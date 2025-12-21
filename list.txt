@@ -3,5 +3,4 @@
 - awkitss
 - zinzon
 - RioCapek
-- Account
 - RenTwoUs
