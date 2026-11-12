@@ -132,7 +132,7 @@ L029c: A lie, / it turns out, / is usually a door someone closed / because they 
 L030: So the next morning, / you do something new.
 L031: You ask your dad what's really going on. / And you listen.
 L032: Some meters go down. / Some stay high. // But for the first time, / you're not reading numbers. / You're reading people.
-L032b: You text Maya. / Not "we're good, right?" // You call her. / You say sorry. / And you mean it. // No meter needed.
+L032b: You don't text Maya. / Not "we're good, right?" // You call her. / You say sorry. / And you mean it. // No meter needed.
 L032c: That night, / you look in the mirror again. / "I'm not fine. / But I will be." // Zero.
 L033: So, / if you could see when anyone is lying… // would you *want* to?
 L034: Tell me in the comments. / I'll know if you're honest. // *Zero percent.* / Probably.
@@ -168,7 +168,9 @@ L034: Tell me in the comments. / I'll know if you're honest. // *Zero percent.* 
 
 ---
 
-## 7. Shot plan (about 85 shots, average 3.5s)
+## 7. Shot plan. **The full 81-shot storyboard, per-line voice direction, retention plan, Shorts cut-downs, thumbnails and metadata are in `WHAT_IF_LIE_METER_SHOTS.md`.**
+
+(Summary below: about 81 shots, average 3.7s.)
 Write `storyboard.json` with one entry per shot. Minimum fields: `id, line, set, light, grade, lens, move, cast[], acting, overlay[], sfx[]`.
 Key shots that must be special:
 | Shot | Line | Description |
@@ -224,3 +226,51 @@ Lambda. Alternatively, render the final at 30fps here (about 5h, chunked so a cr
 - [ ] VO at −16 LUFS, master at −14, music ducked, silence before the twist
 - [ ] Captions on (for vertical cut-downs), an SRT exported, and YouTube chapters for each act
 - [ ] All §36.10 boxes ticked
+
+
+---
+
+## 11. Look bible per act (lighting and grade, using CLAUDE.md §36.3 + `style/presets.ts`)
+| Act | Key | Fill ratio | Accent | Atmosphere | Signature image |
+|---|---|---|---|---|---|
+| Hook | top spot 4000K | 1:16 (near black) | cold rim 9000K | fog wall, no dust | a silhouette with the rim light coming on |
+| Act 1 | morning window 5600K + warm practicals 2700K | 1:2 (open, happy) | magenta kicker 5% | dust in the window beams, steam | the brother frozen mid-chew under a red meter |
+| Act 2 | classroom daylight, then amber pool lights 3000K in the fundraiser | 1:3 | string-light bokeh | volumetric cones over the tables | the slow-mo hallway walk with light leaks |
+| Act 3 | cold fluorescent 6500K, one flickering; the phone screen as the only key in the kitchen | 1:8 → 1:16 | blue moonlight 12000K | heavier fog, no dust | Dad through the doorway, lit by the phone |
+| Act 4 | bathroom fluorescent (flicker → off), then a void top spot | 1:16 | red meter glow as the only colored light | silence-dark | the mirrored 96 |
+| Ending | golden dawn 3000K GodRays | 1:2 | warm bounce from the table | dust and soft bloom 0.9 | the warm mirror smile, meter at 0 |
+
+The hook and the ending are deliberately **the same angle and set with opposite light** (cold → warm). That's the whole arc in two frames.
+
+---
+
+## 12. New assets this video needs (add them to CLAUDE.md §50 when built)
+| Asset | Spec |
+|---|---|
+| **Kitchen** | 5×4m. Counter, stove, fridge (box + handle), table with 4 chairs, a window on the left (GodRays), a pendant lamp practical |
+| **Bathroom** | 2.5×2.5m. Tiles (a grid texture via thin box seams), a sink, a **mirror** (drei `MeshReflectorMaterial` mirror=1 or a second camera render target), one fluorescent tube that can flicker |
+| **Gym fundraiser** | the casino set (§41) plus basketball hoops, string lights (instanced emissive spheres), the banner |
+| **Bus stop / street** | a sidewalk, a shelter, a bus (rounded box, windows emissive), a billboard plane |
+| **Rooftop** | a ledge, a sky gradient dome (sunset), distant city blocks (instanced boxes with emissive windows) |
+| **Dining room** | a table, plates, a bowl of mashed potatoes (a squashed sphere), a pendant lamp |
+| **Props** | phone (emissive screen with alarm/text UI), cereal box (original mascot), cookie and jar, cards, chips, pan, marker, test papers, door |
+| **Characters** | Mom, brother, Maya, Dad, the dealer, the teacher, crowd. Hair: bun, ponytail, bob, visor. Glasses |
+| **Meter v2** | OddsBadge with a `LIE` label, the color ramp, speech-gated visibility, a mirrored mode, a shatter-to-particles mode, a `?` mode, a "fire" mode (>95, ember particles) |
+
+Build order: Meter v2 → Kitchen + Bedroom (Acts 1, 3, Ending) → Bathroom + mirror (the twist) → Classroom, Hallway night → Fundraiser → the rest.
+Render one look-dev still of each set and show it to the user before animating (CLAUDE.md §48).
+
+---
+
+## 13. Music plan (bars at 72 → 96 → 72 bpm)
+| Section | Tempo | Stems | Motif treatment |
+|---|---|---|---|
+| Hook | 72 | `music_pad` + `drone_low` 0.1 | bells, the first 3 notes only (unfinished, which teases) |
+| Act 1 | 96 | pad + `music_pluck` + light `music_drums` | full motif on plucks when the first real meter lands (A03) |
+| Act 2 | 96 | + `music_bass`, drums full, claps on 2 and 4 | the motif an octave up, triumphant, at B13 |
+| Act 3 | 72 | drone + heartbeat + `riser_shepard`, everything else muted | the motif on low saw, slowed, minor (A C E♭ D C) |
+| Act 4 | free time | solo piano (karplus) | the motif slow, with a long gap between notes 3 and 4 |
+| Ending | 72 | pad + plucks + bells, no drums | the full motif resolving to the tonic (the first time it's ever completed) |
+
+The motif is **never completed until the last shot**. That's the musical version of the story's resolution.
+Generate the extra stems (`music_piano`, `music_minor_motif`, tempo-96 versions) by extending `scripts/make_sfx.py`.
