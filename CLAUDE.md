@@ -713,6 +713,10 @@ Put these scripts in `scripts/` and run them after every full render.
   Draft with `--scale=0.5`, and do final renders on a machine with a GPU.
 - **Emissive and glint values must stay small.** A coin with emissive 3 and a point light of 4 blew out the whole frame.
   Hero props work at emissive 0.1–1.0 because bloom does the rest.
+- **§36.3 stack verified in the demo:** SoftShadows (PCSS), N8AO, ContactShadows, Environment with Lightformers,
+  bounce and kicker lights all render under swangle. **Gotcha:** the Environment makes gold metal
+  much brighter, so set `envMapIntensity` to about 0.35 on metalness ≥0.8 props, or they blow out. Keep the kicker light away from hero props.
+- **Workflow scripts:** `npm run sfx` → `npm run still` (look-dev) → `npm run render` → `npm run master`.
 - **Close camera distance:** for a medium close-up at fov 30, keep the camera about 3.1–3.6m from the hero.
   At 2.1m the head fills the frame and the badge gets clamped off-screen.
 
@@ -987,7 +991,8 @@ Render a **"look-dev" still** (one frame per set, with the full chain) and compa
 | L4 Hard SFX | impacts, whooshes, risers, UI sounds | 0.4–0.9 |
 | L5 Voice | voiceover plus character vocalisations (hmm, gasp, cheer) | the loudest, −16 to −14 LUFS |
 
-**The complete SFX library to generate in `make_sfx.py`.** Every one has a numpy recipe; build them as needed:
+**The complete SFX library.** ✅ **All 80 are built** in `scripts/make_sfx.py`, with building blocks in `scripts/sfxlib.py`.
+Generate them with `npm run sfx` (about 2 min). The WAVs are git-ignored, so regenerate them after cloning. Audition one with `python3 scripts/make_sfx.py <name>`:
 
 *Transitions:* `whoosh` (built) · `whoosh_short` (0.35s, higher band) · `whoosh_heavy` (low band 120–900Hz + sub)
 · `swish_ui` (very short high noise sweep) · `whip` (very fast sweep + click) · `reverse_cymbal` (noise + metallic
@@ -1023,7 +1028,7 @@ formant-filtered sawtooth "speech" for character babble, Animal-Crossing-style).
 · `amb_casino` (murmur + random slot jingles + chip clicks) · `amb_stadium` (crowd wash + PA reverb) ·
 `amb_bedroom_night` (air + crickets + a slow clock) · `amb_hospital` (beeps + HVAC) · `amb_void` (soft sub drone + air).
 
-**Synthesis building blocks to have in `make_sfx.py`:** `sine/saw/square/noise` · `adsr` · time-varying
+**Synthesis building blocks (✅ in `scripts/sfxlib.py`):** `sine/saw/square/noise` · `adsr` · time-varying
 `bandpass/lowpass/highpass` · `formant(x, vowel)` (3 parallel bandpasses at F1/F2/F3) · `bell` (inharmonic
 partials) · `fm(carrier, mod, index_env)` (metallic and glassy tones) · `karplus_strong` (plucks and strings) ·
 `granular(src, density, pitch_jitter)` (shimmers, crowds) · `reverb(size, damp, mix)` · `delay(time, fb)` ·
@@ -1043,7 +1048,7 @@ partials) · `fm(carrier, mod, index_env)` (metallic and glassy tones) · `karpl
 8. **Silence before the biggest moment** (4–8 beats), and a `suck_back` into it.
 9. **Ducking:** music and ambience are side-chained to VO (−6dB, 80ms attack, 300ms release, implemented
    as volume curves computed from the VO amplitude).
-10. **Master chain** (ffmpeg after the render): `acompressor=threshold=-18dB:ratio=3:attack=10:release=150`,
+10. **Master chain** (`npm run master` after `npm run render`; the demo measured −14.4 LUFS with a +0.5 TP peak before mastering, so the limiter is required): `acompressor=threshold=-18dB:ratio=3:attack=10:release=150`,
     then `loudnorm=I=-14:TP=-1:LRA=9`. Keep the uncompressed stems in `out/stems/`.
 
 ### 36.7 Music system

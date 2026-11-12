@@ -2,8 +2,11 @@
   "name": "chardfans-anim",
   "private": true,
   "scripts": {
+    "sfx": "python3 scripts/make_sfx.py",
     "studio": "remotion studio",
-    "render": "remotion render Main out/video.mp4"
+    "still": "remotion still src/index.ts Main out/still.png --scale=0.5",
+    "render": "remotion render src/index.ts Main out/video.mp4 --audio-bitrate=320k",
+    "master": "ffmpeg -y -i out/video.mp4 -c:v copy -af \"acompressor=threshold=-18dB:ratio=3:attack=10:release=150,loudnorm=I=-14:TP=-1.5:LRA=9,alimiter=limit=0.84\" -c:a aac -b:a 320k out/final.mp4"
   },
   "dependencies": {
     "@fontsource/cinzel": "^5.1.0",

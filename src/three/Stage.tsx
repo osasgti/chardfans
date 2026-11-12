@@ -2,7 +2,8 @@ import React from 'react';
 import {ThreeCanvas} from '@remotion/three';
 import {useCurrentFrame, random} from 'remotion';
 import {useThree} from '@react-three/fiber';
-import {EffectComposer, DepthOfField, Bloom, Vignette, Noise, ChromaticAberration, HueSaturation, BrightnessContrast} from '@react-three/postprocessing';
+import {SoftShadows, ContactShadows, Environment, Lightformer} from '@react-three/drei';
+import {EffectComposer, N8AO, DepthOfField, Bloom, Vignette, Noise, ChromaticAberration, HueSaturation, BrightnessContrast} from '@react-three/postprocessing';
 import {BlendFunction} from 'postprocessing';
 import {ACESFilmicToneMapping, Vector2, Vector3} from 'three';
 import {C, W, H, NEAR, FAR} from '../style/tokens';
@@ -33,6 +34,18 @@ export const Lights = ({keyColor = C.keyWarm, keyI = 70}: {keyColor?: string; ke
       castShadow shadow-mapSize={[2048, 2048]} shadow-bias={-0.0004} shadow-normalBias={0.02} />
     <pointLight position={[4, 2.2, 2]} intensity={9} decay={1.6} color={C.fillCool} />
     <spotLight position={[0.5, 4, -4]} angle={0.6} penumbra={1} intensity={55} decay={1.5} color={C.rimBlue} />
+    {/* bounce: warm floor light up onto chins (§36.3) */}
+    <pointLight position={[0, 0.15, 1.2]} intensity={2.2} decay={1.8} color="#ff9a5c" />
+    {/* kicker: subtle magenta on the shadow side */}
+    <pointLight position={[-2.5, 1.4, -1.5]} intensity={2.5} decay={1.8} color="#ff6fd0" />
+    <SoftShadows size={18} samples={12} focus={0.6} />
+    <ContactShadows position={[0, 0.003, 0]} opacity={0.5} scale={10} blur={2.5} far={1.2} resolution={1024} frames={1} color="#120a1c" />
+    {/* reflections for clearcoat heads + gold (no download: Lightformers only) */}
+    <Environment resolution={256} frames={1}>
+      <Lightformer form="rect" intensity={2.5} color={C.keyWarm} position={[-4, 3, 3]} scale={[4, 3, 1]} />
+      <Lightformer form="rect" intensity={1.5} color={C.fillCool} position={[4, 1.5, 1]} scale={[1, 4, 1]} />
+      <Lightformer form="rect" intensity={0.6} color="#ffffff" position={[0, 6, 0]} rotation-x={Math.PI / 2} scale={[6, 6, 1]} />
+    </Environment>
     <fog attach="fog" args={[C.bgDeep, 6, 18]} />
     <color attach="background" args={[C.bgDeep]} />
   </>
@@ -40,6 +53,7 @@ export const Lights = ({keyColor = C.keyWarm, keyI = 70}: {keyColor?: string; ke
 
 export const PostFX = ({focus, frame}: {focus: number; frame: number}) => (
   <EffectComposer multisampling={4}>
+    <N8AO aoRadius={0.6} distanceFalloff={1} intensity={2.2} color="#1a1030" />
     <DepthOfField focusDistance={focus} focalLength={0.03} bokehScale={5} />
     <Bloom intensity={0.7} luminanceThreshold={0.72} luminanceSmoothing={0.2} mipmapBlur />
     <ChromaticAberration offset={new Vector2(0.0008, 0.0006)} radialModulation modulationOffset={0.3} />

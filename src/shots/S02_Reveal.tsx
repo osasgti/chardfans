@@ -43,7 +43,7 @@ export const S02_Reveal = () => {
         <Pill id="bg3" frame={frame} position={[-1.4, 0, -1.7]} rotY={0.7} hoodie="#3d6fd6" seg={24} expr="neutral" />
         <group position={coin} rotation={[Math.PI / 2, 0, spin]}>
           <mesh castShadow><cylinderGeometry args={[0.09, 0.09, 0.016, 48]} />
-            <meshStandardMaterial color={C.gold} metalness={0.9} roughness={0.25} emissive={C.gold} emissiveIntensity={0.08 + glint * 0.9} /></mesh>
+            <meshStandardMaterial color={C.gold} metalness={0.9} roughness={0.25} envMapIntensity={0.35} emissive={C.gold} emissiveIntensity={0.08 + glint * 0.9} /></mesh>
         </group>
         <pointLight position={[coin[0], coin[1], coin[2] + 0.2]} intensity={0.2 + glint * 0.8} distance={0.8} color={C.gold} />
       </Stage>
