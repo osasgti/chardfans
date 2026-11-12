@@ -1,5 +1,11 @@
 # MASTER PROMPT — "What If You Could See When Anyone Is Lying?" (5:00, TTS)
 
+**Format:** a 5:00 main video at 16:9, 1920×1080, 60fps. YouTube Shorts max out at 3 minutes, so the *Shorts* are the 3 vertical
+cut-downs (≤60s) listed in the shots file. The 5-minute piece is a regular upload.
+
+**The one-sentence promise:** *every frame looks like a still from an animated film, every second has something moving and
+something audible, and every 25 seconds the viewer gets a moment they'd screenshot.*
+
 > Claude: this file is the brief, script, shot plan, voice spec and sound map for one 5-minute video.
 > Follow `CLAUDE.md` §36 (the production standard) for *how* to build. This file says *what* to build.
 > Do the phases in order (§36.1) and show the user the artifact at each gate before spending render time.
@@ -27,38 +33,86 @@ Alternatives if you want a different topic (the same structure works):
 
 ---
 
-## 2. Text-to-speech recommendation
+## 2. Voice: ElevenLabs (connected via the connector ✅)
 
-| Provider | Why | Word timings | Use it if |
-|---|---|---|---|
-| **ElevenLabs** (recommended) | the most natural, emotional narration, controllable stability/style, many storyteller voices | ✅ the "with timestamps" endpoint returns character-level alignment | you want the best result |
-| OpenAI TTS (gpt-4o-mini-tts) | cheap, and you can *instruct* the delivery ("whisper this", "smug") | ❌ estimate them with `scripts/estimate_timing.py` | you're on a budget |
-| Azure Neural TTS | SSML control (pauses, emphasis, rate), very stable | ✅ word boundary events | you want precise SSML |
+**Status:** the ElevenLabs connector is connected in this session (`mcp__ElevenLabs__creative_*` tools). The API-key route is *not*
+set up, and it isn't needed.
+The first test take failed only because the free tier's generations were busy. Nothing was charged. A paid plan is recommended for
+41 lines × 2 takes plus re-rolls.
 
-Verify current prices and voice names on the provider's site before choosing. They change often.
+**Workflow:**
+1. `creative_create_flow` → **one flow per act** (6 flows). Reuse its `flow_id` for every line in that act, so takes stay together.
+2. `creative_list_voices` → the narrator. The current pick is **Jesse** (`UlSegI53MOVdpfoA7K1h`, a young, friendly American).
+   The user can switch voices in the ElevenLabs view, and earlier takes are kept. Use a **second, younger voice** only for L024 ("I'm fine.")
+   and the in-world characters' quoted lines if you want them voiced (Mom, the brother, Dad, Maya).
+3. `creative_generate_speech` per line, model **`eleven_v4`** (supports inline audio tags), the default 2 takes. Use
+   `estimate_only: true` on the first line to price the run, and tell the user the total before generating all 41.
+4. Poll `creative_get_flow_run_status`, then `creative_get_generations` → the signed `full_res_url` per take. Download each chosen
+   take to `public/vo/L001.wav` … with `curl` (convert to 48kHz WAV with ffmpeg). **Verify on the first line that the download works.**
+5. Never call generate twice to retry. One call is one charge. Re-roll a line only when the user agrees it's weak.
+6. **Word timings:** try `creative_transcribe_audio` on each chosen take (put the file on the flow first) and check whether it returns
+   word timestamps. If not, use `scripts/estimate_timing.py` per line, scaled to the real clip duration (`ffprobe`). Write
+   `public/vo/words.json` with each line offset by its start time in the edit.
+7. Post chain per line: `highpass=f=70, acompressor=threshold=-20dB:ratio=2.5, loudnorm=I=-16`. Trim leading and trailing silence to 80ms.
+   The *edit* controls the pauses between lines, not the TTS.
 
-**Voice casting:** a young-adult narrator, warm, slightly intimate, with a dry humor edge. Avoid "documentary-deep" voices
-and avoid hype. Think "a friend telling you something wild at 2am".
+**Rules for v4 prompts:**
+- Put direction tags in square brackets before the phrase they colour. Use 1–2 tags per line. Too many sounds theatrical.
+- Use `...` for a held beat and `,` for a breath. Write numbers as words ("eighty-two percent"), so they're spoken the way we want.
+- Emphasis comes from CAPITALS on one word per line, at most.
+- Quoted dialogue inside narration gets its own tag, e.g. `[mimicking, sing-song] "almost ready"`.
 
-**Settings (ElevenLabs terms):**
-- Stability 0.40–0.50: expressive, but it doesn't drift.
-- Similarity 0.75.
-- Style 0.25–0.35.
-- Speaker boost on.
-- Speed 1.0, giving about 150 words/min.
-
-**Generation rules:**
-- Generate **one file per line** (`public/vo/L001.wav` …), not one long take. This lets you retime, re-roll a bad line, and
-  get clean timestamps per line.
-- Write the pauses into the text: a comma is short, "…" is a longer beat, and a new line is a separate file plus silence you control.
-- Emphasis: deliver *italic* words with capitals in the TTS input only if the provider respects it. Otherwise re-roll until it lands.
-- Re-roll any line that sounds flat **3 times** and keep the best. The narration is half the video.
-- Post chain: `highpass=f=70, acompressor=threshold=-20dB:ratio=2.5, loudnorm=I=-16`. Then build
-  `public/vo/words.json` from the timestamps (offset by each line's start time in the edit).
-
-**Credentials:** the API key goes through the session's credential tool. Never paste it into chat or commit it.
-
----
+### 2.1 TTS-ready script (paste each row's tag + text as the prompt)
+| Line | Tags | Text |
+|---|---|---|
+| L001 | `[intimate, curious, half-whisper]` | What if, starting tomorrow, you could see when ANYONE is lying? |
+| L002 | `[crisp, playful]` | Not a guess. Not a feeling... A number. Floating right above their head. |
+| L003 | `[playful, slightly ominous]` | Zero means the truth... A hundred means… well. You'll see. |
+| L003b | `[warm] … [dry, deadpan]` | At first, it feels like the best thing that's ever happened to you... It isn't. But we'll get there. |
+| L004 | `[casual storytelling] … [deadpan]` | You wake up. Your alarm says "five more minutes won't hurt."... Eighty-two percent. |
+| L005 | `[light, amused]` | Downstairs, Mom says breakfast is "almost ready.", Thirty-one percent. Fair. |
+| L006 | `[comic timing, deadpan]` | Your little brother says he did NOT eat the last cookie... Ninety-nine. |
+| L007 | `[clear, teacher-like]` | The rules are simple. The meter only shows up when someone talks. It glows gold when they're honest… and red when they're not. |
+| L008 | `[quick comic rhythm]` | It works on people, on ads, on the cereal box that says "part of a balanced breakfast."... SEVENTY-FOUR. |
+| L008b | `[incredulous]` | On the bus, the driver says he'll "wait just one more minute.", Ninety. He does not wait. |
+| L008c | `[laughs softly]` | A guy on a billboard promises you'll "lose ten pounds in a week."... The meter is so red, it's basically on fire. |
+| L008d | `[slower, thoughtful]` | By lunch, you've figured out the first big secret... Almost nobody lies to hurt you. They lie to make things EASIER. Mostly for themselves. |
+| L009 | `[cocky]` | At school, it's basically a cheat code. |
+| L010 | `[cocky, quick]` | "This won't be on the test.", Ninety-one. You study that chapter twice. |
+| L011 | `[dry]` | "I totally didn't copy your homework.", Hundred. You knew that one already. |
+| L012 | `[storytelling, building excitement]` | At the school's casino night fundraiser, the guy running the card table says the deck is "totally random."... Sixty-eight. |
+| L013 | `[excited]` | You don't win money. The chips are fake... But you win EVERY hand. And people start to notice. |
+| L014 | `[rising energy]` | Suddenly, everyone wants you on their team. For group projects. For debates. For "is he into me?" |
+| L015 | `[proud, savouring it]` | For about a week,... you're the most popular kid in school. |
+| L015b | `[quick, satisfied]` | You settle arguments. "Did she REALLY say that about me?"... Twelve percent. Drama over. |
+| L015c | `[confident]` | You catch the class rumor before it spreads. You know which compliments are real, and which ones are just polite. |
+| L015d | `[a little too confident]` | And honestly?... You start to think, you might be the only person in the world, who sees things CLEARLY. |
+| L016 | `[quieter, darker]` | Then it starts showing you things you didn't ask for. |
+| L017 | `[gentle, hurt]` | Your best friend says, "No, I'm not mad."... Fifty-five. |
+| L018 | `[flat]` | Your teacher says, "Everyone gets a fair chance.", Forty. |
+| L019 | `[whispering] … [long pause] … [whispering]` | Your dad, on the phone, late at night: "Everything's fine. Don't worry about it."... Eighty-eight. |
+| L020 | `[measured, heavy]` | You start hearing people differently. Every "I'm good,", every "no worries,", every "love you"… comes with a number. |
+| L021 | `[quiet]` | And numbers don't care how you feel. |
+| L022 | `[tired]` | You stop asking questions. Because you're scared of the answers. |
+| L022b | `[tired, distant]` | At dinner, everyone talks, and you just watch the numbers float, over the mashed potatoes. |
+| L022c | `[lonely]` | Maya texts you, "we're good, right?"... Texts don't have meters... And for some reason, that's worse. |
+| L022d | `[barely audible]` | You realise you don't trust anyone anymore... Not because they changed. Because YOU did. |
+| L023 | `[slow, sleepy, calm dread]` | One night, you can't sleep. You go to the bathroom, look in the mirror, and say it out loud. |
+| L024 | `[small, brittle, younger voice]` | "I'm fine." |
+| L025 | `[whispering, confession]` | Ninety-six. |
+| L026 | `[slow realisation]` | Turns out, the person lying the most, wasn't your friend. Or your dad. Or the card dealer. |
+| L027 | `[voice breaking slightly]` | It was you. To yourself. Every single day. |
+| L028 | `[warmer, gentle]` | And here's the thing the meter never told you... It shows THAT someone is lying... Not WHY. |
+| L029 | `[understanding]` | Your friend wasn't hiding anger. She was hurt... Your dad wasn't hiding a lie. He was protecting you. |
+| L029b | `[soft laugh] [warm]` | Even your little brother, wasn't lying about the cookie to be evil... He just really, really, likes cookies. |
+| L029c | `[gentle wisdom]` | A lie, it turns out, is usually a door someone closed, because they didn't know how to open it. |
+| L030 | `[hopeful]` | So the next morning, you do something new. |
+| L031 | `[warm]` | You ask your dad what's really going on. And you listen. |
+| L032 | `[hopeful, a smile you can hear]` | Some meters go down. Some stay high... But for the first time, you're not reading numbers. You're reading people. |
+| L032b | `[soft, proud]` | You don't text Maya. Not "we're good, right?"... You call her. You say sorry. And you mean it... No meter needed. |
+| L032c | `[honest, small smile]` | That night, you look in the mirror again. "I'm not fine. But I will be."... Zero. |
+| L033 | `[sincere, slow, to camera]` | So, if you could see when anyone is lying… would you WANT to? |
+| L034 | `[playful, a wink in the voice]` | Tell me in the comments. I'll know if you're honest... Zero percent. Probably. |
 
 ## 3. Structure (5:00 ≈ 680 words at 150 wpm + held pauses)
 
@@ -274,3 +328,62 @@ Render one look-dev still of each set and show it to the user before animating (
 
 The motif is **never completed until the last shot**. That's the musical version of the story's resolution.
 Generate the extra stems (`music_piano`, `music_minor_motif`, tempo-96 versions) by extending `scripts/make_sfx.py`.
+
+---
+
+## 14. Wow-moment map (one screenshot moment every ≈25s, never more than 30s without one)
+| Time | Moment | What makes it "out of this world" | Shot |
+|---|---|---|---|
+| 0:04 | the rim light ignites on the silhouette | darkness → a single edge of light → eyes open, with a bell motif | H02–H03 |
+| 0:14 | first meter, 0 vs 100 side by side | gold calm versus red jitter, introducing the visual language in one frame | H06 |
+| 0:35 | the brother frozen at 99% | a hold on the squash pose, crumbs, a red pulse ring, then a beat of silence before the laugh | A06–A07 |
+| 0:58 | the billboard meter on fire | ember particles + glitch, the most over-the-top comic image | A15 |
+| 1:25 | the fundraiser crane through string lights | bokeh, volumetric pool lights, crowd, the first "big set" | B06 |
+| 1:45 | the 3-hand win montage | speed ramps, a pitched-up success ladder, chips sliding | B09 |
+| 2:00 | the slow-mo hallway walk | light leaks, the crowd parting, a triumph grade spike, the music peak | B13 |
+| 2:08 | the rooftop at sunset | the first quiet frame: wind, a lone figure, music thinning (it plants the turn) | B17 |
+| 2:40 | Dad through the doorway | phone-lit only, a frame within a frame, the meter crawling to 88, heartbeat only | C05–C07 |
+| 3:05 | 20 meters orbiting the hero like planets | the paranoia made visual | C09 |
+| 3:30 | **the mirror: 96%** | total silence → dolly-zoom → the mirrored meter erupts, red flash, sub boom. The single biggest moment | D04–D06 |
+| 3:50 | the meter shatters into a gold "?" | particles reforming, the turn from despair to understanding | D10–D11 |
+| 4:05 | Dad's face, the reverse angle | the payoff of 2:40, the same set but warm | D13 |
+| 4:30 | the dawn kitchen | GodRays, dust, the meter fading away mid-conversation | E01–E02 |
+| 4:50 | the bookend: same angle as 0:04, warm | the whole arc in one cut, then "YOU ?%" aimed at the viewer | E07–E08 |
+
+If a stretch of the edit has no row here and runs longer than 30s, add one (a new angle, a set reveal, a graphic beat or a music change).
+
+---
+
+## 15. Polish passes (in this order, each with a gate the user sees)
+1. **Animatic** (30fps, half-scale, flat grey lighting, no post FX, real VO + temp SFX). Gate: the story and timing work with zero polish.
+   If it's boring here, re-cut. Don't light it yet.
+2. **Look-dev stills:** one frame per set at full quality, plus the 15 wow-moment frames. Gate: each is wallpaper-worthy (CLAUDE.md §36.3).
+3. **Animation pass:** acting beats, eye darts, offsets, overlaps, lip-sync to quoted lines, crowd life. Gate: no frozen character anywhere.
+4. **Graphics pass:** meter v2 behaviours, titles, tags, captions, transitions. Gate: every graphic has an entry, a life, an exit and a sound.
+5. **Sound pass:** ambiences pre-lapping cuts, foley on every movement, the motif placement, ducking, the twist silence. Gate: an audio-only
+   listen tells the story.
+6. **Final grade + film layer:** per-act grades, halation, light leaks only in warm acts, gate weave. Gate: the contact sheet shows a deliberate
+   warm → cold → warm journey.
+7. **Master** at 60fps, chunked render, `npm run master`, `npm run qa`. Gate: CLAUDE.md §36.10 ticked.
+
+---
+
+## 16. Consistency fixes & known gaps (resolve before production)
+- **Timing:** the storyboard durations add up to 3:52 and the VO to about 5:00. Re-time to the real VO. Spend the extra time on held emotional
+  shots, not on the comedy (see the shots file).
+- **Music:** the existing stems are at 72bpm only. Generate 96bpm versions of `music_pluck`, `music_drums` and `music_bass`, plus `music_piano`
+  and `music_minor_motif` (extend `make_sfx.py`) before the sound pass.
+- **Quoted dialogue:** decide now whether characters' quotes are voiced by the narrator (simpler, consistent) or by separate voices
+  (richer, about 2× the TTS cost). The recommendation is the narrator, with a light `[mimicking]` tag, except L024, which uses a separate small voice.
+- **Assets:** about 6 sets, 10 props and 6 characters don't exist yet (§12). Building them is the bulk of the work.
+- **Render:** 18,000 frames at 60fps is about 10h on the cloud CPU. Use a GPU machine for the master, or render 30fps here in chunks.
+
+---
+
+## 17. Deliverables checklist
+- [ ] `out/lie-meter_v01_60.mp4` (5:00 master, −14 LUFS)
+- [ ] `out/lie-meter_v01_vertical_{cookie,dad,mirror}.mp4` (3 Shorts, captions on)
+- [ ] `out/lie-meter_thumb_{A,B,C}.png`
+- [ ] `out/lie-meter_captions.srt`
+- [ ] `out/lie-meter_stems/` (vo, music, sfx)
+- [ ] a description with chapters and a pinned comment (from the shots file)
