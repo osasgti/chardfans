@@ -529,3 +529,126 @@ Implement it as props on `<PostFX grade="tension" />`, so a whole act changes wi
 | Shadow acne / stripes | lower `shadow-bias` to −0.0005, add `shadow-normalBias={0.02}` |
 | Looks flat and "CG" | rim light missing, fog off, or post FX disabled. Re-run the §11 checklist |
 | Render too slow | lower `multisampling` to 2 while drafting, `--scale=0.5` for previews |
+
+---
+
+## 21. Character acting (this is what makes it feel alive)
+
+Apply the classic animation principles to every move. A pose change without them looks robotic.
+
+| Principle | How to implement |
+|---|---|
+| **Anticipation** | Before any big move, go 10–15% the *opposite* way for 4–6 frames (crouch before a jump, pull the arm back before pointing). |
+| **Overshoot + settle** | `spring({damping: 10–14})` instead of linear. The arm passes the target by about 8° and settles. |
+| **Squash & stretch** | Head: on landing or a surprise, scale `[1.08, 0.92, 1.08]` for 3 frames, then spring back. Keep the volume constant: x·y·z ≈ 1. |
+| **Follow-through** | Hood, cap brim, hair bun and drawstrings lag the body by 2–3 frames. Run a damped spring on the parent's rotation delta. |
+| **Offset timing** | Never move all joints on the same frame. Order: hips → torso (+2f) → head (+4f) → arms (+3f) → hands (+5f). |
+| **Arcs** | Hands move on curves. Add a sine bump perpendicular to the path, never a straight lerp. |
+| **Moving holds** | During a "hold", keep breathing, add a 1–2° head drift, and blink. Nothing is ever 100% still. |
+| **Eye darts** | Every 1–2s, pupils jump 3–6px to a new point over 2 frames (saccade), sometimes toward the camera. |
+| **Look-at** | Heads turn toward whoever is speaking or the active object. Head leads, body follows 20% of the angle 6 frames later. |
+| **Head tilt** | Use 5–10° roll for curiosity or smugness. It's the single most expressive cheap move. |
+
+**Talking:** the speaking character's mouth opens with the voiceover amplitude.
+Use `visualizeAudio()` from `@remotion/media-utils`, take the low bands, smooth over 3 frames, and
+map 0..1 to mouth height 4..22px. Add a small head nod (±2°) on stressed words from `timing.json`.
+
+**Reactions library:** `doubleTake` (look, look away, snap back with a squash), `gulp` (neck
+squash plus a sweat drop), `celebrate` (anticipation crouch → jump 0.3m → arms up → land squash),
+`deflate` (shoulders drop 6 frames, head down 15°), `smugNod` (half-lid eyes plus a slow 1-nod).
+
+---
+
+## 22. Atmosphere & lighting extras (the "insane" polish)
+
+- **Dust motes:** drei `<Sparkles count={80} scale={[6,3,6]} size={1.5} speed={0} opacity={0.35} color={C.keyWarm}/>`.
+  Drive their offset yourself from `frame` (speed 0 plus a manual offset) to stay deterministic. Place them in the key light beam.
+- **Volumetric light shafts:** drei `<SpotLight volumetric distance={8} angle={0.35} attenuation={6} anglePower={4} opacity={0.25}/>`
+  for windows, stadium lights and casino lamps. Combined with fog, this is the most "cinematic" single upgrade.
+- **Fake reflections:** drei `<Environment resolution={256}>` containing `<Lightformer>` rectangles
+  (warm softbox left, cool strip right). Nothing gets downloaded, and the clearcoat on heads gets beautiful specular highlights.
+- **Floor reflections** in casino and hallway sets: `<MeshReflectorMaterial blur={[300,100]} mixStrength={0.6} roughness={0.8}/>`.
+- **God-ray rim:** put a bright emissive card just behind a character's head, out of frame. Bloom
+  turns it into a halo. Use it for hero "reveal" moments.
+- **Light change as emotion:** animate the key light's color temperature during a shot (warm → cold over
+  1s) when the mood flips. The audience feels it before they notice it.
+- **Practical flicker:** fluorescent lights at 0.97–1.0 intensity on a seeded noise curve, with an occasional dip to 0.6.
+
+---
+
+## 23. Lens & film emulation
+
+Add these in a `FilmLook` layer: CSS/SVG over the final frame, or shader passes.
+- **Light leaks:** a large blurred orange/magenta radial gradient drifting slowly across a corner, at
+  screen blend mode and 8–15% opacity. Use them on warm or happy shots only.
+- **Anamorphic streak:** a horizontal stretch of bloom on bright practicals. Postprocessing's `Bloom`
+  has no streak, so add a second bloom pass on a 1×8-scaled copy, or draw 1px blurred horizontal
+  lines through bright UI and LEDs at 20% opacity.
+- **Gate weave:** a ±0.6px seeded subpixel jitter of the whole frame. It's subtle but feels like film.
+- **Halation:** a red-tinted blur of the highlights added back at 10%. It gives the bright edges a warm glow.
+- **Motion blur:** for fast moves (whips, thrown coins, jumps), render with
+  `<CameraMotionBlur>` from `@remotion/motion-blur` (5–8 samples, shutterAngle 180). Never use it on slow shots,
+  because it costs N× render time.
+- **Focus breathing:** during a rack focus, change the fov by 1–2% too, the way real lenses do.
+
+---
+
+## 24. Props & physics (precomputed, deterministic)
+
+- Thrown objects (coins, dice, cards, chips, papers): **simulate once offline** with `cannon-es` in a
+  Node script, save positions and rotations per frame to `public/sim/<name>.json`, and play them back by frame.
+  Never run live physics in Remotion.
+- Coin flip: 2.5 rotations per 10 frames with a parabolic arc. Add a gold glint (an emissive spike) when the face
+  points at the key light, and motion blur on.
+- A paper pile explosion (like the card table shot): 60 instanced planes with a small bend (vertex
+  displacement) and staggered launch frames.
+- Hero objects get a **glint sweep**: a thin bright gradient that crosses the object once when it's introduced.
+
+---
+
+## 25. Kinetic typography & UI motion upgrades
+
+- Titles: tracking animates from 0.3em to 0.14em while fading in, which reads as a "cinematic title".
+- **Mask reveals:** text rises out of an invisible line (`overflow: hidden` on its container), with words 3 frames apart.
+- Emphasis word: a gold gradient fill with a slow shimmer (an animated `background-position`, `background-clip: text`).
+- The badge **ticks** on value change. For each change, scale it 1 → 1.06 → 1, add a one-frame white border
+  flash, and play the SFX "tick". When the value hits 100% or 0%, add a radial pulse ring that expands and fades.
+- Bars and counters: numbers count with an *ease-out-expo* so they start fast and slow down at the end. The final digit
+  lands with a small bounce.
+- UI depth: overlays get a slight parallax with the camera (move 2–4% opposite the camera pan), so
+  they feel like they live in the scene.
+- Never let UI cover a face. Keep a "face exclusion zone", using the projected head anchor with a radius of 180px.
+
+---
+
+## 26. Shot list library (ready-made recipes)
+
+| Name | Set / light | Camera | Acting | Overlay |
+|---|---|---|---|---|
+| `heroIntro` | void, top spot | low crane up to eye level, 4s | smug head tilt, blink | title word-by-word |
+| `powerReveal` | any, god-ray rim | slow push-in on face, fov 30→28 | eyes widen (squash) | badge pops above head |
+| `everydayOdds` | bedroom/vending | orbit 15° | glance at object | badge on object + dotted line |
+| `crowdCheer` | casino/stadium | high wide → push | instanced cheer with offsets | 3–5 small badges on random heads |
+| `numberDrop` | hallway, tension grade | locked-off + handheld | deflate reaction | badge 99%→0% with shake |
+| `comparison` | void | static + slow drift | none | BarRace "YOU vs NORMAL" |
+| `consequence` | cold light, desat grade | slow pull-back reveal | alone in frame | sign "BANNED" in 3D + tag |
+| `whiteboardBeat` | classroom | over-the-shoulder | writeBoard pose | big serif word on board |
+
+---
+
+## 27. Final "insane" pass (do this before the final render)
+
+1. Watch it muted. Does every 2–4s have a visual change? If not, add a camera move, acting or a badge.
+2. Watch it with audio only. Does every badge, cut and impact have an SFX?
+3. Scrub frame by frame through each cut. Look for flicker, popping and badges jumping.
+4. Pause on 10 random frames. Each one should work as a wallpaper (composition, focus, light).
+5. Check that a face reads at phone size (render at 25% and look).
+6. Compare side by side against a reference frame and adjust exposure, saturation and grain to match.
+
+---
+
+## 28. What's left is iteration
+
+Past this point, the remaining quality comes from **rendering and tuning**, not from more rules.
+Build the base `Stage`, `Pill` and `OddsBadge` first. Render the `heroIntro` and `powerReveal` recipes,
+compare them against the reference frames, then update the numbers in this file with what actually looked best.
