@@ -9,6 +9,10 @@ number here is a starting default chosen to match the reference look. Tune it af
 test renders, but change it only when the user asks or a shot clearly needs it. A video that ignores the lighting, depth-of-field and grading rules looks like
 a cheap 3D demo, not the reference.
 
+**Reading order:** start with **§36 (the master prompt)**, which is the standard every video must meet. Then use
+§0–§35 as the toolbox, §32 for lessons from real renders, and §37 for how to keep improving.
+The working demo lives in `src/` (2 shots, 60fps, with full sound).
+
 ---
 
 ## 0. TL;DR pipeline
@@ -693,11 +697,7 @@ Put these scripts in `scripts/` and run them after every full render.
 
 ---
 
-## 31. What's left is iteration
-
-Past this point, the remaining quality comes from **rendering and tuning**, not from more rules.
-Build the base `Stage`, `Pill` and `OddsBadge` first. Render the `heroIntro` and `powerReveal` recipes,
-compare them against the reference frames, then update the numbers in this file with what actually looked best.
+## 31. (moved to the end, see §37)
 
 ---
 
@@ -824,3 +824,279 @@ On the hit beat, stack these together:
 - [ ] Background characters and the environment always have motion
 - [ ] There's one silent moment before the biggest reveal
 - [ ] Rendered at 60fps with no jitter in projected UI
+
+---
+
+## 36. MASTER PROMPT — the "out of this world" production standard
+
+> **Claude, read this whole section before touching any shot.** It is the director, the cinematographer,
+> the lighting artist, the animator, the sound designer and the editor speaking at once. Everything
+> above is the toolbox. This section is the standard every frame and every sound must meet. If a rule here
+> conflicts with an earlier section, **this section wins**. If the user's request conflicts with this section,
+> **the user wins**. Say which rule you're breaking and why.
+
+### 36.0 The prime directive
+Every frame should be good enough to be a wallpaper, every second should have something moving and something
+audible, and every moment should serve the story beat. "Fine" is a failure. Don't ship a shot you wouldn't pause on.
+
+### 36.1 Production phases (never skip, never reorder)
+
+| # | Phase | Output file | Gate (must be true before moving on) |
+|---|---|---|---|
+| 1 | **Brief** | `brief.md` | the logline, the audience, the length, the 3 emotional beats, the ending image |
+| 2 | **Script** | `script.md` | read it aloud: 150–165 words/min, every line has a visual idea |
+| 3 | **Beat sheet** | `beats.json` | each beat has an emotion (wonder, fun, tension, loss, triumph) and a grade preset (§18) |
+| 4 | **Shot list** | `storyboard.json` | every shot has a set, lighting, camera move, acting, overlay, and **SFX cues** |
+| 5 | **Color script** | `out/colorscript.png` | one key frame per shot in a strip, showing a deliberate warm/cold journey |
+| 6 | **Sound map** | `src/audio/Soundtrack.tsx` cues | every visual accent has a cue (§36.6), and the music sections are mapped to beats |
+| 7 | **Blocking** | draft render (30fps, `--scale=0.5`) | the timing reads with *no* polish. If it's boring now, polish won't save it |
+| 8 | **Animation pass** | draft render | all §21 principles applied, nothing frozen, eyes alive |
+| 9 | **Lighting/look pass** | stills of every shot | each still passes §36.3 |
+| 10 | **Sound pass** | audio-only render (`--codec=wav`) | listen with eyes closed: does the story still come through? |
+| 11 | **QA** | §11 + §27 + §28 + §35.6 + §36.10 | all boxes ticked |
+| 12 | **Final** | 60fps master + vertical cut + thumbnail | export specs §19 |
+
+At each gate, Claude shows the user the artifact (still, contact sheet or draft) **before** spending render time on the next phase.
+
+### 36.2 Cinematography standard
+
+**Lens package** (with fixed fov values, so the look stays consistent):
+| Lens | fov | Use |
+|---|---|---|
+| 24mm-equivalent | 45 | establishing wides, crowds, stadiums (maximum, never wider) |
+| 35mm | 38 | medium shots, two-shots, walking |
+| 50mm | 30–32 | the default storytelling lens |
+| 85mm | 20–24 | close-ups and reactions. Background melts |
+| 135mm | 14–16 | extreme close-ups (eyes, a badge on an object, the coin), compressing heroes against the background |
+
+**Composition rules:**
+- Put eyes on the upper third line. Give the hero look room (space in the direction they face).
+- Use depth layers in every shot: a foreground element (blurred), the subject (sharp), the midground, and the background
+  (blurred and darker). §36.3's fog and DOF must separate them.
+- Frame within frames: doorways, locker gaps and railings frame the subject.
+- Silhouette test: if you fill the frame black, the subject's pose still reads.
+- Keep the horizon level unless it's a deliberate dutch angle (≤8°, only for unease).
+- Mind the 180° line: never cross it within a scene unless the camera visibly moves across it.
+
+**Movement grammar:** every shot has *one* primary move and *one* secondary layer (handheld drift, a focus shift, or a light change).
+Shot entry and exit speeds must match the cut: a slow-ending shot cuts to a slow-starting one, unless you're
+deliberately whip-cutting.
+
+### 36.3 Lighting & shadow standard (the "insane" look)
+
+**Renderer settings (Stage):**
+- Tone mapping: AgX (`AgXToneMapping`, three ≥0.160) or ACES. Pick one for the whole video. AgX has
+  the more filmic highlights. Exposure goes in the grade presets, never per-light hacks.
+- Shadows: `shadows="soft"` plus drei `<SoftShadows size={18} samples={12} focus={0.6} />` (PCSS:
+  contact-hardening shadows that are sharp near the feet and soft further away). Only 1–2 lights cast shadows. The key light
+  shadow map is 2048 (4096 for the hero close-up), `shadow-normalBias 0.02`, and the shadow camera is tightly
+  fitted to the visible set (a tight frustum gives crisp shadows).
+- **Ambient occlusion:** `<N8AO aoRadius={0.6} distanceFalloff={1} intensity={2.2} color="#1a1030" />`
+  from `@react-three/postprocessing`. Tint the occlusion purple, never black. It's essential where heads meet necks,
+  feet meet floor, and in locker seams.
+- Contact shadows under every character and prop on the floor (drei `<ContactShadows>`, opacity 0.45, blur
+  2.5, far 1.2). They're even more important than real shadows for grounding.
+- Never use `AccumulativeShadows` or anything that accumulates over frames, because it isn't deterministic in Remotion.
+
+**Light design per shot:** write it like a gaffer would.
+```json
+"lighting": {
+  "key":   {"type": "spot", "from": "camera-left-high", "kelvin": 3200, "power": 70, "softness": 0.9},
+  "fill":  {"type": "point", "from": "camera-right", "kelvin": 9000, "ratio": "1:4"},
+  "rim":   {"type": "spot", "from": "behind-right-high", "kelvin": 8000, "power": 55},
+  "kick":  {"type": "rectArea", "from": "behind-left", "color": "#ff7ad9", "power": 6},
+  "practicals": ["fluorescent x3 flicker", "exit sign red"],
+  "atmos": {"fog": [6, 18], "volumetric": "key", "dust": 90}
+}
+```
+- **Key-to-fill ratio** sets the mood: 1:2 is happy and open, 1:4 is the cinematic default, 1:8 is tension, and 1:16 is noir or consequence.
+- **Kelvin palette:** use a helper `kelvin(k) → hex`. Warm keys are 2700–3500K, cool fills 7000–10000K, moonlight 12000K tinted
+  violet.
+- **Every hero has three lights on the head:** a key highlight (top-left), a rim edge (back) and an eye catch-light (the
+  painted dot plus a tiny specular from the key). A head without a rim light is a failed shot.
+- **Kickers and accents:** add a colored kicker (magenta, teal) on the shadow side for richness. It should be subtle, 5–10% of the key.
+- **Bounce light:** a low-intensity point light near the floor tinted with the floor color (warm wood → orange
+  bounce up onto the chin). It's cheap, and it's what makes CG look real.
+- **Light motivation:** every light should have a believable source (a window, a lamp, a screen, the sky). Show the source
+  in frame at least once per scene.
+- **Volumetrics:** drei `<SpotLight volumetric>` cones on the key in interior scenes, at opacity 0.15–0.3,
+  plus `GodRays` from `@react-three/postprocessing` (sun = an emissive mesh, samples 40, density 0.9,
+  decay 0.94, weight 0.4) for windows and stadium lights. They need fog to read.
+- **Animated light** (at least one per scene): flicker, a slow cloud-like intensity drift (±8% over 4s), screens
+  pulsing, a passing car's light sweeping a wall, or a light that changes with the emotion (§22).
+- **Darkness is a color:** blacks are never pure. Lift them with fog color (`#14101f`). Crush only on purpose.
+
+**Materials standard:**
+| Surface | Settings |
+|---|---|
+| Character skin | physical, roughness 0.42, clearcoat 0.35, sheen 0.4 (velvet-plastic toy look) |
+| Cloth/hoodie | standard, roughness 0.88, plus subtle normal noise (procedural) so it isn't plastic |
+| Wood floor | roughness 0.55 with plank seams and a ±8% per-plank color variation (seeded) |
+| Painted wall | roughness 0.9, a slight vertical gradient (darker at the bottom), and a baseboard |
+| Metal lockers | metalness 0.25–0.4, roughness 0.45, edge highlights via RoundedBox |
+| Gold UI/props | metalness 0.9, roughness 0.25, small emissive (0.1–1), and an env map for reflections |
+| Glass/screens | transmission 0.9 or emissive content, with a reflection from an Environment Lightformer |
+| Felt (casino) | roughness 1, sheen 1, sheenColor lighter green |
+
+- **Environment for reflections:** `<Environment resolution={256} frames={1}>` with 3 Lightformers (a warm
+  softbox, a cool strip and a dim top). Use it on every scene so metals and clearcoat have something to reflect.
+- **Color variation:** nothing in a set is a single flat color. Vary albedo ±5–10% per instance with seeded random.
+- **Wear and detail:** a scuffed floor (darker patches under the lockers), posters on walls (simple text/colour cards), and
+  a clock. Aim for 3–5 storytelling details per set, all low-poly.
+
+### 36.4 Post-processing chain (in this exact order)
+1. `N8AO` (ambient occlusion)
+2. `DepthOfField` (per-shot focus, normalized §5)
+3. `GodRays` (only scenes with a sun/window source)
+4. `Bloom` (mipmapBlur, threshold 0.72, intensity per grade 0.5–0.9)
+5. `ChromaticAberration` (radial, 0.0006–0.001, spiked on impacts)
+6. `HueSaturation` + `BrightnessContrast` (grade preset)
+7. `LUT` (optional: a 3D `.cube` LUT per act, generated by a script, never downloaded)
+8. `Vignette` (offset 0.28, darkness 0.7–0.9 by grade)
+9. `Noise` (overlay 0.04–0.06)
+Then the 2D film layer: halation, light leaks, gate weave, letterbox (§23).
+Render a **"look-dev" still** (one frame per set, with the full chain) and compare it with a reference still before animating.
+
+### 36.5 Animation standard (beyond §21)
+- **Timing chart per action:** write keyposes and breakdowns with beat numbers in the shot file as a
+  comment before coding. Example: `// 0 idle | 6 anticipation | 10 hit pose | 14 overshoot | 22 settle`.
+- **Pose quality:** asymmetry always (one shoulder higher, weight on one leg, head tilted). Twinning (left = right) is
+  forbidden except for comic effect.
+- **Line of action:** every key pose has a clear C or S curve through spine and head.
+- **Weight:** heavy things move slowly and settle long, light things snap. Show weight shifts before steps.
+- **Overlapping action:** a minimum of 2 parts lagging on any big move (hood, cap brim, drawstrings, the arm that isn't leading).
+- **Eyes lead everything:** eyes move first (2 beats) → head (4 beats) → body (8 beats). Blink on big head turns.
+- **Acting beats per shot:** at least one *thought change* per shot that's visible in the face (neutral → realise → smug).
+- **Lip flap:** speaking characters' mouths follow voiceover amplitude (§21). Non-speakers react (nods, glances).
+- **Walk cycles:** 16 beats per cycle at a normal pace, with pelvis bob ×2 per cycle, opposite arm swing, and a head-bob counter.
+- **Crowds:** 3 animation variations × random phase × random speed (0.9–1.1) × occasional "hero" crowd
+  members who do something unique (a wave, a phone check).
+- **Cartoon physics accents:** 1–2 frames of smear (stretch the mesh ×1.4 along the motion vector) on the
+  fastest arm swings and head snaps.
+- **Never** do linear interpolation on anything visible, never leave a pose frozen longer than 12 beats, and never move all
+  characters in sync.
+
+### 36.6 Sound design standard — the "every frame is heard" doctrine
+
+**Layers (each must exist across the whole video):**
+| Layer | Content | Level |
+|---|---|---|
+| L1 Room tone | per-set ambience: hallway hum + distant chatter, a casino murmur + slot jingles, stadium crowd wash, a bedroom clock tick + night air | always on, 0.15–0.3 |
+| L2 Music | a score that changes with the acts (§36.7) | 0.35–0.5, ducked under VO to 0.12–0.18 |
+| L3 Foley | footsteps, cloth rustle on arm moves, chair creak, paper shuffle, coin clinks, a locker slam | synced to the animation, 0.3–0.6 |
+| L4 Hard SFX | impacts, whooshes, risers, UI sounds | 0.4–0.9 |
+| L5 Voice | voiceover plus character vocalisations (hmm, gasp, cheer) | the loudest, −16 to −14 LUFS |
+
+**The complete SFX library to generate in `make_sfx.py`.** Every one has a numpy recipe; build them as needed:
+
+*Transitions:* `whoosh` (built) · `whoosh_short` (0.35s, higher band) · `whoosh_heavy` (low band 120–900Hz + sub)
+· `swish_ui` (very short high noise sweep) · `whip` (very fast sweep + click) · `reverse_cymbal` (noise + metallic
+partials, reversed, swelling into the cut) · `tape_stop` (music rate 1→0 in 0.6s) · `glitch` (sample-and-hold
+bit-crushed noise bursts, 3×40ms) · `zoom_in` (rising sine + noise, 0.5s) · `zoom_out` (falling).
+
+*UI / graphics:* `tick` (built) · `tick_soft` · `pop_small` (sine 520→900Hz 60ms) · `pop_big` (sine 300→700Hz +
+noise, 120ms) · `chime` (built) · `chime_low` · `sparkle` (built) · `shimmer_loop` (granular high bells) ·
+`counter_roll` (accelerating ticks, generated per count) · `bar_fill` (rising filtered saw while a bar grows) ·
+`type_key` ×5 variants (for typed text) · `stamp` (low thump + paper slap for BANNED stamps) · `success`
+(major-third bell pair) · `fail_buzz` (two detuned squares at 110Hz, 0.4s) · `error_blip` · `notification`
+(two-tone glass ping) · `slide_in` (soft airy swish + click on arrival) · `lock_click`.
+
+*Impacts & tension:* `impact` (built) · `impact_light` · `boom_sub` (30Hz sine drop, 3s tail) · `hit_metal`
+(inharmonic metal partials + noise) · `riser` (built) · `riser_short` (1s) · `riser_shepard` (endless
+rising Shepard tones, for long tension) · `drone_low` (two detuned 55Hz saws, slow filter) · `heartbeat` ·
+`clock_tick` (accelerating for countdowns) · `stinger_good` (bright major chord stab) · `stinger_bad` (minor
+cluster plus a low hit) · `suck_back` (reversed impact into silence).
+
+*Foley:* `step_wood` ×4 · `step_tile` ×4 · `cloth_rustle` ×3 (band-passed noise bursts with an organic envelope) ·
+`chair_creak` (resonant filtered noise with a pitch wobble) · `paper_shuffle` · `paper_flutter` · `coin_flip`
+(metal ping + spin whirr) · `coin_land` (bouncing pings with a decreasing interval) · `chips_stack`
+(clicky ceramic) · `dice_roll` · `card_flick` · `locker_slam` (metal hit + rattle) · `door_creak` ·
+`pen_write` (scratchy noise bursts) · `marker_squeak` (whiteboard, a resonant sine wobble) · `alarm_beep`
+(square 2.7kHz pattern) · `vending_drop` (thud + rattle) · `ball_bounce` (sub thump with decay intervals).
+
+*Crowd & vocal (synthesised):* `crowd_murmur` (many band-passed noise "voices" with random
+amplitude modulation 3–6Hz) · `crowd_cheer` (murmur with a rising level + brighter formants + whistles) · `crowd_gasp`
+(a short inhale-like noise swell) · `crowd_aww` · `kid_laugh` (formant-filtered pulses) · `mumble_vo` (a
+formant-filtered sawtooth "speech" for character babble, Animal-Crossing-style).
+
+*Ambience beds (10–30s loops, seamless crossfade):* `amb_hallway` · `amb_classroom` (fans, a distant voice murmur)
+· `amb_casino` (murmur + random slot jingles + chip clicks) · `amb_stadium` (crowd wash + PA reverb) ·
+`amb_bedroom_night` (air + crickets + a slow clock) · `amb_hospital` (beeps + HVAC) · `amb_void` (soft sub drone + air).
+
+**Synthesis building blocks to have in `make_sfx.py`:** `sine/saw/square/noise` · `adsr` · time-varying
+`bandpass/lowpass/highpass` · `formant(x, vowel)` (3 parallel bandpasses at F1/F2/F3) · `bell` (inharmonic
+partials) · `fm(carrier, mod, index_env)` (metallic and glassy tones) · `karplus_strong` (plucks and strings) ·
+`granular(src, density, pitch_jitter)` (shimmers, crowds) · `reverb(size, damp, mix)` · `delay(time, fb)` ·
+`chorus` · `saturate(drive)` (tanh, which adds weight to impacts) · `bitcrush` · `pan(x, pos)` · `reverse` ·
+`pitch_env` · `loop_crossfade` (seamless ambience). Keep everything seeded and deterministic.
+
+**Rules of placement:**
+1. **Pre-lap:** the next scene's ambience starts 8–15 beats *before* the cut. The ear arrives first.
+2. **Whoosh peaks on the cut**, not after it. Start a whoosh at `CUT − 14` beats for the 0.9s whoosh.
+3. **Hits land on the visual frame exactly.** Check with an audio-only render plus the timing sheet.
+4. **Size matches size:** small UI gets small sounds. A big reveal gets impact + sub + sparkle + a music swell.
+5. **Variation:** footsteps and ticks are never the same sample twice in a row. Rotate between variants and vary `rate` by ±5%.
+6. **Spatial:** pan the SFX with the on-screen position (`pan = (x / W) * 2 − 1`, scaled by 0.6). Distant sources
+   get a lowpass at 3–5kHz plus more reverb.
+7. **Frequency slots:** the sub (≤60Hz) belongs to impacts only. Music is high-passed at 40Hz. Dip the music
+   2–5kHz by 3dB under VO.
+8. **Silence before the biggest moment** (4–8 beats), and a `suck_back` into it.
+9. **Ducking:** music and ambience are side-chained to VO (−6dB, 80ms attack, 300ms release, implemented
+   as volume curves computed from the VO amplitude).
+10. **Master chain** (ffmpeg after the render): `acompressor=threshold=-18dB:ratio=3:attack=10:release=150`,
+    then `loudnorm=I=-14:TP=-1:LRA=9`. Keep the uncompressed stems in `out/stems/`.
+
+### 36.7 Music system
+- One **motif** (4–6 notes) for "the power". It returns in every act, in a different instrument and harmony each time
+  (bells in wonder, plucks in fun, low strings/saws in tension, solo piano for consequence).
+- **Act-based cues:** wonder (pad + bells, 72bpm), fun (pluck arpeggios + light kick/hat, 96–110bpm),
+  tension (drone + heartbeat + Shepard riser), consequence (sparse piano + reverb, no drums), triumph (full
+  chord stack + big kick + sparkles).
+- Generate stems separately (`music_pad`, `music_pluck`, `music_drums`, `music_bass`) so you can mute or duck layers per shot.
+- Transitions between cues: stingers, or a 1-bar drum fill, or a `tape_stop`, never an abrupt start.
+- **Tempo map in beats:** make cut points and music bars land together (e.g. 72bpm means one bar every 100 beats at 30-beat/s).
+
+### 36.8 Typography & graphics standard
+- Hierarchy: big titles (Cinzel 72–96), tags (Cinzel 26–30, tracking 0.24em), badges (Inter labels + Cinzel numbers),
+  captions (Inter 600, 34px with a dark plate, for accessibility on mobile).
+- Every graphic has an **entry, a life and an exit**: it enters with spring/blur, stays alive with float, shimmer or
+  subtle pulse, and leaves with an accelerated fade. Nothing just appears or vanishes.
+- Every graphic has a **sound**, and every number change has a tick.
+- Keep the graphic language consistent: gold = the power or odds, cream = information, red = danger or loss. Nothing else.
+- Safe areas: titles inside 90% action-safe, captions above the bottom 12% (and the middle third for vertical).
+
+### 36.9 Edit & rhythm standard
+- Average shot length 2.5–3.5s. Make it faster (1.5–2s) in montages and slower (4–6s) in emotional beats.
+- Every 20–30s, something **new**: a new set, a new lighting mood, a new graphic type, or a new music layer.
+- J-cuts and L-cuts: let sound lead or trail the picture across cuts at least twice per minute.
+- The ending mirrors the opening (same angle and set, but the light or emotion has changed). Hold the last frame 1.5s, then cut to black with a sub-tail.
+
+### 36.10 The final gate — "out of this world" checklist
+**Picture**
+- [ ] Every shot has key, fill, rim and a motivated source, with a correct key:fill ratio for the mood
+- [ ] PCSS shadows + N8AO + contact shadows: nothing floats, and contact points are dark
+- [ ] Volumetric or god rays appear in ≥1 shot per scene, and fog separates depth layers
+- [ ] An Environment map exists, and metals and clearcoat show reflections
+- [ ] Each shot uses the lens package, follows composition rules and respects the 180° line
+- [ ] Every shot has one primary move + one secondary layer, eased (no linear)
+- [ ] Characters: asymmetry, line of action, offsets, overlaps, eyes lead, a thought change, blinks
+- [ ] Background life: crowd variations, practical flicker, dust
+- [ ] Graphics: entry/life/exit, consistent colors, inside safe areas, never covering a face
+
+**Sound**
+- [ ] L1–L5 layers are present throughout, with no dead air (except the planned silence)
+- [ ] Every cut, graphic, number change, impact and big motion has a sound
+- [ ] Ambience pre-laps, whooshes peak on cuts, hits land on the frame
+- [ ] Repeated sounds vary, and positional SFX are panned
+- [ ] Music: the motif recurs, the cues match acts, the music ducks under VO and before the biggest hit
+- [ ] Master: −14 LUFS, TP ≤ −1, no clipping, stems saved
+
+**Delivery**
+- [ ] 60fps master, vertical cut, thumbnail, and a contact sheet reviewed
+- [ ] 10 random paused frames are all wallpaper quality
+- [ ] Watched once on a phone at low volume, it still reads and still sounds good
+## 37. What's left is iteration
+
+Past this point, the remaining quality comes from **rendering and tuning**, not from more rules.
+Build the base `Stage`, `Pill` and `OddsBadge` first. Render the `heroIntro` and `powerReveal` recipes,
+compare them against the reference frames, then update the numbers in this file with what actually looked best.
