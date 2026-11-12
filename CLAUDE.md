@@ -692,3 +692,19 @@ Put these scripts in `scripts/` and run them after every full render.
 Past this point, the remaining quality comes from **rendering and tuning**, not from more rules.
 Build the base `Stage`, `Pill` and `OddsBadge` first. Render the `heroIntro` and `powerReveal` recipes,
 compare them against the reference frames, then update the numbers in this file with what actually looked best.
+
+---
+
+## 32. Lessons from the first real render (demo in `src/`)
+
+- **Fonts must be local.** The render browser can't reach Google Fonts here, and `@remotion/google-fonts`
+  times out. Fonts live in `public/fonts/*.woff2` and load via `@remotion/fonts` (`src/style/fonts.ts`).
+- **Browser in this cloud container:** pass
+  `--browser-executable=/opt/pw-browsers/chromium_headless_shell-1243/chrome-headless-shell-linux64/chrome-headless-shell`.
+  `remotion.config.ts` sets the `swangle` GL renderer.
+- **Speed:** without a GPU, it takes about 4s per 1080p frame (10s of video ≈ 20 min, `--concurrency=2`; 4 got killed).
+  Draft with `--scale=0.5`, and do final renders on a machine with a GPU.
+- **Emissive and glint values must stay small.** A coin with emissive 3 and a point light of 4 blew out the whole frame.
+  Hero props work at emissive 0.1–1.0 because bloom does the rest.
+- **Close camera distance:** for a medium close-up at fov 30, keep the camera about 3.1–3.6m from the hero.
+  At 2.1m the head fills the frame and the badge gets clamped off-screen.
