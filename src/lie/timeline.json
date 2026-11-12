@@ -1,0 +1,3905 @@
+{
+ "total": 302.704,
+ "lines": [
+  {
+   "id": "L001",
+   "act": "hook",
+   "text": "What if, starting tomorrow, you could see when ANYONE is lying?",
+   "start": 0.6,
+   "end": 5.348,
+   "audio": "vo/L001.wav",
+   "words": [
+    {
+     "text": "What",
+     "start": 0.6,
+     "end": 0.938
+    },
+    {
+     "text": "if,",
+     "start": 0.938,
+     "end": 1.275
+    },
+    {
+     "text": "starting",
+     "start": 1.395,
+     "end": 1.832
+    },
+    {
+     "text": "tomorrow,",
+     "start": 1.832,
+     "end": 2.368
+    },
+    {
+     "text": "you",
+     "start": 2.487,
+     "end": 2.825
+    },
+    {
+     "text": "could",
+     "start": 2.825,
+     "end": 3.163
+    },
+    {
+     "text": "see",
+     "start": 3.163,
+     "end": 3.501
+    },
+    {
+     "text": "when",
+     "start": 3.501,
+     "end": 3.838
+    },
+    {
+     "text": "ANYONE",
+     "start": 3.838,
+     "end": 4.375
+    },
+    {
+     "text": "is",
+     "start": 4.375,
+     "end": 4.712
+    },
+    {
+     "text": "lying?",
+     "start": 4.712,
+     "end": 5.05
+    }
+   ]
+  },
+  {
+   "id": "L002",
+   "act": "hook",
+   "text": "Not a guess. Not a feeling... A number. Floating right above their head.",
+   "start": 5.798,
+   "end": 11.213,
+   "audio": null,
+   "words": [
+    {
+     "text": "Not",
+     "start": 5.798,
+     "end": 6.087
+    },
+    {
+     "text": "a",
+     "start": 6.087,
+     "end": 6.376
+    },
+    {
+     "text": "guess.",
+     "start": 6.376,
+     "end": 6.665
+    },
+    {
+     "text": "Not",
+     "start": 6.92,
+     "end": 7.209
+    },
+    {
+     "text": "a",
+     "start": 7.209,
+     "end": 7.498
+    },
+    {
+     "text": "feeling",
+     "start": 7.498,
+     "end": 7.872
+    },
+    {
+     "text": "A",
+     "start": 8.34,
+     "end": 8.629
+    },
+    {
+     "text": "number.",
+     "start": 8.629,
+     "end": 9.003
+    },
+    {
+     "text": "Floating",
+     "start": 9.258,
+     "end": 9.632
+    },
+    {
+     "text": "right",
+     "start": 9.632,
+     "end": 9.921
+    },
+    {
+     "text": "above",
+     "start": 9.921,
+     "end": 10.38
+    },
+    {
+     "text": "their",
+     "start": 10.38,
+     "end": 10.669
+    },
+    {
+     "text": "head.",
+     "start": 10.669,
+     "end": 10.958
+    }
+   ]
+  },
+  {
+   "id": "L003",
+   "act": "hook",
+   "text": "Zero means the truth... A hundred means\u2026 well. You'll see.",
+   "start": 11.663,
+   "end": 15.7,
+   "audio": null,
+   "words": [
+    {
+     "text": "Zero",
+     "start": 11.663,
+     "end": 12.037
+    },
+    {
+     "text": "means",
+     "start": 12.037,
+     "end": 12.326
+    },
+    {
+     "text": "the",
+     "start": 12.326,
+     "end": 12.615
+    },
+    {
+     "text": "truth",
+     "start": 12.615,
+     "end": 12.904
+    },
+    {
+     "text": "A",
+     "start": 13.371,
+     "end": 13.66
+    },
+    {
+     "text": "hundred",
+     "start": 13.66,
+     "end": 14.034
+    },
+    {
+     "text": "means\u2026",
+     "start": 14.034,
+     "end": 14.323
+    },
+    {
+     "text": "well.",
+     "start": 14.323,
+     "end": 14.612
+    },
+    {
+     "text": "You'll",
+     "start": 14.867,
+     "end": 15.156
+    },
+    {
+     "text": "see.",
+     "start": 15.156,
+     "end": 15.445
+    }
+   ]
+  },
+  {
+   "id": "L003b",
+   "act": "hook",
+   "text": "At first, it feels like the best thing that's ever happened to you... It isn't. But we'll get there.",
+   "start": 16.15,
+   "end": 23.146,
+   "audio": null,
+   "words": [
+    {
+     "text": "At",
+     "start": 16.15,
+     "end": 16.439
+    },
+    {
+     "text": "first,",
+     "start": 16.439,
+     "end": 16.728
+    },
+    {
+     "text": "it",
+     "start": 16.83,
+     "end": 17.119
+    },
+    {
+     "text": "feels",
+     "start": 17.119,
+     "end": 17.408
+    },
+    {
+     "text": "like",
+     "start": 17.408,
+     "end": 17.782
+    },
+    {
+     "text": "the",
+     "start": 17.782,
+     "end": 18.071
+    },
+    {
+     "text": "best",
+     "start": 18.071,
+     "end": 18.36
+    },
+    {
+     "text": "thing",
+     "start": 18.36,
+     "end": 18.649
+    },
+    {
+     "text": "that's",
+     "start": 18.649,
+     "end": 18.938
+    },
+    {
+     "text": "ever",
+     "start": 18.938,
+     "end": 19.312
+    },
+    {
+     "text": "happened",
+     "start": 19.312,
+     "end": 19.771
+    },
+    {
+     "text": "to",
+     "start": 19.771,
+     "end": 20.06
+    },
+    {
+     "text": "you",
+     "start": 20.06,
+     "end": 20.349
+    },
+    {
+     "text": "It",
+     "start": 20.817,
+     "end": 21.106
+    },
+    {
+     "text": "isn't.",
+     "start": 21.106,
+     "end": 21.395
+    },
+    {
+     "text": "But",
+     "start": 21.65,
+     "end": 21.939
+    },
+    {
+     "text": "we'll",
+     "start": 21.939,
+     "end": 22.228
+    },
+    {
+     "text": "get",
+     "start": 22.228,
+     "end": 22.517
+    },
+    {
+     "text": "there.",
+     "start": 22.517,
+     "end": 22.891
+    }
+   ]
+  },
+  {
+   "id": "L004",
+   "act": "act1",
+   "text": "You wake up. Your alarm says \"five more minutes won't hurt.\"... Eighty-two percent.",
+   "start": 25.196,
+   "end": 30.695,
+   "audio": null,
+   "words": [
+    {
+     "text": "You",
+     "start": 25.196,
+     "end": 25.485
+    },
+    {
+     "text": "wake",
+     "start": 25.485,
+     "end": 25.859
+    },
+    {
+     "text": "up.",
+     "start": 25.859,
+     "end": 26.148
+    },
+    {
+     "text": "Your",
+     "start": 26.403,
+     "end": 26.692
+    },
+    {
+     "text": "alarm",
+     "start": 26.692,
+     "end": 27.066
+    },
+    {
+     "text": "says",
+     "start": 27.066,
+     "end": 27.355
+    },
+    {
+     "text": "\"five",
+     "start": 27.355,
+     "end": 27.729
+    },
+    {
+     "text": "more",
+     "start": 27.729,
+     "end": 28.103
+    },
+    {
+     "text": "minutes",
+     "start": 28.103,
+     "end": 28.562
+    },
+    {
+     "text": "won't",
+     "start": 28.562,
+     "end": 28.851
+    },
+    {
+     "text": "hurt.\"",
+     "start": 28.851,
+     "end": 29.14
+    },
+    {
+     "text": "Eighty-two",
+     "start": 29.607,
+     "end": 30.066
+    },
+    {
+     "text": "percent.",
+     "start": 30.066,
+     "end": 30.44
+    }
+   ]
+  },
+  {
+   "id": "L005",
+   "act": "act1",
+   "text": "Downstairs, Mom says breakfast is \"almost ready.\" Thirty-one percent. Fair.",
+   "start": 31.145,
+   "end": 35.327,
+   "audio": null,
+   "words": [
+    {
+     "text": "Downstairs,",
+     "start": 31.145,
+     "end": 31.519
+    },
+    {
+     "text": "Mom",
+     "start": 31.621,
+     "end": 31.91
+    },
+    {
+     "text": "says",
+     "start": 31.91,
+     "end": 32.199
+    },
+    {
+     "text": "breakfast",
+     "start": 32.199,
+     "end": 32.573
+    },
+    {
+     "text": "is",
+     "start": 32.573,
+     "end": 32.862
+    },
+    {
+     "text": "\"almost",
+     "start": 32.862,
+     "end": 33.236
+    },
+    {
+     "text": "ready.\"",
+     "start": 33.236,
+     "end": 33.61
+    },
+    {
+     "text": "Thirty-one",
+     "start": 33.61,
+     "end": 34.154
+    },
+    {
+     "text": "percent.",
+     "start": 34.154,
+     "end": 34.528
+    },
+    {
+     "text": "Fair.",
+     "start": 34.783,
+     "end": 35.072
+    }
+   ]
+  },
+  {
+   "id": "L006",
+   "act": "act1",
+   "text": "Your little brother says he did NOT eat the last cookie... Ninety-nine.",
+   "start": 35.777,
+   "end": 40.563,
+   "audio": null,
+   "words": [
+    {
+     "text": "Your",
+     "start": 35.777,
+     "end": 36.066
+    },
+    {
+     "text": "little",
+     "start": 36.066,
+     "end": 36.44
+    },
+    {
+     "text": "brother",
+     "start": 36.44,
+     "end": 36.814
+    },
+    {
+     "text": "says",
+     "start": 36.814,
+     "end": 37.103
+    },
+    {
+     "text": "he",
+     "start": 37.103,
+     "end": 37.392
+    },
+    {
+     "text": "did",
+     "start": 37.392,
+     "end": 37.681
+    },
+    {
+     "text": "NOT",
+     "start": 37.681,
+     "end": 37.97
+    },
+    {
+     "text": "eat",
+     "start": 37.97,
+     "end": 38.259
+    },
+    {
+     "text": "the",
+     "start": 38.259,
+     "end": 38.548
+    },
+    {
+     "text": "last",
+     "start": 38.548,
+     "end": 38.837
+    },
+    {
+     "text": "cookie",
+     "start": 38.837,
+     "end": 39.211
+    },
+    {
+     "text": "Ninety-nine.",
+     "start": 39.679,
+     "end": 40.308
+    }
+   ]
+  },
+  {
+   "id": "L007",
+   "act": "act1",
+   "text": "The rules are simple. The meter only shows up when someone talks. It glows gold when they're honest\u2026 and red when they're not.",
+   "start": 41.363,
+   "end": 48.919,
+   "audio": "vo/L007.wav",
+   "words": [
+    {
+     "text": "The",
+     "start": 41.363,
+     "end": 41.627
+    },
+    {
+     "text": "rules",
+     "start": 41.627,
+     "end": 41.969
+    },
+    {
+     "text": "are",
+     "start": 41.969,
+     "end": 42.311
+    },
+    {
+     "text": "simple.",
+     "start": 42.311,
+     "end": 42.653
+    },
+    {
+     "text": "The",
+     "start": 42.886,
+     "end": 43.151
+    },
+    {
+     "text": "meter",
+     "start": 43.151,
+     "end": 43.493
+    },
+    {
+     "text": "only",
+     "start": 43.493,
+     "end": 43.835
+    },
+    {
+     "text": "shows",
+     "start": 43.835,
+     "end": 44.099
+    },
+    {
+     "text": "up",
+     "start": 44.099,
+     "end": 44.363
+    },
+    {
+     "text": "when",
+     "start": 44.363,
+     "end": 44.628
+    },
+    {
+     "text": "someone",
+     "start": 44.628,
+     "end": 45.048
+    },
+    {
+     "text": "talks.",
+     "start": 45.048,
+     "end": 45.312
+    },
+    {
+     "text": "It",
+     "start": 45.545,
+     "end": 45.809
+    },
+    {
+     "text": "glows",
+     "start": 45.809,
+     "end": 46.074
+    },
+    {
+     "text": "gold",
+     "start": 46.074,
+     "end": 46.338
+    },
+    {
+     "text": "when",
+     "start": 46.338,
+     "end": 46.602
+    },
+    {
+     "text": "they're",
+     "start": 46.602,
+     "end": 46.944
+    },
+    {
+     "text": "honest\u2026",
+     "start": 46.944,
+     "end": 47.286
+    },
+    {
+     "text": "and",
+     "start": 47.286,
+     "end": 47.551
+    },
+    {
+     "text": "red",
+     "start": 47.551,
+     "end": 47.815
+    },
+    {
+     "text": "when",
+     "start": 47.815,
+     "end": 48.079
+    },
+    {
+     "text": "they're",
+     "start": 48.079,
+     "end": 48.421
+    },
+    {
+     "text": "not.",
+     "start": 48.421,
+     "end": 48.686
+    }
+   ]
+  },
+  {
+   "id": "L008",
+   "act": "act1",
+   "text": "It works on people, on ads, on the cereal box that says \"part of a balanced breakfast.\"... SEVENTY-FOUR.",
+   "start": 49.369,
+   "end": 55.272,
+   "audio": "vo/L008.wav",
+   "words": [
+    {
+     "text": "It",
+     "start": 49.369,
+     "end": 49.619
+    },
+    {
+     "text": "works",
+     "start": 49.619,
+     "end": 49.87
+    },
+    {
+     "text": "on",
+     "start": 49.87,
+     "end": 50.121
+    },
+    {
+     "text": "people,",
+     "start": 50.121,
+     "end": 50.445
+    },
+    {
+     "text": "on",
+     "start": 50.533,
+     "end": 50.784
+    },
+    {
+     "text": "ads,",
+     "start": 50.784,
+     "end": 51.034
+    },
+    {
+     "text": "on",
+     "start": 51.123,
+     "end": 51.373
+    },
+    {
+     "text": "the",
+     "start": 51.373,
+     "end": 51.624
+    },
+    {
+     "text": "cereal",
+     "start": 51.624,
+     "end": 51.948
+    },
+    {
+     "text": "box",
+     "start": 51.948,
+     "end": 52.199
+    },
+    {
+     "text": "that",
+     "start": 52.199,
+     "end": 52.449
+    },
+    {
+     "text": "says",
+     "start": 52.449,
+     "end": 52.7
+    },
+    {
+     "text": "\"part",
+     "start": 52.7,
+     "end": 52.95
+    },
+    {
+     "text": "of",
+     "start": 52.95,
+     "end": 53.201
+    },
+    {
+     "text": "a",
+     "start": 53.201,
+     "end": 53.451
+    },
+    {
+     "text": "balanced",
+     "start": 53.451,
+     "end": 53.849
+    },
+    {
+     "text": "breakfast.\"",
+     "start": 53.849,
+     "end": 54.174
+    },
+    {
+     "text": "SEVENTY-FOUR.",
+     "start": 54.579,
+     "end": 55.051
+    }
+   ]
+  },
+  {
+   "id": "L008b",
+   "act": "act1",
+   "text": "On the bus, the driver says he'll \"wait just one more minute.\" Ninety. He does not wait.",
+   "start": 55.722,
+   "end": 61.842,
+   "audio": null,
+   "words": [
+    {
+     "text": "On",
+     "start": 55.722,
+     "end": 56.011
+    },
+    {
+     "text": "the",
+     "start": 56.011,
+     "end": 56.3
+    },
+    {
+     "text": "bus,",
+     "start": 56.3,
+     "end": 56.589
+    },
+    {
+     "text": "the",
+     "start": 56.691,
+     "end": 56.98
+    },
+    {
+     "text": "driver",
+     "start": 56.98,
+     "end": 57.354
+    },
+    {
+     "text": "says",
+     "start": 57.354,
+     "end": 57.643
+    },
+    {
+     "text": "he'll",
+     "start": 57.643,
+     "end": 57.932
+    },
+    {
+     "text": "\"wait",
+     "start": 57.932,
+     "end": 58.221
+    },
+    {
+     "text": "just",
+     "start": 58.221,
+     "end": 58.51
+    },
+    {
+     "text": "one",
+     "start": 58.51,
+     "end": 58.884
+    },
+    {
+     "text": "more",
+     "start": 58.884,
+     "end": 59.258
+    },
+    {
+     "text": "minute.\"",
+     "start": 59.258,
+     "end": 59.717
+    },
+    {
+     "text": "Ninety.",
+     "start": 59.717,
+     "end": 60.176
+    },
+    {
+     "text": "He",
+     "start": 60.431,
+     "end": 60.72
+    },
+    {
+     "text": "does",
+     "start": 60.72,
+     "end": 61.009
+    },
+    {
+     "text": "not",
+     "start": 61.009,
+     "end": 61.298
+    },
+    {
+     "text": "wait.",
+     "start": 61.298,
+     "end": 61.587
+    }
+   ]
+  },
+  {
+   "id": "L008c",
+   "act": "act1",
+   "text": "A guy on a billboard promises you'll \"lose ten pounds in a week.\"... The meter is so red, it's basically on fire.",
+   "start": 62.292,
+   "end": 70.239,
+   "audio": null,
+   "words": [
+    {
+     "text": "A",
+     "start": 62.292,
+     "end": 62.581
+    },
+    {
+     "text": "guy",
+     "start": 62.581,
+     "end": 62.87
+    },
+    {
+     "text": "on",
+     "start": 62.87,
+     "end": 63.159
+    },
+    {
+     "text": "a",
+     "start": 63.159,
+     "end": 63.448
+    },
+    {
+     "text": "billboard",
+     "start": 63.448,
+     "end": 63.822
+    },
+    {
+     "text": "promises",
+     "start": 63.822,
+     "end": 64.281
+    },
+    {
+     "text": "you'll",
+     "start": 64.281,
+     "end": 64.57
+    },
+    {
+     "text": "\"lose",
+     "start": 64.57,
+     "end": 64.944
+    },
+    {
+     "text": "ten",
+     "start": 64.944,
+     "end": 65.233
+    },
+    {
+     "text": "pounds",
+     "start": 65.233,
+     "end": 65.522
+    },
+    {
+     "text": "in",
+     "start": 65.522,
+     "end": 65.811
+    },
+    {
+     "text": "a",
+     "start": 65.811,
+     "end": 66.1
+    },
+    {
+     "text": "week.\"",
+     "start": 66.1,
+     "end": 66.389
+    },
+    {
+     "text": "The",
+     "start": 66.856,
+     "end": 67.145
+    },
+    {
+     "text": "meter",
+     "start": 67.145,
+     "end": 67.519
+    },
+    {
+     "text": "is",
+     "start": 67.519,
+     "end": 67.808
+    },
+    {
+     "text": "so",
+     "start": 67.808,
+     "end": 68.097
+    },
+    {
+     "text": "red,",
+     "start": 68.097,
+     "end": 68.386
+    },
+    {
+     "text": "it's",
+     "start": 68.488,
+     "end": 68.777
+    },
+    {
+     "text": "basically",
+     "start": 68.777,
+     "end": 69.321
+    },
+    {
+     "text": "on",
+     "start": 69.321,
+     "end": 69.61
+    },
+    {
+     "text": "fire.",
+     "start": 69.61,
+     "end": 69.984
+    }
+   ]
+  },
+  {
+   "id": "L008d",
+   "act": "act1",
+   "text": "By lunch, you've figured out the first big secret... Almost nobody lies to hurt you. They lie to make things EASIER. Mostly for themselves.",
+   "start": 70.689,
+   "end": 79.98,
+   "audio": null,
+   "words": [
+    {
+     "text": "By",
+     "start": 70.689,
+     "end": 70.978
+    },
+    {
+     "text": "lunch,",
+     "start": 70.978,
+     "end": 71.267
+    },
+    {
+     "text": "you've",
+     "start": 71.369,
+     "end": 71.743
+    },
+    {
+     "text": "figured",
+     "start": 71.743,
+     "end": 72.202
+    },
+    {
+     "text": "out",
+     "start": 72.202,
+     "end": 72.491
+    },
+    {
+     "text": "the",
+     "start": 72.491,
+     "end": 72.78
+    },
+    {
+     "text": "first",
+     "start": 72.78,
+     "end": 73.069
+    },
+    {
+     "text": "big",
+     "start": 73.069,
+     "end": 73.358
+    },
+    {
+     "text": "secret",
+     "start": 73.358,
+     "end": 73.732
+    },
+    {
+     "text": "Almost",
+     "start": 74.2,
+     "end": 74.574
+    },
+    {
+     "text": "nobody",
+     "start": 74.574,
+     "end": 75.033
+    },
+    {
+     "text": "lies",
+     "start": 75.033,
+     "end": 75.322
+    },
+    {
+     "text": "to",
+     "start": 75.322,
+     "end": 75.611
+    },
+    {
+     "text": "hurt",
+     "start": 75.611,
+     "end": 75.9
+    },
+    {
+     "text": "you.",
+     "start": 75.9,
+     "end": 76.189
+    },
+    {
+     "text": "They",
+     "start": 76.444,
+     "end": 76.733
+    },
+    {
+     "text": "lie",
+     "start": 76.733,
+     "end": 77.022
+    },
+    {
+     "text": "to",
+     "start": 77.022,
+     "end": 77.311
+    },
+    {
+     "text": "make",
+     "start": 77.311,
+     "end": 77.685
+    },
+    {
+     "text": "things",
+     "start": 77.685,
+     "end": 77.974
+    },
+    {
+     "text": "EASIER.",
+     "start": 77.974,
+     "end": 78.348
+    },
+    {
+     "text": "Mostly",
+     "start": 78.603,
+     "end": 78.977
+    },
+    {
+     "text": "for",
+     "start": 78.977,
+     "end": 79.266
+    },
+    {
+     "text": "themselves.",
+     "start": 79.266,
+     "end": 79.725
+    }
+   ]
+  },
+  {
+   "id": "L009",
+   "act": "act2",
+   "text": "At school, it's basically a cheat code.",
+   "start": 82.03,
+   "end": 84.75,
+   "audio": null,
+   "words": [
+    {
+     "text": "At",
+     "start": 82.03,
+     "end": 82.319
+    },
+    {
+     "text": "school,",
+     "start": 82.319,
+     "end": 82.608
+    },
+    {
+     "text": "it's",
+     "start": 82.71,
+     "end": 82.999
+    },
+    {
+     "text": "basically",
+     "start": 82.999,
+     "end": 83.543
+    },
+    {
+     "text": "a",
+     "start": 83.543,
+     "end": 83.832
+    },
+    {
+     "text": "cheat",
+     "start": 83.832,
+     "end": 84.121
+    },
+    {
+     "text": "code.",
+     "start": 84.121,
+     "end": 84.495
+    }
+   ]
+  },
+  {
+   "id": "L010",
+   "act": "act2",
+   "text": "\"This won't be on the test.\" Ninety-one. You study that chapter twice.",
+   "start": 85.2,
+   "end": 89.773,
+   "audio": null,
+   "words": [
+    {
+     "text": "\"This",
+     "start": 85.2,
+     "end": 85.489
+    },
+    {
+     "text": "won't",
+     "start": 85.489,
+     "end": 85.778
+    },
+    {
+     "text": "be",
+     "start": 85.778,
+     "end": 86.067
+    },
+    {
+     "text": "on",
+     "start": 86.067,
+     "end": 86.356
+    },
+    {
+     "text": "the",
+     "start": 86.356,
+     "end": 86.645
+    },
+    {
+     "text": "test.\"",
+     "start": 86.645,
+     "end": 86.934
+    },
+    {
+     "text": "Ninety-one.",
+     "start": 86.934,
+     "end": 87.563
+    },
+    {
+     "text": "You",
+     "start": 87.818,
+     "end": 88.107
+    },
+    {
+     "text": "study",
+     "start": 88.107,
+     "end": 88.481
+    },
+    {
+     "text": "that",
+     "start": 88.481,
+     "end": 88.77
+    },
+    {
+     "text": "chapter",
+     "start": 88.77,
+     "end": 89.144
+    },
+    {
+     "text": "twice.",
+     "start": 89.144,
+     "end": 89.518
+    }
+   ]
+  },
+  {
+   "id": "L011",
+   "act": "act2",
+   "text": "\"I totally didn't copy your homework.\" Hundred. You knew that one already.",
+   "start": 90.223,
+   "end": 94.966,
+   "audio": null,
+   "words": [
+    {
+     "text": "\"I",
+     "start": 90.223,
+     "end": 90.512
+    },
+    {
+     "text": "totally",
+     "start": 90.512,
+     "end": 90.971
+    },
+    {
+     "text": "didn't",
+     "start": 90.971,
+     "end": 91.26
+    },
+    {
+     "text": "copy",
+     "start": 91.26,
+     "end": 91.634
+    },
+    {
+     "text": "your",
+     "start": 91.634,
+     "end": 91.923
+    },
+    {
+     "text": "homework.\"",
+     "start": 91.923,
+     "end": 92.382
+    },
+    {
+     "text": "Hundred.",
+     "start": 92.382,
+     "end": 92.756
+    },
+    {
+     "text": "You",
+     "start": 93.011,
+     "end": 93.3
+    },
+    {
+     "text": "knew",
+     "start": 93.3,
+     "end": 93.589
+    },
+    {
+     "text": "that",
+     "start": 93.589,
+     "end": 93.878
+    },
+    {
+     "text": "one",
+     "start": 93.878,
+     "end": 94.252
+    },
+    {
+     "text": "already.",
+     "start": 94.252,
+     "end": 94.711
+    }
+   ]
+  },
+  {
+   "id": "L012",
+   "act": "act2",
+   "text": "At the school's casino night fundraiser, the guy running the card table says the deck is \"totally random.\"... Sixty-eight.",
+   "start": 95.416,
+   "end": 102.666,
+   "audio": null,
+   "words": [
+    {
+     "text": "At",
+     "start": 95.416,
+     "end": 95.705
+    },
+    {
+     "text": "the",
+     "start": 95.705,
+     "end": 95.994
+    },
+    {
+     "text": "school's",
+     "start": 95.994,
+     "end": 96.283
+    },
+    {
+     "text": "casino",
+     "start": 96.283,
+     "end": 96.742
+    },
+    {
+     "text": "night",
+     "start": 96.742,
+     "end": 97.031
+    },
+    {
+     "text": "fundraiser,",
+     "start": 97.031,
+     "end": 97.49
+    },
+    {
+     "text": "the",
+     "start": 97.592,
+     "end": 97.881
+    },
+    {
+     "text": "guy",
+     "start": 97.881,
+     "end": 98.17
+    },
+    {
+     "text": "running",
+     "start": 98.17,
+     "end": 98.544
+    },
+    {
+     "text": "the",
+     "start": 98.544,
+     "end": 98.833
+    },
+    {
+     "text": "card",
+     "start": 98.833,
+     "end": 99.122
+    },
+    {
+     "text": "table",
+     "start": 99.122,
+     "end": 99.496
+    },
+    {
+     "text": "says",
+     "start": 99.496,
+     "end": 99.785
+    },
+    {
+     "text": "the",
+     "start": 99.785,
+     "end": 100.074
+    },
+    {
+     "text": "deck",
+     "start": 100.074,
+     "end": 100.363
+    },
+    {
+     "text": "is",
+     "start": 100.363,
+     "end": 100.652
+    },
+    {
+     "text": "\"totally",
+     "start": 100.652,
+     "end": 101.111
+    },
+    {
+     "text": "random.\"",
+     "start": 101.111,
+     "end": 101.485
+    },
+    {
+     "text": "Sixty-eight.",
+     "start": 101.952,
+     "end": 102.411
+    }
+   ]
+  },
+  {
+   "id": "L013",
+   "act": "act2",
+   "text": "You don't win money. The chips are fake... But you win EVERY hand. And people start to notice.",
+   "start": 103.116,
+   "end": 110.231,
+   "audio": null,
+   "words": [
+    {
+     "text": "You",
+     "start": 103.116,
+     "end": 103.405
+    },
+    {
+     "text": "don't",
+     "start": 103.405,
+     "end": 103.694
+    },
+    {
+     "text": "win",
+     "start": 103.694,
+     "end": 103.983
+    },
+    {
+     "text": "money.",
+     "start": 103.983,
+     "end": 104.357
+    },
+    {
+     "text": "The",
+     "start": 104.612,
+     "end": 104.901
+    },
+    {
+     "text": "chips",
+     "start": 104.901,
+     "end": 105.19
+    },
+    {
+     "text": "are",
+     "start": 105.19,
+     "end": 105.564
+    },
+    {
+     "text": "fake",
+     "start": 105.564,
+     "end": 105.938
+    },
+    {
+     "text": "But",
+     "start": 106.406,
+     "end": 106.695
+    },
+    {
+     "text": "you",
+     "start": 106.695,
+     "end": 106.984
+    },
+    {
+     "text": "win",
+     "start": 106.984,
+     "end": 107.273
+    },
+    {
+     "text": "EVERY",
+     "start": 107.273,
+     "end": 107.732
+    },
+    {
+     "text": "hand.",
+     "start": 107.732,
+     "end": 108.021
+    },
+    {
+     "text": "And",
+     "start": 108.276,
+     "end": 108.565
+    },
+    {
+     "text": "people",
+     "start": 108.565,
+     "end": 108.939
+    },
+    {
+     "text": "start",
+     "start": 108.939,
+     "end": 109.228
+    },
+    {
+     "text": "to",
+     "start": 109.228,
+     "end": 109.517
+    },
+    {
+     "text": "notice.",
+     "start": 109.517,
+     "end": 109.976
+    }
+   ]
+  },
+  {
+   "id": "L014",
+   "act": "act2",
+   "text": "Suddenly, everyone wants you on their team. For group projects. For debates. For \"is he into me?\"",
+   "start": 110.681,
+   "end": 117.226,
+   "audio": null,
+   "words": [
+    {
+     "text": "Suddenly,",
+     "start": 110.681,
+     "end": 111.14
+    },
+    {
+     "text": "everyone",
+     "start": 111.242,
+     "end": 111.786
+    },
+    {
+     "text": "wants",
+     "start": 111.786,
+     "end": 112.075
+    },
+    {
+     "text": "you",
+     "start": 112.075,
+     "end": 112.364
+    },
+    {
+     "text": "on",
+     "start": 112.364,
+     "end": 112.653
+    },
+    {
+     "text": "their",
+     "start": 112.653,
+     "end": 112.942
+    },
+    {
+     "text": "team.",
+     "start": 112.942,
+     "end": 113.231
+    },
+    {
+     "text": "For",
+     "start": 113.486,
+     "end": 113.775
+    },
+    {
+     "text": "group",
+     "start": 113.775,
+     "end": 114.064
+    },
+    {
+     "text": "projects.",
+     "start": 114.064,
+     "end": 114.438
+    },
+    {
+     "text": "For",
+     "start": 114.693,
+     "end": 114.982
+    },
+    {
+     "text": "debates.",
+     "start": 114.982,
+     "end": 115.441
+    },
+    {
+     "text": "For",
+     "start": 115.696,
+     "end": 115.985
+    },
+    {
+     "text": "\"is",
+     "start": 115.985,
+     "end": 116.274
+    },
+    {
+     "text": "he",
+     "start": 116.274,
+     "end": 116.563
+    },
+    {
+     "text": "into",
+     "start": 116.563,
+     "end": 116.937
+    },
+    {
+     "text": "me?\"",
+     "start": 116.937,
+     "end": 117.226
+    }
+   ]
+  },
+  {
+   "id": "L015",
+   "act": "act2",
+   "text": "For about a week,... you're the most popular kid in school.",
+   "start": 117.676,
+   "end": 122.019,
+   "audio": null,
+   "words": [
+    {
+     "text": "For",
+     "start": 117.676,
+     "end": 117.965
+    },
+    {
+     "text": "about",
+     "start": 117.965,
+     "end": 118.339
+    },
+    {
+     "text": "a",
+     "start": 118.339,
+     "end": 118.628
+    },
+    {
+     "text": "week,",
+     "start": 118.628,
+     "end": 118.917
+    },
+    {
+     "text": "you're",
+     "start": 119.486,
+     "end": 119.86
+    },
+    {
+     "text": "the",
+     "start": 119.86,
+     "end": 120.149
+    },
+    {
+     "text": "most",
+     "start": 120.149,
+     "end": 120.438
+    },
+    {
+     "text": "popular",
+     "start": 120.438,
+     "end": 120.897
+    },
+    {
+     "text": "kid",
+     "start": 120.897,
+     "end": 121.186
+    },
+    {
+     "text": "in",
+     "start": 121.186,
+     "end": 121.475
+    },
+    {
+     "text": "school.",
+     "start": 121.475,
+     "end": 121.764
+    }
+   ]
+  },
+  {
+   "id": "L015b",
+   "act": "act2",
+   "text": "You settle arguments. \"Did she REALLY say that about me?\"... Twelve percent. Drama over.",
+   "start": 122.469,
+   "end": 128.513,
+   "audio": null,
+   "words": [
+    {
+     "text": "You",
+     "start": 122.469,
+     "end": 122.758
+    },
+    {
+     "text": "settle",
+     "start": 122.758,
+     "end": 123.132
+    },
+    {
+     "text": "arguments.",
+     "start": 123.132,
+     "end": 123.591
+    },
+    {
+     "text": "\"Did",
+     "start": 123.846,
+     "end": 124.135
+    },
+    {
+     "text": "she",
+     "start": 124.135,
+     "end": 124.424
+    },
+    {
+     "text": "REALLY",
+     "start": 124.424,
+     "end": 124.798
+    },
+    {
+     "text": "say",
+     "start": 124.798,
+     "end": 125.087
+    },
+    {
+     "text": "that",
+     "start": 125.087,
+     "end": 125.376
+    },
+    {
+     "text": "about",
+     "start": 125.376,
+     "end": 125.75
+    },
+    {
+     "text": "me?\"",
+     "start": 125.75,
+     "end": 126.039
+    },
+    {
+     "text": "Twelve",
+     "start": 126.507,
+     "end": 126.881
+    },
+    {
+     "text": "percent.",
+     "start": 126.881,
+     "end": 127.255
+    },
+    {
+     "text": "Drama",
+     "start": 127.51,
+     "end": 127.884
+    },
+    {
+     "text": "over.",
+     "start": 127.884,
+     "end": 128.258
+    }
+   ]
+  },
+  {
+   "id": "L015c",
+   "act": "act2",
+   "text": "You catch the class rumor before it spreads. You know which compliments are real, and which ones are just polite.",
+   "start": 128.963,
+   "end": 136.205,
+   "audio": null,
+   "words": [
+    {
+     "text": "You",
+     "start": 128.963,
+     "end": 129.252
+    },
+    {
+     "text": "catch",
+     "start": 129.252,
+     "end": 129.541
+    },
+    {
+     "text": "the",
+     "start": 129.541,
+     "end": 129.83
+    },
+    {
+     "text": "class",
+     "start": 129.83,
+     "end": 130.119
+    },
+    {
+     "text": "rumor",
+     "start": 130.119,
+     "end": 130.493
+    },
+    {
+     "text": "before",
+     "start": 130.493,
+     "end": 130.952
+    },
+    {
+     "text": "it",
+     "start": 130.952,
+     "end": 131.241
+    },
+    {
+     "text": "spreads.",
+     "start": 131.241,
+     "end": 131.53
+    },
+    {
+     "text": "You",
+     "start": 131.785,
+     "end": 132.074
+    },
+    {
+     "text": "know",
+     "start": 132.074,
+     "end": 132.363
+    },
+    {
+     "text": "which",
+     "start": 132.363,
+     "end": 132.652
+    },
+    {
+     "text": "compliments",
+     "start": 132.652,
+     "end": 133.111
+    },
+    {
+     "text": "are",
+     "start": 133.111,
+     "end": 133.485
+    },
+    {
+     "text": "real,",
+     "start": 133.485,
+     "end": 133.774
+    },
+    {
+     "text": "and",
+     "start": 133.876,
+     "end": 134.165
+    },
+    {
+     "text": "which",
+     "start": 134.165,
+     "end": 134.454
+    },
+    {
+     "text": "ones",
+     "start": 134.454,
+     "end": 134.828
+    },
+    {
+     "text": "are",
+     "start": 134.828,
+     "end": 135.202
+    },
+    {
+     "text": "just",
+     "start": 135.202,
+     "end": 135.491
+    },
+    {
+     "text": "polite.",
+     "start": 135.491,
+     "end": 135.95
+    }
+   ]
+  },
+  {
+   "id": "L015d",
+   "act": "act2",
+   "text": "And honestly?... You start to think, you might be the only person in the world, who sees things CLEARLY.",
+   "start": 136.655,
+   "end": 143.752,
+   "audio": null,
+   "words": [
+    {
+     "text": "And",
+     "start": 136.655,
+     "end": 136.944
+    },
+    {
+     "text": "honestly?",
+     "start": 136.944,
+     "end": 137.403
+    },
+    {
+     "text": "You",
+     "start": 138.125,
+     "end": 138.414
+    },
+    {
+     "text": "start",
+     "start": 138.414,
+     "end": 138.703
+    },
+    {
+     "text": "to",
+     "start": 138.703,
+     "end": 138.992
+    },
+    {
+     "text": "think,",
+     "start": 138.992,
+     "end": 139.281
+    },
+    {
+     "text": "you",
+     "start": 139.383,
+     "end": 139.672
+    },
+    {
+     "text": "might",
+     "start": 139.672,
+     "end": 139.961
+    },
+    {
+     "text": "be",
+     "start": 139.961,
+     "end": 140.25
+    },
+    {
+     "text": "the",
+     "start": 140.25,
+     "end": 140.539
+    },
+    {
+     "text": "only",
+     "start": 140.539,
+     "end": 140.913
+    },
+    {
+     "text": "person",
+     "start": 140.913,
+     "end": 141.287
+    },
+    {
+     "text": "in",
+     "start": 141.287,
+     "end": 141.576
+    },
+    {
+     "text": "the",
+     "start": 141.576,
+     "end": 141.865
+    },
+    {
+     "text": "world,",
+     "start": 141.865,
+     "end": 142.154
+    },
+    {
+     "text": "who",
+     "start": 142.256,
+     "end": 142.545
+    },
+    {
+     "text": "sees",
+     "start": 142.545,
+     "end": 142.834
+    },
+    {
+     "text": "things",
+     "start": 142.834,
+     "end": 143.123
+    },
+    {
+     "text": "CLEARLY.",
+     "start": 143.123,
+     "end": 143.497
+    }
+   ]
+  },
+  {
+   "id": "L016",
+   "act": "act3",
+   "text": "Then it starts showing you things you didn't ask for.",
+   "start": 145.802,
+   "end": 149.032,
+   "audio": null,
+   "words": [
+    {
+     "text": "Then",
+     "start": 145.802,
+     "end": 146.091
+    },
+    {
+     "text": "it",
+     "start": 146.091,
+     "end": 146.38
+    },
+    {
+     "text": "starts",
+     "start": 146.38,
+     "end": 146.669
+    },
+    {
+     "text": "showing",
+     "start": 146.669,
+     "end": 147.043
+    },
+    {
+     "text": "you",
+     "start": 147.043,
+     "end": 147.332
+    },
+    {
+     "text": "things",
+     "start": 147.332,
+     "end": 147.621
+    },
+    {
+     "text": "you",
+     "start": 147.621,
+     "end": 147.91
+    },
+    {
+     "text": "didn't",
+     "start": 147.91,
+     "end": 148.199
+    },
+    {
+     "text": "ask",
+     "start": 148.199,
+     "end": 148.488
+    },
+    {
+     "text": "for.",
+     "start": 148.488,
+     "end": 148.777
+    }
+   ]
+  },
+  {
+   "id": "L017",
+   "act": "act3",
+   "text": "Your best friend says, \"No, I'm not mad.\"... Fifty-five.",
+   "start": 149.482,
+   "end": 153.265,
+   "audio": null,
+   "words": [
+    {
+     "text": "Your",
+     "start": 149.482,
+     "end": 149.771
+    },
+    {
+     "text": "best",
+     "start": 149.771,
+     "end": 150.06
+    },
+    {
+     "text": "friend",
+     "start": 150.06,
+     "end": 150.349
+    },
+    {
+     "text": "says,",
+     "start": 150.349,
+     "end": 150.638
+    },
+    {
+     "text": "\"No,",
+     "start": 150.74,
+     "end": 151.029
+    },
+    {
+     "text": "I'm",
+     "start": 151.131,
+     "end": 151.42
+    },
+    {
+     "text": "not",
+     "start": 151.42,
+     "end": 151.709
+    },
+    {
+     "text": "mad.\"",
+     "start": 151.709,
+     "end": 151.998
+    },
+    {
+     "text": "Fifty-five.",
+     "start": 152.466,
+     "end": 153.01
+    }
+   ]
+  },
+  {
+   "id": "L018",
+   "act": "act3",
+   "text": "Your teacher says, \"Everyone gets a fair chance.\" Forty.",
+   "start": 153.715,
+   "end": 157.183,
+   "audio": null,
+   "words": [
+    {
+     "text": "Your",
+     "start": 153.715,
+     "end": 154.004
+    },
+    {
+     "text": "teacher",
+     "start": 154.004,
+     "end": 154.378
+    },
+    {
+     "text": "says,",
+     "start": 154.378,
+     "end": 154.667
+    },
+    {
+     "text": "\"Everyone",
+     "start": 154.769,
+     "end": 155.313
+    },
+    {
+     "text": "gets",
+     "start": 155.313,
+     "end": 155.602
+    },
+    {
+     "text": "a",
+     "start": 155.602,
+     "end": 155.891
+    },
+    {
+     "text": "fair",
+     "start": 155.891,
+     "end": 156.18
+    },
+    {
+     "text": "chance.\"",
+     "start": 156.18,
+     "end": 156.554
+    },
+    {
+     "text": "Forty.",
+     "start": 156.554,
+     "end": 156.928
+    }
+   ]
+  },
+  {
+   "id": "L019",
+   "act": "act3",
+   "text": "Your dad, on the phone, late at night: \"Everything's fine. Don't worry about it.\"... Eighty-eight.",
+   "start": 157.633,
+   "end": 164.101,
+   "audio": null,
+   "words": [
+    {
+     "text": "Your",
+     "start": 157.633,
+     "end": 157.922
+    },
+    {
+     "text": "dad,",
+     "start": 157.922,
+     "end": 158.211
+    },
+    {
+     "text": "on",
+     "start": 158.313,
+     "end": 158.602
+    },
+    {
+     "text": "the",
+     "start": 158.602,
+     "end": 158.891
+    },
+    {
+     "text": "phone,",
+     "start": 158.891,
+     "end": 159.265
+    },
+    {
+     "text": "late",
+     "start": 159.367,
+     "end": 159.741
+    },
+    {
+     "text": "at",
+     "start": 159.741,
+     "end": 160.03
+    },
+    {
+     "text": "night:",
+     "start": 160.03,
+     "end": 160.319
+    },
+    {
+     "text": "\"Everything's",
+     "start": 160.421,
+     "end": 160.965
+    },
+    {
+     "text": "fine.",
+     "start": 160.965,
+     "end": 161.339
+    },
+    {
+     "text": "Don't",
+     "start": 161.594,
+     "end": 161.883
+    },
+    {
+     "text": "worry",
+     "start": 161.883,
+     "end": 162.257
+    },
+    {
+     "text": "about",
+     "start": 162.257,
+     "end": 162.631
+    },
+    {
+     "text": "it.\"",
+     "start": 162.631,
+     "end": 162.92
+    },
+    {
+     "text": "Eighty-eight.",
+     "start": 163.387,
+     "end": 163.846
+    }
+   ]
+  },
+  {
+   "id": "L020",
+   "act": "act3",
+   "text": "You start hearing people differently. Every \"I'm good,\", every \"no worries,\", every \"love you\"\u2026 comes with a number.",
+   "start": 165.701,
+   "end": 172.892,
+   "audio": null,
+   "words": [
+    {
+     "text": "You",
+     "start": 165.701,
+     "end": 165.99
+    },
+    {
+     "text": "start",
+     "start": 165.99,
+     "end": 166.279
+    },
+    {
+     "text": "hearing",
+     "start": 166.279,
+     "end": 166.653
+    },
+    {
+     "text": "people",
+     "start": 166.653,
+     "end": 167.027
+    },
+    {
+     "text": "differently.",
+     "start": 167.027,
+     "end": 167.571
+    },
+    {
+     "text": "Every",
+     "start": 167.826,
+     "end": 168.285
+    },
+    {
+     "text": "\"I'm",
+     "start": 168.285,
+     "end": 168.574
+    },
+    {
+     "text": "good,\",",
+     "start": 168.574,
+     "end": 168.863
+    },
+    {
+     "text": "every",
+     "start": 168.965,
+     "end": 169.424
+    },
+    {
+     "text": "\"no",
+     "start": 169.424,
+     "end": 169.713
+    },
+    {
+     "text": "worries,\",",
+     "start": 169.713,
+     "end": 170.087
+    },
+    {
+     "text": "every",
+     "start": 170.189,
+     "end": 170.648
+    },
+    {
+     "text": "\"love",
+     "start": 170.648,
+     "end": 171.022
+    },
+    {
+     "text": "you\"\u2026",
+     "start": 171.022,
+     "end": 171.311
+    },
+    {
+     "text": "comes",
+     "start": 171.311,
+     "end": 171.685
+    },
+    {
+     "text": "with",
+     "start": 171.685,
+     "end": 171.974
+    },
+    {
+     "text": "a",
+     "start": 171.974,
+     "end": 172.263
+    },
+    {
+     "text": "number.",
+     "start": 172.263,
+     "end": 172.637
+    }
+   ]
+  },
+  {
+   "id": "L021",
+   "act": "act3",
+   "text": "And numbers don't care how you feel.",
+   "start": 173.342,
+   "end": 175.79,
+   "audio": null,
+   "words": [
+    {
+     "text": "And",
+     "start": 173.342,
+     "end": 173.631
+    },
+    {
+     "text": "numbers",
+     "start": 173.631,
+     "end": 174.005
+    },
+    {
+     "text": "don't",
+     "start": 174.005,
+     "end": 174.294
+    },
+    {
+     "text": "care",
+     "start": 174.294,
+     "end": 174.668
+    },
+    {
+     "text": "how",
+     "start": 174.668,
+     "end": 174.957
+    },
+    {
+     "text": "you",
+     "start": 174.957,
+     "end": 175.246
+    },
+    {
+     "text": "feel.",
+     "start": 175.246,
+     "end": 175.535
+    }
+   ]
+  },
+  {
+   "id": "L022",
+   "act": "act3",
+   "text": "You stop asking questions. Because you're scared of the answers.",
+   "start": 176.24,
+   "end": 180.235,
+   "audio": null,
+   "words": [
+    {
+     "text": "You",
+     "start": 176.24,
+     "end": 176.529
+    },
+    {
+     "text": "stop",
+     "start": 176.529,
+     "end": 176.818
+    },
+    {
+     "text": "asking",
+     "start": 176.818,
+     "end": 177.192
+    },
+    {
+     "text": "questions.",
+     "start": 177.192,
+     "end": 177.566
+    },
+    {
+     "text": "Because",
+     "start": 177.821,
+     "end": 178.28
+    },
+    {
+     "text": "you're",
+     "start": 178.28,
+     "end": 178.654
+    },
+    {
+     "text": "scared",
+     "start": 178.654,
+     "end": 179.028
+    },
+    {
+     "text": "of",
+     "start": 179.028,
+     "end": 179.317
+    },
+    {
+     "text": "the",
+     "start": 179.317,
+     "end": 179.606
+    },
+    {
+     "text": "answers.",
+     "start": 179.606,
+     "end": 179.98
+    }
+   ]
+  },
+  {
+   "id": "L022b",
+   "act": "act3",
+   "text": "At dinner, everyone talks, and you just watch the numbers float, over the mashed potatoes.",
+   "start": 180.685,
+   "end": 186.346,
+   "audio": null,
+   "words": [
+    {
+     "text": "At",
+     "start": 180.685,
+     "end": 180.974
+    },
+    {
+     "text": "dinner,",
+     "start": 180.974,
+     "end": 181.348
+    },
+    {
+     "text": "everyone",
+     "start": 181.45,
+     "end": 181.994
+    },
+    {
+     "text": "talks,",
+     "start": 181.994,
+     "end": 182.283
+    },
+    {
+     "text": "and",
+     "start": 182.385,
+     "end": 182.674
+    },
+    {
+     "text": "you",
+     "start": 182.674,
+     "end": 182.963
+    },
+    {
+     "text": "just",
+     "start": 182.963,
+     "end": 183.252
+    },
+    {
+     "text": "watch",
+     "start": 183.252,
+     "end": 183.541
+    },
+    {
+     "text": "the",
+     "start": 183.541,
+     "end": 183.83
+    },
+    {
+     "text": "numbers",
+     "start": 183.83,
+     "end": 184.204
+    },
+    {
+     "text": "float,",
+     "start": 184.204,
+     "end": 184.493
+    },
+    {
+     "text": "over",
+     "start": 184.595,
+     "end": 184.969
+    },
+    {
+     "text": "the",
+     "start": 184.969,
+     "end": 185.258
+    },
+    {
+     "text": "mashed",
+     "start": 185.258,
+     "end": 185.632
+    },
+    {
+     "text": "potatoes.",
+     "start": 185.632,
+     "end": 186.091
+    }
+   ]
+  },
+  {
+   "id": "L022c",
+   "act": "act3",
+   "text": "Maya texts you, \"we're good, right?\"... Texts don't have meters... And for some reason, that's worse.",
+   "start": 186.796,
+   "end": 193.426,
+   "audio": null,
+   "words": [
+    {
+     "text": "Maya",
+     "start": 186.796,
+     "end": 187.085
+    },
+    {
+     "text": "texts",
+     "start": 187.085,
+     "end": 187.374
+    },
+    {
+     "text": "you,",
+     "start": 187.374,
+     "end": 187.663
+    },
+    {
+     "text": "\"we're",
+     "start": 187.765,
+     "end": 188.139
+    },
+    {
+     "text": "good,",
+     "start": 188.139,
+     "end": 188.428
+    },
+    {
+     "text": "right?\"",
+     "start": 188.53,
+     "end": 188.819
+    },
+    {
+     "text": "Texts",
+     "start": 189.287,
+     "end": 189.576
+    },
+    {
+     "text": "don't",
+     "start": 189.576,
+     "end": 189.865
+    },
+    {
+     "text": "have",
+     "start": 189.865,
+     "end": 190.239
+    },
+    {
+     "text": "meters",
+     "start": 190.239,
+     "end": 190.613
+    },
+    {
+     "text": "And",
+     "start": 191.08,
+     "end": 191.369
+    },
+    {
+     "text": "for",
+     "start": 191.369,
+     "end": 191.658
+    },
+    {
+     "text": "some",
+     "start": 191.658,
+     "end": 192.032
+    },
+    {
+     "text": "reason,",
+     "start": 192.032,
+     "end": 192.406
+    },
+    {
+     "text": "that's",
+     "start": 192.508,
+     "end": 192.797
+    },
+    {
+     "text": "worse.",
+     "start": 192.797,
+     "end": 193.171
+    }
+   ]
+  },
+  {
+   "id": "L022d",
+   "act": "act3",
+   "text": "You realise you don't trust anyone anymore... Not because they changed. Because YOU did.",
+   "start": 193.876,
+   "end": 199.92,
+   "audio": null,
+   "words": [
+    {
+     "text": "You",
+     "start": 193.876,
+     "end": 194.165
+    },
+    {
+     "text": "realise",
+     "start": 194.165,
+     "end": 194.624
+    },
+    {
+     "text": "you",
+     "start": 194.624,
+     "end": 194.913
+    },
+    {
+     "text": "don't",
+     "start": 194.913,
+     "end": 195.202
+    },
+    {
+     "text": "trust",
+     "start": 195.202,
+     "end": 195.491
+    },
+    {
+     "text": "anyone",
+     "start": 195.491,
+     "end": 195.95
+    },
+    {
+     "text": "anymore",
+     "start": 195.95,
+     "end": 196.494
+    },
+    {
+     "text": "Not",
+     "start": 196.962,
+     "end": 197.251
+    },
+    {
+     "text": "because",
+     "start": 197.251,
+     "end": 197.71
+    },
+    {
+     "text": "they",
+     "start": 197.71,
+     "end": 197.999
+    },
+    {
+     "text": "changed.",
+     "start": 197.999,
+     "end": 198.373
+    },
+    {
+     "text": "Because",
+     "start": 198.628,
+     "end": 199.087
+    },
+    {
+     "text": "YOU",
+     "start": 199.087,
+     "end": 199.376
+    },
+    {
+     "text": "did.",
+     "start": 199.376,
+     "end": 199.665
+    }
+   ]
+  },
+  {
+   "id": "L023",
+   "act": "act4",
+   "text": "One night, you can't sleep. You go to the bathroom, look in the mirror, and say it out loud.",
+   "start": 202.72,
+   "end": 209.282,
+   "audio": null,
+   "words": [
+    {
+     "text": "One",
+     "start": 202.72,
+     "end": 203.094
+    },
+    {
+     "text": "night,",
+     "start": 203.094,
+     "end": 203.383
+    },
+    {
+     "text": "you",
+     "start": 203.485,
+     "end": 203.774
+    },
+    {
+     "text": "can't",
+     "start": 203.774,
+     "end": 204.063
+    },
+    {
+     "text": "sleep.",
+     "start": 204.063,
+     "end": 204.352
+    },
+    {
+     "text": "You",
+     "start": 204.607,
+     "end": 204.896
+    },
+    {
+     "text": "go",
+     "start": 204.896,
+     "end": 205.185
+    },
+    {
+     "text": "to",
+     "start": 205.185,
+     "end": 205.474
+    },
+    {
+     "text": "the",
+     "start": 205.474,
+     "end": 205.763
+    },
+    {
+     "text": "bathroom,",
+     "start": 205.763,
+     "end": 206.137
+    },
+    {
+     "text": "look",
+     "start": 206.239,
+     "end": 206.528
+    },
+    {
+     "text": "in",
+     "start": 206.528,
+     "end": 206.817
+    },
+    {
+     "text": "the",
+     "start": 206.817,
+     "end": 207.106
+    },
+    {
+     "text": "mirror,",
+     "start": 207.106,
+     "end": 207.48
+    },
+    {
+     "text": "and",
+     "start": 207.582,
+     "end": 207.871
+    },
+    {
+     "text": "say",
+     "start": 207.871,
+     "end": 208.16
+    },
+    {
+     "text": "it",
+     "start": 208.16,
+     "end": 208.449
+    },
+    {
+     "text": "out",
+     "start": 208.449,
+     "end": 208.738
+    },
+    {
+     "text": "loud.",
+     "start": 208.738,
+     "end": 209.027
+    }
+   ]
+  },
+  {
+   "id": "L024",
+   "act": "act4",
+   "text": "\"I'm fine.\"",
+   "start": 209.732,
+   "end": 210.395,
+   "audio": null,
+   "words": [
+    {
+     "text": "\"I'm",
+     "start": 209.732,
+     "end": 210.021
+    },
+    {
+     "text": "fine.\"",
+     "start": 210.021,
+     "end": 210.395
+    }
+   ]
+  },
+  {
+   "id": "L025",
+   "act": "act4",
+   "text": "Ninety-six.",
+   "start": 212.595,
+   "end": 213.394,
+   "audio": null,
+   "words": [
+    {
+     "text": "Ninety-six.",
+     "start": 212.595,
+     "end": 213.139
+    }
+   ]
+  },
+  {
+   "id": "L026",
+   "act": "act4",
+   "text": "Turns out, the person lying the most, wasn't your friend. Or your dad. Or the card dealer.",
+   "start": 214.794,
+   "end": 220.846,
+   "audio": null,
+   "words": [
+    {
+     "text": "Turns",
+     "start": 214.794,
+     "end": 215.083
+    },
+    {
+     "text": "out,",
+     "start": 215.083,
+     "end": 215.372
+    },
+    {
+     "text": "the",
+     "start": 215.474,
+     "end": 215.763
+    },
+    {
+     "text": "person",
+     "start": 215.763,
+     "end": 216.137
+    },
+    {
+     "text": "lying",
+     "start": 216.137,
+     "end": 216.426
+    },
+    {
+     "text": "the",
+     "start": 216.426,
+     "end": 216.715
+    },
+    {
+     "text": "most,",
+     "start": 216.715,
+     "end": 217.004
+    },
+    {
+     "text": "wasn't",
+     "start": 217.106,
+     "end": 217.395
+    },
+    {
+     "text": "your",
+     "start": 217.395,
+     "end": 217.684
+    },
+    {
+     "text": "friend.",
+     "start": 217.684,
+     "end": 217.973
+    },
+    {
+     "text": "Or",
+     "start": 218.228,
+     "end": 218.517
+    },
+    {
+     "text": "your",
+     "start": 218.517,
+     "end": 218.806
+    },
+    {
+     "text": "dad.",
+     "start": 218.806,
+     "end": 219.095
+    },
+    {
+     "text": "Or",
+     "start": 219.35,
+     "end": 219.639
+    },
+    {
+     "text": "the",
+     "start": 219.639,
+     "end": 219.928
+    },
+    {
+     "text": "card",
+     "start": 219.928,
+     "end": 220.217
+    },
+    {
+     "text": "dealer.",
+     "start": 220.217,
+     "end": 220.591
+    }
+   ]
+  },
+  {
+   "id": "L027",
+   "act": "act4",
+   "text": "It was you. To yourself. Every single day.",
+   "start": 221.296,
+   "end": 224.713,
+   "audio": null,
+   "words": [
+    {
+     "text": "It",
+     "start": 221.296,
+     "end": 221.585
+    },
+    {
+     "text": "was",
+     "start": 221.585,
+     "end": 221.874
+    },
+    {
+     "text": "you.",
+     "start": 221.874,
+     "end": 222.163
+    },
+    {
+     "text": "To",
+     "start": 222.418,
+     "end": 222.707
+    },
+    {
+     "text": "yourself.",
+     "start": 222.707,
+     "end": 223.081
+    },
+    {
+     "text": "Every",
+     "start": 223.336,
+     "end": 223.795
+    },
+    {
+     "text": "single",
+     "start": 223.795,
+     "end": 224.169
+    },
+    {
+     "text": "day.",
+     "start": 224.169,
+     "end": 224.458
+    }
+   ]
+  },
+  {
+   "id": "L028",
+   "act": "act4",
+   "text": "And here's the thing the meter never told you... It shows THAT someone is lying... Not WHY.",
+   "start": 225.613,
+   "end": 232.141,
+   "audio": null,
+   "words": [
+    {
+     "text": "And",
+     "start": 225.613,
+     "end": 225.902
+    },
+    {
+     "text": "here's",
+     "start": 225.902,
+     "end": 226.276
+    },
+    {
+     "text": "the",
+     "start": 226.276,
+     "end": 226.565
+    },
+    {
+     "text": "thing",
+     "start": 226.565,
+     "end": 226.854
+    },
+    {
+     "text": "the",
+     "start": 226.854,
+     "end": 227.143
+    },
+    {
+     "text": "meter",
+     "start": 227.143,
+     "end": 227.517
+    },
+    {
+     "text": "never",
+     "start": 227.517,
+     "end": 227.891
+    },
+    {
+     "text": "told",
+     "start": 227.891,
+     "end": 228.18
+    },
+    {
+     "text": "you",
+     "start": 228.18,
+     "end": 228.469
+    },
+    {
+     "text": "It",
+     "start": 228.936,
+     "end": 229.225
+    },
+    {
+     "text": "shows",
+     "start": 229.225,
+     "end": 229.514
+    },
+    {
+     "text": "THAT",
+     "start": 229.514,
+     "end": 229.803
+    },
+    {
+     "text": "someone",
+     "start": 229.803,
+     "end": 230.262
+    },
+    {
+     "text": "is",
+     "start": 230.262,
+     "end": 230.551
+    },
+    {
+     "text": "lying",
+     "start": 230.551,
+     "end": 230.84
+    },
+    {
+     "text": "Not",
+     "start": 231.308,
+     "end": 231.597
+    },
+    {
+     "text": "WHY.",
+     "start": 231.597,
+     "end": 231.886
+    }
+   ]
+  },
+  {
+   "id": "L029",
+   "act": "act4",
+   "text": "Your friend wasn't hiding anger. She was hurt... Your dad wasn't hiding a lie. He was protecting you.",
+   "start": 232.591,
+   "end": 239.45,
+   "audio": null,
+   "words": [
+    {
+     "text": "Your",
+     "start": 232.591,
+     "end": 232.88
+    },
+    {
+     "text": "friend",
+     "start": 232.88,
+     "end": 233.169
+    },
+    {
+     "text": "wasn't",
+     "start": 233.169,
+     "end": 233.458
+    },
+    {
+     "text": "hiding",
+     "start": 233.458,
+     "end": 233.832
+    },
+    {
+     "text": "anger.",
+     "start": 233.832,
+     "end": 234.206
+    },
+    {
+     "text": "She",
+     "start": 234.461,
+     "end": 234.75
+    },
+    {
+     "text": "was",
+     "start": 234.75,
+     "end": 235.039
+    },
+    {
+     "text": "hurt",
+     "start": 235.039,
+     "end": 235.328
+    },
+    {
+     "text": "Your",
+     "start": 235.795,
+     "end": 236.084
+    },
+    {
+     "text": "dad",
+     "start": 236.084,
+     "end": 236.373
+    },
+    {
+     "text": "wasn't",
+     "start": 236.373,
+     "end": 236.662
+    },
+    {
+     "text": "hiding",
+     "start": 236.662,
+     "end": 237.036
+    },
+    {
+     "text": "a",
+     "start": 237.036,
+     "end": 237.325
+    },
+    {
+     "text": "lie.",
+     "start": 237.325,
+     "end": 237.614
+    },
+    {
+     "text": "He",
+     "start": 237.869,
+     "end": 238.158
+    },
+    {
+     "text": "was",
+     "start": 238.158,
+     "end": 238.447
+    },
+    {
+     "text": "protecting",
+     "start": 238.447,
+     "end": 238.906
+    },
+    {
+     "text": "you.",
+     "start": 238.906,
+     "end": 239.195
+    }
+   ]
+  },
+  {
+   "id": "L029b",
+   "act": "act4",
+   "text": "Even your little brother, wasn't lying about the cookie to be evil... He just really, really, likes cookies.",
+   "start": 239.9,
+   "end": 246.981,
+   "audio": null,
+   "words": [
+    {
+     "text": "Even",
+     "start": 239.9,
+     "end": 240.274
+    },
+    {
+     "text": "your",
+     "start": 240.274,
+     "end": 240.563
+    },
+    {
+     "text": "little",
+     "start": 240.563,
+     "end": 240.937
+    },
+    {
+     "text": "brother,",
+     "start": 240.937,
+     "end": 241.311
+    },
+    {
+     "text": "wasn't",
+     "start": 241.413,
+     "end": 241.702
+    },
+    {
+     "text": "lying",
+     "start": 241.702,
+     "end": 241.991
+    },
+    {
+     "text": "about",
+     "start": 241.991,
+     "end": 242.365
+    },
+    {
+     "text": "the",
+     "start": 242.365,
+     "end": 242.654
+    },
+    {
+     "text": "cookie",
+     "start": 242.654,
+     "end": 243.028
+    },
+    {
+     "text": "to",
+     "start": 243.028,
+     "end": 243.317
+    },
+    {
+     "text": "be",
+     "start": 243.317,
+     "end": 243.606
+    },
+    {
+     "text": "evil",
+     "start": 243.606,
+     "end": 243.98
+    },
+    {
+     "text": "He",
+     "start": 244.448,
+     "end": 244.737
+    },
+    {
+     "text": "just",
+     "start": 244.737,
+     "end": 245.026
+    },
+    {
+     "text": "really,",
+     "start": 245.026,
+     "end": 245.4
+    },
+    {
+     "text": "really,",
+     "start": 245.502,
+     "end": 245.876
+    },
+    {
+     "text": "likes",
+     "start": 245.978,
+     "end": 246.352
+    },
+    {
+     "text": "cookies.",
+     "start": 246.352,
+     "end": 246.726
+    }
+   ]
+  },
+  {
+   "id": "L029c",
+   "act": "act4",
+   "text": "A lie, it turns out, is usually a door someone closed, because they didn't know how to open it.",
+   "start": 247.431,
+   "end": 254.163,
+   "audio": null,
+   "words": [
+    {
+     "text": "A",
+     "start": 247.431,
+     "end": 247.72
+    },
+    {
+     "text": "lie,",
+     "start": 247.72,
+     "end": 248.009
+    },
+    {
+     "text": "it",
+     "start": 248.111,
+     "end": 248.4
+    },
+    {
+     "text": "turns",
+     "start": 248.4,
+     "end": 248.689
+    },
+    {
+     "text": "out,",
+     "start": 248.689,
+     "end": 248.978
+    },
+    {
+     "text": "is",
+     "start": 249.08,
+     "end": 249.369
+    },
+    {
+     "text": "usually",
+     "start": 249.369,
+     "end": 249.828
+    },
+    {
+     "text": "a",
+     "start": 249.828,
+     "end": 250.117
+    },
+    {
+     "text": "door",
+     "start": 250.117,
+     "end": 250.406
+    },
+    {
+     "text": "someone",
+     "start": 250.406,
+     "end": 250.865
+    },
+    {
+     "text": "closed,",
+     "start": 250.865,
+     "end": 251.239
+    },
+    {
+     "text": "because",
+     "start": 251.341,
+     "end": 251.8
+    },
+    {
+     "text": "they",
+     "start": 251.8,
+     "end": 252.089
+    },
+    {
+     "text": "didn't",
+     "start": 252.089,
+     "end": 252.378
+    },
+    {
+     "text": "know",
+     "start": 252.378,
+     "end": 252.667
+    },
+    {
+     "text": "how",
+     "start": 252.667,
+     "end": 252.956
+    },
+    {
+     "text": "to",
+     "start": 252.956,
+     "end": 253.245
+    },
+    {
+     "text": "open",
+     "start": 253.245,
+     "end": 253.619
+    },
+    {
+     "text": "it.",
+     "start": 253.619,
+     "end": 253.908
+    }
+   ]
+  },
+  {
+   "id": "L030",
+   "act": "end",
+   "text": "So the next morning, you do something new.",
+   "start": 256.213,
+   "end": 259.137,
+   "audio": null,
+   "words": [
+    {
+     "text": "So",
+     "start": 256.213,
+     "end": 256.502
+    },
+    {
+     "text": "the",
+     "start": 256.502,
+     "end": 256.791
+    },
+    {
+     "text": "next",
+     "start": 256.791,
+     "end": 257.08
+    },
+    {
+     "text": "morning,",
+     "start": 257.08,
+     "end": 257.454
+    },
+    {
+     "text": "you",
+     "start": 257.556,
+     "end": 257.845
+    },
+    {
+     "text": "do",
+     "start": 257.845,
+     "end": 258.134
+    },
+    {
+     "text": "something",
+     "start": 258.134,
+     "end": 258.593
+    },
+    {
+     "text": "new.",
+     "start": 258.593,
+     "end": 258.882
+    }
+   ]
+  },
+  {
+   "id": "L031",
+   "act": "end",
+   "text": "You ask your dad what's really going on. And you listen.",
+   "start": 259.587,
+   "end": 263.446,
+   "audio": null,
+   "words": [
+    {
+     "text": "You",
+     "start": 259.587,
+     "end": 259.876
+    },
+    {
+     "text": "ask",
+     "start": 259.876,
+     "end": 260.165
+    },
+    {
+     "text": "your",
+     "start": 260.165,
+     "end": 260.454
+    },
+    {
+     "text": "dad",
+     "start": 260.454,
+     "end": 260.743
+    },
+    {
+     "text": "what's",
+     "start": 260.743,
+     "end": 261.032
+    },
+    {
+     "text": "really",
+     "start": 261.032,
+     "end": 261.406
+    },
+    {
+     "text": "going",
+     "start": 261.406,
+     "end": 261.695
+    },
+    {
+     "text": "on.",
+     "start": 261.695,
+     "end": 261.984
+    },
+    {
+     "text": "And",
+     "start": 262.239,
+     "end": 262.528
+    },
+    {
+     "text": "you",
+     "start": 262.528,
+     "end": 262.817
+    },
+    {
+     "text": "listen.",
+     "start": 262.817,
+     "end": 263.191
+    }
+   ]
+  },
+  {
+   "id": "L032",
+   "act": "end",
+   "text": "Some meters go down. Some stay high... But for the first time, you're not reading numbers. You're reading people.",
+   "start": 263.896,
+   "end": 271.571,
+   "audio": null,
+   "words": [
+    {
+     "text": "Some",
+     "start": 263.896,
+     "end": 264.27
+    },
+    {
+     "text": "meters",
+     "start": 264.27,
+     "end": 264.644
+    },
+    {
+     "text": "go",
+     "start": 264.644,
+     "end": 264.933
+    },
+    {
+     "text": "down.",
+     "start": 264.933,
+     "end": 265.222
+    },
+    {
+     "text": "Some",
+     "start": 265.477,
+     "end": 265.851
+    },
+    {
+     "text": "stay",
+     "start": 265.851,
+     "end": 266.14
+    },
+    {
+     "text": "high",
+     "start": 266.14,
+     "end": 266.429
+    },
+    {
+     "text": "But",
+     "start": 266.896,
+     "end": 267.185
+    },
+    {
+     "text": "for",
+     "start": 267.185,
+     "end": 267.474
+    },
+    {
+     "text": "the",
+     "start": 267.474,
+     "end": 267.763
+    },
+    {
+     "text": "first",
+     "start": 267.763,
+     "end": 268.052
+    },
+    {
+     "text": "time,",
+     "start": 268.052,
+     "end": 268.426
+    },
+    {
+     "text": "you're",
+     "start": 268.528,
+     "end": 268.902
+    },
+    {
+     "text": "not",
+     "start": 268.902,
+     "end": 269.191
+    },
+    {
+     "text": "reading",
+     "start": 269.191,
+     "end": 269.565
+    },
+    {
+     "text": "numbers.",
+     "start": 269.565,
+     "end": 269.939
+    },
+    {
+     "text": "You're",
+     "start": 270.194,
+     "end": 270.568
+    },
+    {
+     "text": "reading",
+     "start": 270.568,
+     "end": 270.942
+    },
+    {
+     "text": "people.",
+     "start": 270.942,
+     "end": 271.316
+    }
+   ]
+  },
+  {
+   "id": "L032b",
+   "act": "end",
+   "text": "You don't text Maya. Not \"we're good, right?\"... You call her. You say sorry. And you mean it... No meter needed.",
+   "start": 272.021,
+   "end": 280.487,
+   "audio": null,
+   "words": [
+    {
+     "text": "You",
+     "start": 272.021,
+     "end": 272.31
+    },
+    {
+     "text": "don't",
+     "start": 272.31,
+     "end": 272.599
+    },
+    {
+     "text": "text",
+     "start": 272.599,
+     "end": 272.888
+    },
+    {
+     "text": "Maya.",
+     "start": 272.888,
+     "end": 273.177
+    },
+    {
+     "text": "Not",
+     "start": 273.432,
+     "end": 273.721
+    },
+    {
+     "text": "\"we're",
+     "start": 273.721,
+     "end": 274.095
+    },
+    {
+     "text": "good,",
+     "start": 274.095,
+     "end": 274.384
+    },
+    {
+     "text": "right?\"",
+     "start": 274.486,
+     "end": 274.775
+    },
+    {
+     "text": "You",
+     "start": 275.243,
+     "end": 275.532
+    },
+    {
+     "text": "call",
+     "start": 275.532,
+     "end": 275.821
+    },
+    {
+     "text": "her.",
+     "start": 275.821,
+     "end": 276.11
+    },
+    {
+     "text": "You",
+     "start": 276.365,
+     "end": 276.654
+    },
+    {
+     "text": "say",
+     "start": 276.654,
+     "end": 276.943
+    },
+    {
+     "text": "sorry.",
+     "start": 276.943,
+     "end": 277.317
+    },
+    {
+     "text": "And",
+     "start": 277.572,
+     "end": 277.861
+    },
+    {
+     "text": "you",
+     "start": 277.861,
+     "end": 278.15
+    },
+    {
+     "text": "mean",
+     "start": 278.15,
+     "end": 278.439
+    },
+    {
+     "text": "it",
+     "start": 278.439,
+     "end": 278.728
+    },
+    {
+     "text": "No",
+     "start": 279.195,
+     "end": 279.484
+    },
+    {
+     "text": "meter",
+     "start": 279.484,
+     "end": 279.858
+    },
+    {
+     "text": "needed.",
+     "start": 279.858,
+     "end": 280.232
+    }
+   ]
+  },
+  {
+   "id": "L032c",
+   "act": "end",
+   "text": "That night, you look in the mirror again. \"I'm not fine. But I will be.\"... Zero.",
+   "start": 280.937,
+   "end": 287.236,
+   "audio": null,
+   "words": [
+    {
+     "text": "That",
+     "start": 280.937,
+     "end": 281.226
+    },
+    {
+     "text": "night,",
+     "start": 281.226,
+     "end": 281.515
+    },
+    {
+     "text": "you",
+     "start": 281.617,
+     "end": 281.906
+    },
+    {
+     "text": "look",
+     "start": 281.906,
+     "end": 282.195
+    },
+    {
+     "text": "in",
+     "start": 282.195,
+     "end": 282.484
+    },
+    {
+     "text": "the",
+     "start": 282.484,
+     "end": 282.773
+    },
+    {
+     "text": "mirror",
+     "start": 282.773,
+     "end": 283.147
+    },
+    {
+     "text": "again.",
+     "start": 283.147,
+     "end": 283.521
+    },
+    {
+     "text": "\"I'm",
+     "start": 283.776,
+     "end": 284.065
+    },
+    {
+     "text": "not",
+     "start": 284.065,
+     "end": 284.354
+    },
+    {
+     "text": "fine.",
+     "start": 284.354,
+     "end": 284.728
+    },
+    {
+     "text": "But",
+     "start": 284.983,
+     "end": 285.272
+    },
+    {
+     "text": "I",
+     "start": 285.272,
+     "end": 285.561
+    },
+    {
+     "text": "will",
+     "start": 285.561,
+     "end": 285.85
+    },
+    {
+     "text": "be.\"",
+     "start": 285.85,
+     "end": 286.139
+    },
+    {
+     "text": "Zero.",
+     "start": 286.607,
+     "end": 286.981
+    }
+   ]
+  },
+  {
+   "id": "L033",
+   "act": "end",
+   "text": "So, if you could see when anyone is lying\u2026 would you WANT to?",
+   "start": 288.036,
+   "end": 292.32,
+   "audio": null,
+   "words": [
+    {
+     "text": "So,",
+     "start": 288.036,
+     "end": 288.325
+    },
+    {
+     "text": "if",
+     "start": 288.427,
+     "end": 288.716
+    },
+    {
+     "text": "you",
+     "start": 288.716,
+     "end": 289.005
+    },
+    {
+     "text": "could",
+     "start": 289.005,
+     "end": 289.294
+    },
+    {
+     "text": "see",
+     "start": 289.294,
+     "end": 289.583
+    },
+    {
+     "text": "when",
+     "start": 289.583,
+     "end": 289.872
+    },
+    {
+     "text": "anyone",
+     "start": 289.872,
+     "end": 290.331
+    },
+    {
+     "text": "is",
+     "start": 290.331,
+     "end": 290.62
+    },
+    {
+     "text": "lying\u2026",
+     "start": 290.62,
+     "end": 290.909
+    },
+    {
+     "text": "would",
+     "start": 290.909,
+     "end": 291.198
+    },
+    {
+     "text": "you",
+     "start": 291.198,
+     "end": 291.487
+    },
+    {
+     "text": "WANT",
+     "start": 291.487,
+     "end": 291.776
+    },
+    {
+     "text": "to?",
+     "start": 291.776,
+     "end": 292.065
+    }
+   ]
+  },
+  {
+   "id": "L034",
+   "act": "end",
+   "text": "Tell me in the comments. I'll know if you're honest... Zero percent. Probably.",
+   "start": 293.12,
+   "end": 298.704,
+   "audio": null,
+   "words": [
+    {
+     "text": "Tell",
+     "start": 293.12,
+     "end": 293.409
+    },
+    {
+     "text": "me",
+     "start": 293.409,
+     "end": 293.698
+    },
+    {
+     "text": "in",
+     "start": 293.698,
+     "end": 293.987
+    },
+    {
+     "text": "the",
+     "start": 293.987,
+     "end": 294.276
+    },
+    {
+     "text": "comments.",
+     "start": 294.276,
+     "end": 294.65
+    },
+    {
+     "text": "I'll",
+     "start": 294.905,
+     "end": 295.194
+    },
+    {
+     "text": "know",
+     "start": 295.194,
+     "end": 295.483
+    },
+    {
+     "text": "if",
+     "start": 295.483,
+     "end": 295.772
+    },
+    {
+     "text": "you're",
+     "start": 295.772,
+     "end": 296.146
+    },
+    {
+     "text": "honest",
+     "start": 296.146,
+     "end": 296.52
+    },
+    {
+     "text": "Zero",
+     "start": 296.987,
+     "end": 297.361
+    },
+    {
+     "text": "percent.",
+     "start": 297.361,
+     "end": 297.735
+    },
+    {
+     "text": "Probably.",
+     "start": 297.99,
+     "end": 298.449
+    }
+   ]
+  }
+ ]
+}
