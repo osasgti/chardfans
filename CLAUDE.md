@@ -5,7 +5,7 @@ characters on simple low-poly sets, with moody film lighting, shallow depth of f
 and glowing gold UI badges ("THE ODDS 33%") floating over the scene.
 
 Claude: when asked to make a video, scene or shot, **follow this file exactly**. Every
-number here is a tested default. Change one only when the user asks, or when a shot clearly
+number here is a starting default chosen to match the reference look; tune it after test renders. Change one only when the user asks, or when a shot clearly
 needs it. A video that ignores the lighting, depth-of-field and grading rules looks like
 a cheap 3D demo, not the reference.
 
