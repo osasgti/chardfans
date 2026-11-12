@@ -647,7 +647,47 @@ Add these in a `FilmLook` layer: CSS/SVG over the final frame, or shader passes.
 
 ---
 
-## 28. What's left is iteration
+## 28. Automated checks (let the computer catch what eyes miss)
+
+Put these scripts in `scripts/` and run them after every full render.
+- **Flicker detector:** `ffmpeg -i out/video.mp4 -vf "select='gt(scene,0.02)',metadata=print" -an -f null -`
+  lists frames with sudden change. Any hit that is *not* a planned cut (check against `storyboard.json`
+  start frames) is a bug.
+- **Reference match:** extract the same-mood frame from your render and from the reference. Compare the mean
+  luminance, saturation and average hue with `ffprobe -f lavfi "movie=x.png,signalstats"`. Aim to be within 10%.
+- **Contact sheet:** `ffmpeg -i out/video.mp4 -vf "fps=1/3,scale=480:-1,tile=4x4" out/sheet%02d.jpg`.
+  Review the sheets for variety. No two neighbouring tiles should share the same angle *and* set.
+- **Loudness:** `ffmpeg -i out/video.mp4 -af loudnorm=print_format=summary -f null -` should land at
+  about −14 LUFS integrated, with true peak ≤ −1 dB.
+
+---
+
+## 29. Variety rules (avoid the "same shot again" feeling)
+
+- Alternate shot sizes: never two close-ups or two wides in a row.
+- Change at least two of these each cut: camera angle, set, lighting preset, or subject.
+- Each act gets one **signature shot** that is used only once (overhead top-down, extreme
+  macro on an object, a silhouette against a bright doorway, a dolly-zoom on a shock moment).
+- Give every named character a distinct **silhouette** (cap, bun, glasses, beanie) and a
+  hoodie color. Keep both consistent all video long.
+- Keep a color script: one representative frame per shot in a strip. The strip should show
+  a deliberate warm → cold → warm journey.
+
+---
+
+## 30. Build order for a new video
+
+1. `tokens.ts`, `Stage`, `Lighting`, `PostFX`: render one empty lit set and check it against §11.
+2. `Pill` + `Face` + `poses`: render a turntable of one character and check its acting against §21.
+3. `OddsBadge` + `Title`: render the overlay-only test.
+4. The `heroIntro` + `powerReveal` recipes: compare them to the reference and tune the numbers in this file.
+5. Script → voiceover → `timing.json` → `storyboard.json`.
+6. Build shots act by act, render each act, and run the §28 checks.
+7. Do the final pass (§27), then the vertical cut and thumbnail (§19).
+
+---
+
+## 31. What's left is iteration
 
 Past this point, the remaining quality comes from **rendering and tuning**, not from more rules.
 Build the base `Stage`, `Pill` and `OddsBadge` first. Render the `heroIntro` and `powerReveal` recipes,
