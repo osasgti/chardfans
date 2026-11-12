@@ -24,6 +24,12 @@ export const SHOT_TIMES: Timed[] = (() => {
   });
   return out;
 })();
+// validate every shot's cast references up front (a bad index crashed a render at frame 197)
+const bad = SHOTS.flatMap((s, i) => [
+  ...(typeof s.cam.on === 'number' && !s.cast[s.cam.on] ? [`shot ${i} (${s.line}) cam.on=${s.cam.on}`] : []),
+  ...(s.meters ?? []).filter((m) => typeof m.on === 'number' && !s.cast[m.on]).map((m) => `shot ${i} (${s.line}) meter.on=${m.on}`),
+]);
+if (bad.length) throw new Error('Invalid cast references: ' + bad.join('; '));
 const missing = LINES.filter((l) => !SHOTS.some((s) => s.line === l.id)).map((l) => l.id);
 if (missing.length) throw new Error('Lines without shots: ' + missing.join(', '));
 

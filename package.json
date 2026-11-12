@@ -10,7 +10,8 @@
     "qa": "bash scripts/qa.sh out/final.mp4",
     "determinism": "bash scripts/determinism.sh",
     "render:chunks": "bash scripts/render_chunks.sh",
-    "typecheck": "tsc -p ."
+    "typecheck": "tsc -p .",
+    "validate": "node scripts/validate_shots.mjs"
   },
   "dependencies": {
     "@fontsource/cinzel": "^5.1.0",

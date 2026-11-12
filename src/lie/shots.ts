@@ -15,7 +15,7 @@ export const SHOTS: ShotSpec[] = [
     cast: [hero([0, 0], {expr: 'neutral', tilt: -4})], title: {words: ['WHAT', 'IF', 'YOU', 'COULD', 'SEE', 'THE', 'LIES?'], emph: [6], y: 0.16, size: 70}},
   {line: 'L002', w: 1, set: 'Void', light: 'void', grade: 'wonder', cam: {on: [0, 1.5, -0.5], size: 'wide', yaw: -6, move: 'orbitL'},
     cast: [hero([0, 0.4], {rot: 0}), fig('f1', [-1.4, -0.9], {rot: 20}), fig('f2', [1.4, -0.9], {rot: -20})]},
-  {line: 'L002', w: 1.2, set: 'Void', light: 'void', grade: 'wonder', cam: {on: 1, size: 'mcu', yaw: 10, move: 'push'},
+  {line: 'L002', w: 1.2, set: 'Void', light: 'void', grade: 'wonder', cam: {on: 0, size: 'mcu', yaw: 10, move: 'push'},
     cast: [fig('f1', [0, 0], {expr: 'neutral'})], meters: [{on: 0, value: 0, mode: 'q', delay: 10}]},
   {line: 'L003', set: 'Void', light: 'void', grade: 'wonder', cam: {on: [0, 1.5, 0], size: 'med', yaw: 0, move: 'lock'},
     cast: [fig('f1', [-0.75, 0], {rot: 15, expr: 'happy'}), fig('f2', [0.75, 0], {rot: -15, expr: 'smug'})],
