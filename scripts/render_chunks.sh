@@ -3,8 +3,9 @@
 # Usage: scripts/render_chunks.sh [chunk=120]
 set -euo pipefail
 CH=${1:-120}; mkdir -p out/chunks; B=${REMOTION_BROWSER:-}
-TOTAL=$(npx remotion compositions src/index.ts 2>/dev/null | awk '/^Main /{print $4}')
 EXTRA=(); [ -n "$B" ] && EXTRA+=(--browser-executable="$B")
+TOTAL=$(npx remotion compositions src/index.ts "${EXTRA[@]}" 2>/dev/null | awk '/^Main /{print $4}')
+[ -n "$TOTAL" ] || { echo "could not read Main duration"; exit 1; }
 : > out/chunks/list.txt
 for ((s=0; s<TOTAL; s+=CH)); do
   e=$((s+CH-1)); ((e>=TOTAL)) && e=$((TOTAL-1)); f=out/chunks/c_$(printf %05d $s).mp4

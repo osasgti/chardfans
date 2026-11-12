@@ -3,8 +3,7 @@ import {ThreeCanvas} from '@remotion/three';
 import {useCurrentFrame, random} from 'remotion';
 import {useThree} from '@react-three/fiber';
 import {SoftShadows, ContactShadows, Environment, Lightformer} from '@react-three/drei';
-import {EffectComposer, N8AO, DepthOfField, Bloom, Vignette, Noise, ChromaticAberration, HueSaturation, BrightnessContrast} from '@react-three/postprocessing';
-import {BlendFunction} from 'postprocessing';
+import {EffectComposer, N8AO, DepthOfField, Bloom, Vignette, ChromaticAberration, HueSaturation, BrightnessContrast} from '@react-three/postprocessing';
 import {ACESFilmicToneMapping, Vector2, Vector3} from 'three';
 import {C, W, H, NEAR, FAR} from '../style/tokens';
 
@@ -60,7 +59,7 @@ export const PostFX = ({focus, frame}: {focus: number; frame: number}) => (
     <HueSaturation saturation={-0.1} />
     <BrightnessContrast contrast={0.08} />
     <Vignette offset={0.28} darkness={0.78} />
-    <Noise opacity={0.05 + (frame % 2) * 0.001} premultiply blendFunction={BlendFunction.OVERLAY} />
+    {/* grain is NOT here: postprocessing's Noise reads wall-clock time (non-deterministic). See overlay/Grain.tsx */}
   </EffectComposer>
 );
 

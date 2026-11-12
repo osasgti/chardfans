@@ -4,6 +4,7 @@ import {Soundtrack} from './audio/Soundtrack';
 import {S01_Hook} from './shots/S01_Hook';
 import {S02_Reveal} from './shots/S02_Reveal';
 import {Letterbox} from './overlay/Overlays';
+import {Grain} from './overlay/Grain';
 import {ease} from './style/tokens';
 
 export const Main = () => {
@@ -18,6 +19,7 @@ export const Main = () => {
         <Series.Sequence durationInFrames={toFrames(160, fps)}><S02_Reveal /></Series.Sequence>
       </Series>
       <Soundtrack totalBeats={300} />
+      <Grain />
       <Letterbox frame={frame} />
       <AbsoluteFill style={{background: '#000', opacity: Math.max(fadeIn, fadeOut)}} />
     </AbsoluteFill>
