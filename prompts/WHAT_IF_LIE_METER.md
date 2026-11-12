@@ -60,7 +60,7 @@ and avoid hype. Think "a friend telling you something wild at 2am".
 
 ---
 
-## 3. Structure (5:00 at 150 wpm ≈ 750 words)
+## 3. Structure (5:00 ≈ 680 words at 150 wpm + held pauses)
 
 | Time | Act | Emotion | Grade | Music cue | Sets |
 |---|---|---|---|---|---|
@@ -75,12 +75,13 @@ There's a new set, a new graphic idea or a new music layer every 20–30s. There
 
 ---
 
-## 4. Script (draft v1, about 760 words). `/` = short pause, `//` = long pause, `*x*` = emphasis
+## 4. Script (draft v2, about 680 words: ≈ 4:35 of speech + ≈ 25s of written pauses ≈ 5:00; measure after recording). `/` = short pause, `//` = long pause, `*x*` = emphasis
 
 **HOOK (0:00)**
 L001: What if, starting tomorrow, / you could see when *anyone* is lying?
 L002: Not a guess. / Not a feeling. // A number. / Floating right above their head.
 L003: Zero means the truth. // A hundred means… / well. / You'll see.
+L003b: At first, / it feels like the best thing that's ever happened to you. // It isn't. / But we'll get there.
 
 **ACT 1 — THE RULES (0:20)**
 L004: You wake up. / Your alarm says "five more minutes won't hurt." // *Eighty-two percent.*
@@ -88,6 +89,9 @@ L005: Downstairs, Mom says breakfast is "almost ready." / Thirty-one percent. / 
 L006: Your little brother says he did *not* eat the last cookie. // Ninety-nine.
 L007: The rules are simple. / The meter only shows up when someone talks. / It glows gold when they're honest… / and red when they're not.
 L008: It works on people, / on ads, / on the cereal box that says "part of a balanced breakfast." // *Seventy-four.*
+L008b: On the bus, / the driver says he'll "wait just one more minute." / Ninety. / He does not wait.
+L008c: A guy on a billboard promises you'll "lose ten pounds in a week." // The meter is so red / it's basically on fire.
+L008d: By lunch, / you've figured out the first big secret. // Almost nobody lies to hurt you. / They lie to make things *easier*. / Mostly for themselves.
 
 **ACT 2 — USING IT (1:10)**
 L009: At school, it's basically a cheat code.
@@ -97,6 +101,9 @@ L012: At the school's casino night fundraiser, / the guy running the card table 
 L013: You don't win money. / The chips are fake. // But you win *every* hand. / And people start to notice.
 L014: Suddenly, everyone wants you on their team. / For group projects. / For debates. / For "is he into me?"
 L015: For about a week, // you're the most popular kid in school.
+L015b: You settle arguments. / "Did she *really* say that about me?" // Twelve percent. / Drama over.
+L015c: You catch the class rumor before it spreads. / You know which compliments are real / and which ones are just polite.
+L015d: And honestly? // You start to think / you might be the only person in the world / who sees things *clearly*.
 
 **ACT 3 — IT TURNS (2:10)**
 L016: Then it starts showing you things you didn't ask for.
@@ -106,6 +113,9 @@ L019: Your dad, on the phone, late at night: / "Everything's fine. / Don't worry
 L020: You start hearing people differently. / Every "I'm good," / every "no worries," / every "love you"… / comes with a number.
 L021: And numbers don't care how you feel.
 L022: You stop asking questions. / Because you're scared of the answers.
+L022b: At dinner, / everyone talks, / and you just watch the numbers float / over the mashed potatoes.
+L022c: Maya texts you, / "we're good, right?" // Texts don't have meters. // And for some reason / that's worse.
+L022d: You realise you don't trust anyone anymore. // Not because they changed. / Because *you* did.
 
 **ACT 4 — THE MIRROR (3:20)**
 L023: One night, you can't sleep. / You go to the bathroom, / look in the mirror, / and say it out loud.
@@ -115,15 +125,19 @@ L026: Turns out, / the person lying the most / wasn't your friend. / Or your dad
 L027: It was you. / To yourself. / Every single day.
 L028: And here's the thing the meter never told you. // It shows *that* someone is lying. // Not *why*.
 L029: Your friend wasn't hiding anger. / She was hurt. // Your dad wasn't hiding a lie. / He was protecting you.
+L029b: Even your little brother / wasn't lying about the cookie to be evil. // He just really, / really / likes cookies.
+L029c: A lie, / it turns out, / is usually a door someone closed / because they didn't know how to open it.
 
 **ENDING — THE CHOICE (4:20)**
 L030: So the next morning, / you do something new.
 L031: You ask your dad what's really going on. / And you listen.
 L032: Some meters go down. / Some stay high. // But for the first time, / you're not reading numbers. / You're reading people.
+L032b: You text Maya. / Not "we're good, right?" // You call her. / You say sorry. / And you mean it. // No meter needed.
+L032c: That night, / you look in the mirror again. / "I'm not fine. / But I will be." // Zero.
 L033: So, / if you could see when anyone is lying… // would you *want* to?
 L034: Tell me in the comments. / I'll know if you're honest. // *Zero percent.* / Probably.
 
-> Re-time after recording. If the total exceeds 5:10, cut L008 or L014 first. Never cut L019, L024–L029 or L033.
+> Re-time after recording. If the total exceeds 5:10, cut L008b, L008c or L015c first. If it's under 4:50, lengthen the held pauses (dad shot, mirror). Never cut L019, L024–L029, L032c or L033.
 
 ---
 
