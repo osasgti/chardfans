@@ -12,6 +12,7 @@ a cheap 3D demo, not the reference.
 **Reading order:** start with **§36 (the master prompt)**, which is the standard every video must meet. Then use
 §0–§35 as the toolbox, §32 for lessons from real renders, and §51 for how to keep improving.
 The working demo lives in `src/` (2 shots, 60fps, with full sound).
+Video projects have their own master prompt in `prompts/`. The current one is `prompts/WHAT_IF_LIE_METER.md` (5:00, TTS).
 
 ---
 
