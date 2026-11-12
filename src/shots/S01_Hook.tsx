@@ -1,4 +1,5 @@
-import {AbsoluteFill, useCurrentFrame, useVideoConfig, spring} from 'remotion';
+import {AbsoluteFill, spring} from 'remotion';
+import {useBeat} from '../style/time';
 import {Stage, Lights, handheld, Cam} from '../three/Stage';
 import {Pill} from '../three/Pill';
 import {Hallway, Dust} from '../three/Set';
@@ -6,8 +7,8 @@ import {Title} from '../overlay/Overlays';
 import {ease, focusFor} from '../style/tokens';
 
 export const S01_Hook = () => {
-  const frame = useCurrentFrame();
-  const {fps} = useVideoConfig();
+  const frame = useBeat();
+  const fps = 30;
   const k = ease(frame, [0, 140], [0, 1]);
   const base: Cam = {
     pos: [0.55 - 0.35 * k, 0.85 + 0.7 * k, 4.7 - 1.5 * k],

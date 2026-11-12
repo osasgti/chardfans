@@ -1,4 +1,4 @@
-import {spring, useVideoConfig, interpolate, Easing} from 'remotion';
+import {spring, interpolate, Easing} from 'remotion';
 import {PerspectiveCamera, Vector3} from 'three';
 import {C, W, H, ease} from '../style/tokens';
 import {TITLE, UI} from '../style/fonts';
@@ -54,7 +54,7 @@ export const OddsBadge = ({frame, start, x, y, label, steps, anchor}: {
   frame: number; start: number; x: number; y: number; label: string;
   steps: {at: number; value: number}[]; anchor?: {x: number; y: number};
 }) => {
-  const {fps} = useVideoConfig();
+  const fps = 30;
   const f = frame - start;
   if (f < 0) return null;
   const pop = spring({frame: f, fps, config: {damping: 11, mass: 0.7}});

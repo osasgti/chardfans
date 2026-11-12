@@ -16,7 +16,7 @@ export const Pill = ({id, frame, position = [0, 0, 0], rotY = 0, hoodie = C.red,
   const breath = 1 + 0.014 * Math.sin(t * 2.1 + ph);
   // seeded blinks: every ~3.5s, 5 frames
   const period = 95 + Math.floor(random(id + 'b') * 40);
-  const k = (frame + Math.floor(random(id + 'o') * period)) % period;
+  const k = (Math.floor(frame) + Math.floor(random(id + 'o') * period)) % period;
   const blink = k < 5 ? Math.sin((k / 5) * Math.PI) : 0;
   const cloth = <meshStandardMaterial color={hoodie} roughness={0.88} />;
   const sq: [number, number, number] = [1 + squash * 0.5, 1 - squash, 1 + squash * 0.5];

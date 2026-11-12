@@ -1,4 +1,5 @@
-import {AbsoluteFill, useCurrentFrame, useVideoConfig, spring} from 'remotion';
+import {AbsoluteFill, spring} from 'remotion';
+import {useBeat} from '../style/time';
 import {Stage, Lights, handheld, Cam} from '../three/Stage';
 import {Pill} from '../three/Pill';
 import {Hallway, Dust} from '../three/Set';
@@ -8,8 +9,8 @@ import {C, ease, focusFor} from '../style/tokens';
 const FLIP = 88;
 
 export const S02_Reveal = () => {
-  const frame = useCurrentFrame();
-  const {fps} = useVideoConfig();
+  const frame = useBeat();
+  const fps = 30;
   const a = ease(frame, [0, 160], [0.55, 0.12]);
   const r = ease(frame, [0, 160], [3.6, 3.1]);
   const base: Cam = {pos: [Math.sin(a) * r + 0.4, 1.55, Math.cos(a) * r], target: [0.42, 1.5, 0], fov: 30};

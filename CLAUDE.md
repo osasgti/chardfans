@@ -22,24 +22,25 @@ storyboard.json (shots) ◄────────────┘
 Remotion composition  ──►  per-shot <ThreeCanvas> scenes (React Three Fiber)
      │                        + postprocessing (DOF, bloom, vignette, grain, CA)
      ▼
-2D overlay layer (titles, odds badges, counters, arrows)  ──►  MP4 (1920x1080, 30fps)
+2D overlay layer (titles, odds badges, counters, arrows)  ──►  MP4 (1920x1080, 60fps)
 ```
 
 Stack (pin these versions — do not use `latest`):
 
 | Purpose | Package |
 |---|---|
-| Video framework | `remotion`, `@remotion/cli`, `@remotion/three`, `@remotion/google-fonts` (pin all `@remotion/*` to the **same exact 4.x version**, or Remotion refuses to run) |
+| Video framework | `remotion`, `@remotion/cli`, `@remotion/three`, `@remotion/fonts` (pin all `@remotion/*` to the **same exact 4.x version**, or Remotion refuses to run) |
 | 3D | `three@0.169.0`, `@react-three/fiber@8.17.10`, `@react-three/drei@9.114.0` |
 | Post FX | `@react-three/postprocessing@2.16.3`, `postprocessing@6.36.3` |
-| Fonts | `@remotion/google-fonts` (Cinzel, Cormorant Garamond, Inter) |
+| Fonts | `@fontsource/cinzel`, `@fontsource/inter` → copied to `public/fonts/`, loaded with `@remotion/fonts` (never fetch fonts at render time) |
+| Sound | `scripts/make_sfx.py` (numpy only), which generates every SFX and the music bed procedurally (§33) |
 | Audio timing (optional) | `whisper` / `openai-whisper` CLI locally for word timestamps |
 
 Setup:
 ```bash
 npx create-video@latest --template=blank .   # then pin versions above
 npm i three@0.169.0 @react-three/fiber@8.17.10 @react-three/drei@9.114.0 \
-      @react-three/postprocessing@2.16.3 postprocessing@6.36.3 @remotion/three @remotion/google-fonts
+      @react-three/postprocessing@2.16.3 postprocessing@6.36.3 @remotion/three @remotion/fonts @fontsource/cinzel @fontsource/inter
 npx remotion studio            # preview
 npx remotion render Main out/video.mp4 --codec=h264 --crf=16 --gl=angle --concurrency=4
 ```
@@ -110,7 +111,7 @@ export const FONT = {
   serif: 'Cormorant Garamond',  // 600 italic for emphasis words
   ui:    'Inter',               // 700 for numbers in badges
 };
-export const FPS = 30;
+export const FPS = 60, BASE = 30;  // render at 60, AUTHOR in 30fps "beats" (see §14.9)
 export const W = 1920, H = 1080;
 ```
 
@@ -158,7 +159,7 @@ to 0.1 and back.
 sphere at 1.05× scale, black), bob hair (scaled sphere shell, dark brown), bun.
 
 **Poses (`poses.ts`):** each pose is Euler rotations per joint. Interpolate between poses
-with `spring({fps, frame, config:{damping:14, mass:0.8}})`. Always add **idle breathing**:
+with `spring({fps: 30, frame: beat, config:{damping:14, mass:0.8}})` (beats, §14.9). Always add **idle breathing**:
 torso scaleY `1 + 0.012*sin(t*2)` and head bob `0.008*sin(t*2+0.6)`. A character that
 stands perfectly still looks dead.
 
@@ -326,8 +327,7 @@ Small Cinzel caps tags at the top or bottom center ("SINCE LAST TUESDAY", "HOSPI
   ],
   "sfx": ["whoosh@0", "tick@30"] }
 ```
-5. Sound design matters as much as visuals. Add soft whooshes on cuts, a "tick" or "ding" when a
-   badge appears, low cinematic music at −22 LUFS under the voice, and a riser before reveals.
+5. Sound design matters as much as visuals. The full system is in §33.
 
 ---
 
@@ -353,6 +353,7 @@ Small Cinzel caps tags at the top or bottom center ("SINCE LAST TUESDAY", "HOSPI
 - [ ] Is the shot 2–4s long, with cuts on voiceover phrases?
 - [ ] Are all random values seeded (`random(seed)` from Remotion)? Never use `Math.random()`.
 - [ ] Is a test render of `--frames=0-90` reviewed before the full render?
+- [ ] Is the polish checklist (§35.6) done too?
 
 ---
 
@@ -378,7 +379,7 @@ Small Cinzel caps tags at the top or bottom center ("SINCE LAST TUESDAY", "HOSPI
 ## 14. Remotion + R3F rules (the things that break renders)
 
 1. **Never animate with `useFrame` or `clock`.** Remotion renders frames out of order and in
-   parallel. All motion must come from `const frame = useCurrentFrame()`, i.e. `t = frame / fps`.
+   parallel. All motion must come from `useBeat()` (frame-derived, §14.9), i.e. `t = beat / 30` seconds.
    Use `useFrame` only to *apply* frame-derived values, never to accumulate them.
 2. Use `<ThreeCanvas width={W} height={H}>` from `@remotion/three`, not R3F's `<Canvas>`.
    It bridges the Remotion context into the canvas, and it needs explicit width and height.
@@ -392,7 +393,12 @@ Small Cinzel caps tags at the top or bottom center ("SINCE LAST TUESDAY", "HOSPI
    `texture.needsUpdate = true`.
 7. Put audio in `<Audio src={staticFile('audio/voiceover.mp3')} />` at the top level, and put SFX in
    `<Sequence from={f}><Audio .../></Sequence>`.
-8. Each shot is its own `<Series.Sequence durationInFrames={d}>`. Inside, `useCurrentFrame()`
+8. **Author in beats, render at any fps.** `src/style/time.ts` has `useBeat()`, which returns the frame in 30fps
+   units (fractional at 60fps), and `toFrames(beats, fps)` for `<Series.Sequence>` and `<Sequence>` durations.
+   Every number in this file ("10 frames", "4 frames apart") is in beats. Never write `useCurrentFrame()`
+   in a shot, and never hard-code `/ 30` against real frames. Then switching 30 ↔ 60fps is a one-line change.
+   Integer-only logic (blink cycles, `% n`) must `Math.floor(beat)`.
+9. Each shot is its own `<Series.Sequence durationInFrames={d}>`. Inside, `useCurrentFrame()`
    restarts at 0, so write every shot relative to its own start.
 
 ---
@@ -415,7 +421,7 @@ export const CameraRig = ({from, to, target, dur, seed = 'cam'}: Props) => {
   const frame = useCurrentFrame();
   const {camera} = useThree();
   const k = ease(frame, [0, dur], [0, 1]);
-  const t = frame / 30;
+  const t = frame / 30; // frame = useBeat()
   // handheld drift: two slow sines with seeded phases
   const p1 = random(seed + 'a') * 10, p2 = random(seed + 'b') * 10;
   const drift = new Vector3(Math.sin(t * 0.7 + p1) * 0.01, Math.sin(t * 0.9 + p2) * 0.008, 0);
@@ -508,7 +514,7 @@ Implement it as props on `<PostFX grade="tension" />`, so a whole act changes wi
 
 ## 19. Render & delivery
 
-- Main output: 1920×1080 at 30fps, H.264 CRF 16, AAC 320k audio, `--pixel-format=yuv420p`.
+- Main output: 1920×1080 at **60fps** (silky camera moves and number rolls; render cost is 2×), H.264 CRF 16, AAC 320k audio, `--pixel-format=yuv420p`.
 - Vertical cut (Shorts/TikTok): a separate `MainVertical` composition at 1080×1920. Reuse the shots but
   set the camera fov to 40 and move it about 15% back. Put overlays in the middle third, because UI covers the top and bottom.
 - Thumbnail: render one still with `npx remotion still Main thumb.png --frame=N`. Use a hero close-up,
@@ -702,9 +708,119 @@ compare them against the reference frames, then update the numbers in this file 
 - **Browser in this cloud container:** pass
   `--browser-executable=/opt/pw-browsers/chromium_headless_shell-1243/chrome-headless-shell-linux64/chrome-headless-shell`.
   `remotion.config.ts` sets the `swangle` GL renderer.
-- **Speed:** without a GPU, it takes about 4s per 1080p frame (10s of video ≈ 20 min, `--concurrency=2`; 4 got killed).
+- **Speed:** without a GPU, it takes about 4s per 1080p frame. 10s of video takes about 20 min at 30fps and about 40 min at 60fps with
+  `--concurrency=2` (4 got killed for running out of memory).
   Draft with `--scale=0.5`, and do final renders on a machine with a GPU.
 - **Emissive and glint values must stay small.** A coin with emissive 3 and a point light of 4 blew out the whole frame.
   Hero props work at emissive 0.1–1.0 because bloom does the rest.
 - **Close camera distance:** for a medium close-up at fov 30, keep the camera about 3.1–3.6m from the hero.
   At 2.1m the head fills the frame and the badge gets clamped off-screen.
+
+
+---
+
+## 33. Sound design system (half of "polished" is audio)
+
+All sounds are **generated** by `scripts/make_sfx.py` using numpy only, with fixed seeds, so they're identical every run
+and have no licensing issues. Re-run it after changing any recipe. The output is `public/sfx/*.wav` (48kHz/16-bit stereo).
+
+### 33.1 The kit
+
+| File | Recipe | Use it for |
+|---|---|---|
+| `whoosh` | white noise → band-pass sweeping 300→3500→300Hz, sin² envelope, short reverb | every cut and fast camera move. Start it **14 beats before** the cut so the peak lands on the cut |
+| `word` | 180Hz sine with a slight pitch drop + airy noise, 22/s decay | each title word. Pitch it up across a line (`rate` 1.00, 1.06, 1.12…) |
+| `chime` | two inharmonic bells (E6 + B6, partials 1/2.76/5.4/8.9) | badge pop, emphasis word (rate 0.75 = darker) |
+| `tick` | 2.4kHz sine blip + noise click, 80ms | each rolling-number step. Space ticks out as the number slows (ease-out) |
+| `riser` | saw sweep 120Hz × 2^(3.5·t) + noise sweep, t^2.2 swell, 2s | tension before every reveal. It **ends exactly on** the hit |
+| `impact` | 38Hz sub with pitch drop + low thump + noise transient + long tail | big beats (99%, BANNED, 0%) |
+| `sparkle` | 5-bell arpeggio (C6 E6 G6 C7 E7), 45ms apart, big reverb | magical/positive reveals, on top of `impact` |
+| `coin` | random high metallic pings (3.8–5.2kHz) | continuous spinning or glinting objects |
+| `music` | detuned-saw pad Am→F→C→G at 72bpm, slow LFO lowpass, heartbeat kick every 2 beats, 3.5s reverb | the bed under everything |
+| `room` | quiet low-passed noise | room tone. Silence sounds broken, so this is always on at about 0.25 |
+
+### 33.2 Mixing rules
+- Keep **one cue list** (`src/audio/Soundtrack.tsx` → `CUES`) in beats, next to the shot constants
+  (`CUT`, `FLIP`) that the visuals also use. Visual and sound share the same numbers, so they can't drift apart.
+- Volume ladder: impact 0.9 > whoosh 0.7 > sparkle/chime 0.55–0.6 > music 0.45 > riser 0.55 (it swells) > word/tick 0.3–0.45 > room 0.25.
+- **Duck the music** to about 0.18 during the riser, so the pause before the hit feels like
+  held breath. Then swell it to 0.6 on the hit. With a voiceover, keep music at 0.12–0.18 under speech.
+- **Every visual accent has a sound:** a badge pop, a number change, a cut, a head snap, a squash or a light change.
+  If something moves fast and is silent, it feels cheap.
+- **Silence is an instrument:** cut ALL audio for 4–8 beats right before the biggest reveal of the video.
+- Vary repeated SFX. Never play the same file twice with identical `rate`/`vol`. Nudge `rate` ±3–8%.
+- Stereo: when something enters from the left, pan its whoosh left. Use `<Audio>` per side, or pre-render panned variants.
+- Final loudness is about −14 LUFS integrated with a true peak ≤ −1 dB (check with the §28 loudnorm command).
+- At 60fps, `<Sequence from>` takes real frames, so always convert with `toFrames(beat, fps)`.
+
+### 33.3 Adding a new sound
+Write it as a function in `make_sfx.py` from the building blocks: `bell`, `bandpass` (time-varying),
+`lowpass`, `reverb`, `env` and `stereo`. Name it by its *role* (`pop_small`, `fail_buzz`), not by its timbre.
+Normalize it with `save()` and set loudness in the mix, not in the file.
+
+Ideas worth building next: `fail_buzz` (two detuned square waves, 110Hz), `pop_small` (sine
+520→900Hz, 60ms), `crowd_cheer` (dense band-passed noise with an amplitude-modulated "voices" layer),
+`heartbeat` (two low kicks 0.25s apart), `tape_stop` (the music playback rate ramps 1→0 over 0.6s, for "everything stops"
+moments), and `stinger` (a short brass-like saw chord for chapter titles).
+
+---
+
+## 34. 60fps motion — what changes
+
+- Remotion renders 60 real frames per second. Author in beats (§14.9) and nothing else changes.
+- 60fps exposes **jitter** that 30fps hides. Handheld drift must use smooth sines (not per-frame random),
+  and the projected badge positions are continuous (pure-math projection, §15.4).
+- Rolling numbers look buttery at 60. Round only at display time, never inside the animation curve.
+- The noise/grain pattern should change every *real* frame (fine). Gate weave uses smooth noise, not random jumps.
+- Cost: 2× frames means 2× render time. Draft at 30fps (`FPS=30` in tokens) and render the final at 60.
+
+---
+
+## 35. Advanced animation polish (the gap between "good" and "insane")
+
+### 35.1 Easing vocabulary — use the right curve for each motion
+| Motion | Curve |
+|---|---|
+| camera moves | `bezier(0.45,0,0.2,1)` (slow in, slow out). Never linear |
+| UI entering | spring damping 11–13 (slight overshoot) |
+| UI leaving | `Easing.in(Easing.cubic)`, 30% faster than the entry |
+| numbers counting | `Easing.out(Easing.exp)` |
+| characters reacting | anticipation → spring damping 8–10 → settle |
+| heavy things landing | `Easing.in(Easing.quad)` fall + squash + a tiny bounce (10% of the height) |
+| light/color shifts | `bezier(0.4,0,0.6,1)` over 20–40 beats |
+
+### 35.2 Impact frames (for every big beat)
+On the hit beat, stack these together:
+1. **Camera shake:** an amplitude of 0.03m and 0.6° that decays as `e^(−8t)` over 15 beats, with 2 sines at different frequencies.
+2. **Flash:** a full-frame white/gold overlay at 0.25 opacity for 2 beats, then a fast fade.
+3. **Push:** the camera fov drops 1.5° in 3 beats, then slowly returns. It reads as a "punch-in".
+4. **Bloom spike:** intensity +0.4 for 6 beats.
+5. **Chromatic aberration spike:** ×3 for 4 beats.
+6. Sound: `impact` + a role-specific layer (`sparkle` for good, `fail_buzz` for bad).
+
+### 35.3 Camera choreography
+- **Anticipate camera reveals too:** pull back 2% for 6 beats, then push in.
+- Use **speed ramps** for a dramatic orbit: fast → slow-motion at the key moment (time remap the shot's
+  beat with `interpolate(beat, [0,40,60,100], [0,40,50,90])`) → normal.
+- **Cut on action:** cut in the middle of a movement (a head turn, an arm raise). Shot B starts mid-motion too.
+- **Match eyelines:** if A looks right, B is framed so the thing they look at is on the right.
+- Hold one **"breath" shot** (static plus slow drift, about 3s) after every big reveal so it lands.
+
+### 35.4 Secondary life in the world
+- Background characters: idle sway with random phases, occasional head turns toward the hero (every 3–5s),
+  and blinks. Never fully static.
+- Environment: fluorescent flicker, dust, a fan rotating or a clock ticking. There should be **always something moving** in every layer.
+- Props react to the hero: a coin bobs harder when the badge changes, and papers flutter after a whoosh.
+
+### 35.5 Sync: visual accents land on audio
+- Put music downbeats (72bpm → one every 25 beats at 30fps) in the timing sheet and cut on downbeats.
+- Pop badges on beats, never between them.
+- Speech emphasis words get the title emphasis styling *and* a `chime`.
+
+### 35.6 Polish checklist (add to §11)
+- [ ] Every fast or visible change has a sound (§33.2), and the music ducks before hits
+- [ ] At least one impact frame stack (§35.2) per 20s
+- [ ] Camera anticipation before reveals, and cuts happen on action
+- [ ] Background characters and the environment always have motion
+- [ ] There's one silent moment before the biggest reveal
+- [ ] Rendered at 60fps with no jitter in projected UI
