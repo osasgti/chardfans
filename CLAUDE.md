@@ -10,7 +10,7 @@ test renders, but change it only when the user asks or a shot clearly needs it. 
 a cheap 3D demo, not the reference.
 
 **Reading order:** start with **§36 (the master prompt)**, which is the standard every video must meet. Then use
-§0–§35 as the toolbox, §32 for lessons from real renders, and §37 for how to keep improving.
+§0–§35 as the toolbox, §32 for lessons from real renders, and §51 for how to keep improving.
 The working demo lives in `src/` (2 shots, 60fps, with full sound).
 
 ---
@@ -38,7 +38,7 @@ Stack (pin these versions — do not use `latest`):
 | Post FX | `@react-three/postprocessing@2.16.3`, `postprocessing@6.36.3` |
 | Fonts | `@fontsource/cinzel`, `@fontsource/inter` → copied to `public/fonts/`, loaded with `@remotion/fonts` (never fetch fonts at render time) |
 | Sound | `scripts/make_sfx.py` (numpy only), which generates every SFX and the music bed procedurally (§33) |
-| Audio timing (optional) | `whisper` / `openai-whisper` CLI locally for word timestamps |
+| Audio timing | `scripts/estimate_timing.py` (built in), TTS alignment data, or `whisper` on your own machine (§38.3) |
 
 Setup:
 ```bash
@@ -49,41 +49,51 @@ npx remotion studio            # preview
 npx remotion render Main out/video.mp4 --codec=h264 --crf=16 --gl=angle --concurrency=4
 ```
 On headless Linux, use `--gl=swangle` if `angle` fails. Always render a 3-second test
-(`--frames=0-90`) before a full render.
+(`--frames=0-180`, which is 3s at 60fps) before a full render.
 
 ---
 
-## 1. Project structure
+## 1. Project structure (✅ = exists now, 🔲 = planned; create it when first needed)
 
 ```
+CLAUDE.md                  ✅ this playbook
+package.json               ✅ npm scripts: sfx, studio, still, render, master, qa, determinism, render:chunks, typecheck
+remotion.config.ts         ✅ swangle GL, jpeg frames, h264 CRF 16
+scripts/
+  sfxlib.py                ✅ synthesis building blocks (§36.6)
+  make_sfx.py              ✅ 80 sounds + music stems → public/sfx/*.wav (git-ignored, run `npm run sfx`)
+  estimate_timing.py       ✅ script text → words.json (no speech recogniser needed)
+  qa.sh                    ✅ cuts, contact sheet, loudness, black/frozen frames (§28)
+  determinism.sh           ✅ same frame twice → identical hash
+  render_chunks.sh         ✅ crash-safe chunked render + concat + master
+public/
+  fonts/*.woff2            ✅ Cinzel 600/700, Inter 700 (local, never fetched)
+  sfx/*.wav                ✅ generated
+  vo/voiceover.wav         🔲 narration (§38)
+  vo/words.json            🔲 word timings [{text,start,end}] in seconds
 src/
-  Root.tsx                 # registers <Composition id="Main" .../>
-  Main.tsx                 # <Series> of shots from storyboard.json + audio
-  style/tokens.ts          # ALL colors, fonts, timings (single source of truth)
-  three/
-    Stage.tsx              # Canvas wrapper: camera, lights, fog, post FX
-    Lighting.tsx           # 3-point cinematic rig presets (warm/cool/night/casino)
-    PostFX.tsx             # DOF, bloom, vignette, noise, chromatic aberration, tone map
-    CameraRig.tsx          # frame-driven camera moves (dolly, orbit, push-in, handheld)
-    characters/
-      Pill.tsx             # the base character (parametric)
-      Face.tsx             # canvas-drawn face textures (expressions)
-      poses.ts             # named poses (idle, cheer, shrug, point, sit, sleep)
-      accessories.tsx      # caps, beanies, hair, glasses, hoodies
-    sets/
-      Classroom.tsx  Hallway.tsx  Bedroom.tsx  Casino.tsx  Stadium.tsx  Void.tsx
-    props/                 # Coin, Dice, Roulette, Alarm, VendingMachine, Card ...
-  overlay/
-    Title.tsx              # big serif caps headlines
-    OddsBadge.tsx          # pill badge with ring progress + %
-    Callout.tsx            # handwritten-style arrow + label
-    BarRace.tsx            # "YOU vs NORMAL" dot bars
-    Counter.tsx            # rolling number
-    Subtitle.tsx           # lower caption
-  shots/                   # one file per shot, e.g. S03_AlarmClock.tsx
-storyboard.json
-public/audio/voiceover.mp3
+  index.ts / Root.tsx      ✅ registers Main (1920×1080, 60fps)       🔲 MainVertical (§45)
+  Main.tsx                 ✅ <Series> of shots + Soundtrack + letterbox + fades
+  style/tokens.ts          ✅ colors, FPS/BASE, ease(), focusFor()
+  style/time.ts            ✅ useBeat(), toFrames()
+  style/fonts.ts           ✅ local font loading
+  style/presets.ts         ✅ kelvin(), LIGHTS (6 sets), GRADES (5 acts)
+  three/Stage.tsx          ✅ ThreeCanvas + camera + Lights + PostFX + handheld()
+  three/Pill.tsx           ✅ character (body, hoodie, arms, legs, hats, squash, tilt)
+  three/Face.tsx           ✅ canvas-painted expressions + blink + eye look
+  three/Set.tsx            ✅ Hallway, Dust                         🔲 Classroom, Bedroom, Casino, Stadium, Void (§41)
+  three/props/             🔲 Coin (now inline in S02), Dice, Cards, Alarm, Vending, Roulette (§40)
+  overlay/Overlays.tsx     ✅ project(), Title, Tag, OddsBadge, Letterbox
+  overlay/Transitions.tsx  ✅ DipToBlack, WhipStreak, Flash
+  overlay/Captions.tsx     ✅ word-highlight captions from words.json
+  overlay/                 🔲 Callout (arrow), BarRace, Counter (§8.3–8.4)
+  audio/Soundtrack.tsx     ✅ CUES list in beats + music/ambience beds with ducking
+  shots/_TEMPLATE.tsx      ✅ boilerplate for new shots
+  shots/S01_Hook.tsx       ✅ demo shot 1      shots/S02_Reveal.tsx ✅ demo shot 2
+storyboard.json            🔲 optional, for long videos. Short videos hard-code shots in Main.tsx (the demo does)
+out/                       git-ignored renders, stills, qa/
 ```
+**Rule:** when you add or remove a file, update this tree in the same commit. A wrong map misleads every future session.
 
 ---
 
@@ -209,7 +219,7 @@ emissive meshes with `emissiveIntensity` 2–4 so bloom catches them.
 
 ---
 
-## 5. Post-processing (`PostFX.tsx`) — non-negotiable
+## 5. Post-processing (`PostFX` in `Stage.tsx`) — non-negotiable (the full ordered chain is §36.4)
 
 ```tsx
 <EffectComposer multisampling={4}>
@@ -317,8 +327,8 @@ Small Cinzel caps tags at the top or bottom center ("SINCE LAST TUESDAY", "HOSPI
 
 1. Write `script.md` with one line per shot.
 2. Record or generate the voiceover. Place it at `public/audio/voiceover.mp3`.
-3. Get word timestamps (`whisper voiceover.mp3 --word_timestamps True --output_format json`)
-   and convert them to `timing.json`.
+3. Get word timestamps into `public/vo/words.json` ([{text,start,end}] in seconds). The options are in §38.3.
+   `whisper` is **not installed** in the cloud container, so `scripts/estimate_timing.py` is the fallback.
 4. Each shot in `storyboard.json`:
 ```json
 { "id": "S03", "set": "bedroom", "lighting": "bedroom",
@@ -419,7 +429,7 @@ export const ease = (f: number, [a, b]: [number, number], [x, y]: [number, numbe
   });
 ```
 
-### 15.2 Camera rig
+### 15.2 Camera rig (reference. The demo uses `handheld()` + per-shot `Cam` objects in `Stage.tsx`, which is the same idea)
 ```tsx
 export const CameraRig = ({from, to, target, dur, seed = 'cam'}: Props) => {
   const frame = useCurrentFrame();
@@ -697,7 +707,7 @@ Put these scripts in `scripts/` and run them after every full render.
 
 ---
 
-## 31. (moved to the end, see §37)
+## 31. (moved to the end, see §51)
 
 ---
 
@@ -1100,7 +1110,216 @@ partials) · `fm(carrier, mod, index_env)` (metallic and glassy tones) · `karpl
 - [ ] 60fps master, vertical cut, thumbnail, and a contact sheet reviewed
 - [ ] 10 random paused frames are all wallpaper quality
 - [ ] Watched once on a phone at low volume, it still reads and still sounds good
-## 37. What's left is iteration
+## 37. (moved to the end, see §51)
+
+---
+
+## 38. Voice & narration
+
+### 38.1 Writing for the ear
+- 150–165 words per minute, and one idea per sentence. Sentences of 6–14 words. Use contractions.
+- **Second person, present tense** ("You wake up. The alarm says 99%.") pulls the viewer inside.
+- Rule of three for escalation lists. End lines on the strongest word ("…and the odds were **zero**").
+- Write **visual hooks** into the text: every sentence must name something we can show. If a line has nothing to show, cut it.
+- Mark emphasis in the script with `*word*` and pauses with `/` (0.3s) or `//` (0.8s). `estimate_timing.py` treats
+  punctuation as pauses, so write `/` as `,` and `//` as an empty line when estimating.
+- The hook is the first 2 sentences. It must pose a question the video answers only at the end.
+
+### 38.2 Getting a voice
+| Option | Quality | Notes |
+|---|---|---|
+| Record it yourself | best | a quiet room with a blanket over your head, phone 15cm from the mouth, 48kHz WAV. Do 3 takes per line and pick the best |
+| TTS service (ElevenLabs, OpenAI TTS, Azure) | very good | needs an **API key**. In the cloud session, ask for it with the credential tool, never paste it in chat. Prefer providers that return **word timestamps** (alignment), which skips §38.3 |
+| `mumble_vo` babble | stylised | Animal-Crossing-style character "speech" with no real words. Good for in-world characters, not for narration |
+
+Clean-up chain for recorded voice (ffmpeg): `highpass=f=80, afftdn=nf=-25, acompressor=threshold=-20dB:ratio=3,
+deesser, loudnorm=I=-16`. Export to `public/vo/voiceover.wav`.
+
+### 38.3 Word timings → `public/vo/words.json`
+1. **TTS alignment** (best). Convert the provider's character or word timestamps into `[{text,start,end}]`.
+2. **whisper on your own machine:** `whisper vo.wav --word_timestamps True --output_format json`, then map the segments to words.
+3. **Estimate** (always available): `python3 scripts/estimate_timing.py script.txt 155 > public/vo/words.json`.
+   It's accurate to about ±0.3s, which is fine for blocking. Swap in real timings before the final.
+
+Shot cuts and SFX cues then come from word times: `beat = Math.round(word.start * 30)`.
+
+### 38.4 Lip sync & listening
+- Narration with no on-screen speaker: the hero reacts *to* the narration (nods on stresses, eye-rolls on jokes).
+- On-screen speaker: mouth height = smoothed VO amplitude (`visualizeAudio` from `@remotion/media-utils`,
+  🔲 install it when first needed). Close the mouth on silences longer than 0.15s. Add a head nod (±2°) on `*emphasis*` words.
+- Listeners: blink on sentence ends, and glance at the speaker every 2–3s.
+
+---
+
+## 39. Captions & accessibility
+- Use `<Captions words={words} seconds={beat / 30} />` (✅ `overlay/Captions.tsx`). It shows 4–6 word chunks and highlights the
+  active word in gold.
+- Horizontal: put captions 150px from the bottom (above the letterbox). Vertical: put them in the middle third, above the platform UI.
+- Turn captions **on** for Shorts and social, and make them optional for YouTube 16:9 (upload an `.srt` instead, §49).
+- Contrast: cream on a dark plate. Never rely on color alone. The odds are always written as a number too, not
+  only shown by the ring.
+- Never flash faster than 3 times per second (photosensitivity). Impact flashes are single, under 0.4 opacity.
+- Make sure the gold-versus-red meaning also differs by **shape or text** (✔ ✘, or the words "WIN" and "LOSS").
+
+---
+
+## 40. Props, hands & locomotion
+- **Holding:** parent the prop to the hand group. Put a `hand` slot at the end of each arm in `Pill`
+  (🔲 add a `rightHand?: ReactNode` prop rendered at the hand sphere's position). The prop's grip offset is ~0.06m.
+- **Two-handed props** (signs, trays): attach to the right hand, and aim the left arm at the prop's left handle with a
+  2-bone IK solve (law of cosines: shoulder → elbow → hand).
+- **Sitting:** hips at the seat height (0.45m), thighs rotated −90°, shins +90°. The torso leans forward 5–10° when engaged
+  and back 10° when bored.
+- **Walk cycle** (16 beats, at 30 beats per second): legs swing ±25° as a sine, arms ∓15° (opposite), and the body bobs
+  0.03m at twice the step frequency with its lowest point on contact. Move the root at a constant speed
+  `stride / 8 beats`. Stride is 0.45m. **No foot sliding:** the root speed must equal the stride divided by the half-cycle.
+- **Run:** 10 beats per cycle, 15° forward lean, a 0.08m bob, arms bent.
+- **Paths:** walk along a CatmullRom curve (`three` `CatmullRomCurve3`). The body faces the curve tangent and turns
+  with spring smoothing.
+- **Props library** (🔲 `three/props/`): Coin (gold, glint), Dice (rounded box with pips), Card, Chip stack,
+  Roulette wheel (spinning plus a ball on a decaying spiral), Alarm clock (a red 7-segment display texture), Vending
+  machine (a grid of emissive colored cans), Basketball (orange plus black seam torus rings), Paper (a bent plane),
+  Phone (rounded box with an emissive screen), Sign board (with drei `<Text>`).
+
+---
+
+## 41. Set library specs (all low-poly, all in meters)
+
+| Set | Layout | Key details | Light preset |
+|---|---|---|---|
+| **Hallway** ✅ | wood floor, a wall at z=−3, 12 lockers 0.58m wide | 3 fluorescent practicals, locker vents and handles | `hallway` |
+| **Classroom** 🔲 | 4×3 grid of desks (1.0×0.6, h 0.75) spaced 1.4m apart, a whiteboard 3×1.2 at z=−4 | a window on the left (GodRays source), a clock, posters, the teacher's desk | `classroom` |
+| **Bedroom** 🔲 | 4×4 room, a bed 2×1.2 against the back wall, a nightstand on the right | an alarm clock (red LED), a window with moonlight, a lamp practical, a rug | `bedroom` |
+| **Casino** 🔲 | a felt table 2.4×1.2 with a padded rim, a roulette wheel r=0.35, chip stacks | hanging pool lamps (volumetric), a "CASINO NIGHT" banner, a crowd ring | `casino` |
+| **Stadium** 🔲 | stepped bleachers (rows 0.4 high and 0.8 deep), a railing, a field plane | "SEC 308" signs, floodlights (GodRays), an instanced crowd of 200 | `stadium` |
+| **Void** 🔲 | none: a dark floor plus a fog wall | one top spotlight, a floor glow ring | `void` |
+
+Every set exports its **camera marks**: named `Cam` presets (`wide`, `med`, `cu`, `ots`). Shots start from a mark instead
+of inventing coordinates, so the framing stays consistent across shots in the same set.
+
+---
+
+## 42. Character bible
+Keep a cast table in this file and never change a character's look mid-video.
+
+| Name | Role | Silhouette | Hoodie | Default face | Personality in motion |
+|---|---|---|---|---|---|
+| **Hero** | can see the odds | black beanie | red `#c8323a` | smug | relaxed, slow head turns, tilts a lot |
+| **Brain** | sceptic friend | round glasses | blue `#3d6fd6` | neutral | quick, precise, pushes glasses up |
+| **Lucky** | rival | backwards cap | teal `#2f8f8a` | happy | bouncy, over-confident, big arm moves |
+| **Teacher** | authority | bun hair, taller (scale 1.1) | mustard `#d29a2d` | bored | still, minimal moves, slow blinks |
+| **Crowd** | background | random cap/beanie/none | palette pool | neutral | 3 animation variants, random phase |
+
+- **Variety tools:** body scale 0.9–1.15, head scale 0.95–1.05, hair options (beanie, cap, bun, bob, ponytail,
+  spikes made of 5 cones), glasses, a hood up or down, freckles painted on the face texture, and a skin tint ±3%.
+- **Turnaround check:** before using a new character, render it at 4 angles (0°, 90°, 180°, 270°) in the `void` set
+  and look for intersecting meshes and broken silhouettes.
+
+---
+
+## 43. Thumbnail design
+- 1280×720. Render with `npx remotion still` from a **dedicated `Thumb` composition**, not a random frame.
+- Layout: the hero's face is huge (40% of the frame height) on one third, one big badge or number on the other third, and
+  **3 words or fewer** in Cinzel 140px+ with a dark outline (8px).
+- Contrast: a bright subject on a dark background, plus a rim light boosted ×1.5 versus the video. Saturation is +10% versus the video.
+- One clear emotion on the face: shock or smug reads best at small sizes.
+- Test it at 168×94 (YouTube sidebar size). It should still read.
+- Make 3 variants (different expression, number or color) for A/B testing.
+
+---
+
+## 44. Shot, transition & preset templates (use them, don't rewrite them)
+- **New shot:** copy `src/shots/_TEMPLATE.tsx`. Write the timing chart in its header comment *first*, export
+  `DUR` (in beats), and import `DUR` into `Main.tsx` and the cue constants into `Soundtrack.tsx`.
+- **Lighting:** `LIGHTS[preset]` from `style/presets.ts` (🔲 wire it into `<Lights preset="casino" />`, which
+  currently takes `keyColor`/`keyI` only). Use `kelvin(3200)` for any color temperature.
+- **Grade:** `GRADES[act]` → pass it into PostFX (🔲 add a `grade` prop to `PostFX`).
+- **Transitions** (`overlay/Transitions.tsx`): pass `beat - CUT` as the `beat` prop.
+  - `<DipToBlack>` for chapter breaks, plus a `whoosh_heavy` cue.
+  - `<WhipStreak>` for whip cuts, plus a fast camera yaw on both sides and a `whip` cue.
+  - `<Flash>` for impacts, plus `impact` and `sparkle`.
+  - Match cut: no component. Keep the object's projected screen position identical across the cut (check it with `project()`).
+
+---
+
+## 45. Vertical (Shorts / TikTok / Reels) — 🔲 planned
+- Make a separate `MainVertical` composition at 1080×1920. `Stage` and `project()` currently use the global `W/H`.
+  First change them to read `useVideoConfig()` width and height. **Do this before building vertical.**
+- Camera: fov ×1.25 and pull back about 15% so the head and the badge both fit. Recompose the shots so the subject is centered.
+- Overlays: titles at 0.22 of the height, badges stay anchored, captions in the middle third, and nothing in the top 12% or bottom 20%
+  (platform UI).
+- Length: 30–58s. Cut the hook down to 2 seconds. The ending must loop seamlessly into the start (for replays).
+
+---
+
+## 46. Render operations
+| Need | How |
+|---|---|
+| Fast preview | `npx remotion studio`, which plays live in the browser (on a machine with a GPU) |
+| Look-dev still | `npm run still -- --frame=N` (half scale) |
+| Draft video | set `FPS = 30` in tokens, `--scale=0.5`, `multisampling` 2 |
+| Final | `npm run render && npm run master` or, crash-safe, `npm run render:chunks` |
+| Resume after a crash | `render_chunks.sh` skips chunks that already exist. Delete a chunk to redo it |
+| Faster | a machine with a GPU (about 30–60× faster than this CPU container), or Remotion Lambda for long videos |
+| Memory | `--concurrency=2` on 4 cores in the cloud container (4 got OOM-killed). Use `cores/2` elsewhere |
+
+Set the browser path once per session: `export REMOTION_BROWSER=/opt/pw-browsers/chromium_headless_shell-1243/chrome-headless-shell-linux64/chrome-headless-shell`
+(the scripts read it), and pass `--browser-executable=$REMOTION_BROWSER` to plain `npx remotion` commands.
+
+---
+
+## 47. Testing & CI
+- `npm run typecheck` before every render. A type error mid-render wastes the whole run.
+- `npm run determinism` after touching any animation code. It renders the same frame twice, and the hashes must match.
+- `npm run qa` on every final: planned cuts versus detected cuts, the contact sheet, loudness, and black or frozen frames.
+- Before a long render, render stills at the **first, middle and last beat of every shot**, plus every impact beat.
+- 🔲 A GitHub Actions workflow can run `typecheck` and render 3 stills per PR (the CI machine has no GPU either, so keep it to stills).
+
+---
+
+## 48. Review loop with the user
+1. After phases 4–5 (§36.1), send the shot list and color strip. Wait for a 👍.
+2. After look-dev, send 1 still per set (`SendUserFile`, display render).
+3. After blocking, send a 30fps, half-scale draft with audio.
+4. Turn feedback into a numbered list in the reply ("1. badge bigger → OddsBadge scale 1.2 ✅"). Fix everything in one pass,
+   re-render only the affected shots (`--frames`), and say what changed.
+5. Never re-render the full 60fps master until the user has approved the draft.
+
+---
+
+## 49. Output organisation & publishing
+- File names: `out/<slug>_v<NN>_<fps>.mp4`, plus `_vertical`, `_thumb_A/B/C.png`, `_captions.srt` and `_stems/` (music, sfx, vo).
+  Never overwrite a version the user has seen. Bump `vNN` instead.
+- `out/` is git-ignored. Hand finals to the user with `SendUserFile`, never commit them.
+- **SRT export** from `words.json`: group 5–7 words per line, each line under 42 characters, at least 1s on screen.
+- **YouTube metadata:** title under 60 characters (curiosity + payoff), chapters in the description (`0:00 Hook`, one per act, from the
+  shot list), 3–5 tags, end screen space in the last 20s (keep the bottom-right 40% clean), and the thumbnail from §43.
+- **Localization:** keep all on-screen strings in one `src/text/<lang>.ts` (🔲) and never hard-code text in shots.
+  Cinzel has no Cyrillic or CJK, so fall back to Cormorant or Noto Serif for other languages.
+
+---
+
+## 50. Build status & roadmap (keep this current)
+| Area | Status |
+|---|---|
+| Engine: Stage, PostFX, beats/60fps, local fonts | ✅ |
+| Lighting: 3-point + bounce + kicker + PCSS + N8AO + contact shadows + env reflections | ✅ |
+| Lighting/grade presets as data | ✅ data · 🔲 wired into components |
+| Character: Pill, faces, blink, squash, tilt, hats | ✅ · 🔲 hand slots, IK, walk, sit, hair variants, glasses |
+| Sets | ✅ Hallway · 🔲 Classroom, Bedroom, Casino, Stadium, Void |
+| Props | 🔲 library (the coin is inline) |
+| Overlays | ✅ Title, Tag, OddsBadge, Letterbox, Captions, Transitions · 🔲 Callout, BarRace, Counter |
+| Sound | ✅ 80 SFX + music stems + cue list + mastering · 🔲 VO ducking curves, panning |
+| Voice | ✅ timing estimator · 🔲 VO recording/TTS, lip sync |
+| Ops | ✅ chunked render, QA, determinism, typecheck · 🔲 CI, vertical, thumbnail comp, SRT export |
+| Film layer (§23): halation, light leaks, gate weave, motion blur | 🔲 |
+| GodRays / volumetric spot | 🔲 (documented in §36.3, not yet in the demo) |
+
+When you finish a 🔲 item, flip it to ✅ here **and** in §1 in the same commit.
+
+---
+
+## 51. What's left is iteration
 
 Past this point, the remaining quality comes from **rendering and tuning**, not from more rules.
 Build the base `Stage`, `Pill` and `OddsBadge` first. Render the `heroIntro` and `powerReveal` recipes,
