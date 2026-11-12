@@ -64,16 +64,16 @@ scripts/
   sfxlib.py                ✅ synthesis building blocks (§36.6)
   make_sfx.py              ✅ 80 sounds + music stems → public/sfx/*.wav (git-ignored, run `npm run sfx`)
   estimate_timing.py       ✅ script text → words.json (no speech recogniser needed)
+  build_timeline.py        ✅ master-prompt TTS table + public/vo/raw/*.mp3 → cleaned VO wavs + src/lie/timeline.json
   qa.sh                    ✅ cuts, contact sheet, loudness, black/frozen frames (§28)
   determinism.sh           ✅ same frame twice → identical hash
   render_chunks.sh         ✅ crash-safe chunked render + concat + master
 public/
   fonts/*.woff2            ✅ Cinzel 600/700, Inter 700 (local, never fetched)
   sfx/*.wav                ✅ generated
-  vo/voiceover.wav         🔲 narration (§38)
-  vo/words.json            🔲 word timings [{text,start,end}] in seconds
+  vo/raw/L*.mp3            ✅ ElevenLabs takes (3 of 48 so far, see §38.2)   vo/L*.wav ✅ cleaned by build_timeline.py
 src/
-  index.ts / Root.tsx      ✅ registers Main (1920×1080, 60fps)       🔲 MainVertical (§45)
+  index.ts / Root.tsx      ✅ registers Main (demo, 60fps) and LieMeter (5:03, LIE_FPS=24 on CPU)   🔲 MainVertical (§45)
   Main.tsx                 ✅ <Series> of shots + Soundtrack + letterbox + fades
   style/tokens.ts          ✅ colors, FPS/BASE, ease(), focusFor()
   style/time.ts            ✅ useBeat(), toFrames()
@@ -82,7 +82,11 @@ src/
   three/Stage.tsx          ✅ ThreeCanvas + camera + Lights + PostFX + handheld()
   three/Pill.tsx           ✅ character (body, hoodie, arms, legs, hats, squash, tilt)
   three/Face.tsx           ✅ canvas-painted expressions + blink + eye look
-  three/Set.tsx            ✅ Hallway, Dust                         🔲 Classroom, Bedroom, Casino, Stadium, Void (§41)
+  three/Set.tsx            ✅ Hallway, Dust
+  three/LieSets.tsx        ✅ Bedroom, Kitchen(+dining), Classroom, Gym(casino night), Bathroom(+mirror), Void, Street, Rooftop,
+                              props (Phone, CerealBox, CookieJar, Card, ChipStack), canvas-texture 3D Text      🔲 Stadium
+  lie/                     ✅ the 5-minute video: engine.tsx (data → shot), shots.ts (76 shots), LieMeter.tsx,
+                              LieVideo.tsx (sequencing, VO, music, ambience, cues, captions), timeline.json (generated)
   three/props/             🔲 Coin (now inline in S02), Dice, Cards, Alarm, Vending, Roulette (§40)
   overlay/Overlays.tsx     ✅ project(), Title, Tag, OddsBadge, Letterbox
   overlay/Transitions.tsx  ✅ DipToBlack, WhipStreak, Flash
@@ -733,6 +737,22 @@ Put these scripts in `scripts/` and run them after every full render.
   bounce and kicker lights all render under swangle. **Gotcha:** the Environment makes gold metal
   much brighter, so set `envMapIntensity` to about 0.35 on metalness ≥0.8 props, or they blow out. Keep the kicker light away from hero props.
 - **Workflow scripts:** `npm run sfx` → `npm run still` (look-dev) → `npm run render` → `npm run master`.
+- **3D text: never use drei/troika `<Text>` here.** It loads fonts in a web worker that can't reach `staticFile()` fonts in
+  the render browser (woff2 isn't supported either), so it never lays out. Frames hang (`delayRender` timeouts) or the text is
+  blank. `LieSets.tsx` has a `Text` that draws onto a CanvasTexture using the page's loaded FontFaces. It's synchronous and deterministic.
+- **Mirrors:** fake them with a mirrored copy of the cast (`scale [-1,1,1]`, z' = 2·mirrorZ − z) behind a hole in the wall.
+  The mirror *frame* must be 4 thin bars, because a solid box hides the reflection. Keep tile seams out of the mirror area.
+- **Meters in close-ups:** 0.62m above the head is off-frame in CUs. The engine moves the badge beside the head when the
+  above-head point would sit under the letterbox (y < 200px).
+- **CPU render cost is ~3.5–5s per frame and nearly independent of resolution, triangle count and AO.** It's fixed per-frame overhead
+  in software WebGL plus screenshotting. Measured: 1440×810, 960×540 and low-poly all ≈ the same, and concurrency 4 is no faster than 2.
+  So on this machine, **fewer frames is the only real lever**: the 5-minute video renders at 24fps (≈7,300 frames ≈ 8h,
+  chunked/resumable via `render_chunks.sh`). `--props='{"quality":"fast"}'` (FAST in Stage.tsx) drops PCSS, MSAA and N8AO for a
+  ~15% gain. Final-quality 60fps belongs on a GPU machine.
+- **`--scale` must give integer pixel sizes** (0.75 → 1440×810 works, 0.6667 fails in stitching).
+- **ElevenLabs via the connector:** generation works (≈90–150 credits per take, about 1¢), the signed `content_url` downloads with
+  curl, and the takes are saved in public/vo/raw. **The free tier was disabled mid-run** ("unusual activity", likely the cloud
+  proxy), and parallel calls on the free tier fail as "busy". Upgrade the plan, then generate **one line at a time**.
 - **Close camera distance:** for a medium close-up at fov 30, keep the camera about 3.1–3.6m from the hero.
   At 2.1m the head fills the frame and the badge gets clamped off-screen.
 
@@ -1310,13 +1330,13 @@ Set the browser path once per session: `export REMOTION_BROWSER=/opt/pw-browsers
 |---|---|
 | Engine: Stage, PostFX, beats/60fps, local fonts | ✅ |
 | Lighting: 3-point + bounce + kicker + PCSS + N8AO + contact shadows + env reflections | ✅ |
-| Lighting/grade presets as data | ✅ data · 🔲 wired into components |
-| Character: Pill, faces, blink, squash, tilt, hats | ✅ · 🔲 hand slots, IK, walk, sit, hair variants, glasses |
-| Sets | ✅ Hallway · 🔲 Classroom, Bedroom, Casino, Stadium, Void |
-| Props | 🔲 library (the coin is inline) |
+| Lighting/grade presets as data | ✅ wired: `<Lights preset>`, `<Stage grade>` (16 light presets) |
+| Character: Pill, faces, blink, squash, tilt, hats | ✅ + hair (beanie/cap/capBack/bun/ponytail/bob/visor), glasses, scale, talk mouth, sad/worried, hand prop slot, sit/sleep/run/phone poses · 🔲 IK, real walk cycle |
+| Sets | ✅ Hallway, Bedroom, Kitchen, Classroom, Gym, Bathroom+mirror, Void, Street, Rooftop · 🔲 Stadium |
+| Props | ✅ Phone, CerealBox, CookieJar, Card, ChipStack, Bus, Door, Shards · 🔲 Dice, Roulette, Vending |
 | Overlays | ✅ Title, Tag, OddsBadge, Letterbox, Captions, Transitions · 🔲 Callout, BarRace, Counter |
 | Sound | ✅ 80 SFX + music stems + cue list + mastering · 🔲 VO ducking curves, panning |
-| Voice | ✅ timing estimator · 🔲 VO recording/TTS, lip sync |
+| Voice | ✅ ElevenLabs connector pipeline, 3/48 lines voiced, timing calibrated (×0.85), mouth flaps from word timings · 🔲 remaining 45 lines (needs paid plan) |
 | Ops | ✅ chunked render, QA, determinism, typecheck · 🔲 CI, vertical, thumbnail comp, SRT export |
 | Film layer (§23): halation, light leaks, gate weave, motion blur | 🔲 |
 | GodRays / volumetric spot | 🔲 (documented in §36.3, not yet in the demo) |
