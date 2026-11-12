@@ -5,8 +5,8 @@ characters on simple low-poly sets, with moody film lighting, shallow depth of f
 and glowing gold UI badges ("THE ODDS 33%") floating over the scene.
 
 Claude: when asked to make a video, scene or shot, **follow this file exactly**. Every
-number here is a starting default chosen to match the reference look; tune it after test renders. Change one only when the user asks, or when a shot clearly
-needs it. A video that ignores the lighting, depth-of-field and grading rules looks like
+number here is a starting default chosen to match the reference look. Tune it after
+test renders, but change it only when the user asks or a shot clearly needs it. A video that ignores the lighting, depth-of-field and grading rules looks like
 a cheap 3D demo, not the reference.
 
 ---
@@ -29,7 +29,7 @@ Stack (pin these versions — do not use `latest`):
 
 | Purpose | Package |
 |---|---|
-| Video framework | `remotion@4`, `@remotion/cli@4`, `@remotion/three@4` |
+| Video framework | `remotion`, `@remotion/cli`, `@remotion/three`, `@remotion/google-fonts` (pin all `@remotion/*` to the **same exact 4.x version**, or Remotion refuses to run) |
 | 3D | `three@0.169.0`, `@react-three/fiber@8.17.10`, `@react-three/drei@9.114.0` |
 | Post FX | `@react-three/postprocessing@2.16.3`, `postprocessing@6.36.3` |
 | Fonts | `@remotion/google-fonts` (Cinzel, Cormorant Garamond, Inter) |
@@ -208,6 +208,8 @@ emissive meshes with `emissiveIntensity` 2–4 so bloom catches them.
 
 ```tsx
 <EffectComposer multisampling={4}>
+  {/* focusDistance is NORMALIZED 0..1 of camera near..far, not meters: use
+      focus = (meters - near) / (far - near) with near=0.1, far=40 → head at 3m ≈ 0.072 */}
   <DepthOfField focusDistance={focus} focalLength={0.035} bokehScale={4} />
   <Bloom intensity={0.6} luminanceThreshold={0.75} luminanceSmoothing={0.2} mipmapBlur />
   <ChromaticAberration offset={[0.0007, 0.0005]} radialModulation modulationOffset={0.3} />
@@ -370,3 +372,160 @@ Small Cinzel caps tags at the top or bottom center ("SINCE LAST TUESDAY", "HOSPI
 - Don't hold a static camera, use a wide fov above 45, or leave the image without post FX.
 - Don't recreate a specific existing channel's characters, logos or exact videos. Use this
   *style*, with original characters, stories and branding.
+
+---
+
+## 14. Remotion + R3F rules (the things that break renders)
+
+1. **Never animate with `useFrame` or `clock`.** Remotion renders frames out of order and in
+   parallel. All motion must come from `const frame = useCurrentFrame()`, i.e. `t = frame / fps`.
+   Use `useFrame` only to *apply* frame-derived values, never to accumulate them.
+2. Use `<ThreeCanvas width={W} height={H}>` from `@remotion/three`, not R3F's `<Canvas>`.
+   It bridges the Remotion context into the canvas, and it needs explicit width and height.
+3. You don't need `frameloop="never"` with ThreeCanvas, but do pass `gl={{ preserveDrawingBuffer: true, antialias: false }}`
+   (MSAA comes from `EffectComposer multisampling`).
+4. **Load fonts and textures with `delayRender()` and `continueRender()`.** drei `<Text>` loads its font
+   asynchronously. Wrap it in `<Suspense>` and block the frame until it's ready, or the first frames render without text.
+5. For randomness, use `random('crowd-' + i)` from `remotion`. `Math.random()` makes every frame
+   different and causes flicker.
+6. The animated canvas face texture: redraw it only when the expression or blink state changes, then set
+   `texture.needsUpdate = true`.
+7. Put audio in `<Audio src={staticFile('audio/voiceover.mp3')} />` at the top level, and put SFX in
+   `<Sequence from={f}><Audio .../></Sequence>`.
+8. Each shot is its own `<Series.Sequence durationInFrames={d}>`. Inside, `useCurrentFrame()`
+   restarts at 0, so write every shot relative to its own start.
+
+---
+
+## 15. Reference code snippets (copy, don't reinvent)
+
+### 15.1 Eased value helper
+```ts
+import {interpolate, Easing} from 'remotion';
+export const ease = (f: number, [a, b]: [number, number], [x, y]: [number, number]) =>
+  interpolate(f, [a, b], [x, y], {
+    easing: Easing.bezier(0.45, 0, 0.2, 1),
+    extrapolateLeft: 'clamp', extrapolateRight: 'clamp',
+  });
+```
+
+### 15.2 Camera rig
+```tsx
+export const CameraRig = ({from, to, target, dur, seed = 'cam'}: Props) => {
+  const frame = useCurrentFrame();
+  const {camera} = useThree();
+  const k = ease(frame, [0, dur], [0, 1]);
+  const t = frame / 30;
+  // handheld drift: two slow sines with seeded phases
+  const p1 = random(seed + 'a') * 10, p2 = random(seed + 'b') * 10;
+  const drift = new Vector3(Math.sin(t * 0.7 + p1) * 0.01, Math.sin(t * 0.9 + p2) * 0.008, 0);
+  camera.position.lerpVectors(new Vector3(...from), new Vector3(...to), k).add(drift);
+  camera.lookAt(...target);
+  camera.updateProjectionMatrix();
+  return null;
+};
+```
+
+### 15.3 Face texture
+```ts
+export function drawFace(ctx: CanvasRenderingContext2D, expr: Expr, blink: number) {
+  ctx.clearRect(0, 0, 1024, 512);
+  ctx.fillStyle = '#1a1424'; ctx.strokeStyle = '#1a1424'; ctx.lineCap = 'round';
+  // the face sits in the middle of the equirect texture: u≈0.5 is the front (x≈512)
+  const eyeY = 230, eyeH = 40 * (1 - blink * 0.9);
+  for (const x of [482, 542]) {
+    if (expr === 'happy') { ctx.lineWidth = 8; ctx.beginPath(); ctx.arc(x, eyeY + 8, 14, Math.PI, 0); ctx.stroke(); }
+    else if (expr === 'bored') { ctx.lineWidth = 7; ctx.beginPath(); ctx.moveTo(x - 14, eyeY); ctx.lineTo(x + 14, eyeY); ctx.stroke(); }
+    else { ctx.beginPath(); ctx.ellipse(x, eyeY, 13, eyeH / 2, 0, 0, Math.PI * 2); ctx.fill();
+      if (expr === 'smug') { ctx.fillStyle = '#ece6f2'; ctx.fillRect(x - 16, eyeY - 22, 32, 20); ctx.fillStyle = '#1a1424'; } }
+  }
+  ctx.lineWidth = 6; ctx.beginPath();
+  if (expr === 'shock') ctx.ellipse(512, 300, 10, 14, 0, 0, Math.PI * 2);
+  else if (expr === 'smug') { ctx.moveTo(495, 292); ctx.quadraticCurveTo(520, 302, 540, 284); }
+  else if (expr !== 'bored') ctx.arc(512, 280, expr === 'happy' ? 26 : 16, 0.15 * Math.PI, 0.85 * Math.PI);
+  ctx.stroke();
+}
+```
+The texture is mapped on a sphere and gets squashed toward the poles. Keep the features within the
+center band (y 180–330) and check them in a close-up render.
+
+### 15.4 Projecting a 3D anchor to an overlay
+```tsx
+// inside the canvas: write the screen position to a shared ref every frame
+const v = new Vector3(); obj.getWorldPosition(v); v.y += 0.6; v.project(camera);
+anchorRef.current = { x: (v.x * 0.5 + 0.5) * W, y: (-v.y * 0.5 + 0.5) * H, visible: v.z < 1 };
+```
+It's more reliable to compute the anchor **in pure math outside the canvas**: use the same camera
+`from`/`to`/`fov` values as the CameraRig and build a throwaway `PerspectiveCamera`. Then the
+overlay doesn't depend on render order. Clamp the result to an 80px safe margin.
+
+### 15.5 Rolling number
+```tsx
+const v = Math.round(ease(frame - start, [0, 20], [from, to]));
+<span style={{fontVariantNumeric: 'tabular-nums'}}>{v.toLocaleString()}%</span>
+```
+Always use `tabular-nums` so the badge width doesn't jitter.
+
+---
+
+## 16. Transitions between shots
+
+- Most cuts should be **hard cuts** on a voiceover beat. That's the look.
+- Use a **dip to black** (6 frames down, 6 up) for chapter changes, with a title card on the `void` set.
+- A **match cut** carries an object across shots (coin → coin). Keep its screen position identical.
+- For a **whip transition**, the last 5 frames of shot A and the first 5 of shot B pan fast in the same direction,
+  with a directional blur overlay (CSS `filter: blur()` on a stretched copy). Use it at most once per minute.
+- A **zoom-through**: push the camera into a dark object (a hoodie, a door) until the screen is black, then cut.
+
+---
+
+## 17. Story structure that keeps people watching
+
+1. **Hook (0–8s):** start with a striking image plus the question ("WHAT IF YOU COULD…"). No logo intro.
+2. **Rule demo (8–40s):** show the power on small everyday things (alarm clock, vending machine).
+   Each one gets its own badge.
+3. **Escalation:** casino → sports → school → hospital. Raise the stakes each time.
+4. **Twist / cost:** the power has a downside ("LIFETIME BAN", "LUCK 0%"). Change the lighting from warm to cold.
+5. **Payoff + loop:** end on an image that mirrors the opening shot.
+
+Plan a visual change **every 2–4s** and a new idea every 20–30s. Make each badge's number tell
+the story (99% → 0%), because a number change is a plot beat.
+
+---
+
+## 18. Color grade per act
+
+| Act | Grade |
+|---|---|
+| Hook / wonder | purple shadows, warm highlights, bloom 0.8 |
+| Fun / montage | saturation −5% instead of −12%, brighter exposure 1.1 |
+| Tension | teal-blue shadows, exposure 0.85, vignette darkness 0.9 |
+| Consequence | desaturate −30%, cold key light, grain 0.06 |
+
+Implement it as props on `<PostFX grade="tension" />`, so a whole act changes with one value.
+
+---
+
+## 19. Render & delivery
+
+- Main output: 1920×1080 at 30fps, H.264 CRF 16, AAC 320k audio, `--pixel-format=yuv420p`.
+- Vertical cut (Shorts/TikTok): a separate `MainVertical` composition at 1080×1920. Reuse the shots but
+  set the camera fov to 40 and move it about 15% back. Put overlays in the middle third, because UI covers the top and bottom.
+- Thumbnail: render one still with `npx remotion still Main thumb.png --frame=N`. Use a hero close-up,
+  a big badge, and 3 words or fewer.
+- Write outputs to `out/` and keep them in `.gitignore`. Never commit MP4s.
+
+---
+
+## 20. Troubleshooting
+
+| Symptom | Cause / fix |
+|---|---|
+| Black frames in render | WebGL is unavailable, so try `--gl=angle`, then `--gl=swangle` |
+| Flicker between frames | `Math.random()` or `useFrame` accumulation. See §14 |
+| Text missing on first frames | font not ready, so use `delayRender` + Suspense |
+| Everything blurry | DOF `focusDistance` given in meters. It must be normalized (§5) |
+| Faces look stretched | features too far from the texture center band (§15.3) |
+| Shadow acne / stripes | lower `shadow-bias` to −0.0005, add `shadow-normalBias={0.02}` |
+| Looks flat and "CG" | rim light missing, fog off, or post FX disabled. Re-run the §11 checklist |
+| Render too slow | lower `multisampling` to 2 while drafting, `--scale=0.5` for previews |
