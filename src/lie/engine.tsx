@@ -47,7 +47,7 @@ export type CastSpec = {who: Who; id?: string; pos: [number, number]; rot?: numb
 /** head centre in world space (used by camera + meter) */
 export const headOf = (c: CastSpec): [number, number, number] => {
   const s = CAST[c.who].scale;
-  if (c.pose === 'sleep') return [c.pos[0], 0.75, c.pos[1] - 0.95 * s];
+  if (c.pose === 'sleep') return [c.pos[0], 0.7, c.pos[1] - 1.53 * s];
   const sit = c.pose === 'sit' ? -0.28 : 0;
   return [c.pos[0], (c.y ?? 0) + sit + 1.53 * s, c.pos[1]];
 };

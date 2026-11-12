@@ -7,7 +7,7 @@ import type {ShotSpec, CastSpec} from './engine';
 
 const hero = (pos: [number, number], o: Partial<CastSpec> = {}): CastSpec => ({who: 'hero', pos, ...o});
 const fig = (id: string, pos: [number, number], o: Partial<CastSpec> = {}): CastSpec => ({who: 'fig', id, pos, ...o});
-const BED: [number, number] = [-0.6, -1.75];
+const BED: [number, number] = [-0.6, -0.95]; // body origin when lying: head ends up at z ≈ -2.5 on the pillow
 
 export const SHOTS: ShotSpec[] = [
   /* ═════ HOOK ═════ */
@@ -102,7 +102,7 @@ export const SHOTS: ShotSpec[] = [
     cast: [hero([0, 0], {expr: 'smug', tilt: 8})]},
   {line: 'L015d', set: 'Rooftop', light: 'rooftop', grade: 'wonder', keyPos: [3, 3, -8], cam: {on: 0, size: 'wide', yaw: 25, pitch: 4, move: 'orbitL', amount: 1.6},
     cast: [hero([0, -1.1], {rot: 180, expr: 'smug'})]},
-  {line: 'L015d', set: 'Rooftop', light: 'rooftop', grade: 'wonder', keyPos: [3, 3, -8], cam: {on: 0, size: 'cu', yaw: 160, pitch: 2, move: 'push'},
+  {line: 'L015d', set: 'Rooftop', light: 'rooftop', grade: 'wonder', keyPos: [3, 3, -8], exposure: 0.8, cam: {on: 0, size: 'cu', yaw: 160, pitch: 2, move: 'push'},
     cast: [hero([0, -1.1], {rot: 180, expr: 'smug', turn: 25})]},
 
   /* ═════ ACT 3 — IT TURNS ═════ */
