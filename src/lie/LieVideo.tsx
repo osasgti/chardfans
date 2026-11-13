@@ -4,9 +4,10 @@
  */
 import React from 'react';
 import {AbsoluteFill, Audio, Sequence, staticFile, useCurrentFrame, useVideoConfig, interpolate} from 'remotion';
-import {LieShot, LINES, TOTAL, Line} from './engine';
+import {LieShot, LINES, TOTAL} from './engine';
+import CAL from './exposure_cal.json';
 import {SHOTS} from './shots';
-import {Captions, Word} from '../overlay/Captions';
+import {Captions} from '../overlay/Captions';
 import {Letterbox} from '../overlay/Overlays';
 import {Grain} from '../overlay/Grain';
 
@@ -33,7 +34,6 @@ if (bad.length) throw new Error('Invalid cast references: ' + bad.join('; '));
 const missing = LINES.filter((l) => !SHOTS.some((s) => s.line === l.id)).map((l) => l.id);
 if (missing.length) throw new Error('Lines without shots: ' + missing.join(', '));
 
-const ALL_WORDS: Word[] = LINES.flatMap((l: Line) => l.words);
 const ACT_START = (act: string) => LINES.find((l) => l.act === act)!.start;
 const ACTS = ['hook', 'act1', 'act2', 'act3', 'act4', 'end'];
 
@@ -41,17 +41,31 @@ const ShotSeq = ({t}: {t: Timed}) => {
   const frame = useCurrentFrame();
   const {fps} = useVideoConfig();
   const r = fps / 30;
-  return <LieShot spec={SHOTS[t.i]} beat={frame / r} dur={t.durSec * 30} sec={t.startSec + frame / fps} seed={'s' + t.i} fpsRatio={r} />;
+  const spec = SHOTS[t.i];
+  const k = SHOTS.filter((s) => s.line === spec.line).indexOf(spec);
+  const calStops = ((CAL as Record<string, number[]>)[spec.line] ?? [])[k] ?? 0;   // scripts/exposure_cal.py (§52)
+  return <LieShot spec={spec} beat={frame / r} dur={t.durSec * 30} sec={t.startSec + frame / fps} seed={'s' + t.i} fpsRatio={r} calStops={calStops} />;
 };
 
 /** looped bed with fades at both ends (seconds) */
-const Bed = ({src, from, to, vol, fps, fade = 1.5}: {src: string; from: number; to: number; vol: number; fps: number; fade?: number}) => (
+/** Voice ducking (§52): 1 when nobody speaks, `depth` while a VO line plays; 0.12s attack before, 0.4s release after. */
+export const duckAt = (sec: number, depth: number) => {
+  let g = 1;
+  for (const l of LINES) {
+    if (!l.audio) continue;
+    const v = sec < l.start ? interpolate(l.start - sec, [0, 0.12], [depth, 1], {extrapolateRight: 'clamp'})
+      : sec > l.end ? interpolate(sec - l.end, [0, 0.4], [depth, 1], {extrapolateRight: 'clamp'}) : depth;
+    if (v < g) g = v;
+  }
+  return g;
+};
+const Bed = ({src, from, to, vol, fps, fade = 1.5, duck = 0.35}: {src: string; from: number; to: number; vol: number; fps: number; fade?: number; duck?: number}) => (
   <Sequence from={Math.round(from * fps)} durationInFrames={Math.max(1, Math.round((to - from) * fps))} layout="none">
-    <Audio src={staticFile(src)} loop volume={(f) => vol * interpolate(f / fps, [0, fade, to - from - fade, to - from], [0, 1, 1, 0], {extrapolateLeft: 'clamp', extrapolateRight: 'clamp'})} />
+    <Audio src={staticFile(src)} loop volume={(f) => vol * duckAt(from + f / fps, duck) * interpolate(f / fps, [0, fade, to - from - fade, to - from], [0, 1, 1, 0], {extrapolateLeft: 'clamp', extrapolateRight: 'clamp'})} />
   </Sequence>
 );
-const Cue = ({src, at, vol = 0.6, rate = 1, fps}: {src: string; at: number; vol?: number; rate?: number; fps: number}) => (
-  <Sequence from={Math.max(0, Math.round(at * fps))} layout="none"><Audio src={staticFile(`sfx/${src}.wav`)} volume={vol} playbackRate={rate} /></Sequence>
+const Cue = ({src, at, vol = 0.6, rate = 1, fps, duck = 0.55}: {src: string; at: number; vol?: number; rate?: number; fps: number; duck?: number}) => (
+  <Sequence from={Math.max(0, Math.round(at * fps))} layout="none"><Audio src={staticFile(`sfx/${src}.wav`)} volume={(f) => vol * duckAt(at + f / fps, duck)} playbackRate={rate} /></Sequence>
 );
 
 export const LieVideo = () => {
@@ -95,16 +109,16 @@ export const LieVideo = () => {
       <Bed src="sfx/shimmer_loop.wav" from={L('L032c').start} to={TOTAL} vol={0.1} fps={fps} />
 
       {/* ── AMBIENCE ── */}
-      <Bed src="sfx/amb_void.wav" from={0} to={end('hook')} vol={0.25} fps={fps} />
-      <Bed src="sfx/room.wav" from={ACT_START('act1')} to={L('L008b').start} vol={0.25} fps={fps} />
-      <Bed src="sfx/amb_hallway.wav" from={L('L008d').start} to={L('L012').start} vol={0.18} fps={fps} />
-      <Bed src="sfx/amb_casino.wav" from={L('L012').start - 0.6} to={L('L014').start} vol={0.25} fps={fps} />
-      <Bed src="sfx/amb_hallway.wav" from={L('L014').start} to={L('L015d').start} vol={0.2} fps={fps} />
-      <Bed src="sfx/amb_hallway.wav" from={ACT_START('act3')} to={L('L019').start} vol={0.14} fps={fps} />
-      <Bed src="sfx/heartbeat.wav" from={L('L019').start} to={L('L019').end + 1.4} vol={0.45} fps={fps} fade={0.4} />
-      <Bed src="sfx/amb_bedroom_night.wav" from={L('L022').start} to={mirror - 2.2} vol={0.22} fps={fps} />
+      <Bed src="sfx/amb_void.wav" from={0} to={end('hook')} vol={0.25} fps={fps} duck={0.6} />
+      <Bed src="sfx/room.wav" from={ACT_START('act1')} to={L('L008b').start} vol={0.25} fps={fps} duck={0.6} />
+      <Bed src="sfx/amb_hallway.wav" from={L('L008d').start} to={L('L012').start} vol={0.18} fps={fps} duck={0.6} />
+      <Bed src="sfx/amb_casino.wav" from={L('L012').start - 0.6} to={L('L014').start} vol={0.25} fps={fps} duck={0.6} />
+      <Bed src="sfx/amb_hallway.wav" from={L('L014').start} to={L('L015d').start} vol={0.2} fps={fps} duck={0.6} />
+      <Bed src="sfx/amb_hallway.wav" from={ACT_START('act3')} to={L('L019').start} vol={0.14} fps={fps} duck={0.6} />
+      <Bed src="sfx/heartbeat.wav" from={L('L019').start} to={L('L019').end + 1.4} vol={0.45} fps={fps} duck={0.6} fade={0.4} />
+      <Bed src="sfx/amb_bedroom_night.wav" from={L('L022').start} to={mirror - 2.2} vol={0.22} fps={fps} duck={0.6} />
       <Bed src="sfx/drone_low.wav" from={L('L023').start + 2} to={mirror - 2.2} vol={0.12} fps={fps} />
-      <Bed src="sfx/room.wav" from={ACT_START('end')} to={TOTAL} vol={0.18} fps={fps} />
+      <Bed src="sfx/room.wav" from={ACT_START('end')} to={TOTAL} vol={0.18} fps={fps} duck={0.6} />
 
       {/* ── HARD CUES ── */}
       <Cue src="reverse_cymbal" at={0.2} vol={0.25} fps={fps} />
@@ -124,15 +138,15 @@ export const LieVideo = () => {
       <Cue src="stinger_bad" at={ACT_START('act3') - 0.2} vol={0.25} fps={fps} />
       <Cue src="locker_slam" at={L('L017').start + 0.2} vol={0.25} fps={fps} />
       <Cue src="door_creak" at={L('L019').start + 0.3} vol={0.3} fps={fps} />
-      <Cue src="mumble_vo" at={L('L019').start + 1.5} vol={0.08} fps={fps} />
       <Cue src="notification" at={L('L022c').start + 0.3} vol={0.35} fps={fps} />
       <Cue src="suck_back" at={L('L022d').end - 0.6} vol={0.35} fps={fps} />
       <Cue src="step_wood" at={L('L023').start + 2.0} vol={0.2} rate={0.8} fps={fps} />
       {/* THE MIRROR: silence → impact stack */}
       <Cue src="suck_back" at={mirror - 1.4} vol={0.45} fps={fps} />
-      <Cue src="impact" at={mirror} vol={0.9} fps={fps} />
-      <Cue src="boom_sub" at={mirror} vol={0.6} fps={fps} />
-      <Cue src="stinger_bad" at={mirror + 0.1} vol={0.4} fps={fps} />
+      {/* the whispered "Ninety-six" plays in silence; the impact stack lands right after the word (never on top of VO) */}
+      <Cue src="impact" at={L('L025').end + 0.05} vol={0.9} fps={fps} duck={1} />
+      <Cue src="boom_sub" at={L('L025').end + 0.05} vol={0.6} fps={fps} duck={1} />
+      <Cue src="stinger_bad" at={L('L025').end + 0.15} vol={0.4} fps={fps} duck={1} />
       <Cue src="glitch" at={L('L028').start + 0.5} vol={0.2} fps={fps} />
       <Cue src="chime_low" at={L('L028').end - 1.0} vol={0.35} fps={fps} />
       <Cue src="kid_laugh" at={L('L029b').end - 0.6} vol={0.18} fps={fps} />
@@ -143,7 +157,8 @@ export const LieVideo = () => {
       <Cue src="boom_sub" at={TOTAL - 1.5} vol={0.35} fps={fps} />
 
       {/* ── OVERLAYS ── */}
-      <Captions words={ALL_WORDS} seconds={sec} bottom={140} />
+      {/* captions only while a line is being spoken (+0.5s tail): no empty/greyed plates between lines (§52) */}
+      {(() => { const l = LINES.find((x) => sec >= x.start - 0.05 && sec <= x.end + 0.5); return l ? <Captions words={l.words} seconds={Math.min(sec, l.end - 0.01)} bottom={140} /> : null; })()}
       <Grain opacity={0.05} />
       <Letterbox frame={30} />
       {/* mirror moment: red flash */}

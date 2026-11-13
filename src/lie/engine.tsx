@@ -178,7 +178,7 @@ const Shards = ({k}: {k: number}) => (
 );
 
 /* ───────────── the shot ───────────── */
-export const LieShot = ({spec, beat, dur, sec, seed, fpsRatio = 1}: {spec: ShotSpec; beat: number; dur: number; sec: number; seed: string; fpsRatio?: number}) => {
+export const LieShot = ({spec, beat, dur, sec, seed, fpsRatio = 1, calStops = 0}: {spec: ShotSpec; beat: number; dur: number; sec: number; seed: string; fpsRatio?: number; calStops?: number}) => {
   const k = interpolate(beat, [0, dur], [0, 1], {easing: E, extrapolateLeft: 'clamp', extrapolateRight: 'clamp'});
   const cam = camFor(spec, k, beat, seed);
   const S = typeof spec.cam.on === 'number' ? headOf(spec.cast[spec.cam.on]) : spec.cam.on;
@@ -189,7 +189,7 @@ export const LieShot = ({spec, beat, dur, sec, seed, fpsRatio = 1}: {spec: ShotS
   const setNode = spec.set === 'Hallway' ? <Hallway /> : Set ? <Set {...(spec.setProps ?? {})} {...(spec.set === 'Bathroom' ? {flicker: flick} : {})} /> : null;
   return (
     <AbsoluteFill>
-      <Stage cam={cam} focus={focus} grade={spec.grade} flash={spec.flash ?? 0} exposure={spec.exposure}>
+      <Stage cam={cam} focus={focus} grade={spec.grade} flash={spec.flash ?? 0} exposure={(spec.exposure ?? 1.05) * Math.pow(2, calStops)}>
         <Lights preset={spec.light} keyPos={spec.keyPos} keyI={spec.flicker ? undefined : undefined} />
         {setNode}
         {spec.dust !== false && <Dust frame={beat} n={FAST ? 30 : 60} />}

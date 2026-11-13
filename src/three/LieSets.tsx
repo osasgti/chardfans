@@ -131,7 +131,7 @@ export const Bedroom = ({night = false}: {night?: boolean}) => (
   </group>
 );
 
-export const Kitchen = ({night = false, dawn = false}: {night?: boolean; dawn?: boolean}) => (
+export const Kitchen = ({night = false, dawn = false, lamp = true}: {night?: boolean; dawn?: boolean; lamp?: boolean}) => (
   <group>
     <Floor color="#c9b8a6" planks={false} />
     {/* checker tiles */}
@@ -169,7 +169,8 @@ export const Kitchen = ({night = false, dawn = false}: {night?: boolean; dawn?: 
       {[[-0.45, 0], [0.45, 0], [0, -0.25]].map(([x, z]) => <mesh key={`${x}${z}`} position={[x, 0.8, z]} receiveShadow><cylinderGeometry args={[0.13, 0.11, 0.015, 32]} />{std('#f6f2fa', 0.3)}</mesh>)}
       <mesh position={[0, 0.84, 0.18]} scale={[1, 0.55, 1]} castShadow><sphereGeometry args={[0.12, 24, 16]} />{std('#f3e3b5', 0.9)}</mesh>
     </group>
-    <PendantLamp pos={[0, 2.3, 0]} i={night ? 4 : 2} />
+    {/* lamp=false for overhead shots: a camera passing behind the bulb turns it into a frame-filling DOF blob (§52) */}
+    {lamp && <PendantLamp pos={[0, 2.3, 0]} i={night ? 4 : 2} />}
   </group>
 );
 

@@ -9,7 +9,7 @@ number here is a starting default chosen to match the reference look. Tune it af
 test renders, but change it only when the user asks or a shot clearly needs it. A video that ignores the lighting, depth-of-field and grading rules looks like
 a cheap 3D demo, not the reference.
 
-**Reading order:** start with **§36 (the master prompt)**, which is the standard every video must meet. Then use
+**Reading order:** start with **§36 (the master prompt)** and **§52 (consistency & polish, from real bugs)**, which is the standard every video must meet. Then use
 §0–§35 as the toolbox, §32 for lessons from real renders, and §51 for how to keep improving.
 The working demo lives in `src/` (2 shots, 60fps, with full sound).
 Video projects have their own master prompt in `prompts/`. The current one is `prompts/WHAT_IF_LIE_METER.md` (5:00, TTS).
@@ -65,7 +65,11 @@ scripts/
   make_sfx.py              ✅ 80 sounds + music stems → public/sfx/*.wav (git-ignored, run `npm run sfx`)
   estimate_timing.py       ✅ script text → words.json (no speech recogniser needed)
   build_timeline.py        ✅ master-prompt TTS table + public/vo/raw/*.mp3 → cleaned VO wavs + src/lie/timeline.json
-  qa.sh                    ✅ cuts, contact sheet, loudness, black/frozen frames (§28)
+  qa.sh                    ✅ cuts, contact sheet, loudness, black/frozen frames, flashes (§28, §52)
+  luma_qa.py               ✅ 1-frame flash + brightness-range detector (§52.1)
+  exposure_cal.py          ✅ per-shot exposure calibration → src/lie/exposure_cal.json + ffmpeg post filter (§52.1)
+  make_srt.py              ✅ timeline → SRT captions
+  validate_shots.mjs       ✅ shot cast-reference validator (npm run validate)
   determinism.sh           ✅ same frame twice → identical hash
   render_chunks.sh         ✅ crash-safe chunked render + concat + master
 public/
@@ -1085,6 +1089,7 @@ partials) · `fm(carrier, mod, index_env)` (metallic and glassy tones) · `karpl
 8. **Silence before the biggest moment** (4–8 beats), and a `suck_back` into it.
 9. **Ducking:** music and ambience are side-chained to VO (−6dB, 80ms attack, 300ms release, implemented
    as volume curves computed from the VO amplitude).
+9b. **Implemented:** `duckAt()` in `src/lie/LieVideo.tsx` (§52.2).
 10. **Master chain** (`npm run master` after `npm run render`; the demo measured −14.4 LUFS with a +0.5 TP peak before mastering, so the limiter is required): `acompressor=threshold=-18dB:ratio=3:attack=10:release=150`,
     then `loudnorm=I=-14:TP=-1:LRA=9`. Keep the uncompressed stems in `out/stems/`.
 
@@ -1336,13 +1341,107 @@ Set the browser path once per session: `export REMOTION_BROWSER=/opt/pw-browsers
 | Sets | ✅ Hallway, Bedroom, Kitchen, Classroom, Gym, Bathroom+mirror, Void, Street, Rooftop · 🔲 Stadium |
 | Props | ✅ Phone, CerealBox, CookieJar, Card, ChipStack, Bus, Door, Shards · 🔲 Dice, Roulette, Vending |
 | Overlays | ✅ Title, Tag, OddsBadge, Letterbox, Captions, Transitions · 🔲 Callout, BarRace, Counter |
-| Sound | ✅ 80 SFX + music stems + cue list + mastering · 🔲 VO ducking curves, panning |
+| Sound | ✅ 80 SFX + music stems + cue list + mastering + **VO ducking (duckAt)** · 🔲 panning |
 | Voice | ✅ ElevenLabs connector pipeline, **48/48 lines voiced** (v02 render), mouth flaps from word timings |
 | Ops | ✅ chunked render, QA, determinism, typecheck · 🔲 CI, vertical, thumbnail comp, SRT export |
 | Film layer (§23): halation, light leaks, gate weave, motion blur | 🔲 |
 | GodRays / volumetric spot | 🔲 (documented in §36.3, not yet in the demo) |
 
 When you finish a 🔲 item, flip it to ✅ here **and** in §1 in the same commit.
+
+---
+
+## 52. Consistency & polish standard (learned from the v02 review: "too bright sometimes, music over the voice")
+
+> These rules come from real bugs found in a finished render. **Run every check below before calling a video done.**
+> Where a check is automated, the script is named.
+
+### 52.1 Picture: brightness must be consistent across cuts
+**What went wrong in v02:** per-shot mean luma ranged from **3 to 114** (0–255). White pill heads in close-ups under a
+key light tuned for wide shots blew out (the brother CU at 114, the rooftop CU at 99, the bedroom phone call at 98), while
+void shots crushed to near-black (3–14). Cutting between them reads as "the screen keeps flashing".
+
+**Rules:**
+- **Target mean luma per grade** (measured on the final frame, 0–255): wonder 46 · fun 60 · triumph 62 · tension 42 ·
+  consequence 34. Each shot must land within **±25%** of its target. Planned blacks (dips, the cut-to-black ending) are exempt.
+- **Neighbouring shots may differ by at most ~30 luma** unless the jump is the point (a flash, a dip, the mirror twist).
+- **Close-ups need less key.** A white sphere filling the frame reflects far more light than a wide shot. Scale key
+  intensity with shot size (as a rule of thumb, CU ≈ 0.6× and ECU ≈ 0.5× of the wide-shot key), or let the calibration do it.
+- **Calibration loop (automated):** `python3 scripts/exposure_cal.py <render.mp4> 24` measures every shot's median luma and
+  writes `src/lie/exposure_cal.json` (stops per shot, partial correction ×0.75, clamped −1.1…+1.0). The engine applies
+  it to `toneMappingExposure` on the next render, and `out/qa/exposure_filter.txt` applies the same correction to the
+  existing render in post: `format=gbrpf32le,<filter>,format=yuv420p`. Re-run after any lighting change.
+- **Never put a bright practical in the out-of-focus foreground.** DOF turns a small emissive bulb near the camera into a
+  frame-filling white disc. In v02, the overhead dinner orbit passed behind the pendant lamp, which produced two single white frames.
+  Hide practicals in overhead and through-the-set shots (`Kitchen lamp={false}`), or keep them behind the focus plane.
+- **Flash detector (automated):** `python3 scripts/luma_qa.py <video>` (also in `npm run qa`) fails on any 1-frame
+  spike (|Δluma| > 30 that reverts on the next frame) and lists seconds above 100 or below 20. A 1-frame flash is
+  always a bug. Fix it at the source, and patch a delivered file with `freezeframes`.
+- UI and captions are not graded. Keep overlays outside the 3D post chain so their brightness doesn't change with exposure fixes.
+
+### 52.2 Voice: the narrator always wins
+**What went wrong in v02:** music beds played at a constant 0.2–0.45 under the narration. Phone "babble" (`mumble_vo`)
+played under Dad's line, and the mirror impact (0.9) fired on the same frame as the whispered "Ninety-six".
+
+**Rules:**
+- **Ducking is mandatory** (`duckAt()` in `LieVideo.tsx`). Music drops to **0.35×** and ambience to **0.6×** while any
+  VO line plays, with a 0.12s attack before the line and a 0.4s release after it. Hard SFX duck to 0.55× (pass `duck={1}`
+  only for hits that are deliberately placed *between* words).
+- **Never stack another voice under the narrator:** no babble, no crowd chatter louder than 0.15, no character vocalisations
+  during VO. Put them in the gaps.
+- **Big hits go after the word, never on it.** The impact stack lands at `line.end + 0.05s`, so the word is heard in
+  silence and the hit answers it.
+- **Line spacing:** 0.35–0.6s between lines in a paragraph, 0.8–1.6s after a punchline or reveal, and ≥1.5s at act breaks.
+  Trim TTS head and tail silence (`build_timeline.py` does this) and control pauses in the edit, not in the TTS.
+- **Level:** VO at −16 LUFS per line (`build_timeline.py`), master at −14 LUFS with a −1 dBTP limiter (`render_chunks.sh`).
+  The narration should sit about 8–10 LU above the music bed.
+- **One narrator, one take style.** Use the same voice, model and settings for every line. Re-roll a line (1 credit-cost
+  take) when it has wrong emphasis, a mispronounced number, a clipped ending or audible breath noise.
+  Numbers are written as words, and quoted dialogue gets a `[mimicking]`-style tag.
+- **Captions only while speaking** (`LieVideo.tsx`). Show the current line's words from `start − 0.05s` to `end + 0.5s` and nothing
+  between lines. An empty or greyed caption plate looks broken.
+
+### 52.3 Music
+- Every bed is a **seamless loop** (built with `loop_xfade` in `make_sfx.py`), or the seam clicks every 11s.
+  Never loop a non-crossfaded stem.
+- Use **one musical idea per act** (§36.7). Change act cues on a dip or a stinger, never mid-sentence.
+- Keep the music **out of the voice's band**: under VO the pad lowpass stays ≤ 1.6kHz, and plucks and bells duck harder
+  (0.3×) because they sit right in the 2–4kHz range of consonants.
+- **Silence is scored.** Planned silences (the mirror, the dad shot) mute music *and* ambience. The room tone may stay at 0.05.
+- The last music hit lands on the final cut, and the tail rings out over black for 1.5s.
+
+### 52.4 Sound effects
+- Play **at most 3 SFX at once**. If more collide, keep the highest in the volume ladder (§33.2) and drop the rest.
+- **Meter sounds scale with the meter:** small meters use pop 0.18 and tick 0.2, hero meters pop 0.32 and tick 0.35. A fail buzz
+  (≥90%) is 0.22. It's a comic accent, not an alarm.
+- **Foley is quieter than you think:** steps and cloth sit at 0.2–0.3, paper and cards at 0.3–0.4. They are texture.
+- **Ambience pre-laps the cut by 0.3–0.6s** and crossfades for 1–1.5s. Two ambiences may overlap only during that crossfade.
+- **Every cue must be heard at a moment where it means something.** If a cue can't be heard over the VO, move it into a gap or cut it.
+- **Audit:** render audio only (`--codec=wav`), then listen at 1× with eyes closed **and** check the loudness in short windows:
+  `ffmpeg -i mix.wav -af ebur128=peak=true -f null -`. The short-term loudness should not jump more than 6 LU between
+  neighbouring lines.
+
+### 52.5 Graphics & UI
+- **Lanes:** titles in the top lane (y 0.12–0.22), captions in the bottom lane (bottom 140px). A title at y 0.84 collided with
+  captions in v01. **Never place a title in the caption lane.**
+- **Meters:** never cover a face (keep a 180px face-exclusion radius). In close-ups, put the badge beside the head (automatic). Use at most
+  4 meters at once, except the deliberate "orbiting meters" beat.
+- **At most 2 overlay families on screen at once:** captions + meters, or captions + title. A tag fades before a title arrives.
+- **Sizes stay fixed for the whole video:** titles 64–78px, tags 30px, captions 40px, hero meters at full size, background meters at 0.62×.
+- **Graphics obey the grade, not the exposure.** UI colors are fixed (gold, amber, red, cream), so no post exposure fix may touch
+  them. Prefer source-side calibration over post filters for the final master.
+- **Red only means a lie.** No red titles, tags or captions. Gold means the power or truth, and cream means information.
+
+### 52.6 The pre-delivery gate (all must pass)
+```
+npm run typecheck && npm run validate                  # code + shot references
+python3 scripts/luma_qa.py out/<video>.mp4 24          # no 1-frame flashes, brightness in range
+python3 scripts/exposure_cal.py out/<video>.mp4 24     # every shot within ±25% of its grade target (re-run until true)
+ffmpeg -i out/<video>.mp4 -af loudnorm=print_format=summary -f null -   # −14 LUFS ±1, TP ≤ −1
+bash scripts/qa.sh out/<video>.mp4                     # cuts, contact sheet, black/frozen frames
+```
+Then a human-style pass: watch the whole video once at normal speed, once muted (picture only), and once with eyes closed
+(sound only). Write any issue as `timestamp: problem → fix` before touching code.
 
 ---
 

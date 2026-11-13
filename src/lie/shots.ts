@@ -128,7 +128,7 @@ export const SHOTS: ShotSpec[] = [
     cast: [hero([0, 0], {expr: 'worried'})]},
   {line: 'L022', set: 'Bedroom', setProps: {night: true}, light: 'bedroom', grade: 'tension', cam: {on: 0, size: 'mcu', yaw: -30, move: 'lock'},
     cast: [hero([2.3, -1.6], {pose: 'sit', rot: 180, expr: 'sad'})]},
-  {line: 'L022b', set: 'Kitchen', light: 'kitchen', grade: 'tension', exposure: 0.95, cam: {on: [0, 0.9, 0], size: 'wide', pitch: 62, yaw: 20, move: 'orbitL'},
+  {line: 'L022b', set: 'Kitchen', setProps: {lamp: false}, light: 'kitchen', grade: 'tension', exposure: 0.95, cam: {on: [0, 0.9, 0], size: 'wide', pitch: 62, yaw: 20, move: 'orbitL'},
     cast: [{who: 'dad', pos: [1.05, 0], rot: -90, pose: 'sit', talk: true}, {who: 'mom', pos: [0, -0.75], rot: 0, pose: 'sit', talk: true},
       {who: 'brother', pos: [0, 0.75], rot: 180, pose: 'sit'}, hero([-1.05, 0], {rot: 90, pose: 'sit', expr: 'sad'})],
     meters: [{on: 0, value: 22, small: true}, {on: 1, value: 47, small: true, delay: 20}, {on: 2, value: 15, small: true, delay: 40}]},
