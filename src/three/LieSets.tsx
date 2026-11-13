@@ -62,7 +62,7 @@ const PendantLamp = ({pos, color = '#ffcf8f', i = 3}: {pos: [number, number, num
 );
 
 /* ─────────── props ─────────── */
-export const Phone = ({screen = '#9fb8ff', i = 2.2, text}: {screen?: string; i?: number; text?: string}) => (
+export const Phone = ({screen = '#9fb8ff', i = 0.7, text}: {screen?: string; i?: number; text?: string}) => (
   <group>
     <RoundedBox args={[0.16, 0.3, 0.02]} radius={0.015} castShadow>{std('#15121c', 0.35, 0.4)}</RoundedBox>
     <mesh position={[0, 0, 0.011]}><planeGeometry args={[0.14, 0.27]} />{glow(screen, i)}</mesh>

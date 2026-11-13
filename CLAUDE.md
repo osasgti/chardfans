@@ -69,6 +69,7 @@ scripts/
   luma_qa.py               ✅ 1-frame flash + brightness-range detector (§52.1)
   exposure_cal.py          ✅ per-shot exposure calibration → src/lie/exposure_cal.json + ffmpeg post filter (§52.1)
   make_srt.py              ✅ timeline → SRT captions
+  vo_consistency.py        ✅ per-take level + voicing ratio, flags whispered/breathy TTS takes (§54.1)
   validate_shots.mjs       ✅ shot cast-reference validator (npm run validate)
   determinism.sh           ✅ same frame twice → identical hash
   render_chunks.sh         ✅ crash-safe chunked render (480-frame chunks, res=scale automatically) + concat + master (§53)
@@ -1481,6 +1482,38 @@ Then a human-style pass: watch the whole video once at normal speed, once muted 
 
 **Estimated full-video times here** (5:09, 7,425 frames at 24fps, 1440×810, fast quality):
 before about 9h20m → with `res` about 6h20m → with 480-frame chunks about 6h10m. Audio pass about 30 min, mux and master about 1 min.
+
+---
+
+## 54. Consistency standard, round 2 (from the v03 review: "sometimes it whispers, some frames too bright or blurry")
+
+### 54.1 Voice: one register for the whole video
+**What went wrong in v03:** 7 of 48 TTS lines came back whispered or breathy (voicing ratio 0.11–0.33 against 0.5–0.65 for the rest).
+The cause was the direction tags: `[whispering]`, `[soft]`, `[quiet]`, `[tired]`, `[hushed]` make eleven_v4 drop into a whisper, and
+a whisper next to normal speech sounds like a different narrator.
+- **Every tag starts with the register:** `[normal speaking voice, <emotion>]` or `[<emotion>, soft speaking voice]`. Emotion goes
+  *after* the register. Never use `whisper`, `hushed`, `breathy` or `tired` alone. Very short lines ("Ninety-six.") whisper most easily:
+  tag them `[normal speaking voice, firm and clear]`.
+- **Measure every take:** `python3 scripts/vo_consistency.py public/vo/raw/*.mp3`. Voicing = share of 100–1000Hz energy. Below
+  **0.42** is a whisper → re-roll. Every line in the video must sit within ±0.15 of the median.
+- Generate 2 takes per line and keep the higher-voicing one whose length fits the edit. Keep old takes in `out/vo_old/`.
+- Quiet emotion is done with *pace and pitch*, not breath. If a moment needs real intimacy, lower the music around it instead.
+
+### 54.2 Blur: depth of field has limits
+- `bokehScale` is **3** (was 5). At 5, ECU and CU shots were blurry everywhere except a thin slice, and a small focus error
+  blurred the subject itself. The subject (face, phone screen, the object the meter points at) must be sharp in every shot.
+- In an ECU on a prop, focus on the prop, not the head (`focus` target = the prop position).
+- Check one still per ECU/CU at full scale before a long render; if text on a prop isn't readable, the shot fails.
+
+### 54.3 Screens and practicals: never brighter than a face
+- Phone and screen `emissiveIntensity` ≤ **0.8** (was 2.2, which blew the phone in the ECU into a white rectangle and hid its text).
+  Lamps and bulbs 1–2, LEDs up to 3. Bloom does the glow; the source itself must keep its detail.
+- Rule: the brightest *surface* in a shot may be at most ~1.3× the luma of the lit face. `luma_qa.py` flags frames over 100.
+
+### 54.4 Meter clusters: readable, not a pile
+- The "orbiting meters" beat uses **8** small meters on **one** evenly spaced ring (was 14 on 3 rings, which overlapped).
+- Skip any meter whose projected position is within 200px of the head or inside the caption lane (bottom 260px).
+- Stagger their entries 4 beats apart so each pop gets its own tick.
 
 ---
 

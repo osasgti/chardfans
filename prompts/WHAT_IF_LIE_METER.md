@@ -65,7 +65,7 @@ The first test take failed only because the free tier's generations were busy. N
 ### 2.1 TTS-ready script (paste each row's tag + text as the prompt)
 | Line | Tags | Text |
 |---|---|---|
-| L001 | `[intimate, curious, half-whisper]` | What if, starting tomorrow, you could see when ANYONE is lying? |
+| L001 | `[intimate, curious, warm speaking voice]` | What if, starting tomorrow, you could see when ANYONE is lying? |
 | L002 | `[crisp, playful]` | Not a guess. Not a feeling... A number. Floating right above their head. |
 | L003 | `[playful, slightly ominous]` | Zero means the truth... A hundred means… well. You'll see. |
 | L003b | `[warm] … [dry, deadpan]` | At first, it feels like the best thing that's ever happened to you... It isn't. But we'll get there. |
@@ -90,16 +90,16 @@ The first test take failed only because the free tier's generations were busy. N
 | L016 | `[quieter, darker]` | Then it starts showing you things you didn't ask for. |
 | L017 | `[gentle, hurt]` | Your best friend says, "No, I'm not mad."... Fifty-five. |
 | L018 | `[flat]` | Your teacher says, "Everyone gets a fair chance.", Forty. |
-| L019 | `[whispering] … [long pause] … [whispering]` | Your dad, on the phone, late at night: "Everything's fine. Don't worry about it."... Eighty-eight. |
+| L019 | `[low, serious, soft speaking voice]` | Your dad, on the phone, late at night: "Everything's fine. Don't worry about it."... Eighty-eight. |
 | L020 | `[measured, heavy]` | You start hearing people differently. Every "I'm good,", every "no worries,", every "love you"… comes with a number. |
-| L021 | `[quiet]` | And numbers don't care how you feel. |
-| L022 | `[tired]` | You stop asking questions. Because you're scared of the answers. |
+| L021 | `[calm, heavy, soft speaking voice]` | And numbers don't care how you feel. |
+| L022 | `[normal speaking voice, calm and serious]` | You stop asking questions. Because you're scared of the answers. |
 | L022b | `[tired, distant]` | At dinner, everyone talks, and you just watch the numbers float, over the mashed potatoes. |
 | L022c | `[lonely]` | Maya texts you, "we're good, right?"... Texts don't have meters... And for some reason, that's worse. |
-| L022d | `[barely audible]` | You realise you don't trust anyone anymore... Not because they changed. Because YOU did. |
+| L022d | `[quiet, sad, soft speaking voice]` | You realise you don't trust anyone anymore... Not because they changed. Because YOU did. |
 | L023 | `[slow, sleepy, calm dread]` | One night, you can't sleep. You go to the bathroom, look in the mirror, and say it out loud. |
-| L024 | `[small, brittle, younger voice]` | "I'm fine." |
-| L025 | `[whispering, confession]` | Ninety-six. |
+| L024 | `[normal speaking voice, flat and unconvincing]` | "I'm fine." |
+| L025 | `[normal speaking voice, slow and heavy]` | Ninety-six. |
 | L026 | `[slow realisation]` | Turns out, the person lying the most, wasn't your friend. Or your dad. Or the card dealer. |
 | L027 | `[voice breaking slightly]` | It was you. To yourself. Every single day. |
 | L028 | `[warmer, gentle]` | And here's the thing the meter never told you... It shows THAT someone is lying... Not WHY. |

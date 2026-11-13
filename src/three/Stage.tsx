@@ -68,7 +68,7 @@ export const Lights = ({preset = 'hallway', keyColor, keyI, keyPos = [-3.5, 5.5,
 export const PostFX = ({focus, g = GRADES.wonder, flash = 0}: {focus: number; g?: Grade; flash?: number}) => (
   <EffectComposer multisampling={FAST ? 0 : 4}>
     {!FAST ? <N8AO aoRadius={0.6} distanceFalloff={1} intensity={2.2} color="#1a1030" /> : <></>}
-    <DepthOfField focusDistance={focus} focalLength={0.03} bokehScale={5} />
+    <DepthOfField focusDistance={focus} focalLength={0.03} bokehScale={3} />
     <Bloom intensity={g.bloom + flash * 0.4} luminanceThreshold={0.72} luminanceSmoothing={0.2} mipmapBlur />
     <ChromaticAberration offset={new Vector2(g.ca * (1 + flash * 2), g.ca * 0.75 * (1 + flash * 2))} radialModulation modulationOffset={0.3} />
     <HueSaturation saturation={g.saturation} />

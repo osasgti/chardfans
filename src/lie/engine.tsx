@@ -225,11 +225,14 @@ export const LieShot = ({spec, beat, dur, sec, seed, fpsRatio = 1, calStops = 0}
           </Sequence>}
         </React.Fragment>);
       })}
-      {spec.extra === 'orbitMeters' && Array.from({length: 14}).map((_, i) => {
-        const ang = (i / 14) * Math.PI * 2 + beat * 0.02, r = 1.6 + (i % 3) * 0.35;
-        const p = projectCam(cam, [Math.cos(ang) * r, 1.3 + Math.sin(i * 1.7) * 0.6, Math.sin(ang) * r]);
+      {spec.extra === 'orbitMeters' && Array.from({length: 8}).map((_, i) => {
+        // 8 meters on one ring, evenly spaced; screen positions kept out of the face zone and caption lane (§54.4)
+        const ang = (i / 8) * Math.PI * 2 + beat * 0.015;
+        const p = projectCam(cam, [Math.cos(ang) * 2.1, 1.35 + Math.sin(ang * 2) * 0.35, Math.sin(ang) * 2.1]);
+        const head = projectCam(cam, [0, 1.42, 0]);
+        const tooClose = Math.hypot(p.x - head.x, p.y - head.y) < 200;
         const v = Math.round(random('om' + i) * 100);
-        return p.visible ? <LieMeter key={'o' + i} beat={beat} start={i * 3} land={i * 3 + 25} x={p.x} y={p.y} value={v} small dur={dur} /> : null;
+        return p.visible && !tooClose && p.y < H - 260 ? <LieMeter key={'o' + i} beat={beat} start={i * 4} land={i * 4 + 25} x={p.x} y={p.y} value={v} small dur={dur} /> : null;
       })}
       {spec.tag && <Tag text={spec.tag} frame={beat} start={4} out={dur - 10} />}
       {spec.title && <Title words={spec.title.words} frame={beat} start={6} y={spec.title.y ?? 0.2} size={spec.title.size ?? 76} emphasis={spec.title.emph ?? []} out={dur - 12} />}
