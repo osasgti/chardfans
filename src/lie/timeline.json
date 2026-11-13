@@ -1,5 +1,5 @@
 {
- "total": 302.461,
+ "total": 309.342,
  "lines": [
   {
    "id": "L001",
@@ -146,58 +146,58 @@
    "act": "hook",
    "text": "Zero means the truth... A hundred means\u2026 well. You'll see.",
    "start": 11.419,
-   "end": 15.457,
-   "audio": null,
+   "end": 16.654,
+   "audio": "vo/L003.wav",
    "words": [
     {
      "text": "Zero",
      "start": 11.419,
-     "end": 11.793
+     "end": 11.904
     },
     {
      "text": "means",
-     "start": 11.793,
-     "end": 12.082
+     "start": 11.904,
+     "end": 12.279
     },
     {
      "text": "the",
-     "start": 12.082,
-     "end": 12.371
+     "start": 12.279,
+     "end": 12.654
     },
     {
      "text": "truth",
-     "start": 12.371,
-     "end": 12.66
+     "start": 12.654,
+     "end": 13.028
     },
     {
      "text": "A",
-     "start": 13.128,
-     "end": 13.417
+     "start": 13.634,
+     "end": 14.009
     },
     {
      "text": "hundred",
-     "start": 13.417,
-     "end": 13.791
+     "start": 14.009,
+     "end": 14.494
     },
     {
      "text": "means\u2026",
-     "start": 13.791,
-     "end": 14.08
+     "start": 14.494,
+     "end": 14.869
     },
     {
      "text": "well.",
-     "start": 14.08,
-     "end": 14.369
+     "start": 14.869,
+     "end": 15.243
     },
     {
      "text": "You'll",
-     "start": 14.624,
-     "end": 14.913
+     "start": 15.574,
+     "end": 15.949
     },
     {
      "text": "see.",
-     "start": 14.913,
-     "end": 15.202
+     "start": 15.949,
+     "end": 16.323
     }
    ]
   },
@@ -205,104 +205,104 @@
    "id": "L003b",
    "act": "hook",
    "text": "At first, it feels like the best thing that's ever happened to you... It isn't. But we'll get there.",
-   "start": 15.907,
-   "end": 22.902,
-   "audio": null,
+   "start": 17.104,
+   "end": 23.624,
+   "audio": "vo/L003b.wav",
    "words": [
     {
      "text": "At",
-     "start": 15.907,
-     "end": 16.196
+     "start": 17.104,
+     "end": 17.373
     },
     {
      "text": "first,",
-     "start": 16.196,
-     "end": 16.485
+     "start": 17.373,
+     "end": 17.643
     },
     {
      "text": "it",
-     "start": 16.587,
-     "end": 16.876
+     "start": 17.738,
+     "end": 18.007
     },
     {
      "text": "feels",
-     "start": 16.876,
-     "end": 17.165
+     "start": 18.007,
+     "end": 18.276
     },
     {
      "text": "like",
-     "start": 17.165,
-     "end": 17.539
+     "start": 18.276,
+     "end": 18.625
     },
     {
      "text": "the",
-     "start": 17.539,
-     "end": 17.828
+     "start": 18.625,
+     "end": 18.894
     },
     {
      "text": "best",
-     "start": 17.828,
-     "end": 18.117
+     "start": 18.894,
+     "end": 19.164
     },
     {
      "text": "thing",
-     "start": 18.117,
-     "end": 18.406
+     "start": 19.164,
+     "end": 19.433
     },
     {
      "text": "that's",
-     "start": 18.406,
-     "end": 18.695
+     "start": 19.433,
+     "end": 19.702
     },
     {
      "text": "ever",
-     "start": 18.695,
-     "end": 19.069
+     "start": 19.702,
+     "end": 20.051
     },
     {
      "text": "happened",
-     "start": 19.069,
-     "end": 19.528
+     "start": 20.051,
+     "end": 20.479
     },
     {
      "text": "to",
-     "start": 19.528,
-     "end": 19.817
+     "start": 20.479,
+     "end": 20.748
     },
     {
      "text": "you",
-     "start": 19.817,
-     "end": 20.106
+     "start": 20.748,
+     "end": 21.017
     },
     {
      "text": "It",
-     "start": 20.573,
-     "end": 20.862
+     "start": 21.453,
+     "end": 21.722
     },
     {
      "text": "isn't.",
-     "start": 20.862,
-     "end": 21.151
+     "start": 21.722,
+     "end": 21.992
     },
     {
      "text": "But",
-     "start": 21.406,
-     "end": 21.695
+     "start": 22.23,
+     "end": 22.499
     },
     {
      "text": "we'll",
-     "start": 21.695,
-     "end": 21.984
+     "start": 22.499,
+     "end": 22.768
     },
     {
      "text": "get",
-     "start": 21.984,
-     "end": 22.273
+     "start": 22.768,
+     "end": 23.038
     },
     {
      "text": "there.",
-     "start": 22.273,
-     "end": 22.647
+     "start": 23.038,
+     "end": 23.386
     }
    ]
   },
@@ -310,74 +310,74 @@
    "id": "L004",
    "act": "act1",
    "text": "You wake up. Your alarm says \"five more minutes won't hurt.\"... Eighty-two percent.",
-   "start": 24.952,
-   "end": 30.452,
-   "audio": null,
+   "start": 25.674,
+   "end": 31.089,
+   "audio": "vo/L004.wav",
    "words": [
     {
      "text": "You",
-     "start": 24.952,
-     "end": 25.241
+     "start": 25.674,
+     "end": 25.958
     },
     {
      "text": "wake",
-     "start": 25.241,
-     "end": 25.615
+     "start": 25.958,
+     "end": 26.327
     },
     {
      "text": "up.",
-     "start": 25.615,
-     "end": 25.904
+     "start": 26.327,
+     "end": 26.611
     },
     {
      "text": "Your",
-     "start": 26.159,
-     "end": 26.448
+     "start": 26.862,
+     "end": 27.147
     },
     {
      "text": "alarm",
-     "start": 26.448,
-     "end": 26.822
+     "start": 27.147,
+     "end": 27.515
     },
     {
      "text": "says",
-     "start": 26.822,
-     "end": 27.111
+     "start": 27.515,
+     "end": 27.8
     },
     {
      "text": "\"five",
-     "start": 27.111,
-     "end": 27.485
+     "start": 27.8,
+     "end": 28.168
     },
     {
      "text": "more",
-     "start": 27.485,
-     "end": 27.859
+     "start": 28.168,
+     "end": 28.536
     },
     {
      "text": "minutes",
-     "start": 27.859,
-     "end": 28.318
+     "start": 28.536,
+     "end": 28.988
     },
     {
      "text": "won't",
-     "start": 28.318,
-     "end": 28.607
+     "start": 28.988,
+     "end": 29.273
     },
     {
      "text": "hurt.\"",
-     "start": 28.607,
-     "end": 28.896
+     "start": 29.273,
+     "end": 29.558
     },
     {
      "text": "Eighty-two",
-     "start": 29.364,
-     "end": 29.823
+     "start": 30.018,
+     "end": 30.47
     },
     {
      "text": "percent.",
-     "start": 29.823,
-     "end": 30.197
+     "start": 30.47,
+     "end": 30.838
     }
    ]
   },
@@ -385,59 +385,59 @@
    "id": "L005",
    "act": "act1",
    "text": "Downstairs, Mom says breakfast is \"almost ready.\" Thirty-one percent. Fair.",
-   "start": 30.902,
-   "end": 35.084,
-   "audio": null,
+   "start": 31.539,
+   "end": 37.465,
+   "audio": "vo/L005.wav",
    "words": [
     {
      "text": "Downstairs,",
-     "start": 30.902,
-     "end": 31.276
+     "start": 31.539,
+     "end": 32.069
     },
     {
      "text": "Mom",
-     "start": 31.378,
-     "end": 31.667
+     "start": 32.214,
+     "end": 32.623
     },
     {
      "text": "says",
-     "start": 31.667,
-     "end": 31.956
+     "start": 32.623,
+     "end": 33.033
     },
     {
      "text": "breakfast",
-     "start": 31.956,
-     "end": 32.33
+     "start": 33.033,
+     "end": 33.563
     },
     {
      "text": "is",
-     "start": 32.33,
-     "end": 32.619
+     "start": 33.563,
+     "end": 33.972
     },
     {
      "text": "\"almost",
-     "start": 32.619,
-     "end": 32.993
+     "start": 33.972,
+     "end": 34.502
     },
     {
      "text": "ready.\"",
-     "start": 32.993,
-     "end": 33.367
+     "start": 34.502,
+     "end": 35.032
     },
     {
      "text": "Thirty-one",
-     "start": 33.367,
-     "end": 33.911
+     "start": 35.032,
+     "end": 35.803
     },
     {
      "text": "percent.",
-     "start": 33.911,
-     "end": 34.285
+     "start": 35.803,
+     "end": 36.333
     },
     {
      "text": "Fair.",
-     "start": 34.54,
-     "end": 34.829
+     "start": 36.694,
+     "end": 37.104
     }
    ]
   },
@@ -445,69 +445,69 @@
    "id": "L006",
    "act": "act1",
    "text": "Your little brother says he did NOT eat the last cookie... Ninety-nine.",
-   "start": 35.534,
-   "end": 40.319,
-   "audio": null,
+   "start": 37.915,
+   "end": 42.734,
+   "audio": "vo/L006.wav",
    "words": [
     {
      "text": "Your",
-     "start": 35.534,
-     "end": 35.823
+     "start": 37.915,
+     "end": 38.206
     },
     {
      "text": "little",
-     "start": 35.823,
-     "end": 36.197
+     "start": 38.206,
+     "end": 38.583
     },
     {
      "text": "brother",
-     "start": 36.197,
-     "end": 36.571
+     "start": 38.583,
+     "end": 38.959
     },
     {
      "text": "says",
-     "start": 36.571,
-     "end": 36.86
+     "start": 38.959,
+     "end": 39.25
     },
     {
      "text": "he",
-     "start": 36.86,
-     "end": 37.149
+     "start": 39.25,
+     "end": 39.541
     },
     {
      "text": "did",
-     "start": 37.149,
-     "end": 37.438
+     "start": 39.541,
+     "end": 39.832
     },
     {
      "text": "NOT",
-     "start": 37.438,
-     "end": 37.727
+     "start": 39.832,
+     "end": 40.124
     },
     {
      "text": "eat",
-     "start": 37.727,
-     "end": 38.016
+     "start": 40.124,
+     "end": 40.415
     },
     {
      "text": "the",
-     "start": 38.016,
-     "end": 38.305
+     "start": 40.415,
+     "end": 40.706
     },
     {
      "text": "last",
-     "start": 38.305,
-     "end": 38.594
+     "start": 40.706,
+     "end": 40.997
     },
     {
      "text": "cookie",
-     "start": 38.594,
-     "end": 38.968
+     "start": 40.997,
+     "end": 41.373
     },
     {
      "text": "Ninety-nine.",
-     "start": 39.435,
-     "end": 40.064
+     "start": 41.844,
+     "end": 42.477
     }
    ]
   },
@@ -515,124 +515,124 @@
    "id": "L007",
    "act": "act1",
    "text": "The rules are simple. The meter only shows up when someone talks. It glows gold when they're honest\u2026 and red when they're not.",
-   "start": 41.119,
-   "end": 48.676,
+   "start": 43.534,
+   "end": 51.09,
    "audio": "vo/L007.wav",
    "words": [
     {
      "text": "The",
-     "start": 41.119,
-     "end": 41.384
+     "start": 43.534,
+     "end": 43.799
     },
     {
      "text": "rules",
-     "start": 41.384,
-     "end": 41.726
+     "start": 43.799,
+     "end": 44.141
     },
     {
      "text": "are",
-     "start": 41.726,
-     "end": 42.068
+     "start": 44.141,
+     "end": 44.483
     },
     {
      "text": "simple.",
-     "start": 42.068,
-     "end": 42.41
+     "start": 44.483,
+     "end": 44.825
     },
     {
      "text": "The",
-     "start": 42.643,
-     "end": 42.907
+     "start": 45.058,
+     "end": 45.322
     },
     {
      "text": "meter",
-     "start": 42.907,
-     "end": 43.25
+     "start": 45.322,
+     "end": 45.664
     },
     {
      "text": "only",
-     "start": 43.25,
-     "end": 43.592
+     "start": 45.664,
+     "end": 46.006
     },
     {
      "text": "shows",
-     "start": 43.592,
-     "end": 43.856
+     "start": 46.006,
+     "end": 46.271
     },
     {
      "text": "up",
-     "start": 43.856,
-     "end": 44.12
+     "start": 46.271,
+     "end": 46.535
     },
     {
      "text": "when",
-     "start": 44.12,
-     "end": 44.385
+     "start": 46.535,
+     "end": 46.799
     },
     {
      "text": "someone",
-     "start": 44.385,
-     "end": 44.804
+     "start": 46.799,
+     "end": 47.219
     },
     {
      "text": "talks.",
-     "start": 44.804,
-     "end": 45.069
+     "start": 47.219,
+     "end": 47.483
     },
     {
      "text": "It",
-     "start": 45.302,
-     "end": 45.566
+     "start": 47.717,
+     "end": 47.981
     },
     {
      "text": "glows",
-     "start": 45.566,
-     "end": 45.83
+     "start": 47.981,
+     "end": 48.245
     },
     {
      "text": "gold",
-     "start": 45.83,
-     "end": 46.095
+     "start": 48.245,
+     "end": 48.51
     },
     {
      "text": "when",
-     "start": 46.095,
-     "end": 46.359
+     "start": 48.51,
+     "end": 48.774
     },
     {
      "text": "they're",
-     "start": 46.359,
-     "end": 46.701
+     "start": 48.774,
+     "end": 49.116
     },
     {
      "text": "honest\u2026",
-     "start": 46.701,
-     "end": 47.043
+     "start": 49.116,
+     "end": 49.458
     },
     {
      "text": "and",
-     "start": 47.043,
-     "end": 47.307
+     "start": 49.458,
+     "end": 49.722
     },
     {
      "text": "red",
-     "start": 47.307,
-     "end": 47.572
+     "start": 49.722,
+     "end": 49.987
     },
     {
      "text": "when",
-     "start": 47.572,
-     "end": 47.836
+     "start": 49.987,
+     "end": 50.251
     },
     {
      "text": "they're",
-     "start": 47.836,
-     "end": 48.178
+     "start": 50.251,
+     "end": 50.593
     },
     {
      "text": "not.",
-     "start": 48.178,
-     "end": 48.442
+     "start": 50.593,
+     "end": 50.857
     }
    ]
   },
@@ -640,99 +640,99 @@
    "id": "L008",
    "act": "act1",
    "text": "It works on people, on ads, on the cereal box that says \"part of a balanced breakfast.\"... SEVENTY-FOUR.",
-   "start": 49.126,
-   "end": 55.028,
+   "start": 51.54,
+   "end": 57.443,
    "audio": "vo/L008.wav",
    "words": [
     {
      "text": "It",
-     "start": 49.126,
-     "end": 49.376
+     "start": 51.54,
+     "end": 51.791
     },
     {
      "text": "works",
-     "start": 49.376,
-     "end": 49.627
+     "start": 51.791,
+     "end": 52.042
     },
     {
      "text": "on",
-     "start": 49.627,
-     "end": 49.877
+     "start": 52.042,
+     "end": 52.292
     },
     {
      "text": "people,",
-     "start": 49.877,
-     "end": 50.202
+     "start": 52.292,
+     "end": 52.616
     },
     {
      "text": "on",
-     "start": 50.29,
-     "end": 50.541
+     "start": 52.705,
+     "end": 52.955
     },
     {
      "text": "ads,",
-     "start": 50.541,
-     "end": 50.791
+     "start": 52.955,
+     "end": 53.206
     },
     {
      "text": "on",
-     "start": 50.88,
-     "end": 51.13
+     "start": 53.294,
+     "end": 53.545
     },
     {
      "text": "the",
-     "start": 51.13,
-     "end": 51.381
+     "start": 53.545,
+     "end": 53.795
     },
     {
      "text": "cereal",
-     "start": 51.381,
-     "end": 51.705
+     "start": 53.795,
+     "end": 54.12
     },
     {
      "text": "box",
-     "start": 51.705,
-     "end": 51.955
+     "start": 54.12,
+     "end": 54.37
     },
     {
      "text": "that",
-     "start": 51.955,
-     "end": 52.206
+     "start": 54.37,
+     "end": 54.621
     },
     {
      "text": "says",
-     "start": 52.206,
-     "end": 52.457
+     "start": 54.621,
+     "end": 54.871
     },
     {
      "text": "\"part",
-     "start": 52.457,
-     "end": 52.707
+     "start": 54.871,
+     "end": 55.122
     },
     {
      "text": "of",
-     "start": 52.707,
-     "end": 52.958
+     "start": 55.122,
+     "end": 55.372
     },
     {
      "text": "a",
-     "start": 52.958,
-     "end": 53.208
+     "start": 55.372,
+     "end": 55.623
     },
     {
      "text": "balanced",
-     "start": 53.208,
-     "end": 53.606
+     "start": 55.623,
+     "end": 56.021
     },
     {
      "text": "breakfast.\"",
-     "start": 53.606,
-     "end": 53.93
+     "start": 56.021,
+     "end": 56.345
     },
     {
      "text": "SEVENTY-FOUR.",
-     "start": 54.336,
-     "end": 54.807
+     "start": 56.751,
+     "end": 57.222
     }
    ]
   },
@@ -740,94 +740,94 @@
    "id": "L008b",
    "act": "act1",
    "text": "On the bus, the driver says he'll \"wait just one more minute.\" Ninety. He does not wait.",
-   "start": 55.478,
-   "end": 61.598,
-   "audio": null,
+   "start": 57.893,
+   "end": 64.532,
+   "audio": "vo/L008b.wav",
    "words": [
     {
      "text": "On",
-     "start": 55.478,
-     "end": 55.767
+     "start": 57.893,
+     "end": 58.207
     },
     {
      "text": "the",
-     "start": 55.767,
-     "end": 56.056
+     "start": 58.207,
+     "end": 58.52
     },
     {
      "text": "bus,",
-     "start": 56.056,
-     "end": 56.345
+     "start": 58.52,
+     "end": 58.834
     },
     {
      "text": "the",
-     "start": 56.447,
-     "end": 56.736
+     "start": 58.944,
+     "end": 59.258
     },
     {
      "text": "driver",
-     "start": 56.736,
-     "end": 57.11
+     "start": 59.258,
+     "end": 59.664
     },
     {
      "text": "says",
-     "start": 57.11,
-     "end": 57.399
+     "start": 59.664,
+     "end": 59.977
     },
     {
      "text": "he'll",
-     "start": 57.399,
-     "end": 57.688
+     "start": 59.977,
+     "end": 60.291
     },
     {
      "text": "\"wait",
-     "start": 57.688,
-     "end": 57.977
+     "start": 60.291,
+     "end": 60.604
     },
     {
      "text": "just",
-     "start": 57.977,
-     "end": 58.266
+     "start": 60.604,
+     "end": 60.918
     },
     {
      "text": "one",
-     "start": 58.266,
-     "end": 58.64
+     "start": 60.918,
+     "end": 61.323
     },
     {
      "text": "more",
-     "start": 58.64,
-     "end": 59.014
+     "start": 61.323,
+     "end": 61.729
     },
     {
      "text": "minute.\"",
-     "start": 59.014,
-     "end": 59.473
+     "start": 61.729,
+     "end": 62.227
     },
     {
      "text": "Ninety.",
-     "start": 59.473,
-     "end": 59.932
+     "start": 62.227,
+     "end": 62.725
     },
     {
      "text": "He",
-     "start": 60.187,
-     "end": 60.476
+     "start": 63.002,
+     "end": 63.315
     },
     {
      "text": "does",
-     "start": 60.476,
-     "end": 60.765
+     "start": 63.315,
+     "end": 63.629
     },
     {
      "text": "not",
-     "start": 60.765,
-     "end": 61.054
+     "start": 63.629,
+     "end": 63.942
     },
     {
      "text": "wait.",
-     "start": 61.054,
-     "end": 61.343
+     "start": 63.942,
+     "end": 64.256
     }
    ]
   },
@@ -835,119 +835,119 @@
    "id": "L008c",
    "act": "act1",
    "text": "A guy on a billboard promises you'll \"lose ten pounds in a week.\"... The meter is so red, it's basically on fire.",
-   "start": 62.048,
-   "end": 69.996,
-   "audio": null,
+   "start": 64.982,
+   "end": 73.828,
+   "audio": "vo/L008c.wav",
    "words": [
     {
      "text": "A",
-     "start": 62.048,
-     "end": 62.337
+     "start": 64.982,
+     "end": 65.304
     },
     {
      "text": "guy",
-     "start": 62.337,
-     "end": 62.626
+     "start": 65.304,
+     "end": 65.626
     },
     {
      "text": "on",
-     "start": 62.626,
-     "end": 62.915
+     "start": 65.626,
+     "end": 65.947
     },
     {
      "text": "a",
-     "start": 62.915,
-     "end": 63.204
+     "start": 65.947,
+     "end": 66.269
     },
     {
      "text": "billboard",
-     "start": 63.204,
-     "end": 63.578
+     "start": 66.269,
+     "end": 66.685
     },
     {
      "text": "promises",
-     "start": 63.578,
-     "end": 64.037
+     "start": 66.685,
+     "end": 67.196
     },
     {
      "text": "you'll",
-     "start": 64.037,
-     "end": 64.326
+     "start": 67.196,
+     "end": 67.518
     },
     {
      "text": "\"lose",
-     "start": 64.326,
-     "end": 64.7
+     "start": 67.518,
+     "end": 67.934
     },
     {
      "text": "ten",
-     "start": 64.7,
-     "end": 64.989
+     "start": 67.934,
+     "end": 68.256
     },
     {
      "text": "pounds",
-     "start": 64.989,
-     "end": 65.278
+     "start": 68.256,
+     "end": 68.577
     },
     {
      "text": "in",
-     "start": 65.278,
-     "end": 65.567
+     "start": 68.577,
+     "end": 68.899
     },
     {
      "text": "a",
-     "start": 65.567,
-     "end": 65.856
+     "start": 68.899,
+     "end": 69.221
     },
     {
      "text": "week.\"",
-     "start": 65.856,
-     "end": 66.145
+     "start": 69.221,
+     "end": 69.542
     },
     {
      "text": "The",
-     "start": 66.613,
-     "end": 66.902
+     "start": 70.063,
+     "end": 70.384
     },
     {
      "text": "meter",
-     "start": 66.902,
-     "end": 67.276
+     "start": 70.384,
+     "end": 70.801
     },
     {
      "text": "is",
-     "start": 67.276,
-     "end": 67.565
+     "start": 70.801,
+     "end": 71.122
     },
     {
      "text": "so",
-     "start": 67.565,
-     "end": 67.854
+     "start": 71.122,
+     "end": 71.444
     },
     {
      "text": "red,",
-     "start": 67.854,
-     "end": 68.143
+     "start": 71.444,
+     "end": 71.766
     },
     {
      "text": "it's",
-     "start": 68.245,
-     "end": 68.534
+     "start": 71.879,
+     "end": 72.201
     },
     {
      "text": "basically",
-     "start": 68.534,
-     "end": 69.078
+     "start": 72.201,
+     "end": 72.806
     },
     {
      "text": "on",
-     "start": 69.078,
-     "end": 69.367
+     "start": 72.806,
+     "end": 73.128
     },
     {
      "text": "fire.",
-     "start": 69.367,
-     "end": 69.741
+     "start": 73.128,
+     "end": 73.544
     }
    ]
   },
@@ -955,129 +955,129 @@
    "id": "L008d",
    "act": "act1",
    "text": "By lunch, you've figured out the first big secret... Almost nobody lies to hurt you. They lie to make things EASIER. Mostly for themselves.",
-   "start": 70.446,
-   "end": 79.736,
-   "audio": null,
+   "start": 74.278,
+   "end": 84.352,
+   "audio": "vo/L008d.wav",
    "words": [
     {
      "text": "By",
-     "start": 70.446,
-     "end": 70.735
+     "start": 74.278,
+     "end": 74.591
     },
     {
      "text": "lunch,",
-     "start": 70.735,
-     "end": 71.024
+     "start": 74.591,
+     "end": 74.905
     },
     {
      "text": "you've",
-     "start": 71.126,
-     "end": 71.5
+     "start": 75.015,
+     "end": 75.421
     },
     {
      "text": "figured",
-     "start": 71.5,
-     "end": 71.959
+     "start": 75.421,
+     "end": 75.919
     },
     {
      "text": "out",
-     "start": 71.959,
-     "end": 72.248
+     "start": 75.919,
+     "end": 76.232
     },
     {
      "text": "the",
-     "start": 72.248,
-     "end": 72.537
+     "start": 76.232,
+     "end": 76.545
     },
     {
      "text": "first",
-     "start": 72.537,
-     "end": 72.826
+     "start": 76.545,
+     "end": 76.859
     },
     {
      "text": "big",
-     "start": 72.826,
-     "end": 73.115
+     "start": 76.859,
+     "end": 77.172
     },
     {
      "text": "secret",
-     "start": 73.115,
-     "end": 73.489
+     "start": 77.172,
+     "end": 77.578
     },
     {
      "text": "Almost",
-     "start": 73.956,
-     "end": 74.33
+     "start": 78.085,
+     "end": 78.49
     },
     {
      "text": "nobody",
-     "start": 74.33,
-     "end": 74.789
+     "start": 78.49,
+     "end": 78.988
     },
     {
      "text": "lies",
-     "start": 74.789,
-     "end": 75.078
+     "start": 78.988,
+     "end": 79.301
     },
     {
      "text": "to",
-     "start": 75.078,
-     "end": 75.367
+     "start": 79.301,
+     "end": 79.615
     },
     {
      "text": "hurt",
-     "start": 75.367,
-     "end": 75.656
+     "start": 79.615,
+     "end": 79.928
     },
     {
      "text": "you.",
-     "start": 75.656,
-     "end": 75.945
+     "start": 79.928,
+     "end": 80.241
     },
     {
      "text": "They",
-     "start": 76.2,
-     "end": 76.489
+     "start": 80.518,
+     "end": 80.831
     },
     {
      "text": "lie",
-     "start": 76.489,
-     "end": 76.778
+     "start": 80.831,
+     "end": 81.145
     },
     {
      "text": "to",
-     "start": 76.778,
-     "end": 77.067
+     "start": 81.145,
+     "end": 81.458
     },
     {
      "text": "make",
-     "start": 77.067,
-     "end": 77.441
+     "start": 81.458,
+     "end": 81.864
     },
     {
      "text": "things",
-     "start": 77.441,
-     "end": 77.73
+     "start": 81.864,
+     "end": 82.177
     },
     {
      "text": "EASIER.",
-     "start": 77.73,
-     "end": 78.104
+     "start": 82.177,
+     "end": 82.583
     },
     {
      "text": "Mostly",
-     "start": 78.359,
-     "end": 78.733
+     "start": 82.859,
+     "end": 83.265
     },
     {
      "text": "for",
-     "start": 78.733,
-     "end": 79.022
+     "start": 83.265,
+     "end": 83.578
     },
     {
      "text": "themselves.",
-     "start": 79.022,
-     "end": 79.481
+     "start": 83.578,
+     "end": 84.076
     }
    ]
   },
@@ -1085,44 +1085,44 @@
    "id": "L009",
    "act": "act2",
    "text": "At school, it's basically a cheat code.",
-   "start": 81.786,
-   "end": 84.506,
-   "audio": null,
+   "start": 86.402,
+   "end": 89.002,
+   "audio": "vo/L009.wav",
    "words": [
     {
      "text": "At",
-     "start": 81.786,
-     "end": 82.075
+     "start": 86.402,
+     "end": 86.678
     },
     {
      "text": "school,",
-     "start": 82.075,
-     "end": 82.364
+     "start": 86.678,
+     "end": 86.955
     },
     {
      "text": "it's",
-     "start": 82.466,
-     "end": 82.755
+     "start": 87.052,
+     "end": 87.328
     },
     {
      "text": "basically",
-     "start": 82.755,
-     "end": 83.299
+     "start": 87.328,
+     "end": 87.848
     },
     {
      "text": "a",
-     "start": 83.299,
-     "end": 83.588
+     "start": 87.848,
+     "end": 88.125
     },
     {
      "text": "cheat",
-     "start": 83.588,
-     "end": 83.877
+     "start": 88.125,
+     "end": 88.401
     },
     {
      "text": "code.",
-     "start": 83.877,
-     "end": 84.251
+     "start": 88.401,
+     "end": 88.758
     }
    ]
   },
@@ -1130,69 +1130,69 @@
    "id": "L010",
    "act": "act2",
    "text": "\"This won't be on the test.\" Ninety-one. You study that chapter twice.",
-   "start": 84.956,
-   "end": 89.529,
-   "audio": null,
+   "start": 89.452,
+   "end": 94.47,
+   "audio": "vo/L010.wav",
    "words": [
     {
      "text": "\"This",
-     "start": 84.956,
-     "end": 85.245
+     "start": 89.452,
+     "end": 89.769
     },
     {
      "text": "won't",
-     "start": 85.245,
-     "end": 85.534
+     "start": 89.769,
+     "end": 90.086
     },
     {
      "text": "be",
-     "start": 85.534,
-     "end": 85.823
+     "start": 90.086,
+     "end": 90.404
     },
     {
      "text": "on",
-     "start": 85.823,
-     "end": 86.112
+     "start": 90.404,
+     "end": 90.721
     },
     {
      "text": "the",
-     "start": 86.112,
-     "end": 86.401
+     "start": 90.721,
+     "end": 91.038
     },
     {
      "text": "test.\"",
-     "start": 86.401,
-     "end": 86.69
+     "start": 91.038,
+     "end": 91.355
     },
     {
      "text": "Ninety-one.",
-     "start": 86.69,
-     "end": 87.319
+     "start": 91.355,
+     "end": 92.045
     },
     {
      "text": "You",
-     "start": 87.574,
-     "end": 87.863
+     "start": 92.325,
+     "end": 92.642
     },
     {
      "text": "study",
-     "start": 87.863,
-     "end": 88.237
+     "start": 92.642,
+     "end": 93.053
     },
     {
      "text": "that",
-     "start": 88.237,
-     "end": 88.526
+     "start": 93.053,
+     "end": 93.37
     },
     {
      "text": "chapter",
-     "start": 88.526,
-     "end": 88.9
+     "start": 93.37,
+     "end": 93.78
     },
     {
      "text": "twice.",
-     "start": 88.9,
-     "end": 89.274
+     "start": 93.78,
+     "end": 94.191
     }
    ]
   },
@@ -1200,69 +1200,69 @@
    "id": "L011",
    "act": "act2",
    "text": "\"I totally didn't copy your homework.\" Hundred. You knew that one already.",
-   "start": 89.979,
-   "end": 94.722,
-   "audio": null,
+   "start": 94.92,
+   "end": 99.872,
+   "audio": "vo/L011.wav",
    "words": [
     {
      "text": "\"I",
-     "start": 89.979,
-     "end": 90.268
+     "start": 94.92,
+     "end": 95.222
     },
     {
      "text": "totally",
-     "start": 90.268,
-     "end": 90.727
+     "start": 95.222,
+     "end": 95.701
     },
     {
      "text": "didn't",
-     "start": 90.727,
-     "end": 91.016
+     "start": 95.701,
+     "end": 96.003
     },
     {
      "text": "copy",
-     "start": 91.016,
-     "end": 91.39
+     "start": 96.003,
+     "end": 96.393
     },
     {
      "text": "your",
-     "start": 91.39,
-     "end": 91.679
+     "start": 96.393,
+     "end": 96.695
     },
     {
      "text": "homework.\"",
-     "start": 91.679,
-     "end": 92.138
+     "start": 96.695,
+     "end": 97.174
     },
     {
      "text": "Hundred.",
-     "start": 92.138,
-     "end": 92.512
+     "start": 97.174,
+     "end": 97.565
     },
     {
      "text": "You",
-     "start": 92.767,
-     "end": 93.056
+     "start": 97.831,
+     "end": 98.132
     },
     {
      "text": "knew",
-     "start": 93.056,
-     "end": 93.345
+     "start": 98.132,
+     "end": 98.434
     },
     {
      "text": "that",
-     "start": 93.345,
-     "end": 93.634
+     "start": 98.434,
+     "end": 98.736
     },
     {
      "text": "one",
-     "start": 93.634,
-     "end": 94.008
+     "start": 98.736,
+     "end": 99.126
     },
     {
      "text": "already.",
-     "start": 94.008,
-     "end": 94.467
+     "start": 99.126,
+     "end": 99.605
     }
    ]
   },
@@ -1270,104 +1270,104 @@
    "id": "L012",
    "act": "act2",
    "text": "At the school's casino night fundraiser, the guy running the card table says the deck is \"totally random.\"... Sixty-eight.",
-   "start": 95.172,
-   "end": 102.423,
-   "audio": null,
+   "start": 100.322,
+   "end": 107.116,
+   "audio": "vo/L012.wav",
    "words": [
     {
      "text": "At",
-     "start": 95.172,
-     "end": 95.461
+     "start": 100.322,
+     "end": 100.592
     },
     {
      "text": "the",
-     "start": 95.461,
-     "end": 95.75
+     "start": 100.592,
+     "end": 100.863
     },
     {
      "text": "school's",
-     "start": 95.75,
-     "end": 96.039
+     "start": 100.863,
+     "end": 101.134
     },
     {
      "text": "casino",
-     "start": 96.039,
-     "end": 96.498
+     "start": 101.134,
+     "end": 101.564
     },
     {
      "text": "night",
-     "start": 96.498,
-     "end": 96.787
+     "start": 101.564,
+     "end": 101.835
     },
     {
      "text": "fundraiser,",
-     "start": 96.787,
-     "end": 97.246
+     "start": 101.835,
+     "end": 102.265
     },
     {
      "text": "the",
-     "start": 97.348,
-     "end": 97.637
+     "start": 102.361,
+     "end": 102.631
     },
     {
      "text": "guy",
-     "start": 97.637,
-     "end": 97.926
+     "start": 102.631,
+     "end": 102.902
     },
     {
      "text": "running",
-     "start": 97.926,
-     "end": 98.3
+     "start": 102.902,
+     "end": 103.253
     },
     {
      "text": "the",
-     "start": 98.3,
-     "end": 98.589
+     "start": 103.253,
+     "end": 103.524
     },
     {
      "text": "card",
-     "start": 98.589,
-     "end": 98.878
+     "start": 103.524,
+     "end": 103.794
     },
     {
      "text": "table",
-     "start": 98.878,
-     "end": 99.252
+     "start": 103.794,
+     "end": 104.145
     },
     {
      "text": "says",
-     "start": 99.252,
-     "end": 99.541
+     "start": 104.145,
+     "end": 104.416
     },
     {
      "text": "the",
-     "start": 99.541,
-     "end": 99.83
+     "start": 104.416,
+     "end": 104.686
     },
     {
      "text": "deck",
-     "start": 99.83,
-     "end": 100.119
+     "start": 104.686,
+     "end": 104.957
     },
     {
      "text": "is",
-     "start": 100.119,
-     "end": 100.408
+     "start": 104.957,
+     "end": 105.228
     },
     {
      "text": "\"totally",
-     "start": 100.408,
-     "end": 100.867
+     "start": 105.228,
+     "end": 105.658
     },
     {
      "text": "random.\"",
-     "start": 100.867,
-     "end": 101.241
+     "start": 105.658,
+     "end": 106.009
     },
     {
      "text": "Sixty-eight.",
-     "start": 101.709,
-     "end": 102.168
+     "start": 106.447,
+     "end": 106.877
     }
    ]
   },
@@ -1375,99 +1375,99 @@
    "id": "L013",
    "act": "act2",
    "text": "You don't win money. The chips are fake... But you win EVERY hand. And people start to notice.",
-   "start": 102.873,
-   "end": 109.987,
-   "audio": null,
+   "start": 107.566,
+   "end": 114.479,
+   "audio": "vo/L013.wav",
    "words": [
     {
      "text": "You",
-     "start": 102.873,
-     "end": 103.162
+     "start": 107.566,
+     "end": 107.847
     },
     {
      "text": "don't",
-     "start": 103.162,
-     "end": 103.451
+     "start": 107.847,
+     "end": 108.127
     },
     {
      "text": "win",
-     "start": 103.451,
-     "end": 103.74
+     "start": 108.127,
+     "end": 108.408
     },
     {
      "text": "money.",
-     "start": 103.74,
-     "end": 104.114
+     "start": 108.408,
+     "end": 108.772
     },
     {
      "text": "The",
-     "start": 104.369,
-     "end": 104.658
+     "start": 109.019,
+     "end": 109.3
     },
     {
      "text": "chips",
-     "start": 104.658,
-     "end": 104.947
+     "start": 109.3,
+     "end": 109.581
     },
     {
      "text": "are",
-     "start": 104.947,
-     "end": 105.321
+     "start": 109.581,
+     "end": 109.945
     },
     {
      "text": "fake",
-     "start": 105.321,
-     "end": 105.695
+     "start": 109.945,
+     "end": 110.308
     },
     {
      "text": "But",
-     "start": 106.162,
-     "end": 106.451
+     "start": 110.762,
+     "end": 111.043
     },
     {
      "text": "you",
-     "start": 106.451,
-     "end": 106.74
+     "start": 111.043,
+     "end": 111.324
     },
     {
      "text": "win",
-     "start": 106.74,
-     "end": 107.029
+     "start": 111.324,
+     "end": 111.605
     },
     {
      "text": "EVERY",
-     "start": 107.029,
-     "end": 107.488
+     "start": 111.605,
+     "end": 112.051
     },
     {
      "text": "hand.",
-     "start": 107.488,
-     "end": 107.777
+     "start": 112.051,
+     "end": 112.331
     },
     {
      "text": "And",
-     "start": 108.032,
-     "end": 108.321
+     "start": 112.579,
+     "end": 112.86
     },
     {
      "text": "people",
-     "start": 108.321,
-     "end": 108.695
+     "start": 112.86,
+     "end": 113.223
     },
     {
      "text": "start",
-     "start": 108.695,
-     "end": 108.984
+     "start": 113.223,
+     "end": 113.504
     },
     {
      "text": "to",
-     "start": 108.984,
-     "end": 109.273
+     "start": 113.504,
+     "end": 113.785
     },
     {
      "text": "notice.",
-     "start": 109.273,
-     "end": 109.732
+     "start": 113.785,
+     "end": 114.231
     }
    ]
   },
@@ -1475,94 +1475,94 @@
    "id": "L014",
    "act": "act2",
    "text": "Suddenly, everyone wants you on their team. For group projects. For debates. For \"is he into me?\"",
-   "start": 110.437,
-   "end": 116.982,
-   "audio": null,
+   "start": 114.929,
+   "end": 121.691,
+   "audio": "vo/L014.wav",
    "words": [
     {
      "text": "Suddenly,",
-     "start": 110.437,
-     "end": 110.896
+     "start": 114.929,
+     "end": 115.403
     },
     {
      "text": "everyone",
-     "start": 110.998,
-     "end": 111.542
+     "start": 115.509,
+     "end": 116.071
     },
     {
      "text": "wants",
-     "start": 111.542,
-     "end": 111.831
+     "start": 116.071,
+     "end": 116.369
     },
     {
      "text": "you",
-     "start": 111.831,
-     "end": 112.12
+     "start": 116.369,
+     "end": 116.668
     },
     {
      "text": "on",
-     "start": 112.12,
-     "end": 112.409
+     "start": 116.668,
+     "end": 116.966
     },
     {
      "text": "their",
-     "start": 112.409,
-     "end": 112.698
+     "start": 116.966,
+     "end": 117.265
     },
     {
      "text": "team.",
-     "start": 112.698,
-     "end": 112.987
+     "start": 117.265,
+     "end": 117.564
     },
     {
      "text": "For",
-     "start": 113.242,
-     "end": 113.531
+     "start": 117.827,
+     "end": 118.126
     },
     {
      "text": "group",
-     "start": 113.531,
-     "end": 113.82
+     "start": 118.126,
+     "end": 118.424
     },
     {
      "text": "projects.",
-     "start": 113.82,
-     "end": 114.194
+     "start": 118.424,
+     "end": 118.811
     },
     {
      "text": "For",
-     "start": 114.449,
-     "end": 114.738
+     "start": 119.074,
+     "end": 119.373
     },
     {
      "text": "debates.",
-     "start": 114.738,
-     "end": 115.197
+     "start": 119.373,
+     "end": 119.847
     },
     {
      "text": "For",
-     "start": 115.452,
-     "end": 115.741
+     "start": 120.111,
+     "end": 120.409
     },
     {
      "text": "\"is",
-     "start": 115.741,
-     "end": 116.03
+     "start": 120.409,
+     "end": 120.708
     },
     {
      "text": "he",
-     "start": 116.03,
-     "end": 116.319
+     "start": 120.708,
+     "end": 121.006
     },
     {
      "text": "into",
-     "start": 116.319,
-     "end": 116.693
+     "start": 121.006,
+     "end": 121.393
     },
     {
      "text": "me?\"",
-     "start": 116.693,
-     "end": 116.982
+     "start": 121.393,
+     "end": 121.691
     }
    ]
   },
@@ -1570,64 +1570,64 @@
    "id": "L015",
    "act": "act2",
    "text": "For about a week,... you're the most popular kid in school.",
-   "start": 117.432,
-   "end": 121.776,
-   "audio": null,
+   "start": 122.141,
+   "end": 126.233,
+   "audio": "vo/L015.wav",
    "words": [
     {
      "text": "For",
-     "start": 117.432,
-     "end": 117.721
+     "start": 122.141,
+     "end": 122.414
     },
     {
      "text": "about",
-     "start": 117.721,
-     "end": 118.095
+     "start": 122.414,
+     "end": 122.766
     },
     {
      "text": "a",
-     "start": 118.095,
-     "end": 118.384
+     "start": 122.766,
+     "end": 123.038
     },
     {
      "text": "week,",
-     "start": 118.384,
-     "end": 118.673
+     "start": 123.038,
+     "end": 123.31
     },
     {
      "text": "you're",
-     "start": 119.243,
-     "end": 119.617
+     "start": 123.847,
+     "end": 124.199
     },
     {
      "text": "the",
-     "start": 119.617,
-     "end": 119.906
+     "start": 124.199,
+     "end": 124.471
     },
     {
      "text": "most",
-     "start": 119.906,
-     "end": 120.195
+     "start": 124.471,
+     "end": 124.744
     },
     {
      "text": "popular",
-     "start": 120.195,
-     "end": 120.654
+     "start": 124.744,
+     "end": 125.176
     },
     {
      "text": "kid",
-     "start": 120.654,
-     "end": 120.943
+     "start": 125.176,
+     "end": 125.448
     },
     {
      "text": "in",
-     "start": 120.943,
-     "end": 121.232
+     "start": 125.448,
+     "end": 125.72
     },
     {
      "text": "school.",
-     "start": 121.232,
-     "end": 121.521
+     "start": 125.72,
+     "end": 125.993
     }
    ]
   },
@@ -1635,79 +1635,79 @@
    "id": "L015b",
    "act": "act2",
    "text": "You settle arguments. \"Did she REALLY say that about me?\"... Twelve percent. Drama over.",
-   "start": 122.226,
-   "end": 128.269,
-   "audio": null,
+   "start": 126.683,
+   "end": 132.323,
+   "audio": "vo/L015b.wav",
    "words": [
     {
      "text": "You",
-     "start": 122.226,
-     "end": 122.515
+     "start": 126.683,
+     "end": 126.953
     },
     {
      "text": "settle",
-     "start": 122.515,
-     "end": 122.889
+     "start": 126.953,
+     "end": 127.302
     },
     {
      "text": "arguments.",
-     "start": 122.889,
-     "end": 123.348
+     "start": 127.302,
+     "end": 127.73
     },
     {
      "text": "\"Did",
-     "start": 123.603,
-     "end": 123.892
+     "start": 127.968,
+     "end": 128.238
     },
     {
      "text": "she",
-     "start": 123.892,
-     "end": 124.181
+     "start": 128.238,
+     "end": 128.507
     },
     {
      "text": "REALLY",
-     "start": 124.181,
-     "end": 124.555
+     "start": 128.507,
+     "end": 128.856
     },
     {
      "text": "say",
-     "start": 124.555,
-     "end": 124.844
+     "start": 128.856,
+     "end": 129.126
     },
     {
      "text": "that",
-     "start": 124.844,
-     "end": 125.133
+     "start": 129.126,
+     "end": 129.396
     },
     {
      "text": "about",
-     "start": 125.133,
-     "end": 125.507
+     "start": 129.396,
+     "end": 129.745
     },
     {
      "text": "me?\"",
-     "start": 125.507,
-     "end": 125.796
+     "start": 129.745,
+     "end": 130.015
     },
     {
      "text": "Twelve",
-     "start": 126.263,
-     "end": 126.637
+     "start": 130.451,
+     "end": 130.8
     },
     {
      "text": "percent.",
-     "start": 126.637,
-     "end": 127.011
+     "start": 130.8,
+     "end": 131.149
     },
     {
      "text": "Drama",
-     "start": 127.266,
-     "end": 127.64
+     "start": 131.387,
+     "end": 131.736
     },
     {
      "text": "over.",
-     "start": 127.64,
-     "end": 128.014
+     "start": 131.736,
+     "end": 132.085
     }
    ]
   },
@@ -1715,109 +1715,109 @@
    "id": "L015c",
    "act": "act2",
    "text": "You catch the class rumor before it spreads. You know which compliments are real, and which ones are just polite.",
-   "start": 128.719,
-   "end": 135.961,
-   "audio": null,
+   "start": 132.773,
+   "end": 138.965,
+   "audio": "vo/L015c.wav",
    "words": [
     {
      "text": "You",
-     "start": 128.719,
-     "end": 129.008
+     "start": 132.773,
+     "end": 133.02
     },
     {
      "text": "catch",
-     "start": 129.008,
-     "end": 129.297
+     "start": 133.02,
+     "end": 133.267
     },
     {
      "text": "the",
-     "start": 129.297,
-     "end": 129.586
+     "start": 133.267,
+     "end": 133.514
     },
     {
      "text": "class",
-     "start": 129.586,
-     "end": 129.875
+     "start": 133.514,
+     "end": 133.761
     },
     {
      "text": "rumor",
-     "start": 129.875,
-     "end": 130.249
+     "start": 133.761,
+     "end": 134.081
     },
     {
      "text": "before",
-     "start": 130.249,
-     "end": 130.708
+     "start": 134.081,
+     "end": 134.474
     },
     {
      "text": "it",
-     "start": 130.708,
-     "end": 130.997
+     "start": 134.474,
+     "end": 134.721
     },
     {
      "text": "spreads.",
-     "start": 130.997,
-     "end": 131.286
+     "start": 134.721,
+     "end": 134.968
     },
     {
      "text": "You",
-     "start": 131.541,
-     "end": 131.83
+     "start": 135.186,
+     "end": 135.433
     },
     {
      "text": "know",
-     "start": 131.83,
-     "end": 132.119
+     "start": 135.433,
+     "end": 135.68
     },
     {
      "text": "which",
-     "start": 132.119,
-     "end": 132.408
+     "start": 135.68,
+     "end": 135.927
     },
     {
      "text": "compliments",
-     "start": 132.408,
-     "end": 132.867
+     "start": 135.927,
+     "end": 136.32
     },
     {
      "text": "are",
-     "start": 132.867,
-     "end": 133.241
+     "start": 136.32,
+     "end": 136.639
     },
     {
      "text": "real,",
-     "start": 133.241,
-     "end": 133.53
+     "start": 136.639,
+     "end": 136.886
     },
     {
      "text": "and",
-     "start": 133.632,
-     "end": 133.921
+     "start": 136.974,
+     "end": 137.221
     },
     {
      "text": "which",
-     "start": 133.921,
-     "end": 134.21
+     "start": 137.221,
+     "end": 137.468
     },
     {
      "text": "ones",
-     "start": 134.21,
-     "end": 134.584
+     "start": 137.468,
+     "end": 137.788
     },
     {
      "text": "are",
-     "start": 134.584,
-     "end": 134.958
+     "start": 137.788,
+     "end": 138.107
     },
     {
      "text": "just",
-     "start": 134.958,
-     "end": 135.247
+     "start": 138.107,
+     "end": 138.354
     },
     {
      "text": "polite.",
-     "start": 135.247,
-     "end": 135.706
+     "start": 138.354,
+     "end": 138.747
     }
    ]
   },
@@ -1825,104 +1825,104 @@
    "id": "L015d",
    "act": "act2",
    "text": "And honestly?... You start to think, you might be the only person in the world, who sees things CLEARLY.",
-   "start": 136.411,
-   "end": 143.509,
-   "audio": null,
+   "start": 139.415,
+   "end": 144.991,
+   "audio": "vo/L015d.wav",
    "words": [
     {
      "text": "And",
-     "start": 136.411,
-     "end": 136.7
+     "start": 139.415,
+     "end": 139.642
     },
     {
      "text": "honestly?",
-     "start": 136.7,
-     "end": 137.159
+     "start": 139.642,
+     "end": 140.003
     },
     {
      "text": "You",
-     "start": 137.882,
-     "end": 138.171
+     "start": 140.57,
+     "end": 140.797
     },
     {
      "text": "start",
-     "start": 138.171,
-     "end": 138.46
+     "start": 140.797,
+     "end": 141.024
     },
     {
      "text": "to",
-     "start": 138.46,
-     "end": 138.749
+     "start": 141.024,
+     "end": 141.251
     },
     {
      "text": "think,",
-     "start": 138.749,
-     "end": 139.038
+     "start": 141.251,
+     "end": 141.478
     },
     {
      "text": "you",
-     "start": 139.14,
-     "end": 139.429
+     "start": 141.559,
+     "end": 141.786
     },
     {
      "text": "might",
-     "start": 139.429,
-     "end": 139.718
+     "start": 141.786,
+     "end": 142.013
     },
     {
      "text": "be",
-     "start": 139.718,
-     "end": 140.007
+     "start": 142.013,
+     "end": 142.24
     },
     {
      "text": "the",
-     "start": 140.007,
-     "end": 140.296
+     "start": 142.24,
+     "end": 142.467
     },
     {
      "text": "only",
-     "start": 140.296,
-     "end": 140.67
+     "start": 142.467,
+     "end": 142.761
     },
     {
      "text": "person",
-     "start": 140.67,
-     "end": 141.044
+     "start": 142.761,
+     "end": 143.054
     },
     {
      "text": "in",
-     "start": 141.044,
-     "end": 141.333
+     "start": 143.054,
+     "end": 143.281
     },
     {
      "text": "the",
-     "start": 141.333,
-     "end": 141.622
+     "start": 143.281,
+     "end": 143.508
     },
     {
      "text": "world,",
-     "start": 141.622,
-     "end": 141.911
+     "start": 143.508,
+     "end": 143.736
     },
     {
      "text": "who",
-     "start": 142.013,
-     "end": 142.302
+     "start": 143.816,
+     "end": 144.043
     },
     {
      "text": "sees",
-     "start": 142.302,
-     "end": 142.591
+     "start": 144.043,
+     "end": 144.27
     },
     {
      "text": "things",
-     "start": 142.591,
-     "end": 142.88
+     "start": 144.27,
+     "end": 144.497
     },
     {
      "text": "CLEARLY.",
-     "start": 142.88,
-     "end": 143.254
+     "start": 144.497,
+     "end": 144.791
     }
    ]
   },
@@ -1930,59 +1930,59 @@
    "id": "L016",
    "act": "act3",
    "text": "Then it starts showing you things you didn't ask for.",
-   "start": 145.559,
-   "end": 148.789,
-   "audio": null,
+   "start": 147.041,
+   "end": 149.822,
+   "audio": "vo/L016.wav",
    "words": [
     {
      "text": "Then",
-     "start": 145.559,
-     "end": 145.848
+     "start": 147.041,
+     "end": 147.29
     },
     {
      "text": "it",
-     "start": 145.848,
-     "end": 146.137
+     "start": 147.29,
+     "end": 147.539
     },
     {
      "text": "starts",
-     "start": 146.137,
-     "end": 146.426
+     "start": 147.539,
+     "end": 147.787
     },
     {
      "text": "showing",
-     "start": 146.426,
-     "end": 146.8
+     "start": 147.787,
+     "end": 148.109
     },
     {
      "text": "you",
-     "start": 146.8,
-     "end": 147.089
+     "start": 148.109,
+     "end": 148.358
     },
     {
      "text": "things",
-     "start": 147.089,
-     "end": 147.378
+     "start": 148.358,
+     "end": 148.607
     },
     {
      "text": "you",
-     "start": 147.378,
-     "end": 147.667
+     "start": 148.607,
+     "end": 148.856
     },
     {
      "text": "didn't",
-     "start": 147.667,
-     "end": 147.956
+     "start": 148.856,
+     "end": 149.105
     },
     {
      "text": "ask",
-     "start": 147.956,
-     "end": 148.245
+     "start": 149.105,
+     "end": 149.353
     },
     {
      "text": "for.",
-     "start": 148.245,
-     "end": 148.534
+     "start": 149.353,
+     "end": 149.602
     }
    ]
   },
@@ -1990,54 +1990,54 @@
    "id": "L017",
    "act": "act3",
    "text": "Your best friend says, \"No, I'm not mad.\"... Fifty-five.",
-   "start": 149.239,
-   "end": 153.021,
-   "audio": null,
+   "start": 150.272,
+   "end": 154.718,
+   "audio": "vo/L017.wav",
    "words": [
     {
      "text": "Your",
-     "start": 149.239,
-     "end": 149.528
+     "start": 150.272,
+     "end": 150.611
     },
     {
      "text": "best",
-     "start": 149.528,
-     "end": 149.817
+     "start": 150.611,
+     "end": 150.951
     },
     {
      "text": "friend",
-     "start": 149.817,
-     "end": 150.106
+     "start": 150.951,
+     "end": 151.291
     },
     {
      "text": "says,",
-     "start": 150.106,
-     "end": 150.395
+     "start": 151.291,
+     "end": 151.63
     },
     {
      "text": "\"No,",
-     "start": 150.497,
-     "end": 150.786
+     "start": 151.75,
+     "end": 152.09
     },
     {
      "text": "I'm",
-     "start": 150.888,
-     "end": 151.177
+     "start": 152.21,
+     "end": 152.55
     },
     {
      "text": "not",
-     "start": 151.177,
-     "end": 151.466
+     "start": 152.55,
+     "end": 152.889
     },
     {
      "text": "mad.\"",
-     "start": 151.466,
-     "end": 151.755
+     "start": 152.889,
+     "end": 153.229
     },
     {
      "text": "Fifty-five.",
-     "start": 152.222,
-     "end": 152.766
+     "start": 153.778,
+     "end": 154.418
     }
    ]
   },
@@ -2045,54 +2045,54 @@
    "id": "L018",
    "act": "act3",
    "text": "Your teacher says, \"Everyone gets a fair chance.\" Forty.",
-   "start": 153.471,
-   "end": 156.939,
-   "audio": null,
+   "start": 155.168,
+   "end": 159.069,
+   "audio": "vo/L018.wav",
    "words": [
     {
      "text": "Your",
-     "start": 153.471,
-     "end": 153.76
+     "start": 155.168,
+     "end": 155.493
     },
     {
      "text": "teacher",
-     "start": 153.76,
-     "end": 154.134
+     "start": 155.493,
+     "end": 155.913
     },
     {
      "text": "says,",
-     "start": 154.134,
-     "end": 154.423
+     "start": 155.913,
+     "end": 156.239
     },
     {
      "text": "\"Everyone",
-     "start": 154.525,
-     "end": 155.069
+     "start": 156.353,
+     "end": 156.965
     },
     {
      "text": "gets",
-     "start": 155.069,
-     "end": 155.358
+     "start": 156.965,
+     "end": 157.29
     },
     {
      "text": "a",
-     "start": 155.358,
-     "end": 155.647
+     "start": 157.29,
+     "end": 157.616
     },
     {
      "text": "fair",
-     "start": 155.647,
-     "end": 155.936
+     "start": 157.616,
+     "end": 157.941
     },
     {
      "text": "chance.\"",
-     "start": 155.936,
-     "end": 156.31
+     "start": 157.941,
+     "end": 158.361
     },
     {
      "text": "Forty.",
-     "start": 156.31,
-     "end": 156.684
+     "start": 158.361,
+     "end": 158.782
     }
    ]
   },
@@ -2100,84 +2100,84 @@
    "id": "L019",
    "act": "act3",
    "text": "Your dad, on the phone, late at night: \"Everything's fine. Don't worry about it.\"... Eighty-eight.",
-   "start": 157.389,
-   "end": 163.858,
-   "audio": null,
+   "start": 159.519,
+   "end": 165.799,
+   "audio": "vo/L019.wav",
    "words": [
     {
      "text": "Your",
-     "start": 157.389,
-     "end": 157.678
+     "start": 159.519,
+     "end": 159.8
     },
     {
      "text": "dad,",
-     "start": 157.678,
-     "end": 157.967
+     "start": 159.8,
+     "end": 160.08
     },
     {
      "text": "on",
-     "start": 158.069,
-     "end": 158.358
+     "start": 160.179,
+     "end": 160.46
     },
     {
      "text": "the",
-     "start": 158.358,
-     "end": 158.647
+     "start": 160.46,
+     "end": 160.74
     },
     {
      "text": "phone,",
-     "start": 158.647,
-     "end": 159.021
+     "start": 160.74,
+     "end": 161.103
     },
     {
      "text": "late",
-     "start": 159.123,
-     "end": 159.497
+     "start": 161.202,
+     "end": 161.566
     },
     {
      "text": "at",
-     "start": 159.497,
-     "end": 159.786
+     "start": 161.566,
+     "end": 161.846
     },
     {
      "text": "night:",
-     "start": 159.786,
-     "end": 160.075
+     "start": 161.846,
+     "end": 162.127
     },
     {
      "text": "\"Everything's",
-     "start": 160.177,
-     "end": 160.721
+     "start": 162.226,
+     "end": 162.754
     },
     {
      "text": "fine.",
-     "start": 160.721,
-     "end": 161.095
+     "start": 162.754,
+     "end": 163.117
     },
     {
      "text": "Don't",
-     "start": 161.35,
-     "end": 161.639
+     "start": 163.365,
+     "end": 163.645
     },
     {
      "text": "worry",
-     "start": 161.639,
-     "end": 162.013
+     "start": 163.645,
+     "end": 164.008
     },
     {
      "text": "about",
-     "start": 162.013,
-     "end": 162.387
+     "start": 164.008,
+     "end": 164.371
     },
     {
      "text": "it.\"",
-     "start": 162.387,
-     "end": 162.676
+     "start": 164.371,
+     "end": 164.652
     },
     {
      "text": "Eighty-eight.",
-     "start": 163.144,
-     "end": 163.603
+     "start": 165.106,
+     "end": 165.551
     }
    ]
   },
@@ -2185,99 +2185,99 @@
    "id": "L020",
    "act": "act3",
    "text": "You start hearing people differently. Every \"I'm good,\", every \"no worries,\", every \"love you\"\u2026 comes with a number.",
-   "start": 165.458,
-   "end": 172.649,
-   "audio": null,
+   "start": 167.399,
+   "end": 176.558,
+   "audio": "vo/L020.wav",
    "words": [
     {
      "text": "You",
-     "start": 165.458,
-     "end": 165.747
+     "start": 167.399,
+     "end": 167.767
     },
     {
      "text": "start",
-     "start": 165.747,
-     "end": 166.036
+     "start": 167.767,
+     "end": 168.135
     },
     {
      "text": "hearing",
-     "start": 166.036,
-     "end": 166.41
+     "start": 168.135,
+     "end": 168.611
     },
     {
      "text": "people",
-     "start": 166.41,
-     "end": 166.784
+     "start": 168.611,
+     "end": 169.088
     },
     {
      "text": "differently.",
-     "start": 166.784,
-     "end": 167.328
+     "start": 169.088,
+     "end": 169.781
     },
     {
      "text": "Every",
-     "start": 167.583,
-     "end": 168.042
+     "start": 170.105,
+     "end": 170.69
     },
     {
      "text": "\"I'm",
-     "start": 168.042,
-     "end": 168.331
+     "start": 170.69,
+     "end": 171.058
     },
     {
      "text": "good,\",",
-     "start": 168.331,
-     "end": 168.62
+     "start": 171.058,
+     "end": 171.426
     },
     {
      "text": "every",
-     "start": 168.722,
-     "end": 169.181
+     "start": 171.556,
+     "end": 172.141
     },
     {
      "text": "\"no",
-     "start": 169.181,
-     "end": 169.47
+     "start": 172.141,
+     "end": 172.509
     },
     {
      "text": "worries,\",",
-     "start": 169.47,
-     "end": 169.844
+     "start": 172.509,
+     "end": 172.985
     },
     {
      "text": "every",
-     "start": 169.946,
-     "end": 170.405
+     "start": 173.115,
+     "end": 173.7
     },
     {
      "text": "\"love",
-     "start": 170.405,
-     "end": 170.779
+     "start": 173.7,
+     "end": 174.176
     },
     {
      "text": "you\"\u2026",
-     "start": 170.779,
-     "end": 171.068
+     "start": 174.176,
+     "end": 174.544
     },
     {
      "text": "comes",
-     "start": 171.068,
-     "end": 171.442
+     "start": 174.544,
+     "end": 175.02
     },
     {
      "text": "with",
-     "start": 171.442,
-     "end": 171.731
+     "start": 175.02,
+     "end": 175.388
     },
     {
      "text": "a",
-     "start": 171.731,
-     "end": 172.02
+     "start": 175.388,
+     "end": 175.757
     },
     {
      "text": "number.",
-     "start": 172.02,
-     "end": 172.394
+     "start": 175.757,
+     "end": 176.233
     }
    ]
   },
@@ -2285,44 +2285,44 @@
    "id": "L021",
    "act": "act3",
    "text": "And numbers don't care how you feel.",
-   "start": 173.099,
-   "end": 175.547,
-   "audio": null,
+   "start": 177.008,
+   "end": 178.936,
+   "audio": "vo/L021.wav",
    "words": [
     {
      "text": "And",
-     "start": 173.099,
-     "end": 173.388
+     "start": 177.008,
+     "end": 177.235
     },
     {
      "text": "numbers",
-     "start": 173.388,
-     "end": 173.762
+     "start": 177.235,
+     "end": 177.53
     },
     {
      "text": "don't",
-     "start": 173.762,
-     "end": 174.051
+     "start": 177.53,
+     "end": 177.758
     },
     {
      "text": "care",
-     "start": 174.051,
-     "end": 174.425
+     "start": 177.758,
+     "end": 178.052
     },
     {
      "text": "how",
-     "start": 174.425,
-     "end": 174.714
+     "start": 178.052,
+     "end": 178.28
     },
     {
      "text": "you",
-     "start": 174.714,
-     "end": 175.003
+     "start": 178.28,
+     "end": 178.508
     },
     {
      "text": "feel.",
-     "start": 175.003,
-     "end": 175.292
+     "start": 178.508,
+     "end": 178.735
     }
    ]
   },
@@ -2330,59 +2330,59 @@
    "id": "L022",
    "act": "act3",
    "text": "You stop asking questions. Because you're scared of the answers.",
-   "start": 175.997,
-   "end": 179.992,
-   "audio": null,
+   "start": 179.386,
+   "end": 183.667,
+   "audio": "vo/L022.wav",
    "words": [
     {
      "text": "You",
-     "start": 175.997,
-     "end": 176.286
+     "start": 179.386,
+     "end": 179.696
     },
     {
      "text": "stop",
-     "start": 176.286,
-     "end": 176.575
+     "start": 179.696,
+     "end": 180.006
     },
     {
      "text": "asking",
-     "start": 176.575,
-     "end": 176.949
+     "start": 180.006,
+     "end": 180.406
     },
     {
      "text": "questions.",
-     "start": 176.949,
-     "end": 177.323
+     "start": 180.406,
+     "end": 180.807
     },
     {
      "text": "Because",
-     "start": 177.578,
-     "end": 178.037
+     "start": 181.08,
+     "end": 181.572
     },
     {
      "text": "you're",
-     "start": 178.037,
-     "end": 178.411
+     "start": 181.572,
+     "end": 181.973
     },
     {
      "text": "scared",
-     "start": 178.411,
-     "end": 178.785
+     "start": 181.973,
+     "end": 182.374
     },
     {
      "text": "of",
-     "start": 178.785,
-     "end": 179.074
+     "start": 182.374,
+     "end": 182.683
     },
     {
      "text": "the",
-     "start": 179.074,
-     "end": 179.363
+     "start": 182.683,
+     "end": 182.993
     },
     {
      "text": "answers.",
-     "start": 179.363,
-     "end": 179.737
+     "start": 182.993,
+     "end": 183.394
     }
    ]
   },
@@ -2390,84 +2390,84 @@
    "id": "L022b",
    "act": "act3",
    "text": "At dinner, everyone talks, and you just watch the numbers float, over the mashed potatoes.",
-   "start": 180.442,
-   "end": 186.103,
-   "audio": null,
+   "start": 184.117,
+   "end": 189.551,
+   "audio": "vo/L022b.wav",
    "words": [
     {
      "text": "At",
-     "start": 180.442,
-     "end": 180.731
+     "start": 184.117,
+     "end": 184.395
     },
     {
      "text": "dinner,",
-     "start": 180.731,
-     "end": 181.105
+     "start": 184.395,
+     "end": 184.754
     },
     {
      "text": "everyone",
-     "start": 181.207,
-     "end": 181.751
+     "start": 184.851,
+     "end": 185.374
     },
     {
      "text": "talks,",
-     "start": 181.751,
-     "end": 182.04
+     "start": 185.374,
+     "end": 185.651
     },
     {
      "text": "and",
-     "start": 182.142,
-     "end": 182.431
+     "start": 185.749,
+     "end": 186.026
     },
     {
      "text": "you",
-     "start": 182.431,
-     "end": 182.72
+     "start": 186.026,
+     "end": 186.304
     },
     {
      "text": "just",
-     "start": 182.72,
-     "end": 183.009
+     "start": 186.304,
+     "end": 186.581
     },
     {
      "text": "watch",
-     "start": 183.009,
-     "end": 183.298
+     "start": 186.581,
+     "end": 186.858
     },
     {
      "text": "the",
-     "start": 183.298,
-     "end": 183.587
+     "start": 186.858,
+     "end": 187.136
     },
     {
      "text": "numbers",
-     "start": 183.587,
-     "end": 183.961
+     "start": 187.136,
+     "end": 187.495
     },
     {
      "text": "float,",
-     "start": 183.961,
-     "end": 184.25
+     "start": 187.495,
+     "end": 187.772
     },
     {
      "text": "over",
-     "start": 184.352,
-     "end": 184.726
+     "start": 187.87,
+     "end": 188.229
     },
     {
      "text": "the",
-     "start": 184.726,
-     "end": 185.015
+     "start": 188.229,
+     "end": 188.506
     },
     {
      "text": "mashed",
-     "start": 185.015,
-     "end": 185.389
+     "start": 188.506,
+     "end": 188.865
     },
     {
      "text": "potatoes.",
-     "start": 185.389,
-     "end": 185.848
+     "start": 188.865,
+     "end": 189.306
     }
    ]
   },
@@ -2475,89 +2475,89 @@
    "id": "L022c",
    "act": "act3",
    "text": "Maya texts you, \"we're good, right?\"... Texts don't have meters... And for some reason, that's worse.",
-   "start": 186.553,
-   "end": 193.183,
-   "audio": null,
+   "start": 190.001,
+   "end": 197.462,
+   "audio": "vo/L022c.wav",
    "words": [
     {
      "text": "Maya",
-     "start": 186.553,
-     "end": 186.842
+     "start": 190.001,
+     "end": 190.326
     },
     {
      "text": "texts",
-     "start": 186.842,
-     "end": 187.131
+     "start": 190.326,
+     "end": 190.651
     },
     {
      "text": "you,",
-     "start": 187.131,
-     "end": 187.42
+     "start": 190.651,
+     "end": 190.976
     },
     {
      "text": "\"we're",
-     "start": 187.522,
-     "end": 187.896
+     "start": 191.091,
+     "end": 191.512
     },
     {
      "text": "good,",
-     "start": 187.896,
-     "end": 188.185
+     "start": 191.512,
+     "end": 191.837
     },
     {
      "text": "right?\"",
-     "start": 188.287,
-     "end": 188.576
+     "start": 191.952,
+     "end": 192.277
     },
     {
      "text": "Texts",
-     "start": 189.043,
-     "end": 189.332
+     "start": 192.804,
+     "end": 193.129
     },
     {
      "text": "don't",
-     "start": 189.332,
-     "end": 189.621
+     "start": 193.129,
+     "end": 193.454
     },
     {
      "text": "have",
-     "start": 189.621,
-     "end": 189.995
+     "start": 193.454,
+     "end": 193.875
     },
     {
      "text": "meters",
-     "start": 189.995,
-     "end": 190.369
+     "start": 193.875,
+     "end": 194.296
     },
     {
      "text": "And",
-     "start": 190.837,
-     "end": 191.126
+     "start": 194.822,
+     "end": 195.147
     },
     {
      "text": "for",
-     "start": 191.126,
-     "end": 191.415
+     "start": 195.147,
+     "end": 195.472
     },
     {
      "text": "some",
-     "start": 191.415,
-     "end": 191.789
+     "start": 195.472,
+     "end": 195.893
     },
     {
      "text": "reason,",
-     "start": 191.789,
-     "end": 192.163
+     "start": 195.893,
+     "end": 196.314
     },
     {
      "text": "that's",
-     "start": 192.265,
-     "end": 192.554
+     "start": 196.429,
+     "end": 196.754
     },
     {
      "text": "worse.",
-     "start": 192.554,
-     "end": 192.928
+     "start": 196.754,
+     "end": 197.175
     }
    ]
   },
@@ -2565,79 +2565,79 @@
    "id": "L022d",
    "act": "act3",
    "text": "You realise you don't trust anyone anymore... Not because they changed. Because YOU did.",
-   "start": 193.633,
-   "end": 199.676,
-   "audio": null,
+   "start": 197.912,
+   "end": 203.604,
+   "audio": "vo/L022d.wav",
    "words": [
     {
      "text": "You",
-     "start": 193.633,
-     "end": 193.922
+     "start": 197.912,
+     "end": 198.184
     },
     {
      "text": "realise",
-     "start": 193.922,
-     "end": 194.381
+     "start": 198.184,
+     "end": 198.617
     },
     {
      "text": "you",
-     "start": 194.381,
-     "end": 194.67
+     "start": 198.617,
+     "end": 198.889
     },
     {
      "text": "don't",
-     "start": 194.67,
-     "end": 194.959
+     "start": 198.889,
+     "end": 199.161
     },
     {
      "text": "trust",
-     "start": 194.959,
-     "end": 195.248
+     "start": 199.161,
+     "end": 199.433
     },
     {
      "text": "anyone",
-     "start": 195.248,
-     "end": 195.707
+     "start": 199.433,
+     "end": 199.865
     },
     {
      "text": "anymore",
-     "start": 195.707,
-     "end": 196.251
+     "start": 199.865,
+     "end": 200.378
     },
     {
      "text": "Not",
-     "start": 196.718,
-     "end": 197.007
+     "start": 200.818,
+     "end": 201.09
     },
     {
      "text": "because",
-     "start": 197.007,
-     "end": 197.466
+     "start": 201.09,
+     "end": 201.523
     },
     {
      "text": "they",
-     "start": 197.466,
-     "end": 197.755
+     "start": 201.523,
+     "end": 201.795
     },
     {
      "text": "changed.",
-     "start": 197.755,
-     "end": 198.129
+     "start": 201.795,
+     "end": 202.147
     },
     {
      "text": "Because",
-     "start": 198.384,
-     "end": 198.843
+     "start": 202.387,
+     "end": 202.82
     },
     {
      "text": "YOU",
-     "start": 198.843,
-     "end": 199.132
+     "start": 202.82,
+     "end": 203.092
     },
     {
      "text": "did.",
-     "start": 199.132,
-     "end": 199.421
+     "start": 203.092,
+     "end": 203.364
     }
    ]
   },
@@ -2645,104 +2645,104 @@
    "id": "L023",
    "act": "act4",
    "text": "One night, you can't sleep. You go to the bathroom, look in the mirror, and say it out loud.",
-   "start": 202.476,
-   "end": 209.038,
-   "audio": null,
+   "start": 206.404,
+   "end": 213.082,
+   "audio": "vo/L023.wav",
    "words": [
     {
      "text": "One",
-     "start": 202.476,
-     "end": 202.85
+     "start": 206.404,
+     "end": 206.785
     },
     {
      "text": "night,",
-     "start": 202.85,
-     "end": 203.139
+     "start": 206.785,
+     "end": 207.079
     },
     {
      "text": "you",
-     "start": 203.241,
-     "end": 203.53
+     "start": 207.183,
+     "end": 207.477
     },
     {
      "text": "can't",
-     "start": 203.53,
-     "end": 203.819
+     "start": 207.477,
+     "end": 207.771
     },
     {
      "text": "sleep.",
-     "start": 203.819,
-     "end": 204.108
+     "start": 207.771,
+     "end": 208.065
     },
     {
      "text": "You",
-     "start": 204.363,
-     "end": 204.652
+     "start": 208.325,
+     "end": 208.619
     },
     {
      "text": "go",
-     "start": 204.652,
-     "end": 204.941
+     "start": 208.619,
+     "end": 208.913
     },
     {
      "text": "to",
-     "start": 204.941,
-     "end": 205.23
+     "start": 208.913,
+     "end": 209.207
     },
     {
      "text": "the",
-     "start": 205.23,
-     "end": 205.519
+     "start": 209.207,
+     "end": 209.501
     },
     {
      "text": "bathroom,",
-     "start": 205.519,
-     "end": 205.893
+     "start": 209.501,
+     "end": 209.882
     },
     {
      "text": "look",
-     "start": 205.995,
-     "end": 206.284
+     "start": 209.985,
+     "end": 210.279
     },
     {
      "text": "in",
-     "start": 206.284,
-     "end": 206.573
+     "start": 210.279,
+     "end": 210.574
     },
     {
      "text": "the",
-     "start": 206.573,
-     "end": 206.862
+     "start": 210.574,
+     "end": 210.868
     },
     {
      "text": "mirror,",
-     "start": 206.862,
-     "end": 207.236
+     "start": 210.868,
+     "end": 211.248
     },
     {
      "text": "and",
-     "start": 207.338,
-     "end": 207.627
+     "start": 211.352,
+     "end": 211.646
     },
     {
      "text": "say",
-     "start": 207.627,
-     "end": 207.916
+     "start": 211.646,
+     "end": 211.94
     },
     {
      "text": "it",
-     "start": 207.916,
-     "end": 208.205
+     "start": 211.94,
+     "end": 212.234
     },
     {
      "text": "out",
-     "start": 208.205,
-     "end": 208.494
+     "start": 212.234,
+     "end": 212.528
     },
     {
      "text": "loud.",
-     "start": 208.494,
-     "end": 208.783
+     "start": 212.528,
+     "end": 212.822
     }
    ]
   },
@@ -2750,19 +2750,19 @@
    "id": "L024",
    "act": "act4",
    "text": "\"I'm fine.\"",
-   "start": 209.488,
-   "end": 210.151,
-   "audio": null,
+   "start": 213.532,
+   "end": 215.921,
+   "audio": "vo/L024.wav",
    "words": [
     {
      "text": "\"I'm",
-     "start": 209.488,
-     "end": 209.777
+     "start": 213.532,
+     "end": 214.574
     },
     {
      "text": "fine.\"",
-     "start": 209.777,
-     "end": 210.151
+     "start": 214.574,
+     "end": 215.921
     }
    ]
   },
@@ -2770,14 +2770,14 @@
    "id": "L025",
    "act": "act4",
    "text": "Ninety-six.",
-   "start": 212.351,
-   "end": 213.15,
-   "audio": null,
+   "start": 218.121,
+   "end": 219.274,
+   "audio": "vo/L025.wav",
    "words": [
     {
      "text": "Ninety-six.",
-     "start": 212.351,
-     "end": 212.895
+     "start": 218.121,
+     "end": 218.906
     }
    ]
   },
@@ -2785,94 +2785,94 @@
    "id": "L026",
    "act": "act4",
    "text": "Turns out, the person lying the most, wasn't your friend. Or your dad. Or the card dealer.",
-   "start": 214.55,
-   "end": 220.602,
-   "audio": null,
+   "start": 220.674,
+   "end": 227.53,
+   "audio": "vo/L026.wav",
    "words": [
     {
      "text": "Turns",
-     "start": 214.55,
-     "end": 214.839
+     "start": 220.674,
+     "end": 221.001
     },
     {
      "text": "out,",
-     "start": 214.839,
-     "end": 215.128
+     "start": 221.001,
+     "end": 221.328
     },
     {
      "text": "the",
-     "start": 215.23,
-     "end": 215.519
+     "start": 221.444,
+     "end": 221.771
     },
     {
      "text": "person",
-     "start": 215.519,
-     "end": 215.893
+     "start": 221.771,
+     "end": 222.195
     },
     {
      "text": "lying",
-     "start": 215.893,
-     "end": 216.182
+     "start": 222.195,
+     "end": 222.523
     },
     {
      "text": "the",
-     "start": 216.182,
-     "end": 216.471
+     "start": 222.523,
+     "end": 222.85
     },
     {
      "text": "most,",
-     "start": 216.471,
-     "end": 216.76
+     "start": 222.85,
+     "end": 223.177
     },
     {
      "text": "wasn't",
-     "start": 216.862,
-     "end": 217.151
+     "start": 223.293,
+     "end": 223.62
     },
     {
      "text": "your",
-     "start": 217.151,
-     "end": 217.44
+     "start": 223.62,
+     "end": 223.948
     },
     {
      "text": "friend.",
-     "start": 217.44,
-     "end": 217.729
+     "start": 223.948,
+     "end": 224.275
     },
     {
      "text": "Or",
-     "start": 217.984,
-     "end": 218.273
+     "start": 224.564,
+     "end": 224.892
     },
     {
      "text": "your",
-     "start": 218.273,
-     "end": 218.562
+     "start": 224.892,
+     "end": 225.219
     },
     {
      "text": "dad.",
-     "start": 218.562,
-     "end": 218.851
+     "start": 225.219,
+     "end": 225.546
     },
     {
      "text": "Or",
-     "start": 219.106,
-     "end": 219.395
+     "start": 225.835,
+     "end": 226.163
     },
     {
      "text": "the",
-     "start": 219.395,
-     "end": 219.684
+     "start": 226.163,
+     "end": 226.49
     },
     {
      "text": "card",
-     "start": 219.684,
-     "end": 219.973
+     "start": 226.49,
+     "end": 226.818
     },
     {
      "text": "dealer.",
-     "start": 219.973,
-     "end": 220.347
+     "start": 226.818,
+     "end": 227.241
     }
    ]
   },
@@ -2880,49 +2880,49 @@
    "id": "L027",
    "act": "act4",
    "text": "It was you. To yourself. Every single day.",
-   "start": 221.052,
-   "end": 224.469,
-   "audio": null,
+   "start": 227.98,
+   "end": 231.798,
+   "audio": "vo/L027.wav",
    "words": [
     {
      "text": "It",
-     "start": 221.052,
-     "end": 221.341
+     "start": 227.98,
+     "end": 228.303
     },
     {
      "text": "was",
-     "start": 221.341,
-     "end": 221.63
+     "start": 228.303,
+     "end": 228.626
     },
     {
      "text": "you.",
-     "start": 221.63,
-     "end": 221.919
+     "start": 228.626,
+     "end": 228.949
     },
     {
      "text": "To",
-     "start": 222.174,
-     "end": 222.463
+     "start": 229.234,
+     "end": 229.557
     },
     {
      "text": "yourself.",
-     "start": 222.463,
-     "end": 222.837
+     "start": 229.557,
+     "end": 229.975
     },
     {
      "text": "Every",
-     "start": 223.092,
-     "end": 223.551
+     "start": 230.26,
+     "end": 230.773
     },
     {
      "text": "single",
-     "start": 223.551,
-     "end": 223.925
+     "start": 230.773,
+     "end": 231.19
     },
     {
      "text": "day.",
-     "start": 223.925,
-     "end": 224.214
+     "start": 231.19,
+     "end": 231.513
     }
    ]
   },
@@ -2930,94 +2930,94 @@
    "id": "L028",
    "act": "act4",
    "text": "And here's the thing the meter never told you... It shows THAT someone is lying... Not WHY.",
-   "start": 225.369,
-   "end": 231.897,
-   "audio": null,
+   "start": 232.698,
+   "end": 238.728,
+   "audio": "vo/L028.wav",
    "words": [
     {
      "text": "And",
-     "start": 225.369,
-     "end": 225.658
+     "start": 232.698,
+     "end": 232.965
     },
     {
      "text": "here's",
-     "start": 225.658,
-     "end": 226.032
+     "start": 232.965,
+     "end": 233.311
     },
     {
      "text": "the",
-     "start": 226.032,
-     "end": 226.321
+     "start": 233.311,
+     "end": 233.578
     },
     {
      "text": "thing",
-     "start": 226.321,
-     "end": 226.61
+     "start": 233.578,
+     "end": 233.845
     },
     {
      "text": "the",
-     "start": 226.61,
-     "end": 226.899
+     "start": 233.845,
+     "end": 234.112
     },
     {
      "text": "meter",
-     "start": 226.899,
-     "end": 227.273
+     "start": 234.112,
+     "end": 234.457
     },
     {
      "text": "never",
-     "start": 227.273,
-     "end": 227.647
+     "start": 234.457,
+     "end": 234.803
     },
     {
      "text": "told",
-     "start": 227.647,
-     "end": 227.936
+     "start": 234.803,
+     "end": 235.069
     },
     {
      "text": "you",
-     "start": 227.936,
-     "end": 228.225
+     "start": 235.069,
+     "end": 235.336
     },
     {
      "text": "It",
-     "start": 228.693,
-     "end": 228.982
+     "start": 235.768,
+     "end": 236.035
     },
     {
      "text": "shows",
-     "start": 228.982,
-     "end": 229.271
+     "start": 236.035,
+     "end": 236.302
     },
     {
      "text": "THAT",
-     "start": 229.271,
-     "end": 229.56
+     "start": 236.302,
+     "end": 236.569
     },
     {
      "text": "someone",
-     "start": 229.56,
-     "end": 230.019
+     "start": 236.569,
+     "end": 236.993
     },
     {
      "text": "is",
-     "start": 230.019,
-     "end": 230.308
+     "start": 236.993,
+     "end": 237.26
     },
     {
      "text": "lying",
-     "start": 230.308,
-     "end": 230.597
+     "start": 237.26,
+     "end": 237.527
     },
     {
      "text": "Not",
-     "start": 231.064,
-     "end": 231.353
+     "start": 237.959,
+     "end": 238.226
     },
     {
      "text": "WHY.",
-     "start": 231.353,
-     "end": 231.642
+     "start": 238.226,
+     "end": 238.493
     }
    ]
   },
@@ -3025,99 +3025,99 @@
    "id": "L029",
    "act": "act4",
    "text": "Your friend wasn't hiding anger. She was hurt... Your dad wasn't hiding a lie. He was protecting you.",
-   "start": 232.347,
-   "end": 239.207,
-   "audio": null,
+   "start": 239.178,
+   "end": 246.144,
+   "audio": "vo/L029.wav",
    "words": [
     {
      "text": "Your",
-     "start": 232.347,
-     "end": 232.636
+     "start": 239.178,
+     "end": 239.472
     },
     {
      "text": "friend",
-     "start": 232.636,
-     "end": 232.925
+     "start": 239.472,
+     "end": 239.765
     },
     {
      "text": "wasn't",
-     "start": 232.925,
-     "end": 233.214
+     "start": 239.765,
+     "end": 240.059
     },
     {
      "text": "hiding",
-     "start": 233.214,
-     "end": 233.588
+     "start": 240.059,
+     "end": 240.439
     },
     {
      "text": "anger.",
-     "start": 233.588,
-     "end": 233.962
+     "start": 240.439,
+     "end": 240.818
     },
     {
      "text": "She",
-     "start": 234.217,
-     "end": 234.506
+     "start": 241.077,
+     "end": 241.371
     },
     {
      "text": "was",
-     "start": 234.506,
-     "end": 234.795
+     "start": 241.371,
+     "end": 241.664
     },
     {
      "text": "hurt",
-     "start": 234.795,
-     "end": 235.084
+     "start": 241.664,
+     "end": 241.958
     },
     {
      "text": "Your",
-     "start": 235.552,
-     "end": 235.841
+     "start": 242.432,
+     "end": 242.726
     },
     {
      "text": "dad",
-     "start": 235.841,
-     "end": 236.13
+     "start": 242.726,
+     "end": 243.019
     },
     {
      "text": "wasn't",
-     "start": 236.13,
-     "end": 236.419
+     "start": 243.019,
+     "end": 243.313
     },
     {
      "text": "hiding",
-     "start": 236.419,
-     "end": 236.793
+     "start": 243.313,
+     "end": 243.693
     },
     {
      "text": "a",
-     "start": 236.793,
-     "end": 237.082
+     "start": 243.693,
+     "end": 243.986
     },
     {
      "text": "lie.",
-     "start": 237.082,
-     "end": 237.371
+     "start": 243.986,
+     "end": 244.28
     },
     {
      "text": "He",
-     "start": 237.626,
-     "end": 237.915
+     "start": 244.539,
+     "end": 244.832
     },
     {
      "text": "was",
-     "start": 237.915,
-     "end": 238.204
+     "start": 244.832,
+     "end": 245.126
     },
     {
      "text": "protecting",
-     "start": 238.204,
-     "end": 238.663
+     "start": 245.126,
+     "end": 245.592
     },
     {
      "text": "you.",
-     "start": 238.663,
-     "end": 238.952
+     "start": 245.592,
+     "end": 245.885
     }
    ]
   },
@@ -3125,99 +3125,99 @@
    "id": "L029b",
    "act": "act4",
    "text": "Even your little brother, wasn't lying about the cookie to be evil... He just really, really, likes cookies.",
-   "start": 239.657,
-   "end": 246.737,
-   "audio": null,
+   "start": 246.594,
+   "end": 253.839,
+   "audio": "vo/L029b.wav",
    "words": [
     {
      "text": "Even",
-     "start": 239.657,
-     "end": 240.031
+     "start": 246.594,
+     "end": 246.977
     },
     {
      "text": "your",
-     "start": 240.031,
-     "end": 240.32
+     "start": 246.977,
+     "end": 247.272
     },
     {
      "text": "little",
-     "start": 240.32,
-     "end": 240.694
+     "start": 247.272,
+     "end": 247.655
     },
     {
      "text": "brother,",
-     "start": 240.694,
-     "end": 241.068
+     "start": 247.655,
+     "end": 248.038
     },
     {
      "text": "wasn't",
-     "start": 241.17,
-     "end": 241.459
+     "start": 248.142,
+     "end": 248.438
     },
     {
      "text": "lying",
-     "start": 241.459,
-     "end": 241.748
+     "start": 248.438,
+     "end": 248.733
     },
     {
      "text": "about",
-     "start": 241.748,
-     "end": 242.122
+     "start": 248.733,
+     "end": 249.116
     },
     {
      "text": "the",
-     "start": 242.122,
-     "end": 242.411
+     "start": 249.116,
+     "end": 249.412
     },
     {
      "text": "cookie",
-     "start": 242.411,
-     "end": 242.785
+     "start": 249.412,
+     "end": 249.795
     },
     {
      "text": "to",
-     "start": 242.785,
-     "end": 243.074
+     "start": 249.795,
+     "end": 250.09
     },
     {
      "text": "be",
-     "start": 243.074,
-     "end": 243.363
+     "start": 250.09,
+     "end": 250.386
     },
     {
      "text": "evil",
-     "start": 243.363,
-     "end": 243.737
+     "start": 250.386,
+     "end": 250.769
     },
     {
      "text": "He",
-     "start": 244.204,
-     "end": 244.493
+     "start": 251.247,
+     "end": 251.543
     },
     {
      "text": "just",
-     "start": 244.493,
-     "end": 244.782
+     "start": 251.543,
+     "end": 251.838
     },
     {
      "text": "really,",
-     "start": 244.782,
-     "end": 245.156
+     "start": 251.838,
+     "end": 252.221
     },
     {
      "text": "really,",
-     "start": 245.258,
-     "end": 245.632
+     "start": 252.325,
+     "end": 252.708
     },
     {
      "text": "likes",
-     "start": 245.734,
-     "end": 246.108
+     "start": 252.812,
+     "end": 253.195
     },
     {
      "text": "cookies.",
-     "start": 246.108,
-     "end": 246.482
+     "start": 253.195,
+     "end": 253.578
     }
    ]
   },
@@ -3225,104 +3225,104 @@
    "id": "L029c",
    "act": "act4",
    "text": "A lie, it turns out, is usually a door someone closed, because they didn't know how to open it.",
-   "start": 247.187,
-   "end": 253.919,
-   "audio": null,
+   "start": 254.289,
+   "end": 260.503,
+   "audio": "vo/L029c.wav",
    "words": [
     {
      "text": "A",
-     "start": 247.187,
-     "end": 247.476
+     "start": 254.289,
+     "end": 254.555
     },
     {
      "text": "lie,",
-     "start": 247.476,
-     "end": 247.765
+     "start": 254.555,
+     "end": 254.822
     },
     {
      "text": "it",
-     "start": 247.867,
-     "end": 248.156
+     "start": 254.916,
+     "end": 255.183
     },
     {
      "text": "turns",
-     "start": 248.156,
-     "end": 248.445
+     "start": 255.183,
+     "end": 255.45
     },
     {
      "text": "out,",
-     "start": 248.445,
-     "end": 248.734
+     "start": 255.45,
+     "end": 255.717
     },
     {
      "text": "is",
-     "start": 248.836,
-     "end": 249.125
+     "start": 255.811,
+     "end": 256.078
     },
     {
      "text": "usually",
-     "start": 249.125,
-     "end": 249.584
+     "start": 256.078,
+     "end": 256.501
     },
     {
      "text": "a",
-     "start": 249.584,
-     "end": 249.873
+     "start": 256.501,
+     "end": 256.768
     },
     {
      "text": "door",
-     "start": 249.873,
-     "end": 250.162
+     "start": 256.768,
+     "end": 257.035
     },
     {
      "text": "someone",
-     "start": 250.162,
-     "end": 250.621
+     "start": 257.035,
+     "end": 257.459
     },
     {
      "text": "closed,",
-     "start": 250.621,
-     "end": 250.995
+     "start": 257.459,
+     "end": 257.804
     },
     {
      "text": "because",
-     "start": 251.097,
-     "end": 251.556
+     "start": 257.898,
+     "end": 258.322
     },
     {
      "text": "they",
-     "start": 251.556,
-     "end": 251.845
+     "start": 258.322,
+     "end": 258.588
     },
     {
      "text": "didn't",
-     "start": 251.845,
-     "end": 252.134
+     "start": 258.588,
+     "end": 258.855
     },
     {
      "text": "know",
-     "start": 252.134,
-     "end": 252.423
+     "start": 258.855,
+     "end": 259.122
     },
     {
      "text": "how",
-     "start": 252.423,
-     "end": 252.712
+     "start": 259.122,
+     "end": 259.389
     },
     {
      "text": "to",
-     "start": 252.712,
-     "end": 253.001
+     "start": 259.389,
+     "end": 259.656
     },
     {
      "text": "open",
-     "start": 253.001,
-     "end": 253.375
+     "start": 259.656,
+     "end": 260.001
     },
     {
      "text": "it.",
-     "start": 253.375,
-     "end": 253.664
+     "start": 260.001,
+     "end": 260.268
     }
    ]
   },
@@ -3330,49 +3330,49 @@
    "id": "L030",
    "act": "end",
    "text": "So the next morning, you do something new.",
-   "start": 255.969,
-   "end": 258.893,
-   "audio": null,
+   "start": 262.553,
+   "end": 264.882,
+   "audio": "vo/L030.wav",
    "words": [
     {
      "text": "So",
-     "start": 255.969,
-     "end": 256.258
+     "start": 262.553,
+     "end": 262.783
     },
     {
      "text": "the",
-     "start": 256.258,
-     "end": 256.547
+     "start": 262.783,
+     "end": 263.013
     },
     {
      "text": "next",
-     "start": 256.547,
-     "end": 256.836
+     "start": 263.013,
+     "end": 263.244
     },
     {
      "text": "morning,",
-     "start": 256.836,
-     "end": 257.21
+     "start": 263.244,
+     "end": 263.542
     },
     {
      "text": "you",
-     "start": 257.312,
-     "end": 257.601
+     "start": 263.623,
+     "end": 263.853
     },
     {
      "text": "do",
-     "start": 257.601,
-     "end": 257.89
+     "start": 263.853,
+     "end": 264.083
     },
     {
      "text": "something",
-     "start": 257.89,
-     "end": 258.349
+     "start": 264.083,
+     "end": 264.449
     },
     {
      "text": "new.",
-     "start": 258.349,
-     "end": 258.638
+     "start": 264.449,
+     "end": 264.679
     }
    ]
   },
@@ -3380,64 +3380,64 @@
    "id": "L031",
    "act": "end",
    "text": "You ask your dad what's really going on. And you listen.",
-   "start": 259.343,
-   "end": 263.202,
-   "audio": null,
+   "start": 265.332,
+   "end": 268.831,
+   "audio": "vo/L031.wav",
    "words": [
     {
      "text": "You",
-     "start": 259.343,
-     "end": 259.632
+     "start": 265.332,
+     "end": 265.594
     },
     {
      "text": "ask",
-     "start": 259.632,
-     "end": 259.921
+     "start": 265.594,
+     "end": 265.856
     },
     {
      "text": "your",
-     "start": 259.921,
-     "end": 260.21
+     "start": 265.856,
+     "end": 266.118
     },
     {
      "text": "dad",
-     "start": 260.21,
-     "end": 260.499
+     "start": 266.118,
+     "end": 266.38
     },
     {
      "text": "what's",
-     "start": 260.499,
-     "end": 260.788
+     "start": 266.38,
+     "end": 266.642
     },
     {
      "text": "really",
-     "start": 260.788,
-     "end": 261.162
+     "start": 266.642,
+     "end": 266.981
     },
     {
      "text": "going",
-     "start": 261.162,
-     "end": 261.451
+     "start": 266.981,
+     "end": 267.243
     },
     {
      "text": "on.",
-     "start": 261.451,
-     "end": 261.74
+     "start": 267.243,
+     "end": 267.505
     },
     {
      "text": "And",
-     "start": 261.995,
-     "end": 262.284
+     "start": 267.736,
+     "end": 267.998
     },
     {
      "text": "you",
-     "start": 262.284,
-     "end": 262.573
+     "start": 267.998,
+     "end": 268.26
     },
     {
      "text": "listen.",
-     "start": 262.573,
-     "end": 262.947
+     "start": 268.26,
+     "end": 268.599
     }
    ]
   },
@@ -3445,104 +3445,104 @@
    "id": "L032",
    "act": "end",
    "text": "Some meters go down. Some stay high... But for the first time, you're not reading numbers. You're reading people.",
-   "start": 263.652,
-   "end": 271.328,
-   "audio": null,
+   "start": 269.281,
+   "end": 276.776,
+   "audio": "vo/L032.wav",
    "words": [
     {
      "text": "Some",
-     "start": 263.652,
-     "end": 264.026
+     "start": 269.281,
+     "end": 269.646
     },
     {
      "text": "meters",
-     "start": 264.026,
-     "end": 264.4
+     "start": 269.646,
+     "end": 270.011
     },
     {
      "text": "go",
-     "start": 264.4,
-     "end": 264.689
+     "start": 270.011,
+     "end": 270.293
     },
     {
      "text": "down.",
-     "start": 264.689,
-     "end": 264.978
+     "start": 270.293,
+     "end": 270.576
     },
     {
      "text": "Some",
-     "start": 265.233,
-     "end": 265.607
+     "start": 270.825,
+     "end": 271.19
     },
     {
      "text": "stay",
-     "start": 265.607,
-     "end": 265.896
+     "start": 271.19,
+     "end": 271.472
     },
     {
      "text": "high",
-     "start": 265.896,
-     "end": 266.185
+     "start": 271.472,
+     "end": 271.754
     },
     {
      "text": "But",
-     "start": 266.653,
-     "end": 266.942
+     "start": 272.211,
+     "end": 272.493
     },
     {
      "text": "for",
-     "start": 266.942,
-     "end": 267.231
+     "start": 272.493,
+     "end": 272.775
     },
     {
      "text": "the",
-     "start": 267.231,
-     "end": 267.52
+     "start": 272.775,
+     "end": 273.058
     },
     {
      "text": "first",
-     "start": 267.52,
-     "end": 267.809
+     "start": 273.058,
+     "end": 273.34
     },
     {
      "text": "time,",
-     "start": 267.809,
-     "end": 268.183
+     "start": 273.34,
+     "end": 273.705
     },
     {
      "text": "you're",
-     "start": 268.285,
-     "end": 268.659
+     "start": 273.805,
+     "end": 274.17
     },
     {
      "text": "not",
-     "start": 268.659,
-     "end": 268.948
+     "start": 274.17,
+     "end": 274.452
     },
     {
      "text": "reading",
-     "start": 268.948,
-     "end": 269.322
+     "start": 274.452,
+     "end": 274.817
     },
     {
      "text": "numbers.",
-     "start": 269.322,
-     "end": 269.696
+     "start": 274.817,
+     "end": 275.183
     },
     {
      "text": "You're",
-     "start": 269.951,
-     "end": 270.325
+     "start": 275.432,
+     "end": 275.797
     },
     {
      "text": "reading",
-     "start": 270.325,
-     "end": 270.699
+     "start": 275.797,
+     "end": 276.162
     },
     {
      "text": "people.",
-     "start": 270.699,
-     "end": 271.073
+     "start": 276.162,
+     "end": 276.527
     }
    ]
   },
@@ -3550,114 +3550,114 @@
    "id": "L032b",
    "act": "end",
    "text": "You don't text Maya. Not \"we're good, right?\"... You call her. You say sorry. And you mean it... No meter needed.",
-   "start": 271.778,
-   "end": 280.244,
-   "audio": null,
+   "start": 277.226,
+   "end": 286.023,
+   "audio": "vo/L032b.wav",
    "words": [
     {
      "text": "You",
-     "start": 271.778,
-     "end": 272.067
+     "start": 277.226,
+     "end": 277.527
     },
     {
      "text": "don't",
-     "start": 272.067,
-     "end": 272.356
+     "start": 277.527,
+     "end": 277.827
     },
     {
      "text": "text",
-     "start": 272.356,
-     "end": 272.645
+     "start": 277.827,
+     "end": 278.127
     },
     {
      "text": "Maya.",
-     "start": 272.645,
-     "end": 272.934
+     "start": 278.127,
+     "end": 278.428
     },
     {
      "text": "Not",
-     "start": 273.189,
-     "end": 273.478
+     "start": 278.693,
+     "end": 278.993
     },
     {
      "text": "\"we're",
-     "start": 273.478,
-     "end": 273.852
+     "start": 278.993,
+     "end": 279.381
     },
     {
      "text": "good,",
-     "start": 273.852,
-     "end": 274.141
+     "start": 279.381,
+     "end": 279.682
     },
     {
      "text": "right?\"",
-     "start": 274.243,
-     "end": 274.532
+     "start": 279.788,
+     "end": 280.088
     },
     {
      "text": "You",
-     "start": 274.999,
-     "end": 275.288
+     "start": 280.574,
+     "end": 280.874
     },
     {
      "text": "call",
-     "start": 275.288,
-     "end": 275.577
+     "start": 280.874,
+     "end": 281.174
     },
     {
      "text": "her.",
-     "start": 275.577,
-     "end": 275.866
+     "start": 281.174,
+     "end": 281.475
     },
     {
      "text": "You",
-     "start": 276.121,
-     "end": 276.41
+     "start": 281.74,
+     "end": 282.04
     },
     {
      "text": "say",
-     "start": 276.41,
-     "end": 276.699
+     "start": 282.04,
+     "end": 282.34
     },
     {
      "text": "sorry.",
-     "start": 276.699,
-     "end": 277.073
+     "start": 282.34,
+     "end": 282.729
     },
     {
      "text": "And",
-     "start": 277.328,
-     "end": 277.617
+     "start": 282.994,
+     "end": 283.294
     },
     {
      "text": "you",
-     "start": 277.617,
-     "end": 277.906
+     "start": 283.294,
+     "end": 283.594
     },
     {
      "text": "mean",
-     "start": 277.906,
-     "end": 278.195
+     "start": 283.594,
+     "end": 283.895
     },
     {
      "text": "it",
-     "start": 278.195,
-     "end": 278.484
+     "start": 283.895,
+     "end": 284.195
     },
     {
      "text": "No",
-     "start": 278.952,
-     "end": 279.241
+     "start": 284.681,
+     "end": 284.981
     },
     {
      "text": "meter",
-     "start": 279.241,
-     "end": 279.615
+     "start": 284.981,
+     "end": 285.37
     },
     {
      "text": "needed.",
-     "start": 279.615,
-     "end": 279.989
+     "start": 285.37,
+     "end": 285.758
     }
    ]
   },
@@ -3665,89 +3665,89 @@
    "id": "L032c",
    "act": "end",
    "text": "That night, you look in the mirror again. \"I'm not fine. But I will be.\"... Zero.",
-   "start": 280.694,
-   "end": 286.992,
-   "audio": null,
+   "start": 286.473,
+   "end": 292.999,
+   "audio": "vo/L032c.wav",
    "words": [
     {
      "text": "That",
-     "start": 280.694,
-     "end": 280.983
+     "start": 286.473,
+     "end": 286.773
     },
     {
      "text": "night,",
-     "start": 280.983,
-     "end": 281.272
+     "start": 286.773,
+     "end": 287.072
     },
     {
      "text": "you",
-     "start": 281.374,
-     "end": 281.663
+     "start": 287.178,
+     "end": 287.477
     },
     {
      "text": "look",
-     "start": 281.663,
-     "end": 281.952
+     "start": 287.477,
+     "end": 287.777
     },
     {
      "text": "in",
-     "start": 281.952,
-     "end": 282.241
+     "start": 287.777,
+     "end": 288.076
     },
     {
      "text": "the",
-     "start": 282.241,
-     "end": 282.53
+     "start": 288.076,
+     "end": 288.375
     },
     {
      "text": "mirror",
-     "start": 282.53,
-     "end": 282.904
+     "start": 288.375,
+     "end": 288.763
     },
     {
      "text": "again.",
-     "start": 282.904,
-     "end": 283.278
+     "start": 288.763,
+     "end": 289.15
     },
     {
      "text": "\"I'm",
-     "start": 283.533,
-     "end": 283.822
+     "start": 289.414,
+     "end": 289.714
     },
     {
      "text": "not",
-     "start": 283.822,
-     "end": 284.111
+     "start": 289.714,
+     "end": 290.013
     },
     {
      "text": "fine.",
-     "start": 284.111,
-     "end": 284.485
+     "start": 290.013,
+     "end": 290.401
     },
     {
      "text": "But",
-     "start": 284.74,
-     "end": 285.029
+     "start": 290.665,
+     "end": 290.964
     },
     {
      "text": "I",
-     "start": 285.029,
-     "end": 285.318
+     "start": 290.964,
+     "end": 291.264
     },
     {
      "text": "will",
-     "start": 285.318,
-     "end": 285.607
+     "start": 291.264,
+     "end": 291.563
     },
     {
      "text": "be.\"",
-     "start": 285.607,
-     "end": 285.896
+     "start": 291.563,
+     "end": 291.863
     },
     {
      "text": "Zero.",
-     "start": 286.363,
-     "end": 286.737
+     "start": 292.347,
+     "end": 292.734
     }
    ]
   },
@@ -3755,74 +3755,74 @@
    "id": "L033",
    "act": "end",
    "text": "So, if you could see when anyone is lying\u2026 would you WANT to?",
-   "start": 287.792,
-   "end": 292.076,
-   "audio": null,
+   "start": 293.799,
+   "end": 298.833,
+   "audio": "vo/L033.wav",
    "words": [
     {
      "text": "So,",
-     "start": 287.792,
-     "end": 288.081
+     "start": 293.799,
+     "end": 294.138
     },
     {
      "text": "if",
-     "start": 288.183,
-     "end": 288.472
+     "start": 294.258,
+     "end": 294.598
     },
     {
      "text": "you",
-     "start": 288.472,
-     "end": 288.761
+     "start": 294.598,
+     "end": 294.937
     },
     {
      "text": "could",
-     "start": 288.761,
-     "end": 289.05
+     "start": 294.937,
+     "end": 295.277
     },
     {
      "text": "see",
-     "start": 289.05,
-     "end": 289.339
+     "start": 295.277,
+     "end": 295.616
     },
     {
      "text": "when",
-     "start": 289.339,
-     "end": 289.628
+     "start": 295.616,
+     "end": 295.956
     },
     {
      "text": "anyone",
-     "start": 289.628,
-     "end": 290.087
+     "start": 295.956,
+     "end": 296.495
     },
     {
      "text": "is",
-     "start": 290.087,
-     "end": 290.376
+     "start": 296.495,
+     "end": 296.835
     },
     {
      "text": "lying\u2026",
-     "start": 290.376,
-     "end": 290.665
+     "start": 296.835,
+     "end": 297.175
     },
     {
      "text": "would",
-     "start": 290.665,
-     "end": 290.954
+     "start": 297.175,
+     "end": 297.514
     },
     {
      "text": "you",
-     "start": 290.954,
-     "end": 291.243
+     "start": 297.514,
+     "end": 297.854
     },
     {
      "text": "WANT",
-     "start": 291.243,
-     "end": 291.532
+     "start": 297.854,
+     "end": 298.193
     },
     {
      "text": "to?",
-     "start": 291.532,
-     "end": 291.821
+     "start": 298.193,
+     "end": 298.533
     }
    ]
   },
@@ -3830,74 +3830,74 @@
    "id": "L034",
    "act": "end",
    "text": "Tell me in the comments. I'll know if you're honest... Zero percent. Probably.",
-   "start": 292.876,
-   "end": 298.461,
-   "audio": null,
+   "start": 299.633,
+   "end": 305.342,
+   "audio": "vo/L034.wav",
    "words": [
     {
      "text": "Tell",
-     "start": 292.876,
-     "end": 293.165
+     "start": 299.633,
+     "end": 299.928
     },
     {
      "text": "me",
-     "start": 293.165,
-     "end": 293.454
+     "start": 299.928,
+     "end": 300.224
     },
     {
      "text": "in",
-     "start": 293.454,
-     "end": 293.743
+     "start": 300.224,
+     "end": 300.519
     },
     {
      "text": "the",
-     "start": 293.743,
-     "end": 294.032
+     "start": 300.519,
+     "end": 300.814
     },
     {
      "text": "comments.",
-     "start": 294.032,
-     "end": 294.406
+     "start": 300.814,
+     "end": 301.197
     },
     {
      "text": "I'll",
-     "start": 294.661,
-     "end": 294.95
+     "start": 301.458,
+     "end": 301.753
     },
     {
      "text": "know",
-     "start": 294.95,
-     "end": 295.239
+     "start": 301.753,
+     "end": 302.049
     },
     {
      "text": "if",
-     "start": 295.239,
-     "end": 295.528
+     "start": 302.049,
+     "end": 302.344
     },
     {
      "text": "you're",
-     "start": 295.528,
-     "end": 295.902
+     "start": 302.344,
+     "end": 302.726
     },
     {
      "text": "honest",
-     "start": 295.902,
-     "end": 296.276
+     "start": 302.726,
+     "end": 303.109
     },
     {
      "text": "Zero",
-     "start": 296.744,
-     "end": 297.118
+     "start": 303.587,
+     "end": 303.969
     },
     {
      "text": "percent.",
-     "start": 297.118,
-     "end": 297.492
+     "start": 303.969,
+     "end": 304.352
     },
     {
      "text": "Probably.",
-     "start": 297.747,
-     "end": 298.206
+     "start": 304.612,
+     "end": 305.082
     }
    ]
   }
