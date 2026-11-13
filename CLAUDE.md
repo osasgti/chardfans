@@ -71,7 +71,7 @@ scripts/
 public/
   fonts/*.woff2            ✅ Cinzel 600/700, Inter 700 (local, never fetched)
   sfx/*.wav                ✅ generated
-  vo/raw/L*.mp3            ✅ ElevenLabs takes (3 of 48 so far, see §38.2)   vo/L*.wav ✅ cleaned by build_timeline.py
+  vo/raw/L*.mp3            ✅ ElevenLabs takes (all 48)   vo/L*.wav ✅ cleaned by build_timeline.py
 src/
   index.ts / Root.tsx      ✅ registers Main (demo, 60fps) and LieMeter (5:03, LIE_FPS=24 on CPU)   🔲 MainVertical (§45)
   Main.tsx                 ✅ <Series> of shots + Soundtrack + letterbox + fades
@@ -752,7 +752,7 @@ Put these scripts in `scripts/` and run them after every full render.
 - **`--scale` must give integer pixel sizes** (0.75 → 1440×810 works, 0.6667 fails in stitching).
 - **ElevenLabs via the connector:** generation works (≈90–150 credits per take, about 1¢), the signed `content_url` downloads with
   curl, and the takes are saved in public/vo/raw. **The free tier was disabled mid-run** ("unusual activity", likely the cloud
-  proxy), and parallel calls on the free tier fail as "busy". Upgrade the plan, then generate **one line at a time**.
+  proxy), and parallel calls on the free tier fail as "busy". On a **paid plan**, all 40 remaining lines generated in parallel batches in ~2 minutes (≈4,300 credits). Free tier = one shared slot, mostly "busy".
 - **Close camera distance:** for a medium close-up at fov 30, keep the camera about 3.1–3.6m from the hero.
   At 2.1m the head fills the frame and the badge gets clamped off-screen.
 
@@ -1336,7 +1336,7 @@ Set the browser path once per session: `export REMOTION_BROWSER=/opt/pw-browsers
 | Props | ✅ Phone, CerealBox, CookieJar, Card, ChipStack, Bus, Door, Shards · 🔲 Dice, Roulette, Vending |
 | Overlays | ✅ Title, Tag, OddsBadge, Letterbox, Captions, Transitions · 🔲 Callout, BarRace, Counter |
 | Sound | ✅ 80 SFX + music stems + cue list + mastering · 🔲 VO ducking curves, panning |
-| Voice | ✅ ElevenLabs connector pipeline, 3/48 lines voiced, timing calibrated (×0.85), mouth flaps from word timings · 🔲 remaining 45 lines (needs paid plan) |
+| Voice | ✅ ElevenLabs connector pipeline, **48/48 lines voiced** (v02 render), mouth flaps from word timings |
 | Ops | ✅ chunked render, QA, determinism, typecheck · 🔲 CI, vertical, thumbnail comp, SRT export |
 | Film layer (§23): halation, light leaks, gate weave, motion blur | 🔲 |
 | GodRays / volumetric spot | 🔲 (documented in §36.3, not yet in the demo) |
