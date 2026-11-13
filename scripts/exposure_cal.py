@@ -27,7 +27,9 @@ for li, l in enumerate(lines):
         stops = max(-MAX_DOWN, min(MAX_UP, STRENGTH * math.log2(TARGET[s[2]] / max(mean, 1))))
         if abs(stops) < 0.1: stops = 0.0
         cal.setdefault(l['id'], []).append(round(stops, 2))
-        if stops: filt.append(f"exposure=exposure={stops:.2f}:enable='between(t,{t:.3f},{t + d - 0.001:.3f})'")
+        # frame-exact windows, using the same rounding as LieVideo's <Sequence from={round(start*fps)}> (time-based windows drifted by 1 frame)
+        n0, n1 = round(t * fps), round((t + d) * fps) - 1
+        if stops: filt.append(f"exposure=exposure={stops:.2f}:enable='between(n,{n0},{n1})'")
         print(f"{l['id']:6s} {s[2]:11s} {t:6.1f}s  median {mean:5.1f} → target {TARGET[s[2]]:3d}  {stops:+.2f} stops")
         t += d
 json.dump(cal, open(os.path.join(ROOT, 'src/lie/exposure_cal.json'), 'w'), indent=1)
