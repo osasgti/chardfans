@@ -4,6 +4,9 @@ import {random, getInputProps} from 'remotion';
 
 /** Render quality: `final` (default, GPU machines) or `fast` (CPU-only renders): --props='{"quality":"fast"}'. */
 export const FAST = (getInputProps() as {quality?: string}).quality === 'fast';
+/** Internal 3D resolution factor. Set it to the same value as --scale (e.g. 0.75) so WebGL renders at the OUTPUT size instead of
+ *  1920×1080 and is then downscaled. --props='{"res":0.75}'. Default 1. */
+export const RES = Number((getInputProps() as {res?: number}).res ?? 1);
 import {useThree} from '@react-three/fiber';
 import {SoftShadows, ContactShadows, Environment, Lightformer} from '@react-three/drei';
 import {EffectComposer, N8AO, DepthOfField, Bloom, Vignette, ChromaticAberration, HueSaturation, BrightnessContrast} from '@react-three/postprocessing';
@@ -78,7 +81,7 @@ export const PostFX = ({focus, g = GRADES.wonder, flash = 0}: {focus: number; g?
 export const Stage = ({cam, focus, children, grade = 'wonder', flash = 0, exposure}: {
   cam: Cam; focus: number; children: React.ReactNode; grade?: string; flash?: number; exposure?: number;
 }) => (
-  <ThreeCanvas width={W} height={H} shadows="soft" camera={{fov: cam.fov, near: NEAR, far: FAR, position: cam.pos}}
+  <ThreeCanvas width={W} height={H} dpr={RES} shadows="soft" camera={{fov: cam.fov, near: NEAR, far: FAR, position: cam.pos}}
     gl={{antialias: false, preserveDrawingBuffer: true, toneMapping: ACESFilmicToneMapping, toneMappingExposure: exposure ?? 1.05}}>
     <CameraApply cam={cam} />
     {children}

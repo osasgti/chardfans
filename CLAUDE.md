@@ -9,7 +9,7 @@ number here is a starting default chosen to match the reference look. Tune it af
 test renders, but change it only when the user asks or a shot clearly needs it. A video that ignores the lighting, depth-of-field and grading rules looks like
 a cheap 3D demo, not the reference.
 
-**Reading order:** start with **§36 (the master prompt)** and **§52 (consistency & polish, from real bugs)**, which is the standard every video must meet. Then use
+**Reading order:** start with **§36 (the master prompt)**, **§52 (consistency & polish, from real bugs)** and **§53 (render speed)**, which is the standard every video must meet. Then use
 §0–§35 as the toolbox, §32 for lessons from real renders, and §51 for how to keep improving.
 The working demo lives in `src/` (2 shots, 60fps, with full sound).
 Video projects have their own master prompt in `prompts/`. The current one is `prompts/WHAT_IF_LIE_METER.md` (5:00, TTS).
@@ -71,7 +71,7 @@ scripts/
   make_srt.py              ✅ timeline → SRT captions
   validate_shots.mjs       ✅ shot cast-reference validator (npm run validate)
   determinism.sh           ✅ same frame twice → identical hash
-  render_chunks.sh         ✅ crash-safe chunked render + concat + master
+  render_chunks.sh         ✅ crash-safe chunked render (480-frame chunks, res=scale automatically) + concat + master (§53)
 public/
   fonts/*.woff2            ✅ Cinzel 600/700, Inter 700 (local, never fetched)
   sfx/*.wav                ✅ generated
@@ -1292,7 +1292,7 @@ Keep a cast table in this file and never change a character's look mid-video.
 | Draft video | set `FPS = 30` in tokens, `--scale=0.5`, `multisampling` 2 |
 | Final | `npm run render && npm run master` or, crash-safe, `npm run render:chunks` |
 | Resume after a crash | `render_chunks.sh` skips chunks that already exist. Delete a chunk to redo it |
-| Faster | a machine with a GPU (about 30–60× faster than this CPU container), or Remotion Lambda for long videos |
+| Faster | `res` = `--scale` (−32%, §53), 480-frame chunks, partial re-renders · a GPU machine (30–60×) or Remotion Lambda |
 | Memory | `--concurrency=2` on 4 cores in the cloud container (4 got OOM-killed). Use `cores/2` elsewhere |
 
 Set the browser path once per session: `export REMOTION_BROWSER=/opt/pw-browsers/chromium_headless_shell-1243/chrome-headless-shell-linux64/chrome-headless-shell`
@@ -1442,6 +1442,45 @@ bash scripts/qa.sh out/<video>.mp4                     # cuts, contact sheet, bl
 ```
 Then a human-style pass: watch the whole video once at normal speed, once muted (picture only), and once with eyes closed
 (sound only). Write any issue as `timestamp: problem → fix` before touching code.
+
+---
+
+## 53. Render speed playbook (faster without losing quality)
+
+**Measured in this cloud container** (4 CPU cores, no GPU, software WebGL via swangle), same 48 frames of the kitchen shot:
+
+| Change | Time | Quality |
+|---|---|---|
+| baseline: 3D renders at 1920×1080, screenshot downscaled to 1440×810 | 333s | reference |
+| **`res` = output scale** (3D renders at 1440×810 directly) | **228s (−32%)** | SSIM 0.993, visually identical |
+| `quality: fast` (no PCSS/MSAA/N8AO) | about −15% | softer shadows, no AO; acceptable for drafts and long CPU renders |
+| `--concurrency 4` instead of 2 | no gain | CPU-bound. Swiftshader already uses all cores |
+| lower poly counts | no gain | not geometry-bound |
+
+**Rules:**
+1. **Always render the 3D at the output size.** `ThreeCanvas` is sized to the composition (1920×1080), and `--scale` only resizes the
+   *screenshot*. So pass `res` equal to `--scale`: `--scale=0.75 --props='{"res":0.75}'`. `render_chunks.sh` does this
+   automatically (`RES` in `Stage.tsx` sets the canvas `dpr`). Never use a `res` *below* the output scale: that is a real quality loss.
+2. **Fewer frames is the biggest lever.** Render cost is about per-frame, so 24fps costs 40% of 60fps. Use 24fps for CPU finals and
+   60fps only on a GPU machine.
+3. **Big chunks:** each chunk restarts the browser and recompiles shaders (about 30–40s). `render_chunks.sh` now defaults to
+   480-frame chunks (16 restarts instead of 31 for a 5-minute video, saving about 10 min) and still resumes after a crash.
+4. **Don't re-render what didn't change:**
+   - **Audio-only change** (mix, ducking, a new VO take with the same timing): render `--codec=wav` (about 30 min here) and re-mux with
+     the existing `video.mp4` (`ffmpeg -c:v copy`). It took about 35 min instead of 9h in v03.
+   - **Brightness/colour change:** apply `out/qa/exposure_filter.txt` in post (§52.1) for a quick fix, and bake it in the source for the next full render.
+   - **A few shots changed:** delete only the chunks that contain them (`out/chunks_<COMP>/c_<start>.mp4`) and re-run
+     `render_chunks.sh`. It skips existing chunks and re-concatenates.
+   - **A timing change** (new VO with different lengths, added shots) moves every later frame, so it needs a full re-render.
+5. **Look-dev first, render once:** stills at half scale (`--scale=0.5 --props='{"res":0.5}'`) take about 20–40s each. Check every set and
+   every special shot as stills before committing about 7 hours of CPU.
+6. **The real speedup is a GPU:** a desktop GPU renders this project about 30–60× faster. The same 5-minute video takes minutes, at 1080p60
+   with full quality (PCSS, MSAA, N8AO). Run `npm run render:chunks` there with `SCALE=1`. Remotion Lambda also works for long videos.
+7. **Keep the session alive** while a long render runs in this container. An idle cloud session is recycled and the render dies.
+   Use the resumable chunk renderer and poll it with ≤10-minute waits.
+
+**Estimated full-video times here** (5:09, 7,425 frames at 24fps, 1440×810, fast quality):
+before about 9h20m → with `res` about 6h20m → with 480-frame chunks about 6h10m. Audio pass about 30 min, mux and master about 1 min.
 
 ---
 

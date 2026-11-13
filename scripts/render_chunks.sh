@@ -1,10 +1,12 @@
 #!/usr/bin/env bash
 # Crash-safe render: muted N-frame video chunks (skips finished ones) + one audio pass, then mux + master.
-# Usage: COMP=LieMeter SCALE=0.75 PROPS='{"quality":"fast"}' scripts/render_chunks.sh [chunk=240]
+# Usage: COMP=LieMeter SCALE=0.75 PROPS='{"quality":"fast"}' scripts/render_chunks.sh [chunk=480]
 # Env: COMP (default Main), SCALE (default 1; must give integer pixel sizes, e.g. 0.75 → 1440×810),
 #      PROPS (input props JSON), REMOTION_BROWSER (browser path), OUT (default out/<COMP>.mp4)
 set -euo pipefail
-CH=${1:-240}; COMP=${COMP:-Main}; SCALE=${SCALE:-1}; PROPS=${PROPS:-'{}'}; OUT=${OUT:-out/$COMP.mp4}
+CH=${1:-480}; COMP=${COMP:-Main}; SCALE=${SCALE:-1}; PROPS=${PROPS:-'{}'}; OUT=${OUT:-out/$COMP.mp4}
+# Render the 3D at the OUTPUT size (res = scale): ~30% faster, SSIM 0.993 vs rendering at 1920x1080 and downscaling (CLAUDE.md §53)
+case "$PROPS" in *'"res"'*) ;; *) PROPS="${PROPS%\}},\"res\":$SCALE}"; PROPS="${PROPS/\{,/\{}";; esac
 D=out/chunks_$COMP; mkdir -p "$D"; B=${REMOTION_BROWSER:-}
 EXTRA=(); [ -n "$B" ] && EXTRA+=(--browser-executable="$B")
 npx remotion bundle src/index.ts --out-dir out/bundle_$COMP >/dev/null
