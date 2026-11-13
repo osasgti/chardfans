@@ -98,6 +98,7 @@ src/
   shots/S01_Hook.tsx       ✅ demo shot 1      shots/S02_Reveal.tsx ✅ demo shot 2
 storyboard.json            🔲 optional, for long videos. Short videos hard-code shots in Main.tsx (the demo does)
 out/                       git-ignored renders, stills, qa/
+releases/                  ✅ finished deliverables committed on request (lie-meter v02 mp4, SRT, thumbnails; GitHub limit 100MB/file)
 ```
 **Rule:** when you add or remove a file, update this tree in the same commit. A wrong map misleads every future session.
 
