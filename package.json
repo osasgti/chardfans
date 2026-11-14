@@ -1,0 +1,36 @@
+{
+  "name": "chardfans-anim",
+  "private": true,
+  "scripts": {
+    "sfx": "python3 scripts/make_sfx.py",
+    "studio": "remotion studio",
+    "still": "remotion still src/index.ts Main out/still.png --scale=0.5 --props={\\\"res\\\":0.5}",
+    "render": "remotion render src/index.ts Main out/video.mp4 --audio-bitrate=320k",
+    "master": "ffmpeg -y -i out/video.mp4 -c:v copy -af \"acompressor=threshold=-18dB:ratio=3:attack=10:release=150,loudnorm=I=-14:TP=-1.5:LRA=9,alimiter=limit=0.84\" -c:a aac -b:a 320k out/final.mp4",
+    "qa": "bash scripts/qa.sh out/final.mp4",
+    "determinism": "bash scripts/determinism.sh",
+    "render:chunks": "bash scripts/render_chunks.sh",
+    "typecheck": "tsc -p .",
+    "validate": "node scripts/validate_shots.mjs"
+  },
+  "dependencies": {
+    "@fontsource/cinzel": "^5.1.0",
+    "@fontsource/inter": "^5.1.0",
+    "@react-three/drei": "9.114.0",
+    "@react-three/fiber": "8.17.10",
+    "@react-three/postprocessing": "2.16.3",
+    "@remotion/cli": "4.0.543",
+    "@remotion/fonts": "^4.0.543",
+    "@remotion/three": "4.0.543",
+    "postprocessing": "6.36.3",
+    "react": "18.3.1",
+    "react-dom": "18.3.1",
+    "remotion": "4.0.543",
+    "three": "0.169.0"
+  },
+  "devDependencies": {
+    "@types/react": "18.3.12",
+    "@types/three": "0.169.0",
+    "typescript": "5.6.3"
+  }
+}
