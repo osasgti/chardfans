@@ -1,3 +1,4 @@
+import {RB} from './RB';
 import {random} from 'remotion';
 import {C} from '../style/tokens';
 
@@ -8,19 +9,19 @@ export const Hallway = () => (
     {Array.from({length: 14}).map((_, i) => (
       <mesh key={i} position={[-13 + i * 2, 0.002, 0]} rotation={[-Math.PI / 2, 0, 0]}><planeGeometry args={[0.02, 30]} /><meshStandardMaterial color="#4a2e20" /></mesh>
     ))}
-    <mesh position={[0, 3, -3]} receiveShadow><boxGeometry args={[30, 6, 0.2]} /><meshStandardMaterial color={C.purple} roughness={0.9} /></mesh>
+    <mesh position={[0, 3, -3]} receiveShadow><RB args={[30, 6, 0.2]} /><meshStandardMaterial color={C.purple} roughness={0.9} /></mesh>
     {Array.from({length: 12}).map((_, i) => {
       const x = -6.6 + i * 0.62;
       return (
         <group key={i} position={[x, 1.05, -2.72]}>
-          <mesh castShadow receiveShadow><boxGeometry args={[0.58, 2.1, 0.36]} /><meshStandardMaterial color={i % 5 === 3 ? '#4a6f8a' : '#3f5466'} roughness={0.5} metalness={0.25} /></mesh>
-          {[0.55, 0.62, 0.69].map((y) => (<mesh key={y} position={[0, y, 0.185]}><boxGeometry args={[0.36, 0.025, 0.01]} /><meshStandardMaterial color="#1c2630" /></mesh>))}
-          <mesh position={[0.2, 0, 0.19]}><boxGeometry args={[0.03, 0.12, 0.02]} /><meshStandardMaterial color="#c9d2da" metalness={0.8} roughness={0.3} /></mesh>
+          <mesh castShadow receiveShadow><RB args={[0.58, 2.1, 0.36]} /><meshStandardMaterial color={i % 5 === 3 ? '#4a6f8a' : '#3f5466'} roughness={0.5} metalness={0.25} /></mesh>
+          {[0.55, 0.62, 0.69].map((y) => (<mesh key={y} position={[0, y, 0.185]}><RB args={[0.36, 0.025, 0.01]} /><meshStandardMaterial color="#1c2630" /></mesh>))}
+          <mesh position={[0.2, 0, 0.19]}><RB args={[0.03, 0.12, 0.02]} /><meshStandardMaterial color="#c9d2da" metalness={0.8} roughness={0.3} /></mesh>
         </group>
       );
     })}
     {/* ceiling fluorescent practicals */}
-    {[-3, 0, 3].map((x) => (<mesh key={x} position={[x, 4.2, -1]}><boxGeometry args={[1.4, 0.05, 0.25]} /><meshStandardMaterial color="#fff" emissive="#e8f0ff" emissiveIntensity={3} /></mesh>))}
+    {[-3, 0, 3].map((x) => (<mesh key={x} position={[x, 4.2, -1]}><RB args={[1.4, 0.05, 0.25]} /><meshStandardMaterial color="#fff" emissive="#e8f0ff" emissiveIntensity={3} /></mesh>))}
   </group>
 );
 

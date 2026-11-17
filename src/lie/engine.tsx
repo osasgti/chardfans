@@ -2,6 +2,7 @@
  * Lie-meter shot engine: turns a ShotSpec (data) into a rendered shot.
  * Camera language (CLAUDE.md §36.2): shot size → lens + distance; one primary move + handheld drift.
  */
+import {RB} from '../three/RB';
 import React from 'react';
 import {AbsoluteFill, interpolate, Easing, random, Audio, Sequence, staticFile} from 'remotion';
 import {PerspectiveCamera, Vector3} from 'three';
@@ -148,17 +149,17 @@ export const Actor = ({c, beat, sec, line, mirrored = false}: {c: CastSpec; beat
 /* ───────────── special extras ───────────── */
 const Bus = ({k}: {k: number}) => (
   <group position={[-3 + 14 * Math.max(0, k - 0.45) ** 1.6 * 2.2, 0, 1.6]}>
-    <mesh position={[0, 1.3, 0]} castShadow><boxGeometry args={[6, 2.2, 2.2]} /><meshStandardMaterial color="#f2b134" roughness={0.6} /></mesh>
+    <mesh position={[0, 1.3, 0]} castShadow><RB args={[6, 2.2, 2.2]} /><meshStandardMaterial color="#f2b134" roughness={0.6} /></mesh>
     {Array.from({length: 5}).map((_, i) => <mesh key={i} position={[-2.2 + i * 1.1, 1.7, 1.11]}><planeGeometry args={[0.9, 0.7]} /><meshStandardMaterial color="#9fc4ff" emissive="#9fc4ff" emissiveIntensity={0.6} /></mesh>)}
     {[-2, 2].map((x) => <mesh key={x} position={[x, 0.35, 1.0]} rotation={[Math.PI / 2, 0, 0]}><cylinderGeometry args={[0.35, 0.35, 0.3, 20]} /><meshStandardMaterial color="#111" /></mesh>)}
   </group>
 );
 const Door = ({k}: {k: number}) => (
   <group position={[0, 0, -0.6]}>
-    <mesh position={[0, 1.1, -0.05]}><boxGeometry args={[1.2, 2.3, 0.08]} /><meshStandardMaterial color="#3b2d5c" roughness={0.8} /></mesh>
+    <mesh position={[0, 1.1, -0.05]}><RB args={[1.2, 2.3, 0.08]} /><meshStandardMaterial color="#3b2d5c" roughness={0.8} /></mesh>
     <mesh position={[0, 1.05, 0]}><planeGeometry args={[0.9, 2.1]} /><meshStandardMaterial color="#ffd9a0" emissive="#ffcf8f" emissiveIntensity={3} toneMapped={false} /></mesh>
     <group position={[-0.45, 0, 0.02]} rotation={[0, -0.9 * ease(k, [0.35, 1], [0, 1]), 0]}>
-      <mesh position={[0.45, 1.05, 0]} castShadow><boxGeometry args={[0.9, 2.1, 0.05]} /><meshStandardMaterial color="#6e4630" roughness={0.6} /></mesh>
+      <mesh position={[0.45, 1.05, 0]} castShadow><RB args={[0.9, 2.1, 0.05]} /><meshStandardMaterial color="#6e4630" roughness={0.6} /></mesh>
     </group>
     <mesh position={[0, 0.004, 0.6]} rotation={[-Math.PI / 2, 0, 0]}><planeGeometry args={[0.9, 1.2 * ease(k, [0.35, 1], [0.1, 1])]} /><meshBasicMaterial color="#ffcf8f" transparent opacity={0.35} toneMapped={false} /></mesh>
   </group>

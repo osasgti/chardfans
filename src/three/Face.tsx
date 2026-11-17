@@ -6,20 +6,45 @@ const INK = '#1a1424';
 
 function draw(ctx: CanvasRenderingContext2D, expr: Expr, blink: number, look: number, mouth: number) {
   ctx.clearRect(0, 0, 1024, 512);
+  // cheek blush (soft radial, stronger on warm/embarrassed faces)
+  const blushA = expr === 'happy' ? 0.34 : expr === 'sad' || expr === 'worried' ? 0.28 : 0.2;
+  for (const cx of [458, 566]) {
+    const b = ctx.createRadialGradient(cx, 272, 0, cx, 272, 26);
+    b.addColorStop(0, `rgba(255,128,150,${blushA})`); b.addColorStop(1, 'rgba(255,128,150,0)');
+    ctx.fillStyle = b; ctx.beginPath(); ctx.ellipse(cx, 272, 30, 18, 0, 0, Math.PI * 2); ctx.fill();
+  }
   ctx.fillStyle = INK; ctx.strokeStyle = INK; ctx.lineCap = 'round';
   const eyeY = 236, eyeH = 46 * (1 - blink * 0.92);
   for (const bx of [486, 538]) {
     const x = bx + look;
     if (expr === 'happy') { ctx.lineWidth = 8; ctx.beginPath(); ctx.arc(x, eyeY + 8, 13, Math.PI * 1.1, Math.PI * 1.9); ctx.stroke(); continue; }
     if (expr === 'bored') { ctx.lineWidth = 7; ctx.beginPath(); ctx.moveTo(x - 13, eyeY); ctx.lineTo(x + 13, eyeY); ctx.stroke(); continue; }
-    ctx.beginPath(); ctx.ellipse(x, eyeY, 11, Math.max(2, eyeH / 2), 0, 0, Math.PI * 2); ctx.fill();
-    // catch-light
-    if (blink < 0.5) { ctx.fillStyle = 'rgba(255,255,255,.85)'; ctx.beginPath(); ctx.arc(x + 4, eyeY - 9, 3.5, 0, Math.PI * 2); ctx.fill(); ctx.fillStyle = INK; }
+    // iris: deep violet → ink radial gradient (master prompt C3: never flat black)
+    const ry = Math.max(2, eyeH / 2) * (expr === 'shock' ? 1.08 : 1);
+    const g = ctx.createRadialGradient(x - 2, eyeY + ry * 0.35, 1, x, eyeY, Math.max(ry, 11));
+    g.addColorStop(0, '#4a2f6e'); g.addColorStop(0.55, '#24183a'); g.addColorStop(1, INK);
+    ctx.fillStyle = g; ctx.beginPath(); ctx.ellipse(x, eyeY, expr === 'shock' ? 12 : 11, ry, 0, 0, Math.PI * 2); ctx.fill();
+    // upper-lid shadow: darker band at the top of the eye
+    ctx.fillStyle = 'rgba(10,6,18,.45)'; ctx.beginPath(); ctx.ellipse(x, eyeY - ry * 0.55, 11, ry * 0.45, 0, Math.PI, Math.PI * 2); ctx.fill();
+    // two catch-lights: crisp primary upper-left-of-centre, soft secondary lower-right
+    if (blink < 0.5) {
+      ctx.fillStyle = 'rgba(255,255,255,.95)'; ctx.beginPath(); ctx.arc(x + 4, eyeY - ry * 0.42, 4.2, 0, Math.PI * 2); ctx.fill();
+      ctx.fillStyle = 'rgba(255,255,255,.45)'; ctx.beginPath(); ctx.arc(x - 4, eyeY + ry * 0.4, 2.2, 0, Math.PI * 2); ctx.fill();
+    }
+    ctx.fillStyle = INK;
     if (expr === 'smug') { // heavy upper lid
       ctx.lineWidth = 6; ctx.beginPath(); ctx.moveTo(x - 17, eyeY - 4); ctx.lineTo(x + 17, eyeY - 4); ctx.stroke();
       ctx.globalCompositeOperation = 'destination-out'; ctx.fillRect(x - 20, eyeY - 30, 40, 24); ctx.globalCompositeOperation = 'source-over';
     }
   }
+  // neutral-family brows (brows carry emotion; every face has them, master prompt C4)
+  if (expr === 'neutral' || expr === 'happy' || expr === 'smug' || expr === 'shock' || expr === 'bored') {
+    ctx.lineWidth = 5; const lift = expr === 'shock' ? -12 : expr === 'happy' ? -4 : expr === 'bored' ? 6 : 0;
+    for (const [bx, d] of [[486, -1], [538, 1]] as const) {
+      const sk = expr === 'smug' && d === 1 ? -8 : 0;
+      ctx.beginPath(); ctx.moveTo(bx + look - 13, eyeY - 36 + lift + sk); ctx.quadraticCurveTo(bx + look, eyeY - 42 + lift + sk, bx + look + 13, eyeY - 37 + lift + sk); ctx.stroke(); }
+  }
+  ctx.fillStyle = INK;
   if (expr === 'sad' || expr === 'worried') { // brows angled up toward the middle
     ctx.lineWidth = 6; for (const [bx, d] of [[486, -1], [538, 1]] as const) {
       // inner end (toward the nose) higher than the outer end = worried/sad (the reverse reads as angry)

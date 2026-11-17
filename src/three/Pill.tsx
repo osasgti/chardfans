@@ -1,5 +1,7 @@
+import {RB} from './RB';
 import React from 'react';
 import {random} from 'remotion';
+import {AdditiveBlending} from 'three';
 import {C} from '../style/tokens';
 import {Face, Expr} from './Face';
 import {FAST} from './Stage';
@@ -22,6 +24,9 @@ export const Pill = ({id, frame, position = [0, 0, 0], rotY = 0, hoodie = C.red,
   const period = 95 + Math.floor(random(id + 'b') * 40);
   const k = (Math.floor(frame) + Math.floor(random(id + 'o') * period)) % period;
   const blink = k < 5 ? Math.sin((k / 5) * Math.PI) : 0;
+  // saccades: tiny seeded eye darts every ~1–2s (master prompt C3.7)
+  const sp = 30 + Math.floor(random(id + 's') * 25), si = Math.floor(frame / sp);
+  const sacc = (random(id + 'sa' + si) - 0.5) * 5;
   const cloth = <meshStandardMaterial color={hoodie} roughness={0.88} />;
   const sq: [number, number, number] = [1 + squash * 0.5, 1 - squash, 1 + squash * 0.5];
   const arm = (side: 1 | -1, a: number) => (
@@ -42,16 +47,20 @@ export const Pill = ({id, frame, position = [0, 0, 0], rotY = 0, hoodie = C.red,
       <group scale={[1, breath, 1]}>
         <mesh position={[0, 0.72, 0]} castShadow receiveShadow><capsuleGeometry args={[0.22, 0.36, 8, 24]} />{cloth}</mesh>
         {[-1, 1].map((s) => (
-          <mesh key={s} position={[s * 0.045, 0.78, 0.215]}><boxGeometry args={[0.016, 0.17, 0.012]} /><meshStandardMaterial color="#f4f0f8" /></mesh>
+          <mesh key={s} position={[s * 0.045, 0.78, 0.215]}><RB args={[0.016, 0.17, 0.012]} /><meshStandardMaterial color="#f4f0f8" /></mesh>
         ))}
         <mesh position={[0, 0.98, -0.1]} rotation={[0.3, 0, 0]}><torusGeometry args={[0.13, 0.05, 12, 24, Math.PI]} />{cloth}</mesh>
         {arm(-1, armL)}{arm(1, armR)}
         <mesh position={[0, 1.04, 0]}><cylinderGeometry args={[0.05, 0.05, 0.2, 12]} /><meshStandardMaterial color={C.lavender} /></mesh>
         <group position={[0, 1.13, 0]} rotation={[0, headTurn, headTilt]} scale={sq}>
           <group position={[0, 0.4, 0]}>
-            <mesh castShadow><sphereGeometry args={[0.42, seg, seg]} />{skinMat}</mesh>
-            <Face r={0.42} expr={expr} blink={blink} look={look} mouth={mouth} seg={Math.max(seg, 32)} />
+            <group scale={[1, 1.04, 0.97]}>
+              <mesh castShadow><sphereGeometry args={[0.42, seg, seg]} />{skinMat}</mesh>
+              <mesh scale={1.006}><sphereGeometry args={[0.42, seg, seg]} /><SkinGlow /></mesh>
+              <Face r={0.42} expr={expr} blink={blink} look={look + sacc} mouth={mouth} seg={Math.max(seg, 32)} />
+            </group>
             <HairMesh hair={hat} color={hatColor} seg={seg} />
+            {(hat === 'bun' || hat === 'ponytail' || hat === 'bob') && <Fringe color={hatColor} />}
             {glasses && <Glasses />}
           </group>
         </group>
@@ -60,8 +69,24 @@ export const Pill = ({id, frame, position = [0, 0, 0], rotY = 0, hoodie = C.red,
   );
 };
 
+/** Fake subsurface: warm fresnel glow at the silhouette, like light through a toy's soft skin (master prompt C2). */
+const SkinGlow = () => (
+  <shaderMaterial transparent depthWrite={false} blending={AdditiveBlending}
+    vertexShader={`varying vec3 vN; varying vec3 vV; void main(){ vec4 mv = modelViewMatrix * vec4(position,1.0); vN = normalize(normalMatrix*normal); vV = normalize(-mv.xyz); gl_Position = projectionMatrix*mv; }`}
+    fragmentShader={`varying vec3 vN; varying vec3 vV; void main(){ float f = pow(1.0 - max(dot(vN,vV),0.0), 3.0); gl_FragColor = vec4(vec3(1.0,0.55,0.5)*f*0.32, 1.0); }`} />
+);
+
+/** Fringe: overlapping squashed lumps under the hat/hair edge so hair has volume, not a flat cap (C5). */
+const Fringe = ({color}: {color: string}) => (<>
+  {[-0.27, -0.15, -0.03, 0.09, 0.21, 0.3].map((x, i) => {
+    const y = 0.215 - Math.abs(x) * 0.3 + (i % 2) * 0.012, z = Math.sqrt(Math.max(0.01, 0.43 ** 2 - x * x - y * y));
+    return <mesh key={x} position={[x, y, z - 0.05]} rotation={[0.35, x * 1.4, (i % 2 ? 0.4 : -0.3)]} scale={[1.45, 0.55, 0.6]} castShadow>
+      <sphereGeometry args={[0.068, 20, 16]} /><meshPhysicalMaterial color={color} roughness={0.55} sheen={0.8} sheenColor="#8a7aa8" /></mesh>;
+  })}
+</>);
+
 const HairMesh = ({hair, color, seg}: {hair: Hair; color: string; seg: number}) => {
-  const m = <meshStandardMaterial color={color} roughness={0.75} />;
+  const m = <meshPhysicalMaterial color={color} roughness={0.6} sheen={0.6} sheenColor="#8a7aa8" />;
   const cap = (back: boolean) => (<>
     <mesh rotation={[-0.25, 0, 0]} position={[0, 0.06, -0.02]} castShadow><sphereGeometry args={[0.44, seg, seg, 0, Math.PI * 2, 0, Math.PI * 0.42]} />{m}</mesh>
     <mesh position={[0, 0.22, back ? -0.34 : 0.34]} rotation={[back ? -0.25 : 0.25, 0, 0]} scale={[1, 0.08, 1]} castShadow><cylinderGeometry args={[0.24, 0.24, 0.2, 24]} />{m}</mesh>
@@ -86,6 +111,6 @@ const Glasses = () => {
   const m = <meshStandardMaterial color="#141018" roughness={0.3} />;
   return (<group position={[0, 0.07, 0.41]}>
     {[-0.085, 0.085].map((x) => <mesh key={x} position={[x, 0, 0]}><torusGeometry args={[0.058, 0.01, 8, 24]} />{m}</mesh>)}
-    <mesh><boxGeometry args={[0.05, 0.01, 0.01]} />{m}</mesh>
+    <mesh><RB args={[0.05, 0.01, 0.01]} />{m}</mesh>
   </group>);
 };
