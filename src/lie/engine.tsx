@@ -17,6 +17,7 @@ import {Tag, Title} from '../overlay/Overlays';
 import {C, W, H, ease, focusFor, NEAR, FAR} from '../style/tokens';
 import {LieMeter} from './LieMeter';
 import timeline from './timeline.json';
+import {Thread, ThreadSwarm, ThreadState} from '../three/Thread';
 
 export type Line = {id: string; act: string; text: string; start: number; end: number; audio: string | null; words: {text: string; start: number; end: number}[]};
 export const LINES = timeline.lines as Line[];
@@ -24,7 +25,7 @@ export const TOTAL = timeline.total as number;
 export const lineById = (id: string) => LINES.find((l) => l.id === id)!;
 
 /* ───────────── cast ───────────── */
-export type Who = 'hero' | 'mom' | 'brother' | 'maya' | 'dad' | 'teacher' | 'lucky' | 'dealer' | 'driver' | 'kidA' | 'kidB' | 'kidC' | 'kidD' | 'girl' | 'fig';
+export type Who = 'hero' | 'mom' | 'brother' | 'maya' | 'dad' | 'teacher' | 'lucky' | 'dealer' | 'driver' | 'kidA' | 'kidB' | 'kidC' | 'kidD' | 'girl' | 'fig' | 'young' | 'grandma';
 type Look = {hoodie: string; hair: Hair; hairColor: string; glasses?: boolean; scale: number; expr: Expr};
 export const CAST: Record<Who, Look> = {
   hero:    {hoodie: '#c8323a', hair: 'beanie',   hairColor: '#1b1622', scale: 1,    expr: 'smug'},
@@ -41,6 +42,8 @@ export const CAST: Record<Who, Look> = {
   kidC:    {hoodie: '#5aa05a', hair: 'none',     hairColor: '#000',    scale: 1.02, expr: 'neutral', glasses: true},
   kidD:    {hoodie: '#e07a3a', hair: 'beanie',   hairColor: '#3b2d5c', scale: 0.99, expr: 'neutral'},
   girl:    {hoodie: '#e35d8f', hair: 'ponytail', hairColor: '#6e4630', scale: 0.96, expr: 'neutral'},
+  young:   {hoodie: '#c8323a', hair: 'none',     hairColor: '#000',    scale: 0.7,  expr: 'happy'},
+  grandma: {hoodie: '#9a6fb0', hair: 'bun',      hairColor: '#cfc8d8', scale: 1.0,  expr: 'happy', glasses: true},
   fig:     {hoodie: '#55506a', hair: 'none',     hairColor: '#000',    scale: 1,    expr: 'neutral'},
 };
 export type Pose = 'idle' | 'cheer' | 'point' | 'phone' | 'sit' | 'sleep' | 'slump' | 'hold' | 'shrug' | 'run';
@@ -71,11 +74,15 @@ export const headOf = (c: CastSpec): [number, number, number] => {
 export type Size = 'ecu' | 'cu' | 'mcu' | 'med' | 'wide' | 'ews';
 export type Move = 'push' | 'pull' | 'orbitL' | 'orbitR' | 'crane' | 'drop' | 'lock' | 'dz' | 'truck' | 'snap';
 export type MeterSpec = {on: number | [number, number, number]; value: number; label?: string; mode?: 'normal' | 'mirror' | 'q' | 'fire' | 'fade'; delay?: number; from?: number; small?: boolean};
+/** Promise thread (WHAT_IF_PROMISE_THREADS §6). from/to: cast index (wrist → chest) or a world point. `at` = beat the state starts;
+ *  `then` switches state later in the shot (e.g. held → burst). `swarm` draws n hair-thin threads from `from` instead. */
+export type ThreadSpec = {from: number | [number, number, number]; to?: number | [number, number, number]; state: ThreadState; at?: number; thick?: number;
+  then?: {state: ThreadState; at: number}; swarm?: number; grey?: number};
 export type ShotSpec = {
   line: string; w?: number; set: string; setProps?: Record<string, unknown>; light: string; grade: string; keyPos?: [number, number, number]; keyI?: number;
   cam: {on: number | [number, number, number]; size: Size; yaw?: number; pitch?: number; move?: Move; amount?: number};
   cast: CastSpec[]; meters?: MeterSpec[]; tag?: string; title?: {words: string[]; emph?: number[]; y?: number; size?: number};
-  dust?: boolean; extra?: string; flash?: number; exposure?: number; mirror?: boolean; flicker?: boolean;
+  dust?: boolean; extra?: string; threads?: ThreadSpec[]; flash?: number; exposure?: number; mirror?: boolean; flicker?: boolean;
 };
 
 const SIZE: Record<Size, [number, number]> = {ecu: [1.5, 20], cu: [3.4, 24], mcu: [3.6, 28], med: [4.4, 32], wide: [7.2, 38], ews: [11, 42]};
@@ -245,12 +252,12 @@ const Shards = ({k}: {k: number}) => (
 );
 
 /* ───────────── the shot ───────────── */
-export const LieShot = ({spec, beat, dur, sec, seed, fpsRatio = 1, calStops = 0}: {spec: ShotSpec; beat: number; dur: number; sec: number; seed: string; fpsRatio?: number; calStops?: number}) => {
+export const LieShot = ({spec, beat, dur, sec, seed, fpsRatio = 1, calStops = 0, lines = LINES}: {spec: ShotSpec; beat: number; dur: number; sec: number; seed: string; fpsRatio?: number; calStops?: number; lines?: Line[]}) => {
   const k = interpolate(beat, [0, dur], [0, 1], {easing: E, extrapolateLeft: 'clamp', extrapolateRight: 'clamp'});
   const cam = camFor(spec, k, beat, seed);
   const S = typeof spec.cam.on === 'number' ? headOf(spec.cast[spec.cam.on]) : spec.cam.on;
   const focus = focusFor(Math.hypot(cam.pos[0] - S[0], cam.pos[1] - S[1], cam.pos[2] - S[2]));
-  const line = LINES.find((l) => l.id === spec.line);
+  const line = lines.find((l) => l.id === spec.line);
   const Set = SETS[spec.set];
   const flick = spec.flicker ? (random('fl' + Math.floor(beat / 3)) > 0.82 ? 0.35 : 1) : 1;
   const setNode = spec.set === 'Hallway' ? <Hallway frame={beat} /> : Set ? <Set {...(spec.setProps ?? {})} {...(spec.set === 'Bathroom' ? {flicker: flick} : {})} /> : null;
@@ -271,6 +278,16 @@ export const LieShot = ({spec, beat, dur, sec, seed, fpsRatio = 1, calStops = 0}
           <BathroomReflection />
           {spec.cast.filter((c) => c.who === 'hero').map((c, i) => <Actor key={'m' + i} c={c} beat={beat} sec={sec} line={line} mirrored />)}
         </>}
+        {(spec.threads ?? []).map((th, i) => {
+          const end = (v: number | [number, number, number] | undefined, f: 'w' | 'c'): [number, number, number] =>
+            typeof v === 'number' ? (f === 'w' ? wristR(spec.cast[v]) : chestOf(spec.cast[v])) : (v ?? [0, 1, 0]);
+          const a = end(th.from, 'w');
+          if (th.swarm) return beat >= (th.at ?? 0) ? <ThreadSwarm key={'t' + i} from={a} n={th.swarm} t={sec} seed={seed + 'sw' + i} grey={th.grey ?? 0.85} /> : null;
+          const late = th.then && beat >= th.then.at;
+          const st = late ? th.then!.state : th.state, t0 = late ? th.then!.at : th.at ?? 0;
+          if (beat < t0 && st === 'fresh') return null;
+          return <Thread key={'t' + i} from={a} to={end(th.to, 'c')} state={st} t={Math.max(0, beat - t0) / 30} thickness={th.thick ?? 0.01} seed={seed + 'th' + i} light={i < 3} />;
+        })}
         {spec.extra === 'bus' && <Bus k={k} />}
         {spec.extra === 'door' && <Door k={k} />}
         {spec.extra === 'shards' && <Shards k={k} />}

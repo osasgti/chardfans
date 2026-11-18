@@ -65,6 +65,8 @@ scripts/
   sfxlib.py                ✅ synthesis building blocks (§36.6)
   make_sfx.py              ✅ 80 sounds + music stems + Promise Threads set (10 thread SFX, 4 'Promise' motif stems) → public/sfx/*.wav (git-ignored, run `npm run sfx`)
   estimate_timing.py       ✅ script text → words.json (no speech recogniser needed)
+  build_promise_timeline.py ✅ promise_tts.json + vo_promise/picks.txt → cleaned public/vo_promise/*.wav + src/promise/timeline.json
+  promise_tts.json         ✅ the 51 Promise Threads lines [id, tag, text]
   build_timeline.py        ✅ master-prompt TTS table + public/vo/raw/*.mp3 → cleaned VO wavs + src/lie/timeline.json
   qa.sh                    ✅ cuts, contact sheet, loudness, black/frozen frames, flashes (§28, §52)
   luma_qa.py               ✅ 1-frame flash + brightness-range detector (§52.1)
@@ -78,6 +80,7 @@ scripts/
 public/
   fonts/*.woff2            ✅ Cinzel 600/700, Inter 700 (local, never fetched)
   sfx/*.wav                ✅ generated
+  vo_promise/raw/P*_a|b.mp3 ✅ Promise takes (51 lines, take B only where needed) · picks.txt · P*.wav (cleaned)
   vo/raw/L*.mp3            ✅ ElevenLabs takes (all 48)   vo/L*.wav ✅ cleaned by build_timeline.py
 src/
   index.ts / Root.tsx      ✅ registers Main (demo, 60fps) and LieMeter (5:03, LIE_FPS=24 on CPU)   🔲 MainVertical (§45)
@@ -97,6 +100,8 @@ src/
   lie/                     ✅ the 5-minute video: engine.tsx (data → shot), shots.ts (76 shots), LieMeter.tsx,
                               LieVideo.tsx (sequencing, VO, music, ambience, cues, captions), timeline.json (generated),
                               reactions.ts (7 acted reactions: doubleTake/gulp/shrug/facepalm/deflate/celebrate/smugNod), ReactTest.tsx + ThreadTest.tsx (dev comps), engine helpers wristR/chestOf (thread anchors)
+  promise/                 ✅ Promise Threads video: shots.ts (65 shots, `threads` spec), PromiseVideo.tsx (sequencing, VO, music, thread SFX derived from shots,
+                              Kai-wrist-before-twist validator), timeline.json (generated). Composition id `PromiseThreads`
   three/props/             🔲 Coin (now inline in S02), Dice, Cards, Alarm, Vending, Roulette (§40)
   overlay/Overlays.tsx     ✅ project(), Title, Tag, OddsBadge, Letterbox
   overlay/Transitions.tsx  ✅ DipToBlack, WhipStreak, Flash

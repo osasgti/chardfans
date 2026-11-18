@@ -1,0 +1,3176 @@
+{
+ "total": 268.057,
+ "lines": [
+  {
+   "id": "P001",
+   "act": "hook",
+   "speaker": "narrator",
+   "text": "What if every promise you heard... left a thread?",
+   "start": 0.8,
+   "end": 4.081,
+   "audio": "vo_promise/P001.wav",
+   "words": [
+    {
+     "text": "What",
+     "start": 0.8,
+     "end": 1.112
+    },
+    {
+     "text": "if",
+     "start": 1.112,
+     "end": 1.423
+    },
+    {
+     "text": "every",
+     "start": 1.423,
+     "end": 1.918
+    },
+    {
+     "text": "promise",
+     "start": 1.918,
+     "end": 2.413
+    },
+    {
+     "text": "you",
+     "start": 2.413,
+     "end": 2.725
+    },
+    {
+     "text": "heard",
+     "start": 2.725,
+     "end": 3.036
+    },
+    {
+     "text": "left",
+     "start": 3.036,
+     "end": 3.348
+    },
+    {
+     "text": "a",
+     "start": 3.348,
+     "end": 3.66
+    },
+    {
+     "text": "thread?",
+     "start": 3.66,
+     "end": 3.971
+    }
+   ]
+  },
+  {
+   "id": "P002",
+   "act": "hook",
+   "speaker": "narrator",
+   "text": "A real one. Glowing. Tied from their wrist... to your heart.",
+   "start": 4.781,
+   "end": 9.668,
+   "audio": "vo_promise/P002.wav",
+   "words": [
+    {
+     "text": "A",
+     "start": 4.781,
+     "end": 5.168
+    },
+    {
+     "text": "real",
+     "start": 5.168,
+     "end": 5.554
+    },
+    {
+     "text": "one.",
+     "start": 5.554,
+     "end": 6.054
+    },
+    {
+     "text": "Glowing.",
+     "start": 6.191,
+     "end": 6.691
+    },
+    {
+     "text": "Tied",
+     "start": 6.827,
+     "end": 7.213
+    },
+    {
+     "text": "from",
+     "start": 7.213,
+     "end": 7.6
+    },
+    {
+     "text": "their",
+     "start": 7.6,
+     "end": 7.986
+    },
+    {
+     "text": "wrist",
+     "start": 7.986,
+     "end": 8.373
+    },
+    {
+     "text": "to",
+     "start": 8.373,
+     "end": 8.759
+    },
+    {
+     "text": "your",
+     "start": 8.759,
+     "end": 9.145
+    },
+    {
+     "text": "heart.",
+     "start": 9.145,
+     "end": 9.532
+    }
+   ]
+  },
+  {
+   "id": "P003",
+   "act": "hook",
+   "speaker": "narrator",
+   "text": "Keep the promise, and it lights up like a firework. Break it...",
+   "start": 10.868,
+   "end": 15.04,
+   "audio": "vo_promise/P003.wav",
+   "words": [
+    {
+     "text": "Keep",
+     "start": 10.868,
+     "end": 11.167
+    },
+    {
+     "text": "the",
+     "start": 11.167,
+     "end": 11.466
+    },
+    {
+     "text": "promise,",
+     "start": 11.466,
+     "end": 11.94
+    },
+    {
+     "text": "and",
+     "start": 11.982,
+     "end": 12.281
+    },
+    {
+     "text": "it",
+     "start": 12.281,
+     "end": 12.58
+    },
+    {
+     "text": "lights",
+     "start": 12.58,
+     "end": 12.879
+    },
+    {
+     "text": "up",
+     "start": 12.879,
+     "end": 13.177
+    },
+    {
+     "text": "like",
+     "start": 13.177,
+     "end": 13.564
+    },
+    {
+     "text": "a",
+     "start": 13.564,
+     "end": 13.863
+    },
+    {
+     "text": "firework.",
+     "start": 13.863,
+     "end": 14.337
+    },
+    {
+     "text": "Break",
+     "start": 14.443,
+     "end": 14.741
+    },
+    {
+     "text": "it",
+     "start": 14.741,
+     "end": 15.04
+    }
+   ]
+  },
+  {
+   "id": "P003b",
+   "act": "hook",
+   "speaker": "narrator",
+   "text": "...and it hangs there. Grey. For everyone to see. Well. For YOU to see.",
+   "start": 15.74,
+   "end": 21.387,
+   "audio": "vo_promise/P003b.wav",
+   "words": [
+    {
+     "text": "and",
+     "start": 15.74,
+     "end": 16.073
+    },
+    {
+     "text": "it",
+     "start": 16.073,
+     "end": 16.407
+    },
+    {
+     "text": "hangs",
+     "start": 16.407,
+     "end": 16.74
+    },
+    {
+     "text": "there.",
+     "start": 16.74,
+     "end": 17.171
+    },
+    {
+     "text": "Grey.",
+     "start": 17.289,
+     "end": 17.622
+    },
+    {
+     "text": "For",
+     "start": 17.74,
+     "end": 18.073
+    },
+    {
+     "text": "everyone",
+     "start": 18.073,
+     "end": 18.701
+    },
+    {
+     "text": "to",
+     "start": 18.701,
+     "end": 19.034
+    },
+    {
+     "text": "see.",
+     "start": 19.034,
+     "end": 19.367
+    },
+    {
+     "text": "Well.",
+     "start": 19.485,
+     "end": 19.818
+    },
+    {
+     "text": "For",
+     "start": 19.936,
+     "end": 20.269
+    },
+    {
+     "text": "YOU",
+     "start": 20.269,
+     "end": 20.602
+    },
+    {
+     "text": "to",
+     "start": 20.602,
+     "end": 20.936
+    },
+    {
+     "text": "see.",
+     "start": 20.936,
+     "end": 21.269
+    }
+   ]
+  },
+  {
+   "id": "P004",
+   "act": "act1",
+   "speaker": "narrator",
+   "text": "You wake up. Your alarm promises, \"five more minutes.\"",
+   "start": 24.987,
+   "end": 28.685,
+   "audio": "vo_promise/P004.wav",
+   "words": [
+    {
+     "text": "You",
+     "start": 24.987,
+     "end": 25.299
+    },
+    {
+     "text": "wake",
+     "start": 25.299,
+     "end": 25.703
+    },
+    {
+     "text": "up.",
+     "start": 25.703,
+     "end": 26.015
+    },
+    {
+     "text": "Your",
+     "start": 26.125,
+     "end": 26.437
+    },
+    {
+     "text": "alarm",
+     "start": 26.437,
+     "end": 26.841
+    },
+    {
+     "text": "promises,",
+     "start": 26.841,
+     "end": 27.337
+    },
+    {
+     "text": "\"five",
+     "start": 27.381,
+     "end": 27.785
+    },
+    {
+     "text": "more",
+     "start": 27.785,
+     "end": 28.189
+    },
+    {
+     "text": "minutes.\"",
+     "start": 28.189,
+     "end": 28.685
+    }
+   ]
+  },
+  {
+   "id": "P005",
+   "act": "act1",
+   "speaker": "narrator",
+   "text": "The thread snaps grey before you even sit up.",
+   "start": 29.385,
+   "end": 32.166,
+   "audio": "vo_promise/P005.wav",
+   "words": [
+    {
+     "text": "The",
+     "start": 29.385,
+     "end": 29.657
+    },
+    {
+     "text": "thread",
+     "start": 29.657,
+     "end": 29.928
+    },
+    {
+     "text": "snaps",
+     "start": 29.928,
+     "end": 30.2
+    },
+    {
+     "text": "grey",
+     "start": 30.2,
+     "end": 30.472
+    },
+    {
+     "text": "before",
+     "start": 30.472,
+     "end": 30.903
+    },
+    {
+     "text": "you",
+     "start": 30.903,
+     "end": 31.175
+    },
+    {
+     "text": "even",
+     "start": 31.175,
+     "end": 31.527
+    },
+    {
+     "text": "sit",
+     "start": 31.527,
+     "end": 31.798
+    },
+    {
+     "text": "up.",
+     "start": 31.798,
+     "end": 32.07
+    }
+   ]
+  },
+  {
+   "id": "P006",
+   "act": "act1",
+   "speaker": "narrator",
+   "text": "Downstairs, Mom says, \"I'll drive you today.\" Gold. Thick. Already glowing.",
+   "start": 32.866,
+   "end": 39.278,
+   "audio": "vo_promise/P006.wav",
+   "words": [
+    {
+     "text": "Downstairs,",
+     "start": 32.866,
+     "end": 33.454
+    },
+    {
+     "text": "Mom",
+     "start": 33.518,
+     "end": 33.973
+    },
+    {
+     "text": "says,",
+     "start": 33.973,
+     "end": 34.428
+    },
+    {
+     "text": "\"I'll",
+     "start": 34.492,
+     "end": 34.946
+    },
+    {
+     "text": "drive",
+     "start": 34.946,
+     "end": 35.535
+    },
+    {
+     "text": "you",
+     "start": 35.535,
+     "end": 35.989
+    },
+    {
+     "text": "today.\"",
+     "start": 35.989,
+     "end": 36.577
+    },
+    {
+     "text": "Gold.",
+     "start": 36.577,
+     "end": 37.032
+    },
+    {
+     "text": "Thick.",
+     "start": 37.192,
+     "end": 37.647
+    },
+    {
+     "text": "Already",
+     "start": 37.807,
+     "end": 38.529
+    },
+    {
+     "text": "glowing.",
+     "start": 38.529,
+     "end": 39.118
+    }
+   ]
+  },
+  {
+   "id": "P007",
+   "act": "act1",
+   "speaker": "narrator",
+   "text": "Your little brother promises he'll \"clean his room THIS time.\"",
+   "start": 39.978,
+   "end": 43.694,
+   "audio": "vo_promise/P007.wav",
+   "words": [
+    {
+     "text": "Your",
+     "start": 39.978,
+     "end": 40.302
+    },
+    {
+     "text": "little",
+     "start": 40.302,
+     "end": 40.721
+    },
+    {
+     "text": "brother",
+     "start": 40.721,
+     "end": 41.14
+    },
+    {
+     "text": "promises",
+     "start": 41.14,
+     "end": 41.655
+    },
+    {
+     "text": "he'll",
+     "start": 41.655,
+     "end": 41.979
+    },
+    {
+     "text": "\"clean",
+     "start": 41.979,
+     "end": 42.303
+    },
+    {
+     "text": "his",
+     "start": 42.303,
+     "end": 42.627
+    },
+    {
+     "text": "room",
+     "start": 42.627,
+     "end": 42.95
+    },
+    {
+     "text": "THIS",
+     "start": 42.95,
+     "end": 43.274
+    },
+    {
+     "text": "time.\"",
+     "start": 43.274,
+     "end": 43.694
+    }
+   ]
+  },
+  {
+   "id": "P008",
+   "act": "act1",
+   "speaker": "narrator",
+   "text": "His wrist... is a mess.",
+   "start": 44.394,
+   "end": 47.007,
+   "audio": "vo_promise/P008.wav",
+   "words": [
+    {
+     "text": "His",
+     "start": 44.394,
+     "end": 44.882
+    },
+    {
+     "text": "wrist",
+     "start": 44.882,
+     "end": 45.37
+    },
+    {
+     "text": "is",
+     "start": 45.37,
+     "end": 45.858
+    },
+    {
+     "text": "a",
+     "start": 45.858,
+     "end": 46.346
+    },
+    {
+     "text": "mess.",
+     "start": 46.346,
+     "end": 46.834
+    }
+   ]
+  },
+  {
+   "id": "P009",
+   "act": "act1",
+   "speaker": "narrator",
+   "text": "The rules are simple. Every promise makes a thread. Big promises, thick threads. Kept ones turn to light. Broken ones turn grey... and drag.",
+   "start": 47.907,
+   "end": 58.233,
+   "audio": "vo_promise/P009.wav",
+   "words": [
+    {
+     "text": "The",
+     "start": 47.907,
+     "end": 48.254
+    },
+    {
+     "text": "rules",
+     "start": 48.254,
+     "end": 48.703
+    },
+    {
+     "text": "are",
+     "start": 48.703,
+     "end": 49.153
+    },
+    {
+     "text": "simple.",
+     "start": 49.153,
+     "end": 49.602
+    },
+    {
+     "text": "Every",
+     "start": 49.725,
+     "end": 50.277
+    },
+    {
+     "text": "promise",
+     "start": 50.277,
+     "end": 50.828
+    },
+    {
+     "text": "makes",
+     "start": 50.828,
+     "end": 51.278
+    },
+    {
+     "text": "a",
+     "start": 51.278,
+     "end": 51.625
+    },
+    {
+     "text": "thread.",
+     "start": 51.625,
+     "end": 51.972
+    },
+    {
+     "text": "Big",
+     "start": 52.095,
+     "end": 52.442
+    },
+    {
+     "text": "promises,",
+     "start": 52.442,
+     "end": 52.994
+    },
+    {
+     "text": "thick",
+     "start": 53.043,
+     "end": 53.39
+    },
+    {
+     "text": "threads.",
+     "start": 53.39,
+     "end": 53.738
+    },
+    {
+     "text": "Kept",
+     "start": 53.86,
+     "end": 54.208
+    },
+    {
+     "text": "ones",
+     "start": 54.208,
+     "end": 54.657
+    },
+    {
+     "text": "turn",
+     "start": 54.657,
+     "end": 55.004
+    },
+    {
+     "text": "to",
+     "start": 55.004,
+     "end": 55.352
+    },
+    {
+     "text": "light.",
+     "start": 55.352,
+     "end": 55.699
+    },
+    {
+     "text": "Broken",
+     "start": 55.822,
+     "end": 56.271
+    },
+    {
+     "text": "ones",
+     "start": 56.271,
+     "end": 56.721
+    },
+    {
+     "text": "turn",
+     "start": 56.721,
+     "end": 57.068
+    },
+    {
+     "text": "grey",
+     "start": 57.068,
+     "end": 57.415
+    },
+    {
+     "text": "and",
+     "start": 57.415,
+     "end": 57.763
+    },
+    {
+     "text": "drag.",
+     "start": 57.763,
+     "end": 58.11
+    }
+   ]
+  },
+  {
+   "id": "P010",
+   "act": "act1",
+   "speaker": "narrator",
+   "text": "The bus driver: \"I'll wait for you!\"",
+   "start": 58.933,
+   "end": 60.995,
+   "audio": "vo_promise/P010.wav",
+   "words": [
+    {
+     "text": "The",
+     "start": 58.933,
+     "end": 59.21
+    },
+    {
+     "text": "bus",
+     "start": 59.21,
+     "end": 59.487
+    },
+    {
+     "text": "driver:",
+     "start": 59.487,
+     "end": 59.846
+    },
+    {
+     "text": "\"I'll",
+     "start": 59.886,
+     "end": 60.163
+    },
+    {
+     "text": "wait",
+     "start": 60.163,
+     "end": 60.44
+    },
+    {
+     "text": "for",
+     "start": 60.44,
+     "end": 60.718
+    },
+    {
+     "text": "you!\"",
+     "start": 60.718,
+     "end": 60.995
+    }
+   ]
+  },
+  {
+   "id": "P011",
+   "act": "act1",
+   "speaker": "narrator",
+   "text": "A billboard promises \"your best summer ever.\" The thread goes up into the sky, and just... ends.",
+   "start": 61.995,
+   "end": 68.838,
+   "audio": "vo_promise/P011.wav",
+   "words": [
+    {
+     "text": "A",
+     "start": 61.995,
+     "end": 62.35
+    },
+    {
+     "text": "billboard",
+     "start": 62.35,
+     "end": 62.81
+    },
+    {
+     "text": "promises",
+     "start": 62.81,
+     "end": 63.374
+    },
+    {
+     "text": "\"your",
+     "start": 63.374,
+     "end": 63.73
+    },
+    {
+     "text": "best",
+     "start": 63.73,
+     "end": 64.085
+    },
+    {
+     "text": "summer",
+     "start": 64.085,
+     "end": 64.545
+    },
+    {
+     "text": "ever.\"",
+     "start": 64.545,
+     "end": 65.005
+    },
+    {
+     "text": "The",
+     "start": 65.005,
+     "end": 65.36
+    },
+    {
+     "text": "thread",
+     "start": 65.36,
+     "end": 65.715
+    },
+    {
+     "text": "goes",
+     "start": 65.715,
+     "end": 66.071
+    },
+    {
+     "text": "up",
+     "start": 66.071,
+     "end": 66.426
+    },
+    {
+     "text": "into",
+     "start": 66.426,
+     "end": 66.886
+    },
+    {
+     "text": "the",
+     "start": 66.886,
+     "end": 67.241
+    },
+    {
+     "text": "sky,",
+     "start": 67.241,
+     "end": 67.596
+    },
+    {
+     "text": "and",
+     "start": 67.646,
+     "end": 68.002
+    },
+    {
+     "text": "just",
+     "start": 68.002,
+     "end": 68.357
+    },
+    {
+     "text": "ends.",
+     "start": 68.357,
+     "end": 68.712
+    }
+   ]
+  },
+  {
+   "id": "P012",
+   "act": "act1",
+   "speaker": "narrator",
+   "text": "By lunch, you learn the first secret. Most promises aren't lies. People just... forget.",
+   "start": 69.738,
+   "end": 76.44,
+   "audio": "vo_promise/P012.wav",
+   "words": [
+    {
+     "text": "By",
+     "start": 69.738,
+     "end": 70.133
+    },
+    {
+     "text": "lunch,",
+     "start": 70.133,
+     "end": 70.528
+    },
+    {
+     "text": "you",
+     "start": 70.584,
+     "end": 70.979
+    },
+    {
+     "text": "learn",
+     "start": 70.979,
+     "end": 71.374
+    },
+    {
+     "text": "the",
+     "start": 71.374,
+     "end": 71.769
+    },
+    {
+     "text": "first",
+     "start": 71.769,
+     "end": 72.164
+    },
+    {
+     "text": "secret.",
+     "start": 72.164,
+     "end": 72.675
+    },
+    {
+     "text": "Most",
+     "start": 72.815,
+     "end": 73.21
+    },
+    {
+     "text": "promises",
+     "start": 73.21,
+     "end": 73.837
+    },
+    {
+     "text": "aren't",
+     "start": 73.837,
+     "end": 74.348
+    },
+    {
+     "text": "lies.",
+     "start": 74.348,
+     "end": 74.743
+    },
+    {
+     "text": "People",
+     "start": 74.883,
+     "end": 75.394
+    },
+    {
+     "text": "just",
+     "start": 75.394,
+     "end": 75.789
+    },
+    {
+     "text": "forget.",
+     "start": 75.789,
+     "end": 76.3
+    }
+   ]
+  },
+  {
+   "id": "P013",
+   "act": "act2",
+   "speaker": "narrator",
+   "text": "At school, it's like seeing the future.",
+   "start": 80.24,
+   "end": 82.642,
+   "audio": "vo_promise/P013.wav",
+   "words": [
+    {
+     "text": "At",
+     "start": 80.24,
+     "end": 80.527
+    },
+    {
+     "text": "school,",
+     "start": 80.527,
+     "end": 80.813
+    },
+    {
+     "text": "it's",
+     "start": 80.854,
+     "end": 81.141
+    },
+    {
+     "text": "like",
+     "start": 81.141,
+     "end": 81.512
+    },
+    {
+     "text": "seeing",
+     "start": 81.512,
+     "end": 81.798
+    },
+    {
+     "text": "the",
+     "start": 81.798,
+     "end": 82.085
+    },
+    {
+     "text": "future.",
+     "start": 82.085,
+     "end": 82.54
+    }
+   ]
+  },
+  {
+   "id": "P014",
+   "act": "act2",
+   "speaker": "narrator",
+   "text": "\"I'll pay you back Friday.\" Thin. Already sagging. You keep your money.",
+   "start": 83.342,
+   "end": 88.195,
+   "audio": "vo_promise/P014.wav",
+   "words": [
+    {
+     "text": "\"I'll",
+     "start": 83.342,
+     "end": 83.676
+    },
+    {
+     "text": "pay",
+     "start": 83.676,
+     "end": 84.01
+    },
+    {
+     "text": "you",
+     "start": 84.01,
+     "end": 84.344
+    },
+    {
+     "text": "back",
+     "start": 84.344,
+     "end": 84.678
+    },
+    {
+     "text": "Friday.\"",
+     "start": 84.678,
+     "end": 85.11
+    },
+    {
+     "text": "Thin.",
+     "start": 85.11,
+     "end": 85.444
+    },
+    {
+     "text": "Already",
+     "start": 85.562,
+     "end": 86.093
+    },
+    {
+     "text": "sagging.",
+     "start": 86.093,
+     "end": 86.525
+    },
+    {
+     "text": "You",
+     "start": 86.643,
+     "end": 86.977
+    },
+    {
+     "text": "keep",
+     "start": 86.977,
+     "end": 87.311
+    },
+    {
+     "text": "your",
+     "start": 87.311,
+     "end": 87.645
+    },
+    {
+     "text": "money.",
+     "start": 87.645,
+     "end": 88.077
+    }
+   ]
+  },
+  {
+   "id": "P015",
+   "act": "act2",
+   "speaker": "narrator",
+   "text": "Ms. Bell: \"I'll grade them by Monday.\" Twenty-eight threads, one to every desk, all still gold.",
+   "start": 88.895,
+   "end": 95.325,
+   "audio": "vo_promise/P015.wav",
+   "words": [
+    {
+     "text": "Ms.",
+     "start": 88.895,
+     "end": 89.23
+    },
+    {
+     "text": "Bell:",
+     "start": 89.349,
+     "end": 89.684
+    },
+    {
+     "text": "\"I'll",
+     "start": 89.731,
+     "end": 90.066
+    },
+    {
+     "text": "grade",
+     "start": 90.066,
+     "end": 90.5
+    },
+    {
+     "text": "them",
+     "start": 90.5,
+     "end": 90.835
+    },
+    {
+     "text": "by",
+     "start": 90.835,
+     "end": 91.17
+    },
+    {
+     "text": "Monday.\"",
+     "start": 91.17,
+     "end": 91.603
+    },
+    {
+     "text": "Twenty-eight",
+     "start": 91.603,
+     "end": 92.136
+    },
+    {
+     "text": "threads,",
+     "start": 92.136,
+     "end": 92.471
+    },
+    {
+     "text": "one",
+     "start": 92.518,
+     "end": 92.952
+    },
+    {
+     "text": "to",
+     "start": 92.952,
+     "end": 93.287
+    },
+    {
+     "text": "every",
+     "start": 93.287,
+     "end": 93.819
+    },
+    {
+     "text": "desk,",
+     "start": 93.819,
+     "end": 94.154
+    },
+    {
+     "text": "all",
+     "start": 94.201,
+     "end": 94.536
+    },
+    {
+     "text": "still",
+     "start": 94.536,
+     "end": 94.871
+    },
+    {
+     "text": "gold.",
+     "start": 94.871,
+     "end": 95.206
+    }
+   ]
+  },
+  {
+   "id": "P016",
+   "act": "act2",
+   "speaker": "narrator",
+   "text": "She means it. She's just tired.",
+   "start": 96.025,
+   "end": 98.226,
+   "audio": "vo_promise/P016.wav",
+   "words": [
+    {
+     "text": "She",
+     "start": 96.025,
+     "end": 96.339
+    },
+    {
+     "text": "means",
+     "start": 96.339,
+     "end": 96.653
+    },
+    {
+     "text": "it.",
+     "start": 96.653,
+     "end": 96.968
+    },
+    {
+     "text": "She's",
+     "start": 97.079,
+     "end": 97.393
+    },
+    {
+     "text": "just",
+     "start": 97.393,
+     "end": 97.708
+    },
+    {
+     "text": "tired.",
+     "start": 97.708,
+     "end": 98.115
+    }
+   ]
+  },
+  {
+   "id": "P017",
+   "act": "act2",
+   "speaker": "narrator",
+   "text": "At casino night, a kid swears he'll \"split the winnings.\" The thread is already grey before the cards are dealt.",
+   "start": 99.026,
+   "end": 105.851,
+   "audio": "vo_promise/P017.wav",
+   "words": [
+    {
+     "text": "At",
+     "start": 99.026,
+     "end": 99.324
+    },
+    {
+     "text": "casino",
+     "start": 99.324,
+     "end": 99.799
+    },
+    {
+     "text": "night,",
+     "start": 99.799,
+     "end": 100.098
+    },
+    {
+     "text": "a",
+     "start": 100.14,
+     "end": 100.438
+    },
+    {
+     "text": "kid",
+     "start": 100.438,
+     "end": 100.737
+    },
+    {
+     "text": "swears",
+     "start": 100.737,
+     "end": 101.036
+    },
+    {
+     "text": "he'll",
+     "start": 101.036,
+     "end": 101.335
+    },
+    {
+     "text": "\"split",
+     "start": 101.335,
+     "end": 101.633
+    },
+    {
+     "text": "the",
+     "start": 101.633,
+     "end": 101.932
+    },
+    {
+     "text": "winnings.\"",
+     "start": 101.932,
+     "end": 102.319
+    },
+    {
+     "text": "The",
+     "start": 102.319,
+     "end": 102.617
+    },
+    {
+     "text": "thread",
+     "start": 102.617,
+     "end": 102.916
+    },
+    {
+     "text": "is",
+     "start": 102.916,
+     "end": 103.215
+    },
+    {
+     "text": "already",
+     "start": 103.215,
+     "end": 103.689
+    },
+    {
+     "text": "grey",
+     "start": 103.689,
+     "end": 103.988
+    },
+    {
+     "text": "before",
+     "start": 103.988,
+     "end": 104.463
+    },
+    {
+     "text": "the",
+     "start": 104.463,
+     "end": 104.761
+    },
+    {
+     "text": "cards",
+     "start": 104.761,
+     "end": 105.06
+    },
+    {
+     "text": "are",
+     "start": 105.06,
+     "end": 105.447
+    },
+    {
+     "text": "dealt.",
+     "start": 105.447,
+     "end": 105.745
+    }
+   ]
+  },
+  {
+   "id": "P018",
+   "act": "act2",
+   "speaker": "narrator",
+   "text": "You stop trusting words. You start trusting threads.",
+   "start": 106.551,
+   "end": 110.212,
+   "audio": "vo_promise/P018.wav",
+   "words": [
+    {
+     "text": "You",
+     "start": 106.551,
+     "end": 106.945
+    },
+    {
+     "text": "stop",
+     "start": 106.945,
+     "end": 107.339
+    },
+    {
+     "text": "trusting",
+     "start": 107.339,
+     "end": 107.848
+    },
+    {
+     "text": "words.",
+     "start": 107.848,
+     "end": 108.242
+    },
+    {
+     "text": "You",
+     "start": 108.381,
+     "end": 108.775
+    },
+    {
+     "text": "start",
+     "start": 108.775,
+     "end": 109.169
+    },
+    {
+     "text": "trusting",
+     "start": 109.169,
+     "end": 109.679
+    },
+    {
+     "text": "threads.",
+     "start": 109.679,
+     "end": 110.073
+    }
+   ]
+  },
+  {
+   "id": "P019",
+   "act": "act2",
+   "speaker": "narrator",
+   "text": "Group projects? You pick the gold ones. Dates? Gold ones. Friends?",
+   "start": 111.212,
+   "end": 115.409,
+   "audio": "vo_promise/P019.wav",
+   "words": [
+    {
+     "text": "Group",
+     "start": 111.212,
+     "end": 111.513
+    },
+    {
+     "text": "projects?",
+     "start": 111.513,
+     "end": 111.902
+    },
+    {
+     "text": "You",
+     "start": 112.009,
+     "end": 112.31
+    },
+    {
+     "text": "pick",
+     "start": 112.31,
+     "end": 112.611
+    },
+    {
+     "text": "the",
+     "start": 112.611,
+     "end": 112.912
+    },
+    {
+     "text": "gold",
+     "start": 112.912,
+     "end": 113.213
+    },
+    {
+     "text": "ones.",
+     "start": 113.213,
+     "end": 113.603
+    },
+    {
+     "text": "Dates?",
+     "start": 113.709,
+     "end": 114.099
+    },
+    {
+     "text": "Gold",
+     "start": 114.205,
+     "end": 114.506
+    },
+    {
+     "text": "ones.",
+     "start": 114.506,
+     "end": 114.896
+    },
+    {
+     "text": "Friends?",
+     "start": 115.002,
+     "end": 115.303
+    }
+   ]
+  },
+  {
+   "id": "P020",
+   "act": "act2",
+   "speaker": "narrator",
+   "text": "For about a week, your life is perfectly organised... by light.",
+   "start": 117.009,
+   "end": 121.675,
+   "audio": "vo_promise/P020.wav",
+   "words": [
+    {
+     "text": "For",
+     "start": 117.009,
+     "end": 117.353
+    },
+    {
+     "text": "about",
+     "start": 117.353,
+     "end": 117.799
+    },
+    {
+     "text": "a",
+     "start": 117.799,
+     "end": 118.143
+    },
+    {
+     "text": "week,",
+     "start": 118.143,
+     "end": 118.487
+    },
+    {
+     "text": "your",
+     "start": 118.536,
+     "end": 118.88
+    },
+    {
+     "text": "life",
+     "start": 118.88,
+     "end": 119.326
+    },
+    {
+     "text": "is",
+     "start": 119.326,
+     "end": 119.67
+    },
+    {
+     "text": "perfectly",
+     "start": 119.67,
+     "end": 120.217
+    },
+    {
+     "text": "organised",
+     "start": 120.217,
+     "end": 120.865
+    },
+    {
+     "text": "by",
+     "start": 120.865,
+     "end": 121.209
+    },
+    {
+     "text": "light.",
+     "start": 121.209,
+     "end": 121.553
+    }
+   ]
+  },
+  {
+   "id": "P021",
+   "act": "act3",
+   "speaker": "narrator",
+   "text": "Then you notice Maya.",
+   "start": 125.475,
+   "end": 127.376,
+   "audio": "vo_promise/P021.wav",
+   "words": [
+    {
+     "text": "Then",
+     "start": 125.475,
+     "end": 125.86
+    },
+    {
+     "text": "you",
+     "start": 125.86,
+     "end": 126.244
+    },
+    {
+     "text": "notice",
+     "start": 126.244,
+     "end": 126.855
+    },
+    {
+     "text": "Maya.",
+     "start": 126.855,
+     "end": 127.24
+    }
+   ]
+  },
+  {
+   "id": "P022",
+   "act": "act3",
+   "speaker": "narrator",
+   "text": "There's a thread between you. Old. From a long time ago.",
+   "start": 128.076,
+   "end": 132.411,
+   "audio": "vo_promise/P022.wav",
+   "words": [
+    {
+     "text": "There's",
+     "start": 128.076,
+     "end": 128.5
+    },
+    {
+     "text": "a",
+     "start": 128.5,
+     "end": 128.827
+    },
+    {
+     "text": "thread",
+     "start": 128.827,
+     "end": 129.155
+    },
+    {
+     "text": "between",
+     "start": 129.155,
+     "end": 129.579
+    },
+    {
+     "text": "you.",
+     "start": 129.579,
+     "end": 129.906
+    },
+    {
+     "text": "Old.",
+     "start": 130.022,
+     "end": 130.35
+    },
+    {
+     "text": "From",
+     "start": 130.465,
+     "end": 130.793
+    },
+    {
+     "text": "a",
+     "start": 130.793,
+     "end": 131.12
+    },
+    {
+     "text": "long",
+     "start": 131.12,
+     "end": 131.448
+    },
+    {
+     "text": "time",
+     "start": 131.448,
+     "end": 131.872
+    },
+    {
+     "text": "ago.",
+     "start": 131.872,
+     "end": 132.296
+    }
+   ]
+  },
+  {
+   "id": "P023",
+   "act": "act3",
+   "speaker": "narrator",
+   "text": "\"I'll always save you a seat.\" You remember her saying it. In second grade.",
+   "start": 133.111,
+   "end": 137.918,
+   "audio": "vo_promise/P023.wav",
+   "words": [
+    {
+     "text": "\"I'll",
+     "start": 133.111,
+     "end": 133.403
+    },
+    {
+     "text": "always",
+     "start": 133.403,
+     "end": 133.781
+    },
+    {
+     "text": "save",
+     "start": 133.781,
+     "end": 134.159
+    },
+    {
+     "text": "you",
+     "start": 134.159,
+     "end": 134.45
+    },
+    {
+     "text": "a",
+     "start": 134.45,
+     "end": 134.742
+    },
+    {
+     "text": "seat.\"",
+     "start": 134.742,
+     "end": 135.034
+    },
+    {
+     "text": "You",
+     "start": 135.034,
+     "end": 135.326
+    },
+    {
+     "text": "remember",
+     "start": 135.326,
+     "end": 135.79
+    },
+    {
+     "text": "her",
+     "start": 135.79,
+     "end": 136.081
+    },
+    {
+     "text": "saying",
+     "start": 136.081,
+     "end": 136.373
+    },
+    {
+     "text": "it.",
+     "start": 136.373,
+     "end": 136.665
+    },
+    {
+     "text": "In",
+     "start": 136.768,
+     "end": 137.06
+    },
+    {
+     "text": "second",
+     "start": 137.06,
+     "end": 137.438
+    },
+    {
+     "text": "grade.",
+     "start": 137.438,
+     "end": 137.815
+    }
+   ]
+  },
+  {
+   "id": "P024",
+   "act": "act3",
+   "speaker": "narrator",
+   "text": "It's still there. Still gold. Barely. Because she still saves it. Every day. And you never sit there.",
+   "start": 138.618,
+   "end": 146.729,
+   "audio": "vo_promise/P024.wav",
+   "words": [
+    {
+     "text": "It's",
+     "start": 138.618,
+     "end": 138.97
+    },
+    {
+     "text": "still",
+     "start": 138.97,
+     "end": 139.322
+    },
+    {
+     "text": "there.",
+     "start": 139.322,
+     "end": 139.777
+    },
+    {
+     "text": "Still",
+     "start": 139.901,
+     "end": 140.253
+    },
+    {
+     "text": "gold.",
+     "start": 140.253,
+     "end": 140.605
+    },
+    {
+     "text": "Barely.",
+     "start": 140.729,
+     "end": 141.288
+    },
+    {
+     "text": "Because",
+     "start": 141.412,
+     "end": 141.97
+    },
+    {
+     "text": "she",
+     "start": 141.97,
+     "end": 142.322
+    },
+    {
+     "text": "still",
+     "start": 142.322,
+     "end": 142.674
+    },
+    {
+     "text": "saves",
+     "start": 142.674,
+     "end": 143.129
+    },
+    {
+     "text": "it.",
+     "start": 143.129,
+     "end": 143.481
+    },
+    {
+     "text": "Every",
+     "start": 143.605,
+     "end": 144.164
+    },
+    {
+     "text": "day.",
+     "start": 144.164,
+     "end": 144.515
+    },
+    {
+     "text": "And",
+     "start": 144.639,
+     "end": 144.991
+    },
+    {
+     "text": "you",
+     "start": 144.991,
+     "end": 145.343
+    },
+    {
+     "text": "never",
+     "start": 145.343,
+     "end": 145.798
+    },
+    {
+     "text": "sit",
+     "start": 145.798,
+     "end": 146.15
+    },
+    {
+     "text": "there.",
+     "start": 146.15,
+     "end": 146.605
+    }
+   ]
+  },
+  {
+   "id": "P025",
+   "act": "act3",
+   "speaker": "narrator",
+   "text": "You start seeing it everywhere. Not lies. Just... waiting.",
+   "start": 148.129,
+   "end": 152.813,
+   "audio": "vo_promise/P025.wav",
+   "words": [
+    {
+     "text": "You",
+     "start": 148.129,
+     "end": 148.535
+    },
+    {
+     "text": "start",
+     "start": 148.535,
+     "end": 148.942
+    },
+    {
+     "text": "seeing",
+     "start": 148.942,
+     "end": 149.348
+    },
+    {
+     "text": "it",
+     "start": 149.348,
+     "end": 149.754
+    },
+    {
+     "text": "everywhere.",
+     "start": 149.754,
+     "end": 150.638
+    },
+    {
+     "text": "Not",
+     "start": 150.781,
+     "end": 151.188
+    },
+    {
+     "text": "lies.",
+     "start": 151.188,
+     "end": 151.594
+    },
+    {
+     "text": "Just",
+     "start": 151.737,
+     "end": 152.143
+    },
+    {
+     "text": "waiting.",
+     "start": 152.143,
+     "end": 152.669
+    }
+   ]
+  },
+  {
+   "id": "P026",
+   "act": "act3",
+   "speaker": "narrator",
+   "text": "Late at night, you find Dad at the kitchen table.",
+   "start": 154.013,
+   "end": 156.875,
+   "audio": "vo_promise/P026.wav",
+   "words": [
+    {
+     "text": "Late",
+     "start": 154.013,
+     "end": 154.338
+    },
+    {
+     "text": "at",
+     "start": 154.338,
+     "end": 154.59
+    },
+    {
+     "text": "night,",
+     "start": 154.59,
+     "end": 154.841
+    },
+    {
+     "text": "you",
+     "start": 154.877,
+     "end": 155.129
+    },
+    {
+     "text": "find",
+     "start": 155.129,
+     "end": 155.38
+    },
+    {
+     "text": "Dad",
+     "start": 155.38,
+     "end": 155.632
+    },
+    {
+     "text": "at",
+     "start": 155.632,
+     "end": 155.883
+    },
+    {
+     "text": "the",
+     "start": 155.883,
+     "end": 156.135
+    },
+    {
+     "text": "kitchen",
+     "start": 156.135,
+     "end": 156.461
+    },
+    {
+     "text": "table.",
+     "start": 156.461,
+     "end": 156.786
+    }
+   ]
+  },
+  {
+   "id": "P027",
+   "act": "act3",
+   "speaker": "narrator",
+   "text": "He has one thread. One. Thick as a rope. Gold. Going to every one of you.",
+   "start": 157.575,
+   "end": 164.257,
+   "audio": "vo_promise/P027.wav",
+   "words": [
+    {
+     "text": "He",
+     "start": 157.575,
+     "end": 157.917
+    },
+    {
+     "text": "has",
+     "start": 157.917,
+     "end": 158.259
+    },
+    {
+     "text": "one",
+     "start": 158.259,
+     "end": 158.702
+    },
+    {
+     "text": "thread.",
+     "start": 158.702,
+     "end": 159.044
+    },
+    {
+     "text": "One.",
+     "start": 159.165,
+     "end": 159.608
+    },
+    {
+     "text": "Thick",
+     "start": 159.729,
+     "end": 160.071
+    },
+    {
+     "text": "as",
+     "start": 160.071,
+     "end": 160.413
+    },
+    {
+     "text": "a",
+     "start": 160.413,
+     "end": 160.755
+    },
+    {
+     "text": "rope.",
+     "start": 160.755,
+     "end": 161.198
+    },
+    {
+     "text": "Gold.",
+     "start": 161.319,
+     "end": 161.661
+    },
+    {
+     "text": "Going",
+     "start": 161.782,
+     "end": 162.124
+    },
+    {
+     "text": "to",
+     "start": 162.124,
+     "end": 162.466
+    },
+    {
+     "text": "every",
+     "start": 162.466,
+     "end": 163.009
+    },
+    {
+     "text": "one",
+     "start": 163.009,
+     "end": 163.452
+    },
+    {
+     "text": "of",
+     "start": 163.452,
+     "end": 163.794
+    },
+    {
+     "text": "you.",
+     "start": 163.794,
+     "end": 164.137
+    }
+   ]
+  },
+  {
+   "id": "P028",
+   "act": "act3",
+   "speaker": "narrator",
+   "text": "You ask him what he promised. He laughs. \"That I'd take care of you.\"",
+   "start": 165.257,
+   "end": 169.434,
+   "audio": "vo_promise/P028.wav",
+   "words": [
+    {
+     "text": "You",
+     "start": 165.257,
+     "end": 165.52
+    },
+    {
+     "text": "ask",
+     "start": 165.52,
+     "end": 165.783
+    },
+    {
+     "text": "him",
+     "start": 165.783,
+     "end": 166.046
+    },
+    {
+     "text": "what",
+     "start": 166.046,
+     "end": 166.309
+    },
+    {
+     "text": "he",
+     "start": 166.309,
+     "end": 166.572
+    },
+    {
+     "text": "promised.",
+     "start": 166.572,
+     "end": 166.99
+    },
+    {
+     "text": "He",
+     "start": 167.083,
+     "end": 167.346
+    },
+    {
+     "text": "laughs.",
+     "start": 167.346,
+     "end": 167.609
+    },
+    {
+     "text": "\"That",
+     "start": 167.702,
+     "end": 167.965
+    },
+    {
+     "text": "I'd",
+     "start": 167.965,
+     "end": 168.228
+    },
+    {
+     "text": "take",
+     "start": 168.228,
+     "end": 168.568
+    },
+    {
+     "text": "care",
+     "start": 168.568,
+     "end": 168.908
+    },
+    {
+     "text": "of",
+     "start": 168.908,
+     "end": 169.171
+    },
+    {
+     "text": "you.\"",
+     "start": 169.171,
+     "end": 169.434
+    }
+   ]
+  },
+  {
+   "id": "P029",
+   "act": "act3",
+   "speaker": "narrator",
+   "text": "He never said it out loud. Not once. And it's the brightest thread in the house.",
+   "start": 170.134,
+   "end": 174.924,
+   "audio": "vo_promise/P029.wav",
+   "words": [
+    {
+     "text": "He",
+     "start": 170.134,
+     "end": 170.397
+    },
+    {
+     "text": "never",
+     "start": 170.397,
+     "end": 170.737
+    },
+    {
+     "text": "said",
+     "start": 170.737,
+     "end": 171.0
+    },
+    {
+     "text": "it",
+     "start": 171.0,
+     "end": 171.262
+    },
+    {
+     "text": "out",
+     "start": 171.262,
+     "end": 171.525
+    },
+    {
+     "text": "loud.",
+     "start": 171.525,
+     "end": 171.788
+    },
+    {
+     "text": "Not",
+     "start": 171.88,
+     "end": 172.143
+    },
+    {
+     "text": "once.",
+     "start": 172.143,
+     "end": 172.483
+    },
+    {
+     "text": "And",
+     "start": 172.576,
+     "end": 172.838
+    },
+    {
+     "text": "it's",
+     "start": 172.838,
+     "end": 173.101
+    },
+    {
+     "text": "the",
+     "start": 173.101,
+     "end": 173.364
+    },
+    {
+     "text": "brightest",
+     "start": 173.364,
+     "end": 173.704
+    },
+    {
+     "text": "thread",
+     "start": 173.704,
+     "end": 173.966
+    },
+    {
+     "text": "in",
+     "start": 173.966,
+     "end": 174.229
+    },
+    {
+     "text": "the",
+     "start": 174.229,
+     "end": 174.492
+    },
+    {
+     "text": "house.",
+     "start": 174.492,
+     "end": 174.832
+    }
+   ]
+  },
+  {
+   "id": "P030",
+   "act": "act3",
+   "speaker": "narrator",
+   "text": "That night, you can't sleep.",
+   "start": 176.324,
+   "end": 178.278,
+   "audio": "vo_promise/P030.wav",
+   "words": [
+    {
+     "text": "That",
+     "start": 176.324,
+     "end": 176.68
+    },
+    {
+     "text": "night,",
+     "start": 176.68,
+     "end": 177.036
+    },
+    {
+     "text": "you",
+     "start": 177.086,
+     "end": 177.441
+    },
+    {
+     "text": "can't",
+     "start": 177.441,
+     "end": 177.797
+    },
+    {
+     "text": "sleep.",
+     "start": 177.797,
+     "end": 178.153
+    }
+   ]
+  },
+  {
+   "id": "P031",
+   "act": "act4",
+   "speaker": "narrator",
+   "text": "You go to the bathroom, turn on the light... and look in the mirror.",
+   "start": 181.578,
+   "end": 185.968,
+   "audio": "vo_promise/P031.wav",
+   "words": [
+    {
+     "text": "You",
+     "start": 181.578,
+     "end": 181.869
+    },
+    {
+     "text": "go",
+     "start": 181.869,
+     "end": 182.16
+    },
+    {
+     "text": "to",
+     "start": 182.16,
+     "end": 182.451
+    },
+    {
+     "text": "the",
+     "start": 182.451,
+     "end": 182.742
+    },
+    {
+     "text": "bathroom,",
+     "start": 182.742,
+     "end": 183.119
+    },
+    {
+     "text": "turn",
+     "start": 183.16,
+     "end": 183.451
+    },
+    {
+     "text": "on",
+     "start": 183.451,
+     "end": 183.742
+    },
+    {
+     "text": "the",
+     "start": 183.742,
+     "end": 184.033
+    },
+    {
+     "text": "light",
+     "start": 184.033,
+     "end": 184.324
+    },
+    {
+     "text": "and",
+     "start": 184.324,
+     "end": 184.615
+    },
+    {
+     "text": "look",
+     "start": 184.615,
+     "end": 184.906
+    },
+    {
+     "text": "in",
+     "start": 184.906,
+     "end": 185.198
+    },
+    {
+     "text": "the",
+     "start": 185.198,
+     "end": 185.489
+    },
+    {
+     "text": "mirror.",
+     "start": 185.489,
+     "end": 185.865
+    }
+   ]
+  },
+  {
+   "id": "P032",
+   "act": "act4",
+   "speaker": "narrator",
+   "text": "You never thought to look at your OWN wrist.",
+   "start": 186.668,
+   "end": 188.907,
+   "audio": "vo_promise/P032.wav",
+   "words": [
+    {
+     "text": "You",
+     "start": 186.668,
+     "end": 186.9
+    },
+    {
+     "text": "never",
+     "start": 186.9,
+     "end": 187.2
+    },
+    {
+     "text": "thought",
+     "start": 187.2,
+     "end": 187.432
+    },
+    {
+     "text": "to",
+     "start": 187.432,
+     "end": 187.665
+    },
+    {
+     "text": "look",
+     "start": 187.665,
+     "end": 187.897
+    },
+    {
+     "text": "at",
+     "start": 187.897,
+     "end": 188.129
+    },
+    {
+     "text": "your",
+     "start": 188.129,
+     "end": 188.361
+    },
+    {
+     "text": "OWN",
+     "start": 188.361,
+     "end": 188.593
+    },
+    {
+     "text": "wrist.",
+     "start": 188.593,
+     "end": 188.825
+    }
+   ]
+  },
+  {
+   "id": "P033",
+   "act": "act4",
+   "speaker": "narrator",
+   "text": "There are hundreds.",
+   "start": 189.807,
+   "end": 191.088,
+   "audio": "vo_promise/P033.wav",
+   "words": [
+    {
+     "text": "There",
+     "start": 189.807,
+     "end": 190.199
+    },
+    {
+     "text": "are",
+     "start": 190.199,
+     "end": 190.59
+    },
+    {
+     "text": "hundreds.",
+     "start": 190.59,
+     "end": 190.982
+    }
+   ]
+  },
+  {
+   "id": "P034",
+   "act": "act4",
+   "speaker": "narrator",
+   "text": "\"I'll start tomorrow.\" \"I'll call Grandma.\" \"I'll be nicer to Leo.\" \"I'll text you back.\"",
+   "start": 193.288,
+   "end": 198.458,
+   "audio": "vo_promise/P034.wav",
+   "words": [
+    {
+     "text": "\"I'll",
+     "start": 193.288,
+     "end": 193.608
+    },
+    {
+     "text": "start",
+     "start": 193.608,
+     "end": 193.928
+    },
+    {
+     "text": "tomorrow.\"",
+     "start": 193.928,
+     "end": 194.435
+    },
+    {
+     "text": "\"I'll",
+     "start": 194.435,
+     "end": 194.755
+    },
+    {
+     "text": "call",
+     "start": 194.755,
+     "end": 195.074
+    },
+    {
+     "text": "Grandma.\"",
+     "start": 195.074,
+     "end": 195.488
+    },
+    {
+     "text": "\"I'll",
+     "start": 195.488,
+     "end": 195.808
+    },
+    {
+     "text": "be",
+     "start": 195.808,
+     "end": 196.127
+    },
+    {
+     "text": "nicer",
+     "start": 196.127,
+     "end": 196.541
+    },
+    {
+     "text": "to",
+     "start": 196.541,
+     "end": 196.86
+    },
+    {
+     "text": "Leo.\"",
+     "start": 196.86,
+     "end": 197.18
+    },
+    {
+     "text": "\"I'll",
+     "start": 197.18,
+     "end": 197.5
+    },
+    {
+     "text": "text",
+     "start": 197.5,
+     "end": 197.819
+    },
+    {
+     "text": "you",
+     "start": 197.819,
+     "end": 198.139
+    },
+    {
+     "text": "back.\"",
+     "start": 198.139,
+     "end": 198.458
+    }
+   ]
+  },
+  {
+   "id": "P035",
+   "act": "act4",
+   "speaker": "narrator",
+   "text": "Most of them are grey. And they all lead... to people you love.",
+   "start": 199.458,
+   "end": 203.84,
+   "audio": "vo_promise/P035.wav",
+   "words": [
+    {
+     "text": "Most",
+     "start": 199.458,
+     "end": 199.759
+    },
+    {
+     "text": "of",
+     "start": 199.759,
+     "end": 200.059
+    },
+    {
+     "text": "them",
+     "start": 200.059,
+     "end": 200.359
+    },
+    {
+     "text": "are",
+     "start": 200.359,
+     "end": 200.748
+    },
+    {
+     "text": "grey.",
+     "start": 200.748,
+     "end": 201.048
+    },
+    {
+     "text": "And",
+     "start": 201.154,
+     "end": 201.455
+    },
+    {
+     "text": "they",
+     "start": 201.455,
+     "end": 201.755
+    },
+    {
+     "text": "all",
+     "start": 201.755,
+     "end": 202.055
+    },
+    {
+     "text": "lead",
+     "start": 202.055,
+     "end": 202.356
+    },
+    {
+     "text": "to",
+     "start": 202.356,
+     "end": 202.656
+    },
+    {
+     "text": "people",
+     "start": 202.656,
+     "end": 203.045
+    },
+    {
+     "text": "you",
+     "start": 203.045,
+     "end": 203.345
+    },
+    {
+     "text": "love.",
+     "start": 203.345,
+     "end": 203.734
+    }
+   ]
+  },
+  {
+   "id": "P036",
+   "act": "act4",
+   "speaker": "narrator",
+   "text": "But one is older than all the others.",
+   "start": 205.04,
+   "end": 207.435,
+   "audio": "vo_promise/P036.wav",
+   "words": [
+    {
+     "text": "But",
+     "start": 205.04,
+     "end": 205.299
+    },
+    {
+     "text": "one",
+     "start": 205.299,
+     "end": 205.635
+    },
+    {
+     "text": "is",
+     "start": 205.635,
+     "end": 205.894
+    },
+    {
+     "text": "older",
+     "start": 205.894,
+     "end": 206.23
+    },
+    {
+     "text": "than",
+     "start": 206.23,
+     "end": 206.489
+    },
+    {
+     "text": "all",
+     "start": 206.489,
+     "end": 206.748
+    },
+    {
+     "text": "the",
+     "start": 206.748,
+     "end": 207.008
+    },
+    {
+     "text": "others.",
+     "start": 207.008,
+     "end": 207.343
+    }
+   ]
+  },
+  {
+   "id": "P037",
+   "act": "act4",
+   "speaker": "narrator",
+   "text": "You follow it.",
+   "start": 208.135,
+   "end": 208.877,
+   "audio": "vo_promise/P037.wav",
+   "words": [
+    {
+     "text": "You",
+     "start": 208.135,
+     "end": 208.338
+    },
+    {
+     "text": "follow",
+     "start": 208.338,
+     "end": 208.602
+    },
+    {
+     "text": "it.",
+     "start": 208.602,
+     "end": 208.805
+    }
+   ]
+  },
+  {
+   "id": "P038",
+   "act": "act4",
+   "speaker": "narrator",
+   "text": "It leads to YOU. Seven years old.",
+   "start": 210.277,
+   "end": 213.201,
+   "audio": "vo_promise/P038.wav",
+   "words": [
+    {
+     "text": "It",
+     "start": 210.277,
+     "end": 210.642
+    },
+    {
+     "text": "leads",
+     "start": 210.642,
+     "end": 211.008
+    },
+    {
+     "text": "to",
+     "start": 211.008,
+     "end": 211.374
+    },
+    {
+     "text": "YOU.",
+     "start": 211.374,
+     "end": 211.739
+    },
+    {
+     "text": "Seven",
+     "start": 211.868,
+     "end": 212.341
+    },
+    {
+     "text": "years",
+     "start": 212.341,
+     "end": 212.707
+    },
+    {
+     "text": "old.",
+     "start": 212.707,
+     "end": 213.072
+    }
+   ]
+  },
+  {
+   "id": "P038k",
+   "act": "act4",
+   "speaker": "kid",
+   "text": "I'll be brave.",
+   "start": 213.901,
+   "end": 215.212,
+   "audio": "vo_promise/P038k.wav",
+   "words": [
+    {
+     "text": "I'll",
+     "start": 213.901,
+     "end": 214.261
+    },
+    {
+     "text": "be",
+     "start": 214.261,
+     "end": 214.62
+    },
+    {
+     "text": "brave.",
+     "start": 214.62,
+     "end": 215.085
+    }
+   ]
+  },
+  {
+   "id": "P039",
+   "act": "act4",
+   "speaker": "narrator",
+   "text": "Promises to yourself count too. You just never see them break.",
+   "start": 216.612,
+   "end": 220.744,
+   "audio": "vo_promise/P039.wav",
+   "words": [
+    {
+     "text": "Promises",
+     "start": 216.612,
+     "end": 217.121
+    },
+    {
+     "text": "to",
+     "start": 217.121,
+     "end": 217.442
+    },
+    {
+     "text": "yourself",
+     "start": 217.442,
+     "end": 217.857
+    },
+    {
+     "text": "count",
+     "start": 217.857,
+     "end": 218.178
+    },
+    {
+     "text": "too.",
+     "start": 218.178,
+     "end": 218.499
+    },
+    {
+     "text": "You",
+     "start": 218.612,
+     "end": 218.933
+    },
+    {
+     "text": "just",
+     "start": 218.933,
+     "end": 219.253
+    },
+    {
+     "text": "never",
+     "start": 219.253,
+     "end": 219.668
+    },
+    {
+     "text": "see",
+     "start": 219.668,
+     "end": 219.989
+    },
+    {
+     "text": "them",
+     "start": 219.989,
+     "end": 220.31
+    },
+    {
+     "text": "break.",
+     "start": 220.31,
+     "end": 220.631
+    }
+   ]
+  },
+  {
+   "id": "P040",
+   "act": "act5",
+   "speaker": "narrator",
+   "text": "So the next morning, you keep one.",
+   "start": 225.944,
+   "end": 227.966,
+   "audio": "vo_promise/P040.wav",
+   "words": [
+    {
+     "text": "So",
+     "start": 225.944,
+     "end": 226.194
+    },
+    {
+     "text": "the",
+     "start": 226.194,
+     "end": 226.444
+    },
+    {
+     "text": "next",
+     "start": 226.444,
+     "end": 226.694
+    },
+    {
+     "text": "morning,",
+     "start": 226.694,
+     "end": 227.018
+    },
+    {
+     "text": "you",
+     "start": 227.053,
+     "end": 227.304
+    },
+    {
+     "text": "keep",
+     "start": 227.304,
+     "end": 227.554
+    },
+    {
+     "text": "one.",
+     "start": 227.554,
+     "end": 227.878
+    }
+   ]
+  },
+  {
+   "id": "P041",
+   "act": "act5",
+   "speaker": "narrator",
+   "text": "Just one. Small.",
+   "start": 228.666,
+   "end": 230.674,
+   "audio": "vo_promise/P041.wav",
+   "words": [
+    {
+     "text": "Just",
+     "start": 228.666,
+     "end": 229.168
+    },
+    {
+     "text": "one.",
+     "start": 229.168,
+     "end": 229.817
+    },
+    {
+     "text": "Small.",
+     "start": 229.995,
+     "end": 230.496
+    }
+   ]
+  },
+  {
+   "id": "P042",
+   "act": "act5",
+   "speaker": "narrator",
+   "text": "You sit in the seat Maya saves.",
+   "start": 231.574,
+   "end": 233.699,
+   "audio": "vo_promise/P042.wav",
+   "words": [
+    {
+     "text": "You",
+     "start": 231.574,
+     "end": 231.851
+    },
+    {
+     "text": "sit",
+     "start": 231.851,
+     "end": 232.129
+    },
+    {
+     "text": "in",
+     "start": 232.129,
+     "end": 232.407
+    },
+    {
+     "text": "the",
+     "start": 232.407,
+     "end": 232.685
+    },
+    {
+     "text": "seat",
+     "start": 232.685,
+     "end": 232.963
+    },
+    {
+     "text": "Maya",
+     "start": 232.963,
+     "end": 233.241
+    },
+    {
+     "text": "saves.",
+     "start": 233.241,
+     "end": 233.6
+    }
+   ]
+  },
+  {
+   "id": "P043",
+   "act": "act5",
+   "speaker": "narrator",
+   "text": "And the thread between you... doesn't snap.",
+   "start": 234.399,
+   "end": 237.213,
+   "audio": "vo_promise/P043.wav",
+   "words": [
+    {
+     "text": "And",
+     "start": 234.399,
+     "end": 234.767
+    },
+    {
+     "text": "the",
+     "start": 234.767,
+     "end": 235.135
+    },
+    {
+     "text": "thread",
+     "start": 235.135,
+     "end": 235.503
+    },
+    {
+     "text": "between",
+     "start": 235.503,
+     "end": 235.979
+    },
+    {
+     "text": "you",
+     "start": 235.979,
+     "end": 236.347
+    },
+    {
+     "text": "doesn't",
+     "start": 236.347,
+     "end": 236.715
+    },
+    {
+     "text": "snap.",
+     "start": 236.715,
+     "end": 237.083
+    }
+   ]
+  },
+  {
+   "id": "P044",
+   "act": "act5",
+   "speaker": "narrator",
+   "text": "It ignites.",
+   "start": 237.613,
+   "end": 238.912,
+   "audio": "vo_promise/P044.wav",
+   "words": [
+    {
+     "text": "It",
+     "start": 237.613,
+     "end": 238.055
+    },
+    {
+     "text": "ignites.",
+     "start": 238.055,
+     "end": 238.756
+    }
+   ]
+  },
+  {
+   "id": "P045",
+   "act": "act5",
+   "speaker": "narrator",
+   "text": "You call Grandma. Gold. You help Leo clean his room. He's so shocked, HIS thread bursts too.",
+   "start": 241.512,
+   "end": 248.649,
+   "audio": "vo_promise/P045.wav",
+   "words": [
+    {
+     "text": "You",
+     "start": 241.512,
+     "end": 241.885
+    },
+    {
+     "text": "call",
+     "start": 241.885,
+     "end": 242.258
+    },
+    {
+     "text": "Grandma.",
+     "start": 242.258,
+     "end": 242.74
+    },
+    {
+     "text": "Gold.",
+     "start": 242.872,
+     "end": 243.245
+    },
+    {
+     "text": "You",
+     "start": 243.376,
+     "end": 243.749
+    },
+    {
+     "text": "help",
+     "start": 243.749,
+     "end": 244.122
+    },
+    {
+     "text": "Leo",
+     "start": 244.122,
+     "end": 244.495
+    },
+    {
+     "text": "clean",
+     "start": 244.495,
+     "end": 244.868
+    },
+    {
+     "text": "his",
+     "start": 244.868,
+     "end": 245.241
+    },
+    {
+     "text": "room.",
+     "start": 245.241,
+     "end": 245.614
+    },
+    {
+     "text": "He's",
+     "start": 245.745,
+     "end": 246.118
+    },
+    {
+     "text": "so",
+     "start": 246.118,
+     "end": 246.491
+    },
+    {
+     "text": "shocked,",
+     "start": 246.491,
+     "end": 246.974
+    },
+    {
+     "text": "HIS",
+     "start": 247.026,
+     "end": 247.399
+    },
+    {
+     "text": "thread",
+     "start": 247.399,
+     "end": 247.772
+    },
+    {
+     "text": "bursts",
+     "start": 247.772,
+     "end": 248.145
+    },
+    {
+     "text": "too.",
+     "start": 248.145,
+     "end": 248.518
+    }
+   ]
+  },
+  {
+   "id": "P046",
+   "act": "act5",
+   "speaker": "narrator",
+   "text": "Your wrist doesn't get lighter overnight. But it gets brighter.",
+   "start": 249.449,
+   "end": 253.341,
+   "audio": "vo_promise/P046.wav",
+   "words": [
+    {
+     "text": "Your",
+     "start": 249.449,
+     "end": 249.777
+    },
+    {
+     "text": "wrist",
+     "start": 249.777,
+     "end": 250.104
+    },
+    {
+     "text": "doesn't",
+     "start": 250.104,
+     "end": 250.432
+    },
+    {
+     "text": "get",
+     "start": 250.432,
+     "end": 250.76
+    },
+    {
+     "text": "lighter",
+     "start": 250.76,
+     "end": 251.183
+    },
+    {
+     "text": "overnight.",
+     "start": 251.183,
+     "end": 251.704
+    },
+    {
+     "text": "But",
+     "start": 251.819,
+     "end": 252.147
+    },
+    {
+     "text": "it",
+     "start": 252.147,
+     "end": 252.474
+    },
+    {
+     "text": "gets",
+     "start": 252.474,
+     "end": 252.802
+    },
+    {
+     "text": "brighter.",
+     "start": 252.802,
+     "end": 253.226
+    }
+   ]
+  },
+  {
+   "id": "P047",
+   "act": "act5",
+   "speaker": "narrator",
+   "text": "And that oldest thread? You're working on it.",
+   "start": 254.341,
+   "end": 256.879,
+   "audio": "vo_promise/P047.wav",
+   "words": [
+    {
+     "text": "And",
+     "start": 254.341,
+     "end": 254.606
+    },
+    {
+     "text": "that",
+     "start": 254.606,
+     "end": 254.871
+    },
+    {
+     "text": "oldest",
+     "start": 254.871,
+     "end": 255.213
+    },
+    {
+     "text": "thread?",
+     "start": 255.213,
+     "end": 255.478
+    },
+    {
+     "text": "You're",
+     "start": 255.571,
+     "end": 255.914
+    },
+    {
+     "text": "working",
+     "start": 255.914,
+     "end": 256.256
+    },
+    {
+     "text": "on",
+     "start": 256.256,
+     "end": 256.521
+    },
+    {
+     "text": "it.",
+     "start": 256.521,
+     "end": 256.786
+    }
+   ]
+  },
+  {
+   "id": "P048",
+   "act": "act5",
+   "speaker": "narrator",
+   "text": "So. If you could see every promise you've made...",
+   "start": 258.079,
+   "end": 261.462,
+   "audio": "vo_promise/P048.wav",
+   "words": [
+    {
+     "text": "So.",
+     "start": 258.079,
+     "end": 258.383
+    },
+    {
+     "text": "If",
+     "start": 258.491,
+     "end": 258.795
+    },
+    {
+     "text": "you",
+     "start": 258.795,
+     "end": 259.099
+    },
+    {
+     "text": "could",
+     "start": 259.099,
+     "end": 259.404
+    },
+    {
+     "text": "see",
+     "start": 259.404,
+     "end": 259.708
+    },
+    {
+     "text": "every",
+     "start": 259.708,
+     "end": 260.191
+    },
+    {
+     "text": "promise",
+     "start": 260.191,
+     "end": 260.675
+    },
+    {
+     "text": "you've",
+     "start": 260.675,
+     "end": 261.068
+    },
+    {
+     "text": "made",
+     "start": 261.068,
+     "end": 261.462
+    }
+   ]
+  },
+  {
+   "id": "P049",
+   "act": "act5",
+   "speaker": "narrator",
+   "text": "...how many would still be waiting?",
+   "start": 262.162,
+   "end": 264.057,
+   "audio": "vo_promise/P049.wav",
+   "words": [
+    {
+     "text": "how",
+     "start": 262.162,
+     "end": 262.435
+    },
+    {
+     "text": "many",
+     "start": 262.435,
+     "end": 262.789
+    },
+    {
+     "text": "would",
+     "start": 262.789,
+     "end": 263.062
+    },
+    {
+     "text": "still",
+     "start": 263.062,
+     "end": 263.335
+    },
+    {
+     "text": "be",
+     "start": 263.335,
+     "end": 263.608
+    },
+    {
+     "text": "waiting?",
+     "start": 263.608,
+     "end": 263.961
+    }
+   ]
+  }
+ ]
+}
