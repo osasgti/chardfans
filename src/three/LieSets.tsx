@@ -14,7 +14,7 @@ import {C} from '../style/tokens';
  * staticFile() fonts in the render browser, so it never lays out — see CLAUDE.md §32.) Fonts here are the page's
  * already-loaded FontFaces (style/fonts.ts), so this is synchronous and deterministic.
  */
-const Text = ({children, position, fontSize, color = '#fff', font = 'Cinzel'}: {
+export const Text = ({children, position, fontSize, color = '#fff', font = 'Cinzel'}: {
   children: React.ReactNode; position?: [number, number, number]; fontSize: number; color?: string; font?: string; maxWidth?: number; textAlign?: string;
 }) => {
   const tex = useMemo(() => {
@@ -47,7 +47,10 @@ const Wall = ({z = -3, color, w = 30, h = 6, x = 0, rotY = 0}: {z?: number; colo
 /** A window with an emissive "sky" — a motivated light source (pair with a key light from the same side). */
 export const Window = ({pos, w = 1.6, h = 1.3, sky = '#9fc4ff', i = 1.6}: {pos: [number, number, number]; w?: number; h?: number; sky?: string; i?: number}) => (
   <group position={pos}>
-    <mesh><planeGeometry args={[w, h]} />{glow(sky, i)}</mesh>
+    {/* tone-mapped (unlike glow) so a bright window keeps its colour instead of clipping to white */}
+    <mesh><planeGeometry args={[w, h]} /><meshStandardMaterial color={sky} emissive={sky} emissiveIntensity={i * 0.55} /></mesh>
+    {/* a soft horizon band so the window shows an outside, not a flat card (dark tree blobs read as holes: removed) */}
+    <mesh position={[0, -h * 0.28, 0.005]}><planeGeometry args={[w, h * 0.22]} /><meshStandardMaterial color="#6d7fb0" emissive="#6d7fb0" emissiveIntensity={i * 0.25} transparent opacity={0.55} /></mesh>
     {[[0, h / 2, w + 0.14, 0.07], [0, -h / 2, w + 0.14, 0.07], [0, 0, 0.05, h], [0, 0, w, 0.05]].map(([x, y, ww, hh], k) => (
       <mesh key={k} position={[x, y, 0.03]}><RB args={[ww, hh, 0.06]} />{std('#efe8f5', 0.5)}</mesh>
     ))}
@@ -321,3 +324,29 @@ export const Rooftop = () => (
 export const HallwayNight = () => null; // the Hallway set + `hallway` preset with dim key (see LieShot light overrides)
 
 export const SETS: Record<string, React.FC<any>> = {Bedroom, Kitchen, Classroom, Gym, Bathroom, Void, Street, Rooftop};
+
+/** Wall poster (backlog #51): coloured card, white border, short readable headline. */
+export const Poster = ({pos, w = 0.6, h = 0.85, color = '#c8323a', title, sub, rot = 0}: {pos: [number, number, number]; w?: number; h?: number; color?: string; title: string; sub?: string; rot?: number}) => (
+  <group position={pos} rotation={[0, 0, rot]}>
+    <mesh><planeGeometry args={[w + 0.04, h + 0.04]} />{std('#efe8f5', 0.8)}</mesh>
+    <mesh position={[0, 0, 0.002]}><planeGeometry args={[w, h]} />{std(color, 0.85)}</mesh>
+    <Text position={[0, h * 0.18, 0.004]} fontSize={w * 0.16} color="#f5ead2">{title}</Text>
+    {sub && <Text position={[0, -h * 0.12, 0.004]} fontSize={w * 0.08} color="#f5ead2" font="Inter">{sub}</Text>}
+    <mesh position={[0, h / 2 - 0.02, 0.006]}><circleGeometry args={[0.015, 10]} />{std('#9aa0aa', 0.3, 0.8)}</mesh>
+  </group>
+);
+/** Wall clock (backlog #52): hands set from a story time (minutes past midnight); seconds hand ticks with the frame. */
+export const WallClock = ({pos, r = 0.22, time = 8 * 60 + 2, frame = 0}: {pos: [number, number, number]; r?: number; time?: number; frame?: number}) => {
+  const m = (time % 60) / 60, hr = ((time / 60) % 12) / 12, sec = (Math.floor(frame / 30) % 60) / 60;
+  const hand = (a: number, len: number, wdt: number, col: string, z: number) => (
+    <mesh position={[Math.sin(a * Math.PI * 2) * len / 2, Math.cos(a * Math.PI * 2) * len / 2, z]} rotation={[0, 0, -a * Math.PI * 2]}>
+      <planeGeometry args={[wdt, len]} />{std(col, 0.5)}</mesh>);
+  return (
+    <group position={pos}>
+      <mesh rotation={[Math.PI / 2, 0, 0]}><cylinderGeometry args={[r, r, 0.05, 40]} />{std('#2b2233', 0.4, 0.3)}</mesh>
+      <mesh position={[0, 0, 0.026]}><circleGeometry args={[r * 0.9, 40]} />{std('#f4efe6', 0.6)}</mesh>
+      {Array.from({length: 12}).map((_, k) => <mesh key={k} position={[Math.sin(k / 12 * Math.PI * 2) * r * 0.78, Math.cos(k / 12 * Math.PI * 2) * r * 0.78, 0.028]}><circleGeometry args={[k % 3 ? 0.006 : 0.012, 8]} />{std('#2b2233')}</mesh>)}
+      {hand(hr, r * 0.5, 0.018, '#1a1424', 0.03)}{hand(m, r * 0.72, 0.012, '#1a1424', 0.032)}{hand(sec, r * 0.78, 0.004, '#c8323a', 0.034)}
+    </group>
+  );
+};

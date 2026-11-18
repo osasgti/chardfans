@@ -226,7 +226,7 @@ export const LieShot = ({spec, beat, dur, sec, seed, fpsRatio = 1, calStops = 0}
   const line = LINES.find((l) => l.id === spec.line);
   const Set = SETS[spec.set];
   const flick = spec.flicker ? (random('fl' + Math.floor(beat / 3)) > 0.82 ? 0.35 : 1) : 1;
-  const setNode = spec.set === 'Hallway' ? <Hallway /> : Set ? <Set {...(spec.setProps ?? {})} {...(spec.set === 'Bathroom' ? {flicker: flick} : {})} /> : null;
+  const setNode = spec.set === 'Hallway' ? <Hallway frame={beat} /> : Set ? <Set {...(spec.setProps ?? {})} {...(spec.set === 'Bathroom' ? {flicker: flick} : {})} /> : null;
   return (
     <AbsoluteFill>
       <AbsoluteFill style={{transform: weave(sec)}}>

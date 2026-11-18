@@ -1529,6 +1529,10 @@ a whisper next to normal speech sounds like a different narrator.
   screen (fontSize 0.017 for "5 MORE MIN?").
 - **Close-up framing changed** (cu 3.4 m, mcu 3.6 m, aim +0.08 m above head centre) and an eye light was added, so
   **`src/lie/exposure_cal.json` is stale**: re-run `scripts/exposure_cal.py` on the next full render before the final.
+- **Windows are tone-mapped**, not `glow()`: at emissive 2.4 with `toneMapped={false}` they clipped to a white hole. A horizon band
+  reads as "outside"; small dark shapes (trees) read as holes at this size, so don't add them.
+- **Hallway storytelling details:** posters ("BE HONEST", "SCIENCE FAIR", "TRYOUTS") and a wall clock at 8:02 whose second hand
+  ticks with the frame (`Poster`, `WallClock` in LieSets.tsx). They are small in wides; give them a dedicated insert shot if they matter.
 - **Check every set, not the same 4 frames.** The bugs above were invisible in the usual 4-frame grid. Use one mid-shot still per
   distinct set (script in the session notes: pick the first shot of each set from `timeline.json`).
 

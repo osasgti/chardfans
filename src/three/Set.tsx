@@ -1,10 +1,16 @@
 import {RB} from './RB';
 import {random} from 'remotion';
 import {C} from '../style/tokens';
+import {Poster, WallClock} from './LieSets';
 
 /** School hallway: wood floor, purple wall, lockers, a lamp practical. */
-export const Hallway = () => (
+export const Hallway = ({frame = 0}: {frame?: number}) => (
   <group>
+    {/* storytelling details (backlog #51/#52): posters + a clock that reads 8:02 — just late for class */}
+    <Poster pos={[1.1, 1.75, -2.88]} title="BE HONEST" sub="STUDENT COUNCIL" color="#3d6fd6" rot={0.03} />
+    <Poster pos={[1.95, 1.6, -2.88]} w={0.5} h={0.7} title="SCIENCE" sub="FAIR · FRI" color="#2f8f8a" rot={-0.04} />
+    <Poster pos={[-7.4, 1.7, -2.88]} w={0.55} title="TRYOUTS" sub="GYM 3PM" color="#d29a2d" rot={0.02} />
+    <WallClock pos={[2.9, 2.75, -2.86]} time={8 * 60 + 2} frame={frame} />
     <mesh rotation={[-Math.PI / 2, 0, 0]} receiveShadow><planeGeometry args={[30, 30]} /><meshStandardMaterial color={C.floorWood} roughness={0.55} /></mesh>
     {Array.from({length: 14}).map((_, i) => (
       <mesh key={i} position={[-13 + i * 2, 0.002, 0]} rotation={[-Math.PI / 2, 0, 0]}><planeGeometry args={[0.02, 30]} /><meshStandardMaterial color="#4a2e20" /></mesh>

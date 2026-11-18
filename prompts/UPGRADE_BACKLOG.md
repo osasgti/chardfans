@@ -61,8 +61,8 @@
 48. [S] ±5–10% seeded albedo variation on every instanced object.
 49. [S] Grime gradient: darker floor patches near walls / under furniture.
 50. [S] Worn-paint lighter edges on lockers, doors, desks.
-51. [M] Posters with short readable text on every wall (canvas-texture Text).
-52. [S] Working wall clock whose time matches the story.
+51. ✅ [M] Posters with short readable text on every wall (canvas-texture Text).
+52. ✅ [S] Working wall clock whose time matches the story.
 53. [S] Random small rotation (±1–3°) on props so nothing is perfectly aligned.
 54. [M] Stadium set (bleachers, railing, SEC signs, floodlights, instanced crowd).
 55. [M] Vending machine with emissive cans grid.
