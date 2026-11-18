@@ -12,7 +12,7 @@ a cheap 3D demo, not the reference.
 **Reading order:** start with **`prompts/MASTER_PROMPT_INSANE.md`** (the top-level quality bar and final checklist, it wins over this file) and `prompts/UPGRADE_BACKLOG.md` (125 numbered upgrades; tick them off as they ship). For buildable, file-level fixes with "done when" checks, use `prompts/FIX_LIST_V2.md` (120 items). To run an improvement session, paste `prompts/MASTER_LOOP.md`. To pick and spec the next video, paste `prompts/WHAT_IF_IDEA_ENGINE.md`. To render fast on a GPU, follow `docs/RENDER_ON_GPU.md`. Then **§36 (the master prompt)**, **§52 (consistency & polish, from real bugs)** and **§53 (render speed)**, which is the standard every video must meet. Then use
 §0–§35 as the toolbox, §32 for lessons from real renders, and §51 for how to keep improving.
 The working demo lives in `src/` (2 shots, 60fps, with full sound).
-Video projects have their own master prompt in `prompts/`. The current one is `prompts/WHAT_IF_LIE_METER.md` (5:00, TTS).
+Video projects have their own master prompt in `prompts/`. Finished: `prompts/WHAT_IF_LIE_METER.md` (5:00, TTS). **Next: `prompts/WHAT_IF_PROMISE_THREADS.md` + `_SHOTS.md`** (5:00, glowing promise threads).
 
 ---
 
