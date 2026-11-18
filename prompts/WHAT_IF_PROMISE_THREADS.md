@@ -237,6 +237,12 @@ Pass criteria: readable at 320 px wide, bloom doesn't wash the face, broken grey
 
 ---
 
+### 7.1 Build status (Nov 18): ✅ all 10 SFX + 4 motif stems built in `make_sfx.py` (`npm run sfx`)
+Checked numerically and by spectrogram, but **not yet auditioned by a human**. Fixed after the first spectrogram pass: the spool's noise "zip"
+stopped dead (click) → sin² envelope + tail fade; the burst's reverse swell ended *after* the bells → trimmed to end exactly on the hit;
+the hum gated in and out (granular gaps) → smooth sine shimmer. Known: `thread_drag` has small periodic dips (granular); fine as texture.
+Sketch: `python3 scripts/promise_sketch.py` → `out/promise_sound_sketch.wav` (−18.8 LUFS before mastering, no VO).
+
 ## 8. Music plan (generate stems in `make_sfx.py`; one motif reworked per act, §36.7)
 
 - **Motif "The Promise":** 5 notes, E–G#–B–C#–B (rising, then a hopeful step down), 72 bpm.

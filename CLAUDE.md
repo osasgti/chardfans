@@ -63,13 +63,14 @@ remotion.config.ts         ✅ GL from REMOTION_GL (default swangle; angle/egl o
 docs/RENDER_ON_GPU.md      ✅ step-by-step fast render on your own computer (30–60×)
 scripts/
   sfxlib.py                ✅ synthesis building blocks (§36.6)
-  make_sfx.py              ✅ 80 sounds + music stems → public/sfx/*.wav (git-ignored, run `npm run sfx`)
+  make_sfx.py              ✅ 80 sounds + music stems + Promise Threads set (10 thread SFX, 4 'Promise' motif stems) → public/sfx/*.wav (git-ignored, run `npm run sfx`)
   estimate_timing.py       ✅ script text → words.json (no speech recogniser needed)
   build_timeline.py        ✅ master-prompt TTS table + public/vo/raw/*.mp3 → cleaned VO wavs + src/lie/timeline.json
   qa.sh                    ✅ cuts, contact sheet, loudness, black/frozen frames, flashes (§28, §52)
   luma_qa.py               ✅ 1-frame flash + brightness-range detector (§52.1)
   exposure_cal.py          ✅ per-shot exposure calibration → src/lie/exposure_cal.json + ffmpeg post filter (§52.1)
   make_srt.py              ✅ timeline → SRT captions
+  promise_sketch.py        ✅ 20 s SFX+music sketch of the Promise Threads hook → out/promise_sound_sketch.wav
   vo_consistency.py        ✅ per-take level + voicing ratio, flags whispered/breathy TTS takes (§54.1)
   validate_shots.mjs       ✅ shot cast-reference validator (npm run validate)
   determinism.sh           ✅ same frame twice → identical hash

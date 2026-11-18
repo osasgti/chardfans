@@ -305,7 +305,120 @@ def music():
     for b in np.arange(0, 11, BEAT * 2): s = int(b * SR); pulse[s:s + len(k)] += k[:len(pulse) - s] * 0.35
     return pad + reverb(pulse, 1.0, 0.2)[:len(pad)]
 
-PEAK = {'room': 0.25, 'coin': 0.5, 'tick': 0.6, 'word': 0.7, 'music': 0.8}
+# ───────────────── Promise Threads video (prompts/WHAT_IF_PROMISE_THREADS.md §7, §8) ─────────────────
+def _sweep(f0, f1, d, curve=1.0):
+    """Sine with an exponential pitch glide f0→f1 (phase-accumulated, so no clicks)."""
+    n = int(SR * d); u = np.linspace(0, 1, n) ** curve; f = f0 * (f1 / f0) ** u
+    return np.sin(2 * np.pi * np.cumsum(f) / SR)
+def _pluck(f, d, damp=0.997, bright=6000):
+    return lowpass(karplus(f, d, damp), bright) * dec(int(SR * d), 3)
+
+@sfx
+def thread_spool():
+    """A thread is born: rising glass tone + a bright filtered 'zip', short room."""
+    d = 0.6; n = int(SR * d); env = np.minimum(1, np.linspace(0, 6, n)) * np.exp(-3 * np.linspace(0, d, n))
+    glass = _sweep(600, 1800, d, 0.7) * env * 0.6 + _sweep(1200, 3600, d, 0.7) * env * 0.18
+    zip_ = bandpass(N(d), 5000, 3) * np.sin(np.pi * np.linspace(0, 1, n)) ** 2 * 0.45   # rises and fades: no hard stop (spectrogram check)
+    x = glass + zip_; x[-int(SR * 0.1):] *= np.linspace(1, 0, int(SR * 0.1))
+    return reverb(x, 0.9, 0.25, 7000)
+@sfx
+def thread_hum():
+    """Held threads nearby: detuned sine cluster + slow airy shimmer partials, seamless loop (no grains: they gated the bed)."""
+    d = 7.0; t = T(d); trem = 0.85 + 0.15 * np.sin(2 * np.pi * 0.35 * t)
+    x = (np.sin(2 * np.pi * 220 * t) + np.sin(2 * np.pi * 221.5 * t) + 0.5 * np.sin(2 * np.pi * 330 * t)) * trem * 0.25
+    x += sum(np.sin(2 * np.pi * f * t + k) * (0.5 + 0.5 * np.sin(2 * np.pi * (0.13 + 0.05 * k) * t + k)) * 0.03
+             for k, f in enumerate((1760, 2217, 2637, 3520)))
+    return loop_xfade(x, 1.0)
+@sfx
+def thread_pluck():
+    """A thread tightens or is touched: bright string pluck (A4)."""
+    return reverb(_pluck(440, 0.8, 0.996, 7000), 0.8, 0.22, 7000)
+@sfx
+def thread_fray():
+    """A thread breaks: paper-tear crackle + falling detuned pluck + soft sub."""
+    d = 1.0; n = int(SR * d)
+    crackle = bandpass(N(d), 2500, 1.5) * (rng.random(n) < 0.02).astype(float).cumsum() % 2 * 0.0
+    tear = sum(bandpass(N(0.08), 1800 + 900 * k, 2) * dec(int(SR * 0.08), 30) for k in range(3))
+    tear = at(d, *[(0.02 + 0.07 * k, tear * (0.7 - 0.15 * k)) for k in range(4)])
+    fall = (_sweep(330, 180, 0.9) + 0.6 * _sweep(333, 182, 0.9)) * dec(int(SR * 0.9), 4) * 0.35
+    sub = sine(55, 0.4) * dec(int(SR * 0.4), 8) * 0.4
+    x = at(d, (0, tear), (0.05, fall), (0.05, sub)) + crackle[:n]; x[-int(SR * 0.08):] *= np.linspace(1, 0, int(SR * 0.08))
+    return reverb(x, 1.0, 0.2, 4000)
+@sfx
+def thread_drag():
+    """Broken thread dragging: low band-passed brown noise with irregular grain, 4 s loop."""
+    d = 5.0; brown = np.cumsum(N(d)); brown = brown - np.convolve(brown, np.ones(2000) / 2000, 'same')
+    x = bandpass(brown / (np.abs(brown).max() + 1e-9), 380, 1.2)
+    x = granular(x, d, density=30, glen=0.18, pitch_jit=0.15)
+    return loop_xfade(x, 1.0)
+@sfx
+def thread_snap_small():
+    """A tiny promise breaks: dry pluck + 'tsk'."""
+    return at(0.3, (0, _pluck(880, 0.25, 0.99, 9000) * 0.8), (0.0, highpass(N(0.03), 4000) * dec(1440, 120) * 0.6))
+@sfx
+def thread_burst():
+    """A promise kept: bending pluck (tension) → bell cluster + sparkle + sub bloom → falling glitter."""
+    pre = _pluck(440, 0.5) * 0.6 + _sweep(440, 587, 0.5, 2) * np.linspace(0, 1, int(SR * 0.5)) ** 2 * 0.25
+    swell = rev(reverb(highpass(N(0.4), 3000) * dec(int(SR * 0.4), 6), 1.2, 0.4, 9000)) * 0.35
+    bells = sum(bell(mtof(m), 2.2, decay=2.6) for m in (84, 88, 91, 96)) * 0.3
+    sub = sine(55, 1.2) * dec(int(SR * 1.2), 3) * 0.6
+    glitter = granular(bell(2637, 1.0, decay=3), 1.6, density=60, glen=0.05, pitch_jit=0.25)
+    glitter *= np.linspace(1, 0, len(glitter)) ** 1.5 * 0.35
+    swell = swell[-int(SR * 0.5):]                           # the reverse swell must END on the hit at 0.5 s
+    x = at(2.8, (0.0, pre), (0.0, swell), (0.5, bells), (0.5, sub), (0.5, LIB['sparkle']() * 0.5), (0.7, glitter))
+    return reverb(x, 2.2, 0.35, 8000)
+@sfx
+def rope_creak():
+    """Dad's rope: slow resonant filtered noise with a pitch wobble (lower chair_creak)."""
+    d = 1.5; n = int(SR * d); t = T(d); f = 260 + 60 * np.sin(2 * np.pi * 1.3 * t)
+    x = np.zeros(n)
+    for fc in (f[0], f[n // 2], f[-1]): x += bandpass(N(d), float(fc), 8) * 0.4
+    return reverb(x * (0.3 + 0.7 * np.sin(np.pi * np.linspace(0, 1, n))), 0.8, 0.2, 2500)
+@sfx
+def wrist_reveal():
+    """'There are hundreds': 40 staggered spools in 1.2 s (pitch-randomised) + low boom."""
+    sp = LIB['thread_spool'](); evs = []
+    for k in range(40):
+        r = 0.8 + rng.random() * 0.6; idx = (np.arange(int(len(sp) / r)) * r).astype(int)
+        evs.append((rng.random() * 1.2, sp[idx] * (0.15 + rng.random() * 0.1)))
+    return at(2.4, *evs, (0.9, LIB['boom_sub']()[:int(SR * 1.5)] * 0.8))
+@sfx
+def heartbeat_soft():
+    """Two low kicks 0.25 s apart at 58 bpm, low-passed; seamless loop."""
+    beat = 60 / 58; k = lowpass(sine(48 + 30 * np.exp(-25 * T(.3)), .3) * dec(int(SR * .3), 10), 300)
+    x = at(beat * 4, *[(b * beat, k) for b in range(4)], *[(b * beat + 0.25, k * 0.7) for b in range(4)])
+    return x
+
+PROMISE = [64, 68, 71, 73, 71]  # "The Promise" motif: E G# B C# B
+def _motif(voice, start, bpm, octave=0, gap=1.0):
+    step = 60 / bpm; return [(start + i * step * gap, voice(mtof(m + octave))) for i, m in enumerate(PROMISE)]
+@sfx
+def promise_celesta():
+    """Hook / wonder: celesta-like bells over a soft pad, 72 bpm."""
+    pad = lowpass(sum(saw(mtof(m - 12), 11) * 0.05 for m in (64, 68, 71)), 900)
+    x = at(11, *_motif(lambda f: bell(f * 2, 2.0, decay=3) * 0.35, 1.0, 72), *_motif(lambda f: bell(f * 2, 2.0, decay=3) * 0.22, 6.0, 72, 12))
+    return reverb(x + pad[:len(x)] * np.minimum(1, T(11) / 2), 3.0, 0.45, 6000)
+@sfx
+def promise_pizz():
+    """Act 1 fun: pizzicato motif at 96 bpm, bouncing twice."""
+    v = lambda f: _pluck(f, 0.5, 0.99, 5000) * 0.5
+    return reverb(at(11, *_motif(v, 0.5, 96, 0, 1), *_motif(v, 3.0, 96, 12, 1), *_motif(v, 5.5, 96, 0, 0.5), *_motif(v, 8.0, 96, 12, 0.5)), 1.2, 0.25, 6000)
+@sfx
+def promise_minor():
+    """Act 3 tension: minor motif (E G B C B) on low saw strings + heartbeat."""
+    minor = [64, 67, 71, 72, 71]; x = np.zeros(int(11 * SR))
+    for i, m in enumerate(minor):
+        s = int((0.5 + i * 2.0) * SR); note = lowpass(saw(mtof(m - 12), 2.4) + saw(mtof(m - 12) * 1.004, 2.4), 700) * adsr(int(SR * 2.4), 0.4, 0.4, 0.7, 0.8) * 0.2
+        x[s:s + len(note)] += note[:len(x) - s]
+    hb = LIB['heartbeat_soft'](); x[:len(hb)] += hb[:len(x)] * 0.5; x[len(hb):2 * len(hb)] += hb[:len(x) - len(hb)] * 0.5
+    return reverb(x, 2.5, 0.35, 3000)
+@sfx
+def promise_piano():
+    """Act 5: solo piano-ish motif (decaying pluck + body) that resolves up."""
+    v = lambda f: (_pluck(f, 2.0, 0.999, 3500) + 0.3 * sine(f, 2.0) * dec(int(SR * 2), 2)) * 0.45
+    return reverb(at(11, *_motif(v, 0.5, 66), *[(5.5 + i * 0.9, v(mtof(m))) for i, m in enumerate([71, 73, 76, 80])]), 2.6, 0.4, 5000)
+
+PEAK = {'thread_hum': 0.4, 'thread_drag': 0.35, 'heartbeat_soft': 0.6, 'room': 0.25, 'coin': 0.5, 'tick': 0.6, 'word': 0.7, 'music': 0.8}
 if __name__ == '__main__':
     flt = sys.argv[1] if len(sys.argv) > 1 else ''
     names = [n for n in LIB if flt in n]
