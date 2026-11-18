@@ -93,7 +93,8 @@ src/
   three/LieSets.tsx        ✅ Bedroom, Kitchen(+dining), Classroom, Gym(casino night), Bathroom(+mirror), Void, Street, Rooftop,
                               props (Phone, CerealBox, CookieJar, Card, ChipStack), canvas-texture 3D Text      🔲 Stadium
   lie/                     ✅ the 5-minute video: engine.tsx (data → shot), shots.ts (76 shots), LieMeter.tsx,
-                              LieVideo.tsx (sequencing, VO, music, ambience, cues, captions), timeline.json (generated)
+                              LieVideo.tsx (sequencing, VO, music, ambience, cues, captions), timeline.json (generated),
+                              reactions.ts (7 acted reactions: doubleTake/gulp/shrug/facepalm/deflate/celebrate/smugNod), ReactTest.tsx (dev comp)
   three/props/             🔲 Coin (now inline in S02), Dice, Cards, Alarm, Vending, Roulette (§40)
   overlay/Overlays.tsx     ✅ project(), Title, Tag, OddsBadge, Letterbox
   overlay/Transitions.tsx  ✅ DipToBlack, WhipStreak, Flash

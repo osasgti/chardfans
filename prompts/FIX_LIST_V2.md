@@ -27,7 +27,7 @@
 
 ## B. Characters: body & acting (15–32)
 
-- [ ] **15 🟢 L: Reaction library.** Fix: `react: 'doubleTake'|'gulp'|'shrug'|'facepalm'|'deflate'|'celebrate'|'smugNod'` in CastSpec, each a keyed timeline of armL/armR/headTurn/headTilt/squash with anticipation + overshoot. Where: new `src/lie/reactions.ts`, used in `poseArgs`. Done when: 7 reactions render and validator accepts the field.
+- [x] **15 🟢 L: Reaction library.** *(built: `src/lie/reactions.ts`, test comp `ReactTest`; arms gained a forward swing `armLx/armRx`)* Fix: `react: 'doubleTake'|'gulp'|'shrug'|'facepalm'|'deflate'|'celebrate'|'smugNod'` in CastSpec, each a keyed timeline of armL/armR/headTurn/headTilt/squash with anticipation + overshoot. Where: new `src/lie/reactions.ts`, used in `poseArgs`. Done when: 7 reactions render and validator accepts the field.
 - [ ] **16 🟠 M: Arms snap between poses.** Fix: spring-interpolate arm angles from previous shot pose over 8 beats. Where: `poseArgs`. Done when: no arm pop at cuts within a scene.
 - [ ] **17 🟢 M: No hand shapes.** Fix: mitten hand = sphere + thumb capsule; `hand: 'fist'|'open'|'point'`. Where: `Pill.tsx` arm(). Done when: point pose shows an index finger.
 - [ ] **18 🟢 M: No elbows.** Fix: split arm capsule in two with a bend angle (default 12°, point 0°, phone 110°). Where: `Pill.tsx`. Done when: the phone pose reads as holding a phone, not a straight stick.
@@ -38,7 +38,7 @@
 - [ ] **23 🟠 S: Run pose bobs but legs don't move.** Fix: drive leg rotation in run (10-beat cycle). Where: `Pill.tsx` legs get `legSwing`. Done when: legs alternate.
 - [ ] **24 🟠 S: Sitting characters float above chairs.** Fix: sit offset tuned per set chair height (kitchen 0.45, classroom 0.42). Where: engine `sit`. Done when: no gap between body and seat in any sit shot.
 - [ ] **25 🟢 M: Look-at body follow.** Fix: body rotY follows head turn at 20% with 6-beat lag. Where: engine Actor. Done when: big head turns pull the torso.
-- [ ] **26 🟢 S: Squash on surprise.** Fix: when meter lands ≥90 on a character, squash 0.08 for 3 beats then spring. Where: engine (meter land → actor squash). Done when: high readings get a body reaction.
+- [x] **26 🟢 S: Squash on surprise.** *(built as auto-`gulp` on ≥90% meters)* Fix: when meter lands ≥90 on a character, squash 0.08 for 3 beats then spring. Where: engine (meter land → actor squash). Done when: high readings get a body reaction.
 - [ ] **27 🟠 S: Characters in a group move in sync.** Fix: per-id phase offsets for breathing/drift already exist; also offset pose springs by random 0–6 beats. Where: engine. Done when: no two characters move identically in the classroom.
 - [ ] **28 🟢 M: Background crowd variation.** Fix: 3 idle variants (sway, phone check, look around) chosen by seeded id. Where: `poseArgs('idle')`. Done when: classroom back rows don't look cloned.
 - [ ] **29 🟢 S: Hood flop.** Fix: hood half-torus rotates with head pitch lag. Where: `Pill.tsx`. Done when: hood moves on nods.

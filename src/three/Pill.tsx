@@ -9,14 +9,14 @@ import {FAST} from './Stage';
 export type Hair = 'none' | 'beanie' | 'cap' | 'capBack' | 'bun' | 'ponytail' | 'bob' | 'visor';
 export type PillProps = {
   id: string; frame: number; position?: [number, number, number]; rotY?: number;
-  hoodie?: string; expr?: Expr; hat?: Hair; hatColor?: string; glasses?: boolean; scale?: number; mouth?: number; turnLag?: number; rightHand?: React.ReactNode;
+  hoodie?: string; expr?: Expr; hat?: Hair; hatColor?: string; glasses?: boolean; scale?: number; mouth?: number; turnLag?: number; lean?: number; armLx?: number; armRx?: number; rightHand?: React.ReactNode;
   armL?: number; armR?: number; headTilt?: number; headTurn?: number; squash?: number; look?: number; seg?: number;
 };
 
 const skinMat = <meshPhysicalMaterial color={C.skin} roughness={0.42} clearcoat={0.35} clearcoatRoughness={0.4} sheen={0.4} sheenColor="#ffffff" />;
 
 export const Pill = ({id, frame, position = [0, 0, 0], rotY = 0, hoodie = C.red, expr = 'neutral', hat = 'none', hatColor = '#1b1622',
-  armL = 0.15, armR = 0.15, headTilt = 0, headTurn = 0, squash = 0, look = 0, seg = 48, glasses = false, scale = 1, mouth = 0, turnLag = 0, rightHand}: PillProps) => {
+  armL = 0.15, armR = 0.15, headTilt = 0, headTurn = 0, squash = 0, look = 0, seg = 48, glasses = false, scale = 1, mouth = 0, turnLag = 0, lean = 0, armLx = 0, armRx = 0, rightHand}: PillProps) => {
   if (FAST) seg = Math.min(seg, 28);
   const t = frame / 30, ph = random(id) * 6.28;
   // breathing rate follows emotion (backlog #41): calm ≈ 0.33 Hz, anxious ≈ 0.6 Hz
@@ -35,8 +35,8 @@ export const Pill = ({id, frame, position = [0, 0, 0], rotY = 0, hoodie = C.red,
   const sacc = (random(id + 'sa' + si) - 0.5) * 5;
   const cloth = <meshStandardMaterial color={hoodie} roughness={0.88} />;
   const sq: [number, number, number] = [1 + squash * 0.5, 1 - squash, 1 + squash * 0.5];
-  const arm = (side: 1 | -1, a: number) => (
-    <group position={[side * 0.27, 0.93, 0]} rotation={[0, 0, side * (0.12 + a)]}>
+  const arm = (side: 1 | -1, a: number, ax = 0) => (
+    <group position={[side * 0.27, 0.93, 0]} rotation={[ax, 0, side * (0.12 + a)]}>
       <mesh position={[0, -0.24, 0]} castShadow><capsuleGeometry args={[0.062, 0.36, 6, 16]} />{cloth}</mesh>
       <mesh position={[0, -0.5, 0]} castShadow><sphereGeometry args={[0.072, 24, 24]} />{skinMat}</mesh>
       {side === 1 && rightHand && <group position={[0, -0.56, 0.02]} rotation={[0, 0, -(0.12 + a)]}>{rightHand}</group>}
@@ -50,13 +50,13 @@ export const Pill = ({id, frame, position = [0, 0, 0], rotY = 0, hoodie = C.red,
           <mesh position={[0, -0.39, 0.03]} scale={[1, 0.6, 1.5]} castShadow><sphereGeometry args={[0.07, 16, 16]} /><meshStandardMaterial color="#2a2433" roughness={0.7} /></mesh>
         </group>
       ))}
-      <group scale={[1, breath, 1]} rotation={[0, 0, shift]}>
+      <group scale={[1, breath, 1]} rotation={[lean, 0, shift]}>
         <mesh position={[0, 0.72, 0]} castShadow receiveShadow><capsuleGeometry args={[0.22, 0.36, 8, 24]} />{cloth}</mesh>
         {[-1, 1].map((s) => (
           <mesh key={s} position={[s * 0.045, 0.78, 0.215]}><RB args={[0.016, 0.17, 0.012]} /><meshStandardMaterial color="#f4f0f8" /></mesh>
         ))}
         <mesh position={[0, 0.98, -0.1]} rotation={[0.3, 0, 0]}><torusGeometry args={[0.13, 0.05, 12, 24, Math.PI]} />{cloth}</mesh>
-        {arm(-1, armL)}{arm(1, armR)}
+        {arm(-1, armL, armLx)}{arm(1, armR, armRx)}
         <mesh position={[0, 1.04, 0]}><cylinderGeometry args={[0.05, 0.05, 0.2, 12]} /><meshStandardMaterial color={C.lavender} /></mesh>
         <group position={[0, 1.13, 0]} rotation={[0, headTurn + drift, headTilt + driftTilt - shift * 0.6]} scale={sq}>
           <group position={[0, 0.4, 0]}>

@@ -6,6 +6,7 @@ import {RB} from '../three/RB';
 import React from 'react';
 import {AbsoluteFill, interpolate, Easing, random, Audio, Sequence, staticFile} from 'remotion';
 import {PerspectiveCamera, Vector3} from 'three';
+import {reactAt, Reaction} from './reactions';
 import {FilmLook, weave} from '../overlay/FilmLook';
 import {Stage, Lights, handheld, Cam, FAST} from '../three/Stage';
 import {Pill, Hair} from '../three/Pill';
@@ -44,7 +45,7 @@ export const CAST: Record<Who, Look> = {
 };
 export type Pose = 'idle' | 'cheer' | 'point' | 'phone' | 'sit' | 'sleep' | 'slump' | 'hold' | 'shrug' | 'run';
 export type Prop = 'phone' | 'phoneText' | 'card' | 'cookie' | 'pan';
-export type CastSpec = {who: Who; id?: string; pos: [number, number]; rot?: number; expr?: Expr; pose?: Pose; talk?: boolean; hold?: Prop; turn?: number; tilt?: number; y?: number};
+export type CastSpec = {who: Who; id?: string; pos: [number, number]; rot?: number; expr?: Expr; pose?: Pose; talk?: boolean; hold?: Prop; turn?: number; tilt?: number; y?: number; react?: Reaction; reactAt?: number};
 
 /** head centre in world space (used by camera + meter) */
 export const headOf = (c: CastSpec): [number, number, number] => {
@@ -146,11 +147,13 @@ export const Actor = ({c, beat, sec, line, mirrored = false}: {c: CastSpec; beat
   const z = mirrored ? 2 * MIRROR_Z - c.pos[1] : c.pos[1];
   const rotY = ((c.rot ?? 0) * deg) * (mirrored ? -1 : 1) + (mirrored ? Math.PI : 0);
   const run = c.pose === 'run' ? Math.abs(Math.sin(beat / 30 * 12)) * 0.05 : 0;
+  const R = reactAt(c.react, beat, c.reactAt);
+  const base = poseArgs(c.pose, beat, id);
   const body = (
-    <Pill id={id} frame={beat} position={sleep ? [0, 0, 0] : [c.pos[0], (c.y ?? 0) + sit + run, z]} rotY={sleep ? 0 : rotY}
+    <Pill id={id} frame={beat} position={sleep ? [0, 0, 0] : [c.pos[0], (c.y ?? 0) + sit + run + R.dy, z]} rotY={sleep ? 0 : rotY}
       hoodie={L.hoodie} hat={L.hair} hatColor={L.hairColor} glasses={L.glasses} expr={c.expr ?? L.expr} scale={s}
-      headTurn={(c.turn ?? 0) * deg + (c.talk ? Math.sin(beat / 30 * 2.3) * 0.04 : 0)} turnLag={c.talk ? (Math.sin((beat - 4) / 30 * 2.3) - Math.sin(beat / 30 * 2.3)) * 0.04 : 0} headTilt={(c.tilt ?? 0) * deg}
-      mouth={mouth} {...poseArgs(c.pose, beat, id)} rightHand={<PropMesh p={c.hold} text={c.hold === 'phoneText' ? 'we\'re good, right?' : undefined} />}
+      headTurn={(c.turn ?? 0) * deg + R.headTurn + (c.talk ? Math.sin(beat / 30 * 2.3) * 0.04 : 0)} squash={R.squash} lean={R.lean} turnLag={(reactAt(c.react, beat - 4, c.reactAt).headTurn - R.headTurn) + (c.talk ? (Math.sin((beat - 4) / 30 * 2.3) - Math.sin(beat / 30 * 2.3)) * 0.04 : 0)} headTilt={(c.tilt ?? 0) * deg + R.headTilt}
+      mouth={mouth} armL={base.armL + R.armL} armR={base.armR + R.armR} armLx={R.armLx} armRx={R.armRx} rightHand={<PropMesh p={c.hold} text={c.hold === 'phoneText' ? 'we\'re good, right?' : undefined} />}
       look={c.talk ? 0 : Math.round(Math.sin(beat / 30 * 0.7 + random(id) * 9)) * 5} />
   );
   if (sleep) return <group position={[c.pos[0], 0.62, c.pos[1]]} rotation={[-Math.PI / 2, 0, 0]}>{body}</group>;
@@ -234,7 +237,12 @@ export const LieShot = ({spec, beat, dur, sec, seed, fpsRatio = 1, calStops = 0}
         <Lights preset={spec.light} keyPos={spec.keyPos} keyI={spec.flicker ? undefined : undefined} />
         {setNode}
         {spec.dust !== false && <Dust frame={beat} n={FAST ? 30 : 60} />}
-        {spec.cast.map((c, i) => <Actor key={i} c={c} beat={beat} sec={sec} line={line} />)}
+        {spec.cast.map((c, i) => {
+          // FIX_LIST_V2 #26: a character whose meter lands ≥90% reacts (gulp) unless the shot says otherwise
+          const hot = (spec.meters ?? []).some((m) => m.on === i && m.value >= 90 && m.mode !== 'q');
+          const cc = hot && !c.react ? {...c, react: 'gulp' as const, reactAt: c.reactAt ?? Math.round(dur * 0.55)} : c;
+          return <Actor key={i} c={cc} beat={beat} sec={sec} line={line} />;
+        })}
         {spec.mirror && <>
           <BathroomReflection />
           {spec.cast.filter((c) => c.who === 'hero').map((c, i) => <Actor key={'m' + i} c={c} beat={beat} sec={sec} line={line} mirrored />)}
