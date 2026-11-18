@@ -23,7 +23,7 @@ function draw(ctx: CanvasRenderingContext2D, expr: Expr, blink: number, look: nu
     const ry = Math.max(2, eyeH / 2) * (expr === 'shock' ? 1.08 : 1);
     const g = ctx.createRadialGradient(x - 2, eyeY + ry * 0.35, 1, x, eyeY, Math.max(ry, 11));
     g.addColorStop(0, '#4a2f6e'); g.addColorStop(0.55, '#24183a'); g.addColorStop(1, INK);
-    ctx.fillStyle = g; ctx.beginPath(); ctx.ellipse(x, eyeY, expr === 'shock' ? 12 : 11, ry, 0, 0, Math.PI * 2); ctx.fill();
+    ctx.fillStyle = g; ctx.beginPath(); ctx.ellipse(x, eyeY, expr === 'shock' ? 12.5 : 11, ry, 0, 0, Math.PI * 2); ctx.fill();
     // upper-lid shadow: darker band at the top of the eye
     ctx.fillStyle = 'rgba(10,6,18,.45)'; ctx.beginPath(); ctx.ellipse(x, eyeY - ry * 0.55, 11, ry * 0.45, 0, Math.PI, Math.PI * 2); ctx.fill();
     // two catch-lights: crisp primary upper-left-of-centre, soft secondary lower-right
@@ -49,6 +49,12 @@ function draw(ctx: CanvasRenderingContext2D, expr: Expr, blink: number, look: nu
     ctx.lineWidth = 6; for (const [bx, d] of [[486, -1], [538, 1]] as const) {
       // inner end (toward the nose) higher than the outer end = worried/sad (the reverse reads as angry)
       ctx.beginPath(); ctx.moveTo(bx + look - 14 * d, eyeY - 42); ctx.lineTo(bx + look + 16 * d, eyeY - 30 + (expr === 'sad' ? 4 : 0)); ctx.stroke(); } }
+  if (expr === 'worried' || expr === 'shock') { // cartoon sweat drop at the temple (backlog #14)
+    const sx = 582, sy = 252; const g2 = ctx.createLinearGradient(sx, sy - 14, sx, sy + 14);
+    g2.addColorStop(0, 'rgba(190,225,255,.95)'); g2.addColorStop(1, 'rgba(120,170,235,.95)');
+    ctx.fillStyle = g2; ctx.beginPath(); ctx.moveTo(sx, sy - 16); ctx.quadraticCurveTo(sx + 11, sy + 2, sx, sy + 12); ctx.quadraticCurveTo(sx - 11, sy + 2, sx, sy - 16); ctx.fill();
+    ctx.fillStyle = 'rgba(255,255,255,.9)'; ctx.beginPath(); ctx.arc(sx - 3, sy + 2, 2.5, 0, Math.PI * 2); ctx.fill(); ctx.fillStyle = INK;
+  }
   ctx.lineWidth = 6; ctx.beginPath();
   if (mouth > 0.05) { ctx.ellipse(512, 290, 10 + mouth * 6, 3 + mouth * 13, 0, 0, Math.PI * 2); ctx.fill(); return; }
   if (expr === 'sad') { ctx.arc(512, 306, 15, 1.15 * Math.PI, 1.85 * Math.PI); ctx.stroke(); return; }

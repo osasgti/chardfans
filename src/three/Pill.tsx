@@ -19,11 +19,17 @@ export const Pill = ({id, frame, position = [0, 0, 0], rotY = 0, hoodie = C.red,
   armL = 0.15, armR = 0.15, headTilt = 0, headTurn = 0, squash = 0, look = 0, seg = 48, glasses = false, scale = 1, mouth = 0, rightHand}: PillProps) => {
   if (FAST) seg = Math.min(seg, 28);
   const t = frame / 30, ph = random(id) * 6.28;
-  const breath = 1 + 0.014 * Math.sin(t * 2.1 + ph);
-  // seeded blinks: every ~3.5s, 5 frames
+  // breathing rate follows emotion (backlog #41): calm ≈ 0.33 Hz, anxious ≈ 0.6 Hz
+  const anxious = expr === 'worried' || expr === 'shock' || expr === 'sad';
+  const breath = 1 + 0.014 * Math.sin(t * (anxious ? 3.8 : 2.1) + ph);
+  // seeded blinks every ~3.5s; ~20% of cycles are double blinks (backlog #10)
   const period = 95 + Math.floor(random(id + 'b') * 40);
-  const k = (Math.floor(frame) + Math.floor(random(id + 'o') * period)) % period;
-  const blink = k < 5 ? Math.sin((k / 5) * Math.PI) : 0;
+  const kb = Math.floor(frame) + Math.floor(random(id + 'o') * period), k = kb % period, cyc = Math.floor(kb / period);
+  const dbl = random(id + 'd' + cyc) < 0.2;
+  const blink = k < 5 ? Math.sin((k / 5) * Math.PI) : dbl && k >= 8 && k < 13 ? Math.sin(((k - 8) / 5) * Math.PI) : 0;
+  // weight shift (backlog #31) + moving-hold head drift (backlog #44): slow, seeded, never twins
+  const shift = Math.sin(t * 0.55 + ph * 1.7) * 0.022;
+  const drift = Math.sin(t * 0.4 + ph) * 0.02, driftTilt = Math.sin(t * 0.33 + ph * 2.3) * 0.018;
   // saccades: tiny seeded eye darts every ~1–2s (master prompt C3.7)
   const sp = 30 + Math.floor(random(id + 's') * 25), si = Math.floor(frame / sp);
   const sacc = (random(id + 'sa' + si) - 0.5) * 5;
@@ -44,7 +50,7 @@ export const Pill = ({id, frame, position = [0, 0, 0], rotY = 0, hoodie = C.red,
           <mesh position={[0, -0.39, 0.03]} scale={[1, 0.6, 1.5]} castShadow><sphereGeometry args={[0.07, 16, 16]} /><meshStandardMaterial color="#2a2433" roughness={0.7} /></mesh>
         </group>
       ))}
-      <group scale={[1, breath, 1]}>
+      <group scale={[1, breath, 1]} rotation={[0, 0, shift]}>
         <mesh position={[0, 0.72, 0]} castShadow receiveShadow><capsuleGeometry args={[0.22, 0.36, 8, 24]} />{cloth}</mesh>
         {[-1, 1].map((s) => (
           <mesh key={s} position={[s * 0.045, 0.78, 0.215]}><RB args={[0.016, 0.17, 0.012]} /><meshStandardMaterial color="#f4f0f8" /></mesh>
@@ -52,7 +58,7 @@ export const Pill = ({id, frame, position = [0, 0, 0], rotY = 0, hoodie = C.red,
         <mesh position={[0, 0.98, -0.1]} rotation={[0.3, 0, 0]}><torusGeometry args={[0.13, 0.05, 12, 24, Math.PI]} />{cloth}</mesh>
         {arm(-1, armL)}{arm(1, armR)}
         <mesh position={[0, 1.04, 0]}><cylinderGeometry args={[0.05, 0.05, 0.2, 12]} /><meshStandardMaterial color={C.lavender} /></mesh>
-        <group position={[0, 1.13, 0]} rotation={[0, headTurn, headTilt]} scale={sq}>
+        <group position={[0, 1.13, 0]} rotation={[0, headTurn + drift, headTilt + driftTilt - shift * 0.6]} scale={sq}>
           <group position={[0, 0.4, 0]}>
             <group scale={[1, 1.04, 0.97]}>
               <mesh castShadow><sphereGeometry args={[0.42, seg, seg]} />{skinMat}</mesh>

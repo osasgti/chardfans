@@ -14,11 +14,11 @@
 7. [S] Mouth opens 1–2 frames before each word (anticipation).
 8. [S] Tongue + teeth hint inside big open mouths (dark-red gradient).
 9. [M] Face swaps cross-fade over 3 frames instead of popping.
-10. [S] Double blinks (15% chance) and blinks forced on head turns > 20°.
+10. ✅ [S] Double blinks (15% chance) and blinks forced on head turns > 20°.
 11. [S] Pupils dilate +10% on surprise / love, shrink on fear.
 12. [S] Freckles / beauty marks per character (seeded, painted).
 13. [M] Tear system: glossy bead mesh + wet lower-lid line + streak.
-14. [S] Sweat drop (cartoon) on nervous beats, with a slide-down animation.
+14. ✅ [S] Sweat drop (cartoon) on nervous beats, with a slide-down animation.
 15. [S] Sparkle eyes (star catch-lights) for the "power" moments.
 
 ## 2. Characters — body, hair, cloth (16–30)
@@ -39,7 +39,7 @@
 30. [S] Accessories: backpack, headphones, wristwatch, lanyard — each with physics lag.
 
 ## 3. Acting & animation (31–45)
-31. ⭐ [S] Weight shift every 2–4 s on standing characters.
+31. ✅ ⭐ [S] Weight shift every 2–4 s on standing characters.
 32. [S] Head nod on stressed words (`*emphasis*` in the script).
 33. [S] Listeners nod / glance at the speaker every 2–3 s.
 34. [M] Reaction library: doubleTake, gulp, facepalm, shrug, celebrate, deflate, smugNod.
@@ -49,10 +49,10 @@
 38. [S] "Hero" crowd members doing one unique thing (wave, phone check, yawn).
 39. [S] Anticipation crouch before every jump / sit / stand.
 40. [M] Speed-ramp orbits (fast → slow-mo on the key beat → normal).
-41. [S] Breathing rate tied to emotion (calm 0.25 Hz, anxious 0.6 Hz).
+41. ✅ [S] Breathing rate tied to emotion (calm 0.25 Hz, anxious 0.6 Hz).
 42. [S] Asymmetric arms in all idle poses (never twins).
 43. [M] Line-of-action check: a debug overlay that draws the spine curve per keypose.
-44. [S] Moving holds: 1–2° head drift during any hold > 12 beats.
+44. ✅ [S] Moving holds: 1–2° head drift during any hold > 12 beats.
 45. [M] Character turnaround test composition (4 angles) for every new character.
 
 ## 4. Sets & props (46–62)
