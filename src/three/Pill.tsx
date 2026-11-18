@@ -68,7 +68,7 @@ export const Pill = ({id, frame, position = [0, 0, 0], rotY = 0, hoodie = C.red,
             {/* follow-through (backlog #17): hair trails the head by ~4 beats and overshoots a little */}
             <group rotation={[0, (turnLag + (Math.sin((t - 0.13) * 0.4 + ph) * 0.02 - drift)) * 1.6, (Math.sin((t - 0.13) * 0.33 + ph * 2.3) * 0.018 - driftTilt) * 1.6]}>
               <HairMesh hair={hat} color={hatColor} seg={seg} />
-              {(hat === 'bun' || hat === 'ponytail' || hat === 'bob') && <Fringe color={hatColor} />}
+              {hat === 'bob' && <Fringe color={hatColor} />}
             </group>
             {glasses && <Glasses />}
           </group>

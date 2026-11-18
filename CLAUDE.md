@@ -1520,6 +1520,20 @@ a whisper next to normal speech sounds like a different narrator.
 
 ---
 
+## 55. Review round 3 (Nov 18: one still per set after the upgrade batches)
+
+- **The volumetric key beam is indoor-only.** On Street it laid grey haze over half the frame. `Lights` now picks the beam
+  per preset (hallway/bedroom/kitchen/classroom/casino/gym/dawn/bathroomWarm, 0.08–0.14) and 0 elsewhere. Override with `beam`.
+- **Bangs only on `bob` hair.** On bun/ponytail characters the fringe sat on the brows and read as caterpillars.
+- **Phone screens:** `toneMapped={false}` emissive at 0.7 rendered pure white; 0.45 keeps text readable. Prop text must fit the
+  screen (fontSize 0.017 for "5 MORE MIN?").
+- **Close-up framing changed** (cu 3.4 m, mcu 3.6 m, aim +0.08 m above head centre) and an eye light was added, so
+  **`src/lie/exposure_cal.json` is stale**: re-run `scripts/exposure_cal.py` on the next full render before the final.
+- **Check every set, not the same 4 frames.** The bugs above were invisible in the usual 4-frame grid. Use one mid-shot still per
+  distinct set (script in the session notes: pick the first shot of each set from `timeline.json`).
+
+---
+
 ## 51. What's left is iteration
 
 Past this point, the remaining quality comes from **rendering and tuning**, not from more rules.

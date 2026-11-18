@@ -50,10 +50,13 @@ const Beam = ({from, to, color, opacity}: {from: [number, number, number]; to: [
 };
 
 /** preset → LIGHTS (style/presets.ts). keyColor/keyI override the preset. `env` dims reflections for dark scenes. */
-export const Lights = ({preset = 'hallway', keyColor, keyI, keyPos = [-3.5, 5.5, 4], extra, beam = 0.16}: {
+export const Lights = ({preset = 'hallway', keyColor, keyI, keyPos = [-3.5, 5.5, 4], extra, beam}: {
   preset?: string; keyColor?: string; keyI?: number; keyPos?: [number, number, number]; extra?: React.ReactNode; beam?: number;
 }) => {
   const L = LIGHTS[preset] ?? LIGHTS.hallway;
+  // the beam needs a motivated indoor source; on exteriors/void/bathroom it read as grey haze over half the frame (check, Nov 18)
+  const BEAM: Record<string, number> = {hallway: 0.12, bedroom: 0.14, kitchen: 0.1, classroom: 0.12, casino: 0.14, gym: 0.14, dawn: 0.12, bathroomWarm: 0.08};
+  beam = beam ?? Number((getInputProps() as {beam?: number}).beam ?? BEAM[preset] ?? 0);
   const kc = keyColor ?? L.key, ki = keyI ?? L.keyI;
   return (
   <>
