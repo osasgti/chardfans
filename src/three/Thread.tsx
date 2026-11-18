@@ -44,12 +44,12 @@ void main(){
 
 const Tube = ({curve, r, color, i, t, seed, pulse, halo = true}: {curve: CatmullRomCurve3; r: number; color: string; i: number; t: number; seed: string; pulse: number; halo?: boolean}) => {
   const geo = useMemo(() => new TubeGeometry(curve, 64, r, 8, false), [curve, r]);
-  const halog = useMemo(() => (halo ? new TubeGeometry(curve, 48, r * 3, 8, false) : null), [curve, r, halo]);
+  const halog = useMemo(() => (halo ? new TubeGeometry(curve, 48, r * 3.6, 8, false) : null), [curve, r, halo]);
   const u = {uColor: {value: new Color(color)}, uI: {value: i}, uT: {value: t}, uSeed: {value: random(seed)}, uPulse: {value: pulse}};
   return (
     <group>
       <mesh geometry={geo}><shaderMaterial vertexShader={vert} fragmentShader={frag} uniforms={u} toneMapped={false} /></mesh>
-      {halog && <mesh geometry={halog}><meshBasicMaterial color={color} transparent opacity={0.16 * Math.min(1, i)} blending={AdditiveBlending} depthWrite={false} toneMapped={false} /></mesh>}
+      {halog && <mesh geometry={halog}><meshBasicMaterial color={color} transparent opacity={0.22 * Math.min(1, i)} blending={AdditiveBlending} depthWrite={false} toneMapped={false} /></mesh>}
     </group>
   );
 };
@@ -60,10 +60,20 @@ const Points = ({pos, color, size, opacity}: {pos: number[]; color: string; size
   return <points geometry={g}><pointsMaterial color={color} size={size} sizeAttenuation transparent opacity={opacity} blending={AdditiveBlending} depthWrite={false} toneMapped={false} /></points>;
 };
 
-export const Thread = ({from, to, state, t, thickness = 0.01, seed, light = true}: {
-  from: V3; to: V3; state: ThreadState; t: number; thickness?: number; seed: string; light?: boolean;
+/** Glowing bead where a thread is tied on (wrist / chest): makes it read as "tied", not floating. */
+const Knot = ({p, r, color}: {p: Vector3 | V3; r: number; color: string}) => (
+  <group position={p as any}>
+    <mesh><sphereGeometry args={[r * 2.2, 14, 14]} /><meshBasicMaterial color="#fff6dc" toneMapped={false} /></mesh>
+    <mesh><sphereGeometry args={[r * 5, 14, 14]} /><meshBasicMaterial color={color} transparent opacity={0.25} blending={AdditiveBlending} depthWrite={false} toneMapped={false} /></mesh>
+  </group>
+);
+
+/** camPos: threads keep a minimum on-screen width (≈1.5 px at 1080p) so they still read in wides. */
+export const Thread = ({from, to, state, t, thickness = 0.01, seed, light = true, camPos}: {
+  from: V3; to: V3; state: ThreadState; t: number; thickness?: number; seed: string; light?: boolean; camPos?: V3;
 }) => {
-  const r = thickness;
+  const mid0 = new Vector3(...from).lerp(new Vector3(...to), 0.5);
+  const r = camPos ? Math.max(thickness, mid0.distanceTo(new Vector3(...camPos)) * 0.0016) : thickness;
   if (state === 'fresh' || state === 'held' || state === 'slack') {
     const sag = state === 'slack' ? 0.55 : 0.04;
     const c = makeCurve(from, to, sag, t, seed);
@@ -74,6 +84,8 @@ export const Thread = ({from, to, state, t, thickness = 0.01, seed, light = true
     return (
       <group>
         <Tube curve={curve} r={r} color={col} i={I} t={t} seed={seed} pulse={state === 'slack' ? 0.3 : 1} />
+        <Knot p={from} r={r} color={col} />
+        {p >= 1 && <Knot p={to} r={r} color={col} />}
         {state === 'fresh' && p < 1 && <mesh position={tip}><sphereGeometry args={[r * 2.6, 12, 12]} /><meshBasicMaterial color="#fff6dc" toneMapped={false} /></mesh>}
         {light && <pointLight position={mid} color={col} intensity={state === 'slack' ? 0.15 : 0.4} distance={2.5} decay={2} />}
       </group>
@@ -91,15 +103,19 @@ export const Thread = ({from, to, state, t, thickness = 0.01, seed, light = true
       return new CatmullRomCurve3([base, m, e]);
     });
     const dust: number[] = [];
-    for (let k = 0; k < 20; k++) {
-      const u = 0.75 + random(seed + 'du' + k) * 0.25, p = c.getPoint(u), life = (t * 0.4 + random(seed + 'dl' + k)) % 1;
-      dust.push(p.x + (random(seed + 'dx' + k) - 0.5) * 0.12, p.y + 0.02 + life * 0.25, p.z + (random(seed + 'dz' + k) - 0.5) * 0.12);
+    for (let k = 0; k < 44; k++) {
+      // grey ash drifting up off the dead thread (slow, with a little sideways sway)
+      const u = 0.45 + random(seed + 'du' + k) * 0.55, p = c.getPoint(u), life = (t * 0.3 + random(seed + 'dl' + k)) % 1;
+      dust.push(p.x + (random(seed + 'dx' + k) - 0.5) * 0.16 + Math.sin(life * 6 + k) * 0.03, p.y + 0.02 + life * 0.45, p.z + (random(seed + 'dz' + k) - 0.5) * 0.16);
     }
+    const endP = c.getPoint(0.95);
     return (
       <group>
         <Tube curve={main} r={r * 0.9} color={GREY} i={0.7} t={t} seed={seed} pulse={0} halo={false} />
         {fr.map((f, k) => <Tube key={k} curve={f} r={r * 0.4} color={GREY} i={0.6} t={t} seed={seed + k} pulse={0} halo={false} />)}
-        <Points pos={dust} color="#b8b2c2" size={0.018} opacity={0.5} />
+        <Points pos={dust} color="#b8b2c2" size={0.02} opacity={0.45} />
+        {/* scuff where the dead thread drags on the floor */}
+        <mesh position={[endP.x, 0.004, endP.z]} rotation={[-Math.PI / 2, 0, random(seed + 'sc') * 3]}><circleGeometry args={[0.22, 24]} /><meshBasicMaterial color="#3a3444" transparent opacity={0.35} depthWrite={false} /></mesh>
       </group>
     );
   }
@@ -110,27 +126,30 @@ export const Thread = ({from, to, state, t, thickness = 0.01, seed, light = true
     return <group><Tube curve={c} r={r * (1 + t * 2)} color={flash ? '#fff6dc' : GOLD} i={2.2 + t * 4} t={t} seed={seed} pulse={1} />
       {light && <pointLight position={c.getPoint(0.5)} color={GOLD} intensity={0.6 + t * 10} distance={3} decay={2} />}</group>;
   }
-  const s = t - 0.27, sparks: number[] = [], n = 120;
+  const s = t - 0.27, sparks: number[] = [], n = 240;
   for (let k = 0; k < n; k++) {
     const u = random(seed + 'su' + k), p = c.getPoint(u);
     const vx = (random(seed + 'vx' + k) - 0.5) * 1.6, vy = 0.4 + random(seed + 'vy' + k) * 1.2, vz = (random(seed + 'vz' + k) - 0.5) * 1.6;
     const drag = (1 - Math.exp(-2.2 * s)) / 2.2;       // velocity decays; then slow upward drift
-    sparks.push(p.x + vx * drag, p.y + vy * drag + 0.25 * s, p.z + vz * drag);
+    const fall = Math.max(0, s - 0.9); // after the pop, sparks drift down like embers for ~3 s
+    sparks.push(p.x + vx * drag + Math.sin(s * 2 + k) * 0.02 * fall, p.y + vy * drag + 0.25 * Math.min(s, 0.9) - 0.18 * fall * fall, p.z + vz * drag);
   }
-  const fade = clamp01(1 - s / 2);
+  const fade = clamp01(1 - s / 3.2);
   const ring = c.getPoint(0.5), rs = 0.1 + s * 1.4;
   return (
     <group>
-      <Points pos={sparks} color={GOLD} size={0.035} opacity={fade} />
+      <Points pos={sparks} color={GOLD} size={0.04} opacity={fade} />
       <Points pos={sparks.map((v, i) => v + (i % 3 === 1 ? -0.01 : 0))} color="#fff6dc" size={0.015} opacity={fade} />
       {s < 0.6 && <mesh position={ring} rotation={[Math.PI / 2, 0, 0]}><ringGeometry args={[rs, rs + 0.02, 48]} /><meshBasicMaterial color={GOLD} transparent opacity={(1 - s / 0.6) * 0.6} blending={AdditiveBlending} depthWrite={false} toneMapped={false} side={2} /></mesh>}
-      {light && <pointLight position={ring} color={GOLD} intensity={3 * fade} distance={3} decay={2} />}
+      {/* warm flare across every nearby face as it fires */}
+      {light && <pointLight position={ring} color={GOLD} intensity={3 * fade + 9 * Math.exp(-4 * s)} distance={5} decay={2} />}
     </group>
   );
 };
 
 /** "Hundreds" of thin threads radiating from one wrist (one draw call). Directions and lengths are seeded. */
-export const ThreadSwarm = ({from, n = 120, t, seed, grey = 0.85}: {from: V3; n?: number; t: number; seed: string; grey?: number}) => {
+/** xray: draw through walls (P033: "out through walls in every direction"). */
+export const ThreadSwarm = ({from, n = 120, t, seed, grey = 0.85, xray = false}: {from: V3; n?: number; t: number; seed: string; grey?: number; xray?: boolean}) => {
   const {pos, col} = useMemo(() => {
     const pos: number[] = [], col: number[] = [], g = new Color(GREY), go = new Color(GOLD);
     for (let k = 0; k < n; k++) {
@@ -141,11 +160,22 @@ export const ThreadSwarm = ({from, n = 120, t, seed, grey = 0.85}: {from: V3; n?
       for (let i = 0; i < seg; i++) {
         const u0 = i / seg, u1 = (i + 1) / seg;
         const p = (u0r: number) => { const u = 0.04 + u0r * 0.96; return [from[0] + dir.x * L * u, from[1] + dir.y * L * u - sagK * Math.sin(u * Math.PI) * L * 0.1, from[2] + dir.z * L * u]; };
-        pos.push(...p(u0), ...p(u1)); col.push(c.r, c.g, c.b, c.r, c.g, c.b);
+        const f0 = 1 - 0.8 * u0, f1 = 1 - 0.8 * u1;   // far end fades into the fog (additive: darker = dimmer)
+        pos.push(...p(u0), ...p(u1)); col.push(c.r * f0, c.g * f0, c.b * f0, c.r * f1, c.g * f1, c.b * f1);
       }
     }
     return {pos, col};
   }, [from[0], from[1], from[2], n, seed, grey]);
   const geo = useMemo(() => { const b = new BufferGeometry(); b.setAttribute('position', new Float32BufferAttribute(pos, 3)); b.setAttribute('color', new Float32BufferAttribute(col, 3)); return b; }, [pos, col]);
-  return <lineSegments geometry={geo}><lineBasicMaterial vertexColors transparent opacity={0.32 + 0.06 * Math.sin(t * 1.3)} blending={AdditiveBlending} depthWrite={false} toneMapped={false} /></lineSegments>;
+  // a few thick near threads in front of the hair-thin mass give the swarm depth layers (near / mid / far)
+  const near = Array.from({length: Math.min(9, Math.round(n / 20))}, (_, k) => {
+    const az = Math.PI * 0.5 + (random(seed + 'na' + k) - 0.5) * 2.2, el = (random(seed + 'ne' + k) - 0.4) * 0.9, L = 2.2 + random(seed + 'nl' + k) * 2;
+    const to: V3 = [from[0] + Math.cos(az) * L, from[1] + Math.sin(el) * L * 0.6, from[2] + Math.abs(Math.sin(az)) * L * 0.8];
+    return <Tube key={k} curve={makeCurve(from, to, 0.25, t, seed + 'n' + k)} r={0.007} color={random(seed + 'nc' + k) < grey ? GREY : GOLD} i={0.9} t={t} seed={seed + 'n' + k} pulse={0.3} />;
+  });
+  return <group>
+    <lineSegments geometry={geo}><lineBasicMaterial depthTest={!xray} vertexColors transparent opacity={(xray ? 0.5 : 0.36) + 0.06 * Math.sin(t * 1.3)} blending={AdditiveBlending} depthWrite={false} toneMapped={false} /></lineSegments>
+    {!xray && near}
+    <Knot p={from} r={0.012} color={GREY} />
+  </group>;
 };

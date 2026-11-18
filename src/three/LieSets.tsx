@@ -323,7 +323,57 @@ export const Rooftop = () => (
 
 export const HallwayNight = () => null; // the Hallway set + `hallway` preset with dim key (see LieShot light overrides)
 
-export const SETS: Record<string, React.FC<any>> = {Bedroom, Kitchen, Classroom, Gym, Bathroom, Void, Street, Rooftop};
+
+/** Cafeteria (Promise Threads): long lunch tables, benches, trays, a serving counter, a LUNCH sign and fluorescent panels.
+ *  Hero table top at y 0.78 spanning z −0.1…0.8; seated cast sit at z ≈ 0.95 facing −z. `saved` puts Maya's backpack on the seat at x −0.5. */
+const Tray = ({pos, c = '#c8323a'}: {pos: [number, number, number]; c?: string}) => (
+  <group position={pos}>
+    <RoundedBox args={[0.42, 0.025, 0.3]} radius={0.01} castShadow>{std('#6a8fa8', 0.5)}</RoundedBox>
+    <mesh position={[-0.08, 0.035, 0]}><cylinderGeometry args={[0.08, 0.07, 0.04, 20]} />{std('#efe8f5', 0.4)}</mesh>
+    <mesh position={[0.12, 0.05, 0.05]}><cylinderGeometry args={[0.035, 0.03, 0.09, 12]} />{std(c, 0.5)}</mesh>
+    <mesh position={[0.11, 0.025, -0.08]}><boxGeometry args={[0.12, 0.02, 0.07]} />{std('#e0a24a', 0.7)}</mesh>
+  </group>
+);
+const LunchTable = ({z, x = 0, len = 5}: {z: number; x?: number; len?: number}) => (
+  <group position={[x, 0, z]}>
+    <RoundedBox args={[len, 0.07, 0.9]} radius={0.03} position={[0, 0.78, 0]} castShadow receiveShadow>{std('#d9cfe4', 0.45)}</RoundedBox>
+    {[-len / 2 + 0.3, len / 2 - 0.3].map((lx) => <mesh key={lx} position={[lx, 0.39, 0]} castShadow><boxGeometry args={[0.06, 0.78, 0.7]} />{std('#3a3444', 0.5, 0.4)}</mesh>)}
+    {[0.6, -0.6].map((bz) => <RoundedBox key={bz} args={[len, 0.06, 0.3]} radius={0.02} position={[0, 0.45, bz]} castShadow receiveShadow>{std('#2f8f8a', 0.6)}</RoundedBox>)}
+  </group>
+);
+export const Cafeteria = ({saved = true}: {saved?: boolean}) => (
+  <group>
+    <Floor color="#c9c2d4" planks={false} />
+    <Wall color="#3b2d5c" z={-5} />
+    <LunchTable z={0.35} />
+    <LunchTable z={-2.2} x={0.6} />
+    <LunchTable z={2.9} x={-0.4} />
+    <Tray pos={[0.9, 0.83, 0.55]} c="#2f8f8a" /><Tray pos={[2.0, 0.83, 0.1]} /><Tray pos={[-1.6, 0.83, 0.2]} c="#d29a2d" />
+    <Tray pos={[0.2, 0.83, -2.3]} /><Tray pos={[1.6, 0.83, -2.0]} c="#3d6fd6" />
+    {saved && <group position={[-0.5, 0.62, 0.98]} rotation={[0, 0.25, 0]}>
+      <RoundedBox args={[0.36, 0.34, 0.2]} radius={0.06} castShadow>{std('#c84a8a', 0.8)}</RoundedBox>
+      <RoundedBox args={[0.26, 0.14, 0.05]} radius={0.03} position={[0, -0.06, 0.11]}>{std('#a83a72', 0.8)}</RoundedBox>
+    </group>}
+    {/* serving counter + sign */}
+    <group position={[-1.5, 0, -4.4]}>
+      <RoundedBox args={[4, 1.0, 0.8]} radius={0.04} position={[0, 0.5, 0]} castShadow receiveShadow>{std('#9aa0aa', 0.35, 0.5)}</RoundedBox>
+      <mesh position={[0, 1.02, 0]}><boxGeometry args={[3.8, 0.04, 0.7]} />{std('#cfd6de', 0.25, 0.6)}</mesh>
+      {[-1.2, -0.4, 0.4, 1.2].map((x) => <mesh key={x} position={[x, 1.08, 0]}><boxGeometry args={[0.6, 0.06, 0.45]} />{std('#e0a24a', 0.6)}</mesh>)}
+      <group position={[0, 2.5, -0.35]}>
+        <mesh><planeGeometry args={[1.8, 0.55]} />{std('#1b1622', 0.8)}</mesh>
+        <mesh position={[0, 0, -0.01]}><planeGeometry args={[1.88, 0.63]} />{std(C.gold, 0.3, 0.6)}</mesh>
+        <Text position={[0, 0, 0.01]} fontSize={0.3} color={C.cream}>LUNCH</Text>
+      </group>
+    </group>
+    <Poster pos={[2.6, 2.0, -4.95]} title="BE KIND" sub="IT'S FREE" color="#2f8f8a" />
+    {/* fluorescent panels */}
+    {[[-1.5, -1], [1.5, -1], [-1.5, 2], [1.5, 2]].map(([x, z]) => (
+      <mesh key={`${x}${z}`} position={[x, 3.6, z]} rotation={[Math.PI / 2, 0, 0]}><planeGeometry args={[1.2, 0.3]} />{glow('#f4f0ff', 1.6)}</mesh>
+    ))}
+  </group>
+);
+
+export const SETS: Record<string, React.FC<any>> = {Bedroom, Kitchen, Classroom, Gym, Bathroom, Void, Street, Rooftop, Cafeteria};
 
 /** Wall poster (backlog #51): coloured card, white border, short readable headline. */
 export const Poster = ({pos, w = 0.6, h = 0.85, color = '#c8323a', title, sub, rot = 0}: {pos: [number, number, number]; w?: number; h?: number; color?: string; title: string; sub?: string; rot?: number}) => (

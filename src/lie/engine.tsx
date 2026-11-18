@@ -77,12 +77,12 @@ export type MeterSpec = {on: number | [number, number, number]; value: number; l
 /** Promise thread (WHAT_IF_PROMISE_THREADS §6). from/to: cast index (wrist → chest) or a world point. `at` = beat the state starts;
  *  `then` switches state later in the shot (e.g. held → burst). `swarm` draws n hair-thin threads from `from` instead. */
 export type ThreadSpec = {from: number | [number, number, number]; to?: number | [number, number, number]; state: ThreadState; at?: number; thick?: number;
-  then?: {state: ThreadState; at: number}; swarm?: number; grey?: number};
+  then?: {state: ThreadState; at: number}; swarm?: number; grey?: number; xray?: boolean};
 export type ShotSpec = {
   line: string; w?: number; set: string; setProps?: Record<string, unknown>; light: string; grade: string; keyPos?: [number, number, number]; keyI?: number;
   cam: {on: number | [number, number, number]; size: Size; yaw?: number; pitch?: number; move?: Move; amount?: number};
   cast: CastSpec[]; meters?: MeterSpec[]; tag?: string; title?: {words: string[]; emph?: number[]; y?: number; size?: number};
-  dust?: boolean; extra?: string; threads?: ThreadSpec[]; flash?: number; exposure?: number; mirror?: boolean; flicker?: boolean;
+  dust?: boolean; extra?: string; threads?: ThreadSpec[]; shake?: number; flash?: number; exposure?: number; mirror?: boolean; flicker?: boolean;
 };
 
 const SIZE: Record<Size, [number, number]> = {ecu: [1.5, 20], cu: [3.4, 24], mcu: [3.6, 28], med: [4.4, 32], wide: [7.2, 38], ews: [11, 42]};
@@ -254,7 +254,10 @@ const Shards = ({k}: {k: number}) => (
 /* ───────────── the shot ───────────── */
 export const LieShot = ({spec, beat, dur, sec, seed, fpsRatio = 1, calStops = 0, lines = LINES}: {spec: ShotSpec; beat: number; dur: number; sec: number; seed: string; fpsRatio?: number; calStops?: number; lines?: Line[]}) => {
   const k = interpolate(beat, [0, dur], [0, 1], {easing: E, extrapolateLeft: 'clamp', extrapolateRight: 'clamp'});
-  const cam = camFor(spec, k, beat, seed);
+  const cam0 = camFor(spec, k, beat, seed);
+  // impact shake (§35.2): 0.03 m, decays e^(−8t) over ~15 beats, two sines at different frequencies
+  const sh = spec.shake !== undefined && beat >= spec.shake ? Math.exp(-8 * (beat - spec.shake) / 30) * 0.03 : 0;
+  const cam = sh ? {...cam0, pos: [cam0.pos[0] + Math.sin(beat * 2.1) * sh, cam0.pos[1] + Math.sin(beat * 2.9 + 1) * sh * 0.7, cam0.pos[2]] as [number, number, number]} : cam0;
   const S = typeof spec.cam.on === 'number' ? headOf(spec.cast[spec.cam.on]) : spec.cam.on;
   const focus = focusFor(Math.hypot(cam.pos[0] - S[0], cam.pos[1] - S[1], cam.pos[2] - S[2]));
   const line = lines.find((l) => l.id === spec.line);
@@ -282,11 +285,11 @@ export const LieShot = ({spec, beat, dur, sec, seed, fpsRatio = 1, calStops = 0,
           const end = (v: number | [number, number, number] | undefined, f: 'w' | 'c'): [number, number, number] =>
             typeof v === 'number' ? (f === 'w' ? wristR(spec.cast[v]) : chestOf(spec.cast[v])) : (v ?? [0, 1, 0]);
           const a = end(th.from, 'w');
-          if (th.swarm) return beat >= (th.at ?? 0) ? <ThreadSwarm key={'t' + i} from={a} n={th.swarm} t={sec} seed={seed + 'sw' + i} grey={th.grey ?? 0.85} /> : null;
+          if (th.swarm) return beat >= (th.at ?? 0) ? <ThreadSwarm key={'t' + i} from={a} n={th.swarm} t={sec} seed={seed + 'sw' + i} grey={th.grey ?? 0.85} xray={th.xray} /> : null;
           const late = th.then && beat >= th.then.at;
           const st = late ? th.then!.state : th.state, t0 = late ? th.then!.at : th.at ?? 0;
           if (beat < t0 && st === 'fresh') return null;
-          return <Thread key={'t' + i} from={a} to={end(th.to, 'c')} state={st} t={Math.max(0, beat - t0) / 30} thickness={th.thick ?? 0.01} seed={seed + 'th' + i} light={i < 3} />;
+          return <Thread key={'t' + i} from={a} to={end(th.to, 'c')} state={st} t={Math.max(0, beat - t0) / 30} thickness={th.thick ?? 0.01} seed={seed + 'th' + i} light={i < 3} camPos={cam.pos as [number, number, number]} />;
         })}
         {spec.extra === 'bus' && <Bus k={k} />}
         {spec.extra === 'door' && <Door k={k} />}
