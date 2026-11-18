@@ -1341,14 +1341,14 @@ Set the browser path once per session: `export REMOTION_BROWSER=/opt/pw-browsers
 | Engine: Stage, PostFX, beats/60fps, local fonts | ✅ |
 | Lighting: 3-point + bounce + kicker + PCSS + N8AO + contact shadows + env reflections | ✅ |
 | Lighting/grade presets as data | ✅ wired: `<Lights preset>`, `<Stage grade>` (16 light presets) |
-| Character: Pill, faces, blink, squash, tilt, hats | ✅ + hair (beanie/cap/capBack/bun/ponytail/bob/visor), glasses, scale, talk mouth, sad/worried, hand prop slot, sit/sleep/run/phone poses · 🔲 IK, real walk cycle |
+| Character: Pill, faces, blink, squash, tilt, hats | ✅ + hair (beanie/cap/capBack/bun/ponytail/bob/visor), glasses, scale, talk mouth + **visemes from word letters** (MBP/OO/EE/FV/open, opens 0.05s early), hair follow-through, weight shift, head drift, double blinks, sweat drop, sad/worried, hand prop slot, sit/sleep/run/phone poses · 🔲 IK, real walk cycle |
 | Sets | ✅ Hallway, Bedroom, Kitchen, Classroom, Gym, Bathroom+mirror, Void, Street, Rooftop · 🔲 Stadium |
 | Props | ✅ Phone, CerealBox, CookieJar, Card, ChipStack, Bus, Door, Shards · 🔲 Dice, Roulette, Vending |
 | Overlays | ✅ Title, Tag, OddsBadge, Letterbox, Captions, Transitions · 🔲 Callout, BarRace, Counter |
 | Sound | ✅ 80 SFX + music stems + cue list + mastering + **VO ducking (duckAt)** · 🔲 panning |
 | Voice | ✅ ElevenLabs connector pipeline, **48/48 lines voiced** (v02 render), mouth flaps from word timings |
-| Ops | ✅ chunked render, QA, determinism, typecheck · 🔲 CI, vertical, thumbnail comp, SRT export |
-| Film layer (§23): halation, light leaks, gate weave, motion blur | ✅ light leaks, gate weave · 🔲 halation, motion blur |
+| Ops | ✅ chunked render, QA, determinism, typecheck, validator (lens package + jump-cut warning), GPU-ready (REMOTION_GL, fps prop) · 🔲 CI, vertical, thumbnail comp, SRT export |
+| Film layer (§23): halation, light leaks, gate weave, motion blur | ✅ light leaks, gate weave, per-act split-tone (`GradeTone`) · 🔲 halation, motion blur, real LUT |
 | GodRays / volumetric spot | ✅ fake volumetric key beam (`Beam` in Stage.tsx) · 🔲 GodRays |
 
 When you finish a 🔲 item, flip it to ✅ here **and** in §1 in the same commit.

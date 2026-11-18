@@ -9,14 +9,14 @@ import {FAST} from './Stage';
 export type Hair = 'none' | 'beanie' | 'cap' | 'capBack' | 'bun' | 'ponytail' | 'bob' | 'visor';
 export type PillProps = {
   id: string; frame: number; position?: [number, number, number]; rotY?: number;
-  hoodie?: string; expr?: Expr; hat?: Hair; hatColor?: string; glasses?: boolean; scale?: number; mouth?: number; rightHand?: React.ReactNode;
+  hoodie?: string; expr?: Expr; hat?: Hair; hatColor?: string; glasses?: boolean; scale?: number; mouth?: number; turnLag?: number; rightHand?: React.ReactNode;
   armL?: number; armR?: number; headTilt?: number; headTurn?: number; squash?: number; look?: number; seg?: number;
 };
 
 const skinMat = <meshPhysicalMaterial color={C.skin} roughness={0.42} clearcoat={0.35} clearcoatRoughness={0.4} sheen={0.4} sheenColor="#ffffff" />;
 
 export const Pill = ({id, frame, position = [0, 0, 0], rotY = 0, hoodie = C.red, expr = 'neutral', hat = 'none', hatColor = '#1b1622',
-  armL = 0.15, armR = 0.15, headTilt = 0, headTurn = 0, squash = 0, look = 0, seg = 48, glasses = false, scale = 1, mouth = 0, rightHand}: PillProps) => {
+  armL = 0.15, armR = 0.15, headTilt = 0, headTurn = 0, squash = 0, look = 0, seg = 48, glasses = false, scale = 1, mouth = 0, turnLag = 0, rightHand}: PillProps) => {
   if (FAST) seg = Math.min(seg, 28);
   const t = frame / 30, ph = random(id) * 6.28;
   // breathing rate follows emotion (backlog #41): calm ≈ 0.33 Hz, anxious ≈ 0.6 Hz
@@ -65,8 +65,11 @@ export const Pill = ({id, frame, position = [0, 0, 0], rotY = 0, hoodie = C.red,
               <mesh scale={1.006}><sphereGeometry args={[0.42, seg, seg]} /><SkinGlow /></mesh>
               <Face r={0.42} expr={expr} blink={blink} look={look + sacc} mouth={mouth} seg={Math.max(seg, 32)} />
             </group>
-            <HairMesh hair={hat} color={hatColor} seg={seg} />
-            {(hat === 'bun' || hat === 'ponytail' || hat === 'bob') && <Fringe color={hatColor} />}
+            {/* follow-through (backlog #17): hair trails the head by ~4 beats and overshoots a little */}
+            <group rotation={[0, (turnLag + (Math.sin((t - 0.13) * 0.4 + ph) * 0.02 - drift)) * 1.6, (Math.sin((t - 0.13) * 0.33 + ph * 2.3) * 0.018 - driftTilt) * 1.6]}>
+              <HairMesh hair={hat} color={hatColor} seg={seg} />
+              {(hat === 'bun' || hat === 'ponytail' || hat === 'bob') && <Fringe color={hatColor} />}
+            </group>
             {glasses && <Glasses />}
           </group>
         </group>

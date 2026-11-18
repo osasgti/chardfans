@@ -56,7 +56,16 @@ function draw(ctx: CanvasRenderingContext2D, expr: Expr, blink: number, look: nu
     ctx.fillStyle = 'rgba(255,255,255,.9)'; ctx.beginPath(); ctx.arc(sx - 3, sy + 2, 2.5, 0, Math.PI * 2); ctx.fill(); ctx.fillStyle = INK;
   }
   ctx.lineWidth = 6; ctx.beginPath();
-  if (mouth > 0.05) { ctx.ellipse(512, 290, 10 + mouth * 6, 3 + mouth * 13, 0, 0, Math.PI * 2); ctx.fill(); return; }
+  if (mouth > 0.05) {
+    const shape = Math.floor(mouth / 10), m = mouth - shape * 10;
+    if (shape === 1) { ctx.lineWidth = 6; ctx.moveTo(498, 292); ctx.lineTo(526, 292); ctx.stroke(); return; }            // M B P: lips pressed
+    if (shape === 4) { ctx.ellipse(512, 291, 13, 3 + m * 4, 0, 0, Math.PI * 2); ctx.fill();                             // F V: teeth on lip
+      ctx.fillStyle = '#f4efe8'; ctx.fillRect(503, 286, 18, 4); return; }
+    const rx = shape === 2 ? 7 + m * 3 : shape === 3 ? 14 + m * 7 : 10 + m * 6, ry = shape === 2 ? 5 + m * 9 : shape === 3 ? 3 + m * 7 : 3 + m * 13;
+    ctx.ellipse(512, 290, rx, ry, 0, 0, Math.PI * 2); ctx.fill();
+    if (ry > 9) { ctx.fillStyle = '#c4505c'; ctx.beginPath(); ctx.ellipse(512, 290 + ry * 0.45, rx * 0.55, ry * 0.35, 0, 0, Math.PI * 2); ctx.fill(); } // tongue hint (#8)
+    return;
+  }
   if (expr === 'sad') { ctx.arc(512, 306, 15, 1.15 * Math.PI, 1.85 * Math.PI); ctx.stroke(); return; }
   if (expr === 'worried') { ctx.moveTo(498, 296); ctx.quadraticCurveTo(505, 290, 512, 296); ctx.quadraticCurveTo(519, 302, 526, 296); ctx.stroke(); return; }
   if (expr === 'shock') ctx.ellipse(512, 300, 9, 13, 0, 0, Math.PI * 2);

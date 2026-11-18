@@ -4,15 +4,26 @@ import {AbsoluteFill} from 'remotion';
 const LEAK: Record<string, [string, number]> = {
   wonder: ['255,170,90', 0.1], fun: ['255,150,80', 0.13], triumph: ['255,180,100', 0.14], tension: ['120,140,255', 0.05], consequence: ['0,0,0', 0],
 };
+/** Per-act split-tone (backlog #89, LUT-lite): shadows tinted one way, highlights another, via soft-light. */
+const TONE: Record<string, [string, string, number]> = {
+  wonder: ['70,40,140', '255,200,140', 0.22], fun: ['20,90,110', '255,190,120', 0.18], triumph: ['90,50,30', '255,210,150', 0.2],
+  tension: ['20,50,110', '150,190,255', 0.24], consequence: ['40,50,70', '190,200,215', 0.26],
+};
+export const GradeTone = ({grade}: {grade: string}) => {
+  const [sh, hi, a] = TONE[grade] ?? TONE.wonder;
+  return <AbsoluteFill style={{pointerEvents: 'none', mixBlendMode: 'soft-light', opacity: a,
+    background: `linear-gradient(180deg, rgb(${hi}) 0%, rgb(${sh}) 100%)`}} />;
+};
 export const FilmLook = ({sec, grade}: {sec: number; grade: string}) => {
   const [rgb, a] = LEAK[grade] ?? LEAK.wonder;
-  if (!a) return null;
+  if (!a) return <GradeTone grade={grade} />;
   const x = 8 + 10 * Math.sin(sec * 0.21), y = 12 + 8 * Math.sin(sec * 0.17 + 1.3), b = a * (0.75 + 0.25 * Math.sin(sec * 0.6));
-  return (
+  return (<>
+    <GradeTone grade={grade} />
     <AbsoluteFill style={{pointerEvents: 'none', mixBlendMode: 'screen',
       background: `radial-gradient(ellipse 55% 45% at ${x}% ${y}%, rgba(${rgb},${b}) 0%, rgba(${rgb},0) 70%),
                    radial-gradient(ellipse 30% 40% at ${100 - x}% ${95 - y}%, rgba(255,90,140,${b * 0.45}) 0%, rgba(255,90,140,0) 70%)`}} />
-  );
+  </>);
 };
 /** Sub-pixel gate weave for the 3D layer only (UI stays still). */
 export const weave = (sec: number) => `translate(${(Math.sin(sec * 2.3) * 0.35 + Math.sin(sec * 5.1) * 0.2).toFixed(3)}px, ${(Math.sin(sec * 1.7 + 2) * 0.3).toFixed(3)}px)`;

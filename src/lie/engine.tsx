@@ -104,12 +104,19 @@ export const projectCam = (cam: Cam, p: [number, number, number]) => {
 };
 
 /* ───────────── speaking / poses ───────────── */
+/** Lip sync (backlog #6, #7): openness from the word envelope + a viseme from the letter being spoken.
+ *  Looks 0.05s ahead so the mouth opens just BEFORE the sound. Encoded as shape*10 + openness for Face. */
+const VIS = (ch: string) => /[mbp]/.test(ch) ? 1 : /[ouwq]/.test(ch) ? 2 : /[eiy]/.test(ch) ? 3 : /[fv]/.test(ch) ? 4 : 0;
 const mouthAt = (line: Line | undefined, sec: number) => {
   if (!line) return 0;
-  const w = line.words.find((x) => sec >= x.start && sec < x.end);
+  const t = sec + 0.05;
+  const w = line.words.find((x) => t >= x.start && t < x.end);
   if (!w) return 0;
-  const p = (sec - w.start) / Math.max(0.05, w.end - w.start);
-  return Math.sin(p * Math.PI) * (0.55 + 0.45 * random(w.text + w.start));
+  const p = (t - w.start) / Math.max(0.05, w.end - w.start);
+  const letters = w.text.toLowerCase().replace(/[^a-z]/g, '') || 'a';
+  const shape = VIS(letters[Math.min(letters.length - 1, Math.floor(p * letters.length))]);
+  const open = Math.sin(p * Math.PI) * (0.55 + 0.45 * random(w.text + w.start));
+  return shape * 10 + Math.max(0.06, open);
 };
 const poseArgs = (pose: Pose | undefined, beat: number, id: string) => {
   const t = beat / 30, ph = random(id + 'p') * 6;
@@ -142,7 +149,7 @@ export const Actor = ({c, beat, sec, line, mirrored = false}: {c: CastSpec; beat
   const body = (
     <Pill id={id} frame={beat} position={sleep ? [0, 0, 0] : [c.pos[0], (c.y ?? 0) + sit + run, z]} rotY={sleep ? 0 : rotY}
       hoodie={L.hoodie} hat={L.hair} hatColor={L.hairColor} glasses={L.glasses} expr={c.expr ?? L.expr} scale={s}
-      headTurn={(c.turn ?? 0) * deg + (c.talk ? Math.sin(beat / 30 * 2.3) * 0.04 : 0)} headTilt={(c.tilt ?? 0) * deg}
+      headTurn={(c.turn ?? 0) * deg + (c.talk ? Math.sin(beat / 30 * 2.3) * 0.04 : 0)} turnLag={c.talk ? (Math.sin((beat - 4) / 30 * 2.3) - Math.sin(beat / 30 * 2.3)) * 0.04 : 0} headTilt={(c.tilt ?? 0) * deg}
       mouth={mouth} {...poseArgs(c.pose, beat, id)} rightHand={<PropMesh p={c.hold} text={c.hold === 'phoneText' ? 'we\'re good, right?' : undefined} />}
       look={c.talk ? 0 : Math.round(Math.sin(beat / 30 * 0.7 + random(id) * 9)) * 5} />
   );
