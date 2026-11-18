@@ -103,6 +103,15 @@
 - **Part O — The final gate (master checklist)**
 - **Part P — Reference library**
 - **Part Q — Glossary**
+- **Part R — Scoring rubric**
+- **Part S — Worked example shot**
+- **Part T — Per-shot-size spec tables**
+- **Part U — Emotion → everything map**
+- **Part V — Bug → fix encyclopedia**
+- **Part W — Per-set look sheets**
+- **Part X — Department checklists**
+- **Part Y — Iteration protocol**
+- **Part Z — One-page summary**
 
 ---
 
@@ -895,3 +904,251 @@ Use for technique, never copy designs, characters or music.
 - **Viseme**: mouth shape for a group of sounds.
 - **LUFS / dBTP**: loudness unit / true-peak level.
 - **Screenshot moment**: a frame strong enough that viewers would pause and share it.
+
+---
+
+# PART R — SCORING RUBRIC (grade every shot 0–5)
+
+Before a shot is approved, score it. **A shot ships only if every row ≥ 4 and the total ≥ 52/60.**
+Record the scores in the shot file comment: `// score: L5 C4 M5 ...`.
+
+| # | Axis | 0–1 (fail) | 2–3 (ok) | 4–5 (insane) |
+|---|---|---|---|---|
+| 1 | Light (L) | flat, no rim | key+fill only | key/fill/rim/kick/bounce, motivated, animated |
+| 2 | Composition (C) | crop at brows, centred dead | thirds-ish | thirds, look room, foreground frame, 3+ depth layers |
+| 3 | Motion (M) | static camera or frozen character | one move | primary move + secondary layer + character life |
+| 4 | Acting (A) | pose holds, no thought | expression change | eyes lead, thought change, asymmetry, overlap |
+| 5 | Face (F) | flat eyes | catch-light | two catch-lights, brows, blush, saccades, blinks |
+| 6 | Materials (Mt) | flat colours | roughness varied | bevels, wear, variation, reflections |
+| 7 | Atmosphere (At) | none | fog | fog + dust + volumetric / god rays |
+| 8 | Grade (G) | inconsistent | act grade | act grade + LUT + matched to neighbours |
+| 9 | UI (U) | covers face / pops | animated | entry/life/exit, sound, anchored, in lane |
+| 10 | Sound (S) | silent accents | most accents | every accent, panned, layered, mixed under VO |
+| 11 | Story (St) | unclear purpose | readable | one clear beat, screenshot-worthy |
+| 12 | Tech (T) | flicker / flash | passes QA | passes QA + determinism + luma within ±10% |
+
+---
+
+# PART S — WORKED EXAMPLE: ONE SHOT, FULLY SPECIFIED
+
+This is what "no detail missed" looks like. Every new shot is written at this level **before** coding.
+
+```jsonc
+{
+  "id": "S031",
+  "beat": "B09 — Mom's meter flickers",
+  "duration": 3.6,                      // seconds
+  "set": "kitchen_evening",
+  "act": "tension",
+  "size": "MCU", "lens": 85, "fov": 22, "angle": "eye, slight low (−4°)",
+  "composition": {
+    "subject": "mom", "eyesOn": "upper third", "lookRoom": "frame-left 40%",
+    "foreground": "blurred cereal box edge frame-right, 12% of width",
+    "depthLayers": ["cereal box (fg, blurred)", "mom (sharp)", "counter + fridge (mid)", "window dusk (bg, blurred)"]
+  },
+  "camera": {
+    "primary": "push-in 0.35 m over 3.2 s, bezier(0.45,0,0.2,1)",
+    "secondary": "handheld amp 0.45 (tension), rack focus 0 (locked on mom)",
+    "anticipation": "pull back 2% over first 6 beats"
+  },
+  "focus": { "target": "mom.head", "bokehScale": 3 },
+  "lighting": {
+    "key":   { "type": "spot", "from": "window frame-left high", "kelvin": 3400, "power": 55, "softness": 0.9 },
+    "fill":  { "type": "point", "from": "camera-right", "kelvin": 9000, "ratio": "1:8" },
+    "rim":   { "type": "spot", "from": "behind-right high", "kelvin": 8000, "power": 50 },
+    "kick":  { "type": "rectArea", "from": "behind-left", "color": "#ff7ad9", "power": 5 },
+    "bounce":{ "from": "counter", "tint": "#8a5a3c", "power": 3 },
+    "eyeLight": { "power": 0.6 },
+    "animated": "key Kelvin 3400 → 4600 over 1.0 s at t=1.8 (mood turns cold)",
+    "atmos": { "fog": [5, 16], "dust": 70, "volumetric": "key, opacity 0.2" }
+  },
+  "acting": [
+    "0.00 neutral smile, breathing 0.25 Hz",
+    "0.40 eyes dart to camera-left (2 beats), head follows (+4 beats)",
+    "1.20 brows inner-up 6 beats before mouth flattens",
+    "1.80 blink (forced by head turn), smile fades to worried over 10 beats",
+    "2.40 moving hold: head drift 1.5°, breathing quickens to 0.45 Hz",
+    "3.20 single slow blink, hold"
+  ],
+  "ui": [
+    "meter 'LIE' on mom.head, enters 0.30 s (easeOutBack 1.4, 10 frames)",
+    "value rolls 12 → 61 % (easeOutExpo, 20 frames) at 1.80 s, ring sweeps, colour gold → red (OKLCH)",
+    "glitch flicker 3 frames at 1.80 s, pulse ring on settle"
+  ],
+  "vo": ["L019"],
+  "sfx": [
+    "0.30 pop_small vol 0.22 pan −0.2",
+    "1.75 riser_short end at 1.80",
+    "1.80 tick ×8 (spaced by ease) vol 0.25",
+    "1.80 glitch vol 0.3",
+    "2.05 impact_light vol 0.45 (after the word, never on it)"
+  ],
+  "ambience": "amb_kitchen_evening 0.22, pre-lapped 0.4 s",
+  "music": "tension pad, ducked to 0.35× under L019",
+  "grade": "tension, exposure from exposure_cal.json",
+  "transition": { "in": "hard cut on action (head turn)", "out": "L-cut: fridge hum carries 0.5 s" },
+  "screenshot": true,
+  "qa": { "faceLuma": [0.55, 0.72], "maxMeters": 1, "captionLane": "clear" }
+}
+```
+
+---
+
+# PART T — PER-SHOT-SIZE SPEC TABLES
+
+## T1. Framing numbers
+
+| Size | Head height (% frame) | Headroom | Lens | Camera distance (fov) | Badge placement |
+|---|---|---|---|---|---|
+| EWS | < 8% | n/a | 24 | 10–20 m | above head, small (0.62×) |
+| WS | 8–15% | 15% | 24–35 | 6–10 m | above head |
+| MWS | 15–25% | 12% | 35 | 4–6 m | above head |
+| MS | 25–35% | 10% | 50 | 3.5–4.5 m | above head |
+| MCU | 35–50% | 6–8% | 50–85 | 3.1–3.6 m (fov 30) | above / beside head |
+| CU | 50–70% | 0–4% (top of head may crop) | 85 | 2.4–3.0 m (fov 22) | beside head |
+| ECU | > 70% | crop allowed above brows only | 135 | 2.5–3.5 m (fov 15) | beside, or none |
+
+## T2. Light multipliers by shot size (white heads reflect a lot)
+
+| Size | Key × | Rim × | Bloom intensity | Exposure offset |
+|---|---|---|---|---|
+| WS | 1.0 | 1.0 | 0.7 | 0 |
+| MS | 0.85 | 1.1 | 0.65 | 0 |
+| MCU | 0.7 | 1.2 | 0.6 | −0.1 EV |
+| CU | 0.6 | 1.3 | 0.55 | −0.2 EV |
+| ECU | 0.5 | 1.3 | 0.5 | −0.3 EV |
+
+## T3. DOF by shot size (bokehScale 3 cap)
+
+| Size | Focus target | Focal length | Background state |
+|---|---|---|---|
+| WS | hero body | 0.02 | shapes readable |
+| MS | hero head | 0.03 | soft |
+| MCU/CU | near eye | 0.035 | melted, but silhouettes read |
+| ECU | the eye / prop | 0.04 | melted |
+
+---
+
+# PART U — EMOTION → EVERYTHING MAP
+
+One emotion value drives every department. Pick the row, apply all columns.
+
+| Emotion | Key:fill | Kelvin key | Grade | Camera | Handheld | Music | Face | Pace (avg shot) |
+|---|---|---|---|---|---|---|---|---|
+| Wonder | 1:2 | 3200 | wonder | slow crane/push | 0.2 | pad + bells | wide eyes, sparkle catch-lights | 3.5 s |
+| Fun | 1:2 | 3000 | fun | snappy orbits, whips | 0.3 | plucks, kick/hat | big smiles, bouncy | 2.0 s |
+| Smug | 1:4 | 3200 | fun | low angle, slow push | 0.25 | pluck motif | half lids, smirk, tilt | 3.0 s |
+| Suspicion | 1:6 | 3800 | tension | slow push, dutch 3° | 0.4 | drone | skeptical brow | 3.0 s |
+| Tension | 1:8 | 4500 | tension | creeping push, rack focus | 0.5 | drone + heartbeat | worried brows, darting eyes | 2.5 s |
+| Shock | 1:8 | 5000 | tension | punch-in fov −1.5°, shake | 0.9 | hit + silence | dilated pupils, "o" mouth | 1.5 s |
+| Loss | 1:16 | 6500 | consequence | slow pull-out, high angle | 0.15 | solo piano | sad brows, wet eyes | 4.5 s |
+| Warmth | 1:3 | 2900 | triumph | slow arc | 0.2 | full motif, warm | soft smile, blush up | 4.0 s |
+
+---
+
+# PART V — THE BUG → FIX ENCYCLOPEDIA
+
+| Symptom | Root cause | Fix |
+|---|---|---|
+| Head looks like a white ball | key too strong, no rim, flat face | T2 multipliers, rim ×1.3, face upgrades (C2–C4) |
+| Face looks pasted on | painted texture without lighting cues | blush, lid shadow, iris gradient, SSS glow |
+| Hair looks like a helmet | single smooth shell | fringe lumps, tufts, sheen, secondary motion |
+| Sets look like a toy box | sharp flat boxes | RB bevels, variation, wear, details |
+| Scene looks empty | no atmosphere | fog + dust + volumetric + background life |
+| Cuts feel jumpy | exposure / grade mismatch | exposure_cal, neighbour luma ≤ 30 |
+| Video feels slow | long static holds | 2.5–3.5 s avg, ≥ 2 moving things per frame |
+| Video feels chaotic | too many moves / UI | 1 primary move, ≤ 2 meters, ≤ 2 overlay families |
+| Character feels dead | no breathing / blinks / saccades | G4, C3, C8 |
+| Movement feels robotic | linear easing, synced joints | G2 curves, offset timing |
+| Badge jitters | per-frame projection noise | spring-smoothed anchor (I5) |
+| Voice sounds like two narrators | whispered takes | §54.1 register tags, vo_consistency.py |
+| Music drowns voice | no ducking / pocket | duckAt, 2–5 kHz dip |
+| One white frame | bright practical in fg bokeh | §52.1 practical rule |
+| Render differs on re-run | Math.random / time uniforms | L1 determinism |
+
+---
+
+# PART W — PER-SET LOOK SHEETS
+
+Each set must ship with a look sheet: palette, light plan, details, ambience, signature shot.
+
+| Set | Dominant / accent | Key source | Practicals | 5 details | Ambience | Signature shot |
+|---|---|---|---|---|---|---|
+| Bedroom | deep blue / warm lamp | lamp 2700 K | lamp, phone, alarm LED | posters, rug, clothes pile, glow stars, alarm clock | night air, clock tick | overhead on bed |
+| Kitchen | warm wood / teal fridge | window dusk 3400 K | pendant lamp, oven clock | magnets, fruit bowl, mail, kettle, family photo | fridge hum | through-the-fridge-door shot |
+| Classroom | pale lavender / gold | window 5600 K | projector | whiteboard text, clock, posters, backpacks, globe | fans, murmur | low angle from desk level |
+| Hallway | purple / teal | fluorescents | exit sign | lockers w/ stickers, trophy case, poster, fire alarm, lost sock | hum + distant chatter | long-lens down the corridor |
+| Gym (casino night) | dark / hot amber | pool lamps | banner, string lights | chip stacks, cards, felt, balloons, scoreboard | murmur + jingles | top-down on the table |
+| Bathroom | cold tile / mirror light | mirror strip | mirror strip | tiles, toothbrush cup, towel, sticky note, mirror crack | drip, hum | the mirror reveal |
+| Street | night violet / sodium orange | streetlight 2200 K | bus lights, signs | bus stop sign, puddles, trash can, poster, cat | traffic, wind | low puddle reflection |
+| Rooftop | dusk gradient / city lights | sky | city bokeh | AC units, railing, antenna, water tower, pigeons | wind, distant city | silhouette against sky |
+| Void | near-black / gold | top spot | floor glow ring | floating dust, ring, title, meter, none else | sub drone + air | slow crane over hero |
+
+---
+
+# PART X — DEPARTMENT CHECKLISTS (per shot, tick in the shot file)
+
+**Director**
+- [ ] One beat, one idea, one screenshot moment if tagged
+- [ ] Shot serves the emotion row (Part U)
+
+**DP / camera**
+- [ ] Lens from package, framing from T1
+- [ ] Primary + secondary move, eased, anticipation
+- [ ] Foreground element (if ≥ 50% quota not yet met)
+- [ ] Focus on the subject; bokeh ≤ 3
+
+**Gaffer**
+- [ ] Key, fill (ratio from U), rim, kick, bounce, eye light
+- [ ] Animated light present in scene
+- [ ] Face luma 0.55–0.72; screens ≤ face
+
+**Animator**
+- [ ] Timing chart written first
+- [ ] Eyes → head → body offsets, overlap, asymmetry
+- [ ] Thought change visible; blinks; breathing; saccades
+
+**Set / props**
+- [ ] Bevels, variation, wear; 3–5 details visible in frame
+- [ ] Contact shadows on everything grounded
+
+**Graphics**
+- [ ] Entry / life / exit, sound on every change
+- [ ] In lane, not over a face, ≤ 2 meters
+
+**Sound**
+- [ ] Every accent has a cue; hits after words; panned
+- [ ] Ambience pre-lap; music ducked
+
+**Editor**
+- [ ] Shot length fits the emotion pace
+- [ ] Cut on action; J/L cut where planned
+
+**QA**
+- [ ] Rubric (Part R) ≥ 52/60, no row < 4
+
+---
+
+# PART Y — ITERATION PROTOCOL
+
+1. Render stills (first / middle / last frame) of every changed shot at half scale.
+2. Build a before/after sheet (`out/before_after.jpg`) for every visual change.
+3. Score with Part R. Fix the lowest row first.
+4. Send the sheet to the user; turn feedback into numbered rules (new §5x in CLAUDE.md).
+5. Tick the item in `UPGRADE_BACKLOG.md`.
+6. Only then render a draft clip; only after approval render the master.
+
+---
+
+# PART Z — THE ONE-PAGE SUMMARY (read this if nothing else)
+
+1. Every frame a wallpaper; every second moving and audible.
+2. Faces: key + rim + two catch-lights, brows lead, blinks, saccades, blush.
+3. Sets: bevels, variation, wear, 3–5 details, contact shadows.
+4. Light: motivated, ratio by emotion, one animated light per scene, fog + dust.
+5. Camera: lens package, thirds, headroom table, one move + one layer.
+6. Animation: never linear, never frozen, eyes lead, overlap, asymmetry.
+7. Grade: per act, exposure consistent across cuts.
+8. UI: gold/cream/red only, entry–life–exit, never on a face, always with sound.
+9. Sound: voice always wins, every accent heard, ducked music, planned silence.
+10. QA: typecheck, validate, determinism, luma, loudness, rubric ≥ 52/60.
