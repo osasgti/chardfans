@@ -88,6 +88,7 @@ src/
   three/Pill.tsx           ✅ character (body, hoodie, arms, legs, hats, squash, tilt)
   three/Face.tsx           ✅ canvas-painted expressions + blink + eye look
   three/Set.tsx            ✅ Hallway, Dust
+  three/RB.tsx             ✅ bevelled drop-in for <boxGeometry> (every box in the sets uses it)
   three/LieSets.tsx        ✅ Bedroom, Kitchen(+dining), Classroom, Gym(casino night), Bathroom(+mirror), Void, Street, Rooftop,
                               props (Phone, CerealBox, CookieJar, Card, ChipStack), canvas-texture 3D Text      🔲 Stadium
   lie/                     ✅ the 5-minute video: engine.tsx (data → shot), shots.ts (76 shots), LieMeter.tsx,
@@ -97,6 +98,7 @@ src/
   overlay/Transitions.tsx  ✅ DipToBlack, WhipStreak, Flash
   overlay/Captions.tsx     ✅ word-highlight captions from words.json
   overlay/Grain.tsx        ✅ deterministic film grain (replaces the Noise effect)
+  overlay/FilmLook.tsx     ✅ light leaks per grade + gate weave (3D layer only)
   overlay/                 🔲 Callout (arrow), BarRace, Counter (§8.3–8.4)
   audio/Soundtrack.tsx     ✅ CUES list in beats + music/ambience beds with ducking
   shots/_TEMPLATE.tsx      ✅ boilerplate for new shots
@@ -1345,8 +1347,8 @@ Set the browser path once per session: `export REMOTION_BROWSER=/opt/pw-browsers
 | Sound | ✅ 80 SFX + music stems + cue list + mastering + **VO ducking (duckAt)** · 🔲 panning |
 | Voice | ✅ ElevenLabs connector pipeline, **48/48 lines voiced** (v02 render), mouth flaps from word timings |
 | Ops | ✅ chunked render, QA, determinism, typecheck · 🔲 CI, vertical, thumbnail comp, SRT export |
-| Film layer (§23): halation, light leaks, gate weave, motion blur | 🔲 |
-| GodRays / volumetric spot | 🔲 (documented in §36.3, not yet in the demo) |
+| Film layer (§23): halation, light leaks, gate weave, motion blur | ✅ light leaks, gate weave · 🔲 halation, motion blur |
+| GodRays / volumetric spot | ✅ fake volumetric key beam (`Beam` in Stage.tsx) · 🔲 GodRays |
 
 When you finish a 🔲 item, flip it to ✅ here **and** in §1 in the same commit.
 
