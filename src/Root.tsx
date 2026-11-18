@@ -1,8 +1,9 @@
-import {Composition} from 'remotion';
+import {Composition, getInputProps} from 'remotion';
 import {Main} from './Main';
 import {LieVideo, LIE_TOTAL} from './lie/LieVideo';
 
-const LIE_FPS = 24;
+// 24 on CPU (cloud container); pass --props='{"fps":60}' on a GPU machine. All timing is in seconds/beats.
+const LIE_FPS = Number((getInputProps() as {fps?: number}).fps ?? 24);
 import {FPS, W, H} from './style/tokens';
 export const Root = () => (
   <>

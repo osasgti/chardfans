@@ -9,7 +9,7 @@ number here is a starting default chosen to match the reference look. Tune it af
 test renders, but change it only when the user asks or a shot clearly needs it. A video that ignores the lighting, depth-of-field and grading rules looks like
 a cheap 3D demo, not the reference.
 
-**Reading order:** start with **`prompts/MASTER_PROMPT_INSANE.md`** (the top-level quality bar and final checklist, it wins over this file) and `prompts/UPGRADE_BACKLOG.md` (125 numbered upgrades; tick them off as they ship), then **§36 (the master prompt)**, **§52 (consistency & polish, from real bugs)** and **§53 (render speed)**, which is the standard every video must meet. Then use
+**Reading order:** start with **`prompts/MASTER_PROMPT_INSANE.md`** (the top-level quality bar and final checklist, it wins over this file) and `prompts/UPGRADE_BACKLOG.md` (125 numbered upgrades; tick them off as they ship). To run an improvement session, paste `prompts/MASTER_LOOP.md`. To render fast on a GPU, follow `docs/RENDER_ON_GPU.md`. Then **§36 (the master prompt)**, **§52 (consistency & polish, from real bugs)** and **§53 (render speed)**, which is the standard every video must meet. Then use
 §0–§35 as the toolbox, §32 for lessons from real renders, and §51 for how to keep improving.
 The working demo lives in `src/` (2 shots, 60fps, with full sound).
 Video projects have their own master prompt in `prompts/`. The current one is `prompts/WHAT_IF_LIE_METER.md` (5:00, TTS).
@@ -59,7 +59,8 @@ On headless Linux, use `--gl=swangle` if `angle` fails. Always render a 3-second
 ```
 CLAUDE.md                  ✅ this playbook
 package.json               ✅ npm scripts: sfx, studio, still, render, master, qa, determinism, render:chunks, typecheck
-remotion.config.ts         ✅ swangle GL, jpeg frames, h264 CRF 16
+remotion.config.ts         ✅ GL from REMOTION_GL (default swangle; angle/egl on GPU), jpeg frames, h264 CRF 16
+docs/RENDER_ON_GPU.md      ✅ step-by-step fast render on your own computer (30–60×)
 scripts/
   sfxlib.py                ✅ synthesis building blocks (§36.6)
   make_sfx.py              ✅ 80 sounds + music stems → public/sfx/*.wav (git-ignored, run `npm run sfx`)

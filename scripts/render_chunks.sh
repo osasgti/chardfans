@@ -1,9 +1,10 @@
 #!/usr/bin/env bash
 # Crash-safe render: muted N-frame video chunks (skips finished ones) + one audio pass, then mux + master.
 # Usage: COMP=LieMeter SCALE=0.75 PROPS='{"quality":"fast"}' scripts/render_chunks.sh [chunk=480]
-# Env: COMP (default Main), SCALE (default 1; must give integer pixel sizes, e.g. 0.75 → 1440×810),
+# Env: CONC (parallel frames, default 2; use 6–8 on a GPU machine), GL (swangle|angle|egl|vulkan → REMOTION_GL), COMP (default Main), SCALE (default 1; must give integer pixel sizes, e.g. 0.75 → 1440×810),
 #      PROPS (input props JSON), REMOTION_BROWSER (browser path), OUT (default out/<COMP>.mp4)
 set -euo pipefail
+[ -n "${GL:-}" ] && export REMOTION_GL=$GL
 CH=${1:-480}; COMP=${COMP:-Main}; SCALE=${SCALE:-1}; PROPS=${PROPS:-'{}'}; OUT=${OUT:-out/$COMP.mp4}
 # Render the 3D at the OUTPUT size (res = scale): ~30% faster, SSIM 0.993 vs rendering at 1920x1080 and downscaling (CLAUDE.md §53)
 case "$PROPS" in *'"res"'*) ;; *) PROPS="${PROPS%\}},\"res\":$SCALE}"; PROPS="${PROPS/\{,/\{}";; esac
@@ -19,7 +20,7 @@ for ((s=0; s<TOTAL; s+=CH)); do
   if [ ! -s "$f" ]; then
     echo "[$(date +%H:%M)] chunk $s-$e"
     npx remotion render out/bundle_$COMP "$COMP" "$f.tmp.mp4" --frames=$s-$e --scale="$SCALE" --props="$PROPS" \
-      --concurrency=2 --timeout=240000 --muted "${EXTRA[@]}" >"$D/log_$s.txt" 2>&1 && mv "$f.tmp.mp4" "$f"
+      --concurrency=${CONC:-2} --timeout=240000 --muted "${EXTRA[@]}" >"$D/log_$s.txt" 2>&1 && mv "$f.tmp.mp4" "$f"
   fi
   echo "file '$(basename "$f")'" >> "$D/list.txt"
 done
