@@ -201,7 +201,9 @@ type ThreadProps = {
 - When a thread is born, a small cream label floats at its midpoint for 1.5 s, quoting the promise in italic Cormorant:
   *"I'll drive you today."* Max 1 label on screen. Captions already carry the VO, so labels only appear when the quote differs.
 
-### 6.4 Look-dev gate (show the user before building shots)
+### 6.4 Look-dev gate (show the user before building shots): ✅ built Nov 18 (`ThreadTest` comp, `--props='{"state":"burst"}'`)
+First pass failed on: anchors at the waist (fixed with `wristR`/`chestOf`), broken grey invisible (intensity 0.35→0.7),
+swarm burying the hero and firing at the camera (n 200→120, opacity 0.32, directions kept away from +z).
 Render 6 stills on the Void set: fresh (spooling), held, slack, broken + fray, burst (mid-sparks), and "hundreds" (Kai's wrist).
 Pass criteria: readable at 320 px wide, bloom doesn't wash the face, broken grey still visible on the dark floor.
 

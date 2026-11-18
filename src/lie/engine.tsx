@@ -47,6 +47,18 @@ export type Pose = 'idle' | 'cheer' | 'point' | 'phone' | 'sit' | 'sleep' | 'slu
 export type Prop = 'phone' | 'phoneText' | 'card' | 'cookie' | 'pan';
 export type CastSpec = {who: Who; id?: string; pos: [number, number]; rot?: number; expr?: Expr; pose?: Pose; talk?: boolean; hold?: Prop; turn?: number; tilt?: number; y?: number; react?: Reaction; reactAt?: number};
 
+/** Thread anchors (WHAT_IF_PROMISE_THREADS §6.2): right hand and chest in world space, from the same maths as Pill.tsx.
+ *  Pill arm: pivot (±0.27, 0.93), hand at (0, −0.5) after rotating z by side·(0.12 + arm). Body is scaled then rotated by rotY. */
+const toWorld = (c: CastSpec, lx: number, ly: number, lz: number): [number, number, number] => {
+  const s = CAST[c.who].scale, r = (c.rot ?? 0) * deg, x = lx * s, y = ly * s, z = lz * s;
+  return [c.pos[0] + x * Math.cos(r) + z * Math.sin(r), (c.y ?? 0) + y, c.pos[1] - x * Math.sin(r) + z * Math.cos(r)];
+};
+export const wristR = (c: CastSpec, armR = 0.15): [number, number, number] => {
+  const th = 0.12 + armR;
+  return toWorld(c, 0.27 + 0.5 * Math.sin(th), 0.93 - 0.5 * Math.cos(th), 0.04);
+};
+export const chestOf = (c: CastSpec): [number, number, number] => toWorld(c, 0, 0.8, 0.2);
+
 /** head centre in world space (used by camera + meter) */
 export const headOf = (c: CastSpec): [number, number, number] => {
   const s = CAST[c.who].scale;
