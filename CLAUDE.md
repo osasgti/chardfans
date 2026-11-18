@@ -1539,6 +1539,26 @@ a whisper next to normal speech sounds like a different narrator.
 
 ---
 
+## 56. Full-shot audit (Nov 18: one still from the middle of all 76 shots)
+
+How: compute each shot's mid time from `timeline.json` + shot weights, **bundle once** (`npx remotion bundle … --out-dir out/bundle_audit`)
+and render stills from the bundle (≈15s each at 0.25 scale instead of ≈60s when every still re-bundles). Tile into labelled sheets.
+Found and fixed:
+- **Back-of-head shots** (17, 23, 47): a camera behind a character facing a desk/wall shows only hair. Put the camera within ~80° of
+  the character's facing and add a head `turn` toward camera (sign matters: check one still).
+- **Blown rooftop CU (37)**, already bad in v04: exposure changes did nothing because the key light itself clipped the face.
+  Shots can now set `keyI`; the sunset CU uses 22 instead of the preset's 80.
+- **Pink hot spot on heads near frame left** (18, 34, 44): the magenta kicker point light sat 1–2 m from cast members. Moved to
+  [−4.5, 2.4, −3.5], intensity 1.3. Kickers must stay ≥3 m from any cast position.
+- **Title vs. "?" shards (59):** the shards now form beside the head (x −1.15), and the title stays in the top lane. Titles above y≈0.12
+  vanish under the letterbox.
+- **Meter covering a face (74):** anchor meters to a point beside the head ([0.85, 1.25, 0]) in centred CUs.
+- **Brother hidden behind props (kitchen, L006):** jar moved aside; seated characters at scale <0.9 get `y: 0.1` so the mouth clears the table.
+Still open: shot 52 (EWS of the hero alone in the void) is near-black even at exposure 2.2. Decide whether that darkness is intended, or add a
+floor glow/spot ring so the figure reads.
+
+---
+
 ## 51. What's left is iteration
 
 Past this point, the remaining quality comes from **rendering and tuning**, not from more rules.

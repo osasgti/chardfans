@@ -60,7 +60,7 @@ export type Size = 'ecu' | 'cu' | 'mcu' | 'med' | 'wide' | 'ews';
 export type Move = 'push' | 'pull' | 'orbitL' | 'orbitR' | 'crane' | 'drop' | 'lock' | 'dz' | 'truck' | 'snap';
 export type MeterSpec = {on: number | [number, number, number]; value: number; label?: string; mode?: 'normal' | 'mirror' | 'q' | 'fire' | 'fade'; delay?: number; from?: number; small?: boolean};
 export type ShotSpec = {
-  line: string; w?: number; set: string; setProps?: Record<string, unknown>; light: string; grade: string; keyPos?: [number, number, number];
+  line: string; w?: number; set: string; setProps?: Record<string, unknown>; light: string; grade: string; keyPos?: [number, number, number]; keyI?: number;
   cam: {on: number | [number, number, number]; size: Size; yaw?: number; pitch?: number; move?: Move; amount?: number};
   cast: CastSpec[]; meters?: MeterSpec[]; tag?: string; title?: {words: string[]; emph?: number[]; y?: number; size?: number};
   dust?: boolean; extra?: string; flash?: number; exposure?: number; mirror?: boolean; flicker?: boolean;
@@ -219,7 +219,7 @@ const Door = ({k}: {k: number}) => (
   </group>
 );
 const Shards = ({k}: {k: number}) => (
-  <group position={[0, 2.25, 0]}>
+  <group position={[-1.15, 2.0, 0]}>
     {Array.from({length: 60}).map((_, i) => {
       const a = random('sa' + i) * Math.PI * 2, b = random('sb' + i) * Math.PI - Math.PI / 2, r = 0.1 + random('sr' + i) * 1.4;
       const t = ease(k, [0, 0.55], [0, 1]), back = ease(k, [0.55, 1], [0, 1]);
@@ -246,7 +246,7 @@ export const LieShot = ({spec, beat, dur, sec, seed, fpsRatio = 1, calStops = 0}
     <AbsoluteFill>
       <AbsoluteFill style={{transform: weave(sec)}}>
       <Stage cam={cam} focus={focus} grade={spec.grade} flash={spec.flash ?? 0} exposure={(spec.exposure ?? 1.05) * Math.pow(2, calStops)}>
-        <Lights preset={spec.light} keyPos={spec.keyPos} keyI={spec.flicker ? undefined : undefined} />
+        <Lights preset={spec.light} keyPos={spec.keyPos} keyI={spec.keyI} />
         {setNode}
         {spec.dust !== false && <Dust frame={beat} n={FAST ? 30 : 60} />}
         {spec.cast.map((c, i) => {

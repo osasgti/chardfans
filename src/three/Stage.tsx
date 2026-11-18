@@ -70,7 +70,7 @@ export const Lights = ({preset = 'hallway', keyColor, keyI, keyPos = [-3.5, 5.5,
     {/* bounce: warm floor light up onto chins (§36.3) */}
     <pointLight position={[0, 0.15, 1.2]} intensity={2.2} decay={1.8} color="#ff9a5c" />
     {/* kicker: subtle magenta on the shadow side */}
-    <pointLight position={[-2.5, 1.4, -1.5]} intensity={2.5} decay={1.8} color="#ff6fd0" />
+    <pointLight position={[-4.5, 2.4, -3.5]} intensity={1.3} decay={2} color="#ff6fd0" />
     {/* fake volumetric beam from the key (backlog #63): additive cone, fades along its length and at its edges.
         Pure shader, no time uniforms → deterministic. Fog makes it read. */}
     {beam > 0 && <Beam from={keyPos} to={[0, 0.6, 0]} color={kc} opacity={beam} />}
