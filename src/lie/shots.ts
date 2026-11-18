@@ -34,7 +34,7 @@ export const SHOTS: ShotSpec[] = [
   {line: 'L005', set: 'Kitchen', light: 'kitchen', grade: 'fun', keyPos: [-3, 4, 1], cam: {on: 0, size: 'mcu', yaw: 18, move: 'orbitL'},
     cast: [{who: 'mom', pos: [0.6, -1.85], rot: 0, talk: true, hold: 'pan', pose: 'hold'}], meters: [{on: 0, value: 31}], extra: 'cereal'},
   {line: 'L006', w: 1, set: 'Kitchen', light: 'kitchen', grade: 'fun', cam: {on: 0, size: 'mcu', yaw: -12, move: 'push'},
-    cast: [{who: 'brother', pos: [0, -0.75], rot: 0, pose: 'sit', talk: true, expr: 'neutral'}], extra: 'jar', meters: [{on: 0, value: 99}]},
+    cast: [{who: 'brother', pos: [0, -0.75], rot: 0, pose: 'sit', talk: true, expr: 'neutral', y: 0.1}], extra: 'jar', meters: [{on: 0, value: 99}]},
   {line: 'L006', w: 0.6, set: 'Kitchen', light: 'kitchen', grade: 'fun', cam: {on: 0, size: 'cu', yaw: -5, move: 'snap'},
     cast: [{who: 'brother', pos: [0, -0.75], rot: 0, pose: 'sit', expr: 'shock'}], extra: 'jar', meters: [{on: 0, value: 99, from: 99}]},
   {line: 'L007', w: 1, set: 'Void', light: 'void', grade: 'fun', cam: {on: 0, size: 'med', move: 'push'},

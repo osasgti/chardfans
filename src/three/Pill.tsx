@@ -9,14 +9,14 @@ import {FAST} from './Stage';
 export type Hair = 'none' | 'beanie' | 'cap' | 'capBack' | 'bun' | 'ponytail' | 'bob' | 'visor';
 export type PillProps = {
   id: string; frame: number; position?: [number, number, number]; rotY?: number;
-  hoodie?: string; expr?: Expr; hat?: Hair; hatColor?: string; glasses?: boolean; scale?: number; mouth?: number; turnLag?: number; lean?: number; armLx?: number; armRx?: number; rightHand?: React.ReactNode;
+  hoodie?: string; expr?: Expr; hat?: Hair; hatColor?: string; glasses?: boolean; scale?: number; mouth?: number; turnLag?: number; lean?: number; armLx?: number; armRx?: number; nod?: number; brow?: number; rightHand?: React.ReactNode;
   armL?: number; armR?: number; headTilt?: number; headTurn?: number; squash?: number; look?: number; seg?: number;
 };
 
 const skinMat = <meshPhysicalMaterial color={C.skin} roughness={0.42} clearcoat={0.35} clearcoatRoughness={0.4} sheen={0.4} sheenColor="#ffffff" />;
 
 export const Pill = ({id, frame, position = [0, 0, 0], rotY = 0, hoodie = C.red, expr = 'neutral', hat = 'none', hatColor = '#1b1622',
-  armL = 0.15, armR = 0.15, headTilt = 0, headTurn = 0, squash = 0, look = 0, seg = 48, glasses = false, scale = 1, mouth = 0, turnLag = 0, lean = 0, armLx = 0, armRx = 0, rightHand}: PillProps) => {
+  armL = 0.15, armR = 0.15, headTilt = 0, headTurn = 0, squash = 0, look = 0, seg = 48, glasses = false, scale = 1, mouth = 0, turnLag = 0, lean = 0, armLx = 0, armRx = 0, nod = 0, brow = 0, rightHand}: PillProps) => {
   if (FAST) seg = Math.min(seg, 28);
   const t = frame / 30, ph = random(id) * 6.28;
   // breathing rate follows emotion (backlog #41): calm ≈ 0.33 Hz, anxious ≈ 0.6 Hz
@@ -58,12 +58,12 @@ export const Pill = ({id, frame, position = [0, 0, 0], rotY = 0, hoodie = C.red,
         <mesh position={[0, 0.98, -0.1]} rotation={[0.3, 0, 0]}><torusGeometry args={[0.13, 0.05, 12, 24, Math.PI]} />{cloth}</mesh>
         {arm(-1, armL, armLx)}{arm(1, armR, armRx)}
         <mesh position={[0, 1.04, 0]}><cylinderGeometry args={[0.05, 0.05, 0.2, 12]} /><meshStandardMaterial color={C.lavender} /></mesh>
-        <group position={[0, 1.13, 0]} rotation={[0, headTurn + drift, headTilt + driftTilt - shift * 0.6]} scale={sq}>
+        <group position={[0, 1.13, 0]} rotation={[nod, headTurn + drift, headTilt + driftTilt - shift * 0.6]} scale={sq}>
           <group position={[0, 0.4, 0]}>
             <group scale={[1, 1.04, 0.97]}>
               <mesh castShadow><sphereGeometry args={[0.42, seg, seg]} />{skinMat}</mesh>
               <mesh scale={1.006}><sphereGeometry args={[0.42, seg, seg]} /><SkinGlow /></mesh>
-              <Face r={0.42} expr={expr} blink={blink} look={look + sacc} mouth={mouth} seg={Math.max(seg, 32)} />
+              <Face r={0.42} expr={expr} blink={blink} look={look + sacc} mouth={mouth} brow={brow} seg={Math.max(seg, 32)} />
             </group>
             {/* follow-through (backlog #17): hair trails the head by ~4 beats and overshoots a little */}
             <group rotation={[0, (turnLag + (Math.sin((t - 0.13) * 0.4 + ph) * 0.02 - drift)) * 1.6, (Math.sin((t - 0.13) * 0.33 + ph * 2.3) * 0.018 - driftTilt) * 1.6]}>

@@ -16,7 +16,7 @@
 - [ ] **4 🟢 M: No pupil dilation per emotion.** Fix: add `pupil` scale (shock 1.12, fear 0.88) on the iris ellipse. Where: `Face.tsx`. Done when: shock CU eyes visibly larger than neutral.
 - [ ] **5 🟢 M: Eyes never look at the speaker.** Fix: engine computes `look` toward the talking cast member's screen x (±6px), else saccades. Where: `engine.tsx` Actor `look=`. Done when: in two-shots the listener's eyes point at the talker.
 - [ ] **6 🟢 S: No tear state.** Fix: `expr: 'cry'` = sad + glossy lower-lid line + tear bead (gradient ellipse) sliding down 0.4px/beat. Where: `Face.tsx`. Done when: the "she was hurt" beat can use it.
-- [ ] **7 🟠 S: Brows don't move during speech.** Fix: raise brows +3px on stressed words (word length ≥6 or ALL CAPS in timeline). Where: `engine.tsx` mouthAt → also return `browLift`. Done when: brows move during "did NOT eat".
+- [x] **7 🟠 S: Brows don't move during speech.** *(built: `stressAt` → `brow`)* Fix: raise brows +3px on stressed words (word length ≥6 or ALL CAPS in timeline). Where: `engine.tsx` mouthAt → also return `browLift`. Done when: brows move during "did NOT eat".
 - [ ] **8 🟠 S: Blush identical on every character.** Fix: per-character blush tint and strength in `CAST` (dad 0.1, maya 0.25). Where: `engine.tsx` CAST + `Face.tsx`. Done when: dad's face reads less rosy than Maya's.
 - [ ] **9 🟢 S: No freckles/marks to tell characters apart.** Fix: seeded freckle dots for maya/brother. Where: `Face.tsx`, `marks` prop. Done when: Maya identifiable in a CU without hair.
 - [ ] **10 🟠 M: Mouth shapes are tiny at MS/WS.** Fix: scale mouth stroke/size up 1.4× when shot size ≥ med. Where: engine passes size → Face. Done when: talking is readable in a MS still.
@@ -33,7 +33,7 @@
 - [ ] **18 🟢 M: No elbows.** Fix: split arm capsule in two with a bend angle (default 12°, point 0°, phone 110°). Where: `Pill.tsx`. Done when: the phone pose reads as holding a phone, not a straight stick.
 - [ ] **19 🟠 S: Torso never leans.** Fix: lean forward 6° when talking, back 8° when bored/smug. Where: `Pill.tsx`, new `lean` prop from engine. Done when: visible posture difference between talk and listen.
 - [ ] **20 🟠 S: Shoulders static.** Fix: shoulder shrug offset (arm pivot y ±0.03) driven by breathing and shrug reaction. Where: `Pill.tsx`. Done when: shrug lifts shoulders.
-- [ ] **21 🟢 M: No head nod on stressed words.** Fix: headTilt X ±2° impulse on stressed words. Where: engine Actor. Done when: speaking heads nod.
+- [x] **21 🟢 M: No head nod on stressed words.** *(built: `stressAt` → `nod`)* Fix: headTilt X ±2° impulse on stressed words. Where: engine Actor. Done when: speaking heads nod.
 - [ ] **22 🟢 L: Real walk cycle.** Fix: 16-beat cycle, legs ±25°, arms ∓15°, bob 0.03 m at 2× frequency, root speed = stride/8 beats. Where: `poseArgs('walk')` + root offset. Done when: no foot sliding at 50% playback.
 - [ ] **23 🟠 S: Run pose bobs but legs don't move.** Fix: drive leg rotation in run (10-beat cycle). Where: `Pill.tsx` legs get `legSwing`. Done when: legs alternate.
 - [ ] **24 🟠 S: Sitting characters float above chairs.** Fix: sit offset tuned per set chair height (kitchen 0.45, classroom 0.42). Where: engine `sit`. Done when: no gap between body and seat in any sit shot.

@@ -4,7 +4,7 @@ import {CanvasTexture} from 'three';
 export type Expr = 'neutral' | 'smug' | 'happy' | 'shock' | 'bored' | 'sad' | 'worried';
 const INK = '#1a1424';
 
-function draw(ctx: CanvasRenderingContext2D, expr: Expr, blink: number, look: number, mouth: number) {
+function draw(ctx: CanvasRenderingContext2D, expr: Expr, blink: number, look: number, mouth: number, brow = 0) {
   ctx.clearRect(0, 0, 1024, 512);
   // cheek blush (soft radial, stronger on warm/embarrassed faces)
   const blushA = expr === 'happy' ? 0.34 : expr === 'sad' || expr === 'worried' ? 0.28 : 0.2;
@@ -39,7 +39,7 @@ function draw(ctx: CanvasRenderingContext2D, expr: Expr, blink: number, look: nu
   }
   // neutral-family brows (brows carry emotion; every face has them, master prompt C4)
   if (expr === 'neutral' || expr === 'happy' || expr === 'smug' || expr === 'shock' || expr === 'bored') {
-    ctx.lineWidth = 5; const lift = expr === 'shock' ? -12 : expr === 'happy' ? -4 : expr === 'bored' ? 6 : 0;
+    ctx.lineWidth = 5; const lift = (expr === 'shock' ? -12 : expr === 'happy' ? -4 : expr === 'bored' ? 6 : 0) - brow * 6;
     for (const [bx, d] of [[486, -1], [538, 1]] as const) {
       const sk = expr === 'smug' && d === 1 ? -8 : 0;
       ctx.beginPath(); ctx.moveTo(bx + look - 13, eyeY - 36 + lift + sk); ctx.quadraticCurveTo(bx + look, eyeY - 42 + lift + sk, bx + look + 13, eyeY - 37 + lift + sk); ctx.stroke(); }
@@ -75,12 +75,12 @@ function draw(ctx: CanvasRenderingContext2D, expr: Expr, blink: number, look: nu
 }
 
 /** Transparent shell with a painted face. Face centre is u=0.5 → rotated to +Z. */
-export const Face = ({r, expr, blink, look = 0, mouth = 0, seg = 64}: {r: number; expr: Expr; blink: number; look?: number; mouth?: number; seg?: number}) => {
+export const Face = ({r, expr, blink, look = 0, mouth = 0, brow = 0, seg = 64}: {r: number; expr: Expr; blink: number; look?: number; mouth?: number; brow?: number; seg?: number}) => {
   const {canvas, tex} = useMemo(() => {
     const canvas = document.createElement('canvas'); canvas.width = 1024; canvas.height = 512;
     const tex = new CanvasTexture(canvas); tex.anisotropy = 8; return {canvas, tex};
   }, []);
-  draw(canvas.getContext('2d')!, expr, blink, look, mouth);
+  draw(canvas.getContext('2d')!, expr, blink, look, mouth, brow);
   tex.needsUpdate = true;
   return (
     <mesh rotation={[0, -Math.PI / 2, 0]}>

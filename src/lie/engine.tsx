@@ -119,6 +119,17 @@ const mouthAt = (line: Line | undefined, sec: number) => {
   const open = Math.sin(p * Math.PI) * (0.55 + 0.45 * random(w.text + w.start));
   return shape * 10 + Math.max(0.06, open);
 };
+/** FIX_LIST_V2 #21/#7: stressed words (ALL CAPS or ≥7 letters) give a small nod + brow lift that peaks mid-word. */
+const stressAt = (line: Line | undefined, sec: number) => {
+  if (!line) return 0;
+  const w = line.words.find((x) => sec >= x.start - 0.05 && sec < x.end + 0.15);
+  if (!w) return 0;
+  const bare = w.text.replace(/[^A-Za-z]/g, '');
+  const stressed = (bare.length >= 2 && bare === bare.toUpperCase()) || bare.length >= 7;
+  if (!stressed) return 0;
+  const p = (sec - (w.start - 0.05)) / Math.max(0.1, w.end + 0.2 - w.start);
+  return Math.sin(Math.min(1, Math.max(0, p)) * Math.PI);
+};
 const poseArgs = (pose: Pose | undefined, beat: number, id: string) => {
   const t = beat / 30, ph = random(id + 'p') * 6;
   switch (pose) {
@@ -148,11 +159,12 @@ export const Actor = ({c, beat, sec, line, mirrored = false}: {c: CastSpec; beat
   const rotY = ((c.rot ?? 0) * deg) * (mirrored ? -1 : 1) + (mirrored ? Math.PI : 0);
   const run = c.pose === 'run' ? Math.abs(Math.sin(beat / 30 * 12)) * 0.05 : 0;
   const R = reactAt(c.react, beat, c.reactAt);
+  const st = c.talk ? stressAt(line, sec) : 0;
   const base = poseArgs(c.pose, beat, id);
   const body = (
     <Pill id={id} frame={beat} position={sleep ? [0, 0, 0] : [c.pos[0], (c.y ?? 0) + sit + run + R.dy, z]} rotY={sleep ? 0 : rotY}
       hoodie={L.hoodie} hat={L.hair} hatColor={L.hairColor} glasses={L.glasses} expr={c.expr ?? L.expr} scale={s}
-      headTurn={(c.turn ?? 0) * deg + R.headTurn + (c.talk ? Math.sin(beat / 30 * 2.3) * 0.04 : 0)} squash={R.squash} lean={R.lean} turnLag={(reactAt(c.react, beat - 4, c.reactAt).headTurn - R.headTurn) + (c.talk ? (Math.sin((beat - 4) / 30 * 2.3) - Math.sin(beat / 30 * 2.3)) * 0.04 : 0)} headTilt={(c.tilt ?? 0) * deg + R.headTilt}
+      headTurn={(c.turn ?? 0) * deg + R.headTurn + (c.talk ? Math.sin(beat / 30 * 2.3) * 0.04 : 0)} squash={R.squash} lean={R.lean} turnLag={(reactAt(c.react, beat - 4, c.reactAt).headTurn - R.headTurn) + (c.talk ? (Math.sin((beat - 4) / 30 * 2.3) - Math.sin(beat / 30 * 2.3)) * 0.04 : 0)} headTilt={(c.tilt ?? 0) * deg + R.headTilt} nod={st * 0.06} brow={st}
       mouth={mouth} armL={base.armL + R.armL} armR={base.armR + R.armR} armLx={R.armLx} armRx={R.armRx} rightHand={<PropMesh p={c.hold} text={c.hold === 'phoneText' ? 'we\'re good, right?' : undefined} />}
       look={c.talk ? 0 : Math.round(Math.sin(beat / 30 * 0.7 + random(id) * 9)) * 5} />
   );
@@ -251,7 +263,7 @@ export const LieShot = ({spec, beat, dur, sec, seed, fpsRatio = 1, calStops = 0}
         {spec.extra === 'door' && <Door k={k} />}
         {spec.extra === 'shards' && <Shards k={k} />}
         {spec.extra === 'cereal' && <group position={[0.4, 0.95, -2.45]} rotation={[0, -0.25, 0]}><CerealBox /></group>}
-        {spec.extra === 'jar' && <group position={[-0.35, 0.79, 0.05]}><CookieJar /></group>}
+        {spec.extra === 'jar' && <group position={[-0.78, 0.79, -0.45]}><CookieJar /></group>}
         {spec.extra === 'phoneDesk' && <group position={[0.55, 0.64, -2.32]} rotation={[-1.2, 0, 0]}><Phone text="5 MORE MIN?" /></group>}
       </Stage>
       </AbsoluteFill>
