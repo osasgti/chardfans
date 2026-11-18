@@ -3,7 +3,13 @@ import {interpolate, Easing, spring, random} from 'remotion';
 import {C, W, H} from '../style/tokens';
 import {TITLE, UI} from '../style/fonts';
 
-export const rampColor = (v: number) => (v <= 30 ? C.gold : v < 70 ? '#f29a3b' : '#e0464f');
+const STOPS: [number, [number, number, number]][] = [[0, [242, 196, 107]], [30, [242, 196, 107]], [55, [242, 154, 59]], [80, [224, 70, 79]], [100, [224, 70, 79]]];
+/** Smooth gold → amber → red ramp (backlog #99): interpolated per value instead of 3 hard steps. */
+export const rampColor = (v: number) => {
+  const i = Math.max(1, STOPS.findIndex(([s]) => s >= v)); const [s0, c0] = STOPS[i - 1], [s1, c1] = STOPS[i];
+  const t = s1 === s0 ? 0 : Math.min(1, Math.max(0, (v - s0) / (s1 - s0)));
+  return '#' + c0.map((c, k) => Math.round(c + (c1[k] - c) * t).toString(16).padStart(2, '0')).join('');
+};
 
 export const LieMeter = ({beat, start, land, x, y, anchor, value, from = 0, label = 'LIE', mode = 'normal', small = false, dur}: {
   beat: number; start: number; land: number; x: number; y: number; anchor?: {x: number; y: number}; value: number; from?: number;
@@ -24,6 +30,8 @@ export const LieMeter = ({beat, start, land, x, y, anchor, value, from = 0, labe
   const fadeAway = mode === 'fade' && landed ? interpolate(since, [10, 40], [1, 0], {extrapolateRight: 'clamp'}) : 1;
   const opacity = Math.min(1, f / 6) * out * fadeAway;
   const float = Math.sin((beat / 30) * 2) * 4;
+  // idle life (backlog #100): slow glow breathing once landed
+  const idle = landed ? 0.5 + 0.5 * Math.sin((beat / 30) * 3.1 + x * 0.01) : 0;
   const R = small ? 12 : 17, circ = 2 * Math.PI * R, sc = small ? 0.62 : 1;
   const pulse = landed ? interpolate(since, [0, 18], [0, 1], {extrapolateRight: 'clamp'}) : 1;
   const cx = Math.min(W - 160, Math.max(160, x)), cy = Math.min(H - 230, Math.max(200, y));
@@ -36,11 +44,11 @@ export const LieMeter = ({beat, start, land, x, y, anchor, value, from = 0, labe
         </svg>
       )}
       <div style={{position: 'absolute', left: cx + jitter, top: cy + float + jitter * 0.6, opacity,
-        transform: `translate(-50%,-50%) scale(${(0.6 + 0.4 * pop) * tick * sc}) ${mode === 'mirror' ? 'scaleX(-1)' : ''}`}}>
+        transform: `translate(-50%,-50%) scale(${(0.6 + 0.4 * pop) * tick * sc * (1 + idle * 0.012)}) ${mode === 'mirror' ? 'scaleX(-1)' : ''}`}}>
         {pulse < 1 && <div style={{position: 'absolute', inset: -10, borderRadius: 999, border: `2px solid ${col}`, transform: `scale(${1 + pulse * 0.5})`, opacity: 1 - pulse}} />}
         <div style={{display: 'flex', alignItems: 'center', gap: 16, padding: '12px 30px 12px 14px', borderRadius: 999, background: C.uiBg,
           border: `2px solid ${flash > 0 ? `rgba(255,255,255,${0.5 + flash / 2})` : col}`,
-          boxShadow: `0 0 ${26 + flash * 30 + (hot ? 18 : 0)}px ${col}${hot ? 'cc' : '88'}, inset 0 0 18px ${col}22`}}>
+          boxShadow: `0 0 ${26 + idle * 10 + flash * 30 + (hot ? 18 : 0)}px ${col}${hot ? 'cc' : '88'}, inset 0 0 18px ${col}22`}}>
           <svg width={48} height={48} viewBox="0 0 48 48">
             <circle cx={24} cy={24} r={R} fill="none" stroke="rgba(255,255,255,.15)" strokeWidth={5} />
             {mode !== 'q' && <circle cx={24} cy={24} r={R} fill="none" stroke={col} strokeWidth={5} strokeLinecap="round" strokeDasharray={circ}

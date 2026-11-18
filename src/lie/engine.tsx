@@ -6,6 +6,7 @@ import {RB} from '../three/RB';
 import React from 'react';
 import {AbsoluteFill, interpolate, Easing, random, Audio, Sequence, staticFile} from 'remotion';
 import {PerspectiveCamera, Vector3} from 'three';
+import {FilmLook, weave} from '../overlay/FilmLook';
 import {Stage, Lights, handheld, Cam, FAST} from '../three/Stage';
 import {Pill, Hair} from '../three/Pill';
 import type {Expr} from '../three/Face';
@@ -64,7 +65,7 @@ export type ShotSpec = {
   dust?: boolean; extra?: string; flash?: number; exposure?: number; mirror?: boolean; flicker?: boolean;
 };
 
-const SIZE: Record<Size, [number, number]> = {ecu: [1.5, 20], cu: [2.4, 24], mcu: [3.2, 28], med: [4.4, 32], wide: [7.2, 38], ews: [11, 42]};
+const SIZE: Record<Size, [number, number]> = {ecu: [1.5, 20], cu: [3.4, 24], mcu: [3.6, 28], med: [4.4, 32], wide: [7.2, 38], ews: [11, 42]};
 const deg = Math.PI / 180;
 const E = Easing.bezier(0.45, 0, 0.2, 1);
 
@@ -88,7 +89,10 @@ export const camFor = (spec: ShotSpec, k: number, beat: number, seed: string): C
     case 'lock': break;
   }
   const pos: [number, number, number] = [S[0] + d * Math.sin(yaw) * Math.cos(pitch), S[1] + lift + d * Math.sin(pitch), S[2] + d * Math.cos(yaw) * Math.cos(pitch)];
-  return handheld({pos, target: [S[0], S[1] - 0.04, S[2]], fov}, beat, seed);
+  // headroom (master prompt F2/T1): the 2.39 letterbox hides ~25% of the height, so close sizes aim slightly ABOVE the head
+  // centre; the whole head then sits inside the visible band with a little room on top instead of cropping at the brows.
+  const ty = cam.size === 'cu' || cam.size === 'mcu' ? S[1] + 0.08 : S[1] - 0.04;
+  return handheld({pos, target: [S[0], ty, S[2]], fov}, beat, seed);
 };
 
 /** pure-math projection with a given camera (no render-order dependence) */
@@ -147,13 +151,41 @@ export const Actor = ({c, beat, sec, line, mirrored = false}: {c: CastSpec; beat
 };
 
 /* ───────────── special extras ───────────── */
-const Bus = ({k}: {k: number}) => (
-  <group position={[-3 + 14 * Math.max(0, k - 0.45) ** 1.6 * 2.2, 0, 1.6]}>
-    <mesh position={[0, 1.3, 0]} castShadow><RB args={[6, 2.2, 2.2]} /><meshStandardMaterial color="#f2b134" roughness={0.6} /></mesh>
-    {Array.from({length: 5}).map((_, i) => <mesh key={i} position={[-2.2 + i * 1.1, 1.7, 1.11]}><planeGeometry args={[0.9, 0.7]} /><meshStandardMaterial color="#9fc4ff" emissive="#9fc4ff" emissiveIntensity={0.6} /></mesh>)}
-    {[-2, 2].map((x) => <mesh key={x} position={[x, 0.35, 1.0]} rotation={[Math.PI / 2, 0, 0]}><cylinderGeometry args={[0.35, 0.35, 0.3, 20]} /><meshStandardMaterial color="#111" /></mesh>)}
+/** Bus (backlog #47): rounded body, roof, bumper, wheel wells, hubcaps, headlights, stop arm, mirror, door, side stripe. */
+const Bus = ({k}: {k: number}) => {
+  const paint = <meshPhysicalMaterial color="#f2b134" roughness={0.4} clearcoat={0.8} clearcoatRoughness={0.25} />;
+  const dark = <meshStandardMaterial color="#1a1620" roughness={0.6} />;
+  const x = -3 + 14 * Math.max(0, k - 0.45) ** 1.6 * 2.2, spin = -x / 0.38;
+  return (
+  <group position={[x, 0, 1.6]}>
+    <mesh position={[0, 1.35, 0]} castShadow receiveShadow><RB args={[6, 2.1, 2.2]} />{paint}</mesh>
+    <mesh position={[0, 2.45, 0]} castShadow><RB args={[5.8, 0.12, 2.05]} /><meshPhysicalMaterial color="#f6e6c0" roughness={0.5} clearcoat={0.5} /></mesh>
+    <mesh position={[0, 1.05, 1.105]}><RB args={[5.9, 0.08, 0.02]} />{dark}</mesh>
+    <mesh position={[0, 0.85, 1.105]}><RB args={[5.9, 0.08, 0.02]} />{dark}</mesh>
+    <mesh position={[3.02, 0.45, 0]} castShadow><RB args={[0.18, 0.28, 2.3]} /><meshStandardMaterial color="#2a2530" roughness={0.4} metalness={0.4} /></mesh>
+    <mesh position={[-3.02, 0.45, 0]} castShadow><RB args={[0.18, 0.28, 2.3]} /><meshStandardMaterial color="#2a2530" roughness={0.4} metalness={0.4} /></mesh>
+    {Array.from({length: 5}).map((_, i) => (<group key={i} position={[-2.3 + i * 1.05, 1.75, 1.105]}>
+      <mesh><RB args={[0.92, 0.72, 0.03]} />{dark}</mesh>
+      <mesh position={[0, 0, 0.02]}><planeGeometry args={[0.82, 0.62]} /><meshStandardMaterial color="#5a6a9a" emissive="#ffd9a8" emissiveIntensity={0.12} roughness={0.1} /></mesh>
+    </group>))}
+    <group position={[2.55, 1.15, 1.105]}><mesh><RB args={[0.7, 1.7, 0.03]} />{dark}</mesh>
+      <mesh position={[0, 0.2, 0.02]}><planeGeometry args={[0.55, 0.9]} /><meshStandardMaterial color="#9fc4ff" emissive="#ffd9a8" emissiveIntensity={0.1} /></mesh></group>
+    {[0.75, -0.75].map((z) => (<group key={z} position={[3.06, 0.95, z]}>
+      <mesh rotation={[0, 0, Math.PI / 2]}><cylinderGeometry args={[0.13, 0.13, 0.06, 20]} /><meshStandardMaterial color="#fff2cf" emissive="#fff2cf" emissiveIntensity={1.4} toneMapped={false} /></mesh>
+    </group>))}
+    {[0.85, -0.85].map((z) => <mesh key={z} position={[-3.06, 0.95, z]} rotation={[0, 0, Math.PI / 2]}><cylinderGeometry args={[0.09, 0.09, 0.05, 16]} /><meshStandardMaterial color="#ff3b3b" emissive="#ff3b3b" emissiveIntensity={1.2} toneMapped={false} /></mesh>)}
+    <group position={[-1.75, 1.0, 1.16]}><mesh rotation={[Math.PI / 2, 0, 0]}><cylinderGeometry args={[0.24, 0.24, 0.03, 8]} /><meshStandardMaterial color="#c8323a" roughness={0.5} /></mesh></group>
+    <group position={[3.2, 1.9, 1.1]}><mesh><RB args={[0.05, 0.4, 0.05]} />{dark}</mesh><mesh position={[0.05, -0.15, 0.06]}><RB args={[0.06, 0.3, 0.2]} />{dark}</mesh></group>
+    {[-2, 2].flatMap((wx) => [1.0, -1.0].map((z) => (<group key={`${wx}${z}`} position={[wx, 0.38, z]}>
+      <mesh position={[0, 0.12, 0]}><cylinderGeometry args={[0.48, 0.48, 0.1, 24, 1, true, 0, Math.PI]} />{dark}</mesh>
+      <group rotation={[Math.PI / 2, 0, 0]}><group rotation={[0, spin, 0]}>
+        <mesh castShadow><cylinderGeometry args={[0.38, 0.38, 0.28, 28]} /><meshStandardMaterial color="#141118" roughness={0.85} /></mesh>
+        <mesh position={[0, z > 0 ? 0.145 : -0.145, 0]}><cylinderGeometry args={[0.2, 0.2, 0.02, 6]} /><meshStandardMaterial color="#b9b6c2" metalness={0.8} roughness={0.3} envMapIntensity={0.4} /></mesh>
+      </group></group>
+    </group>)))}
   </group>
-);
+  );
+};
 const Door = ({k}: {k: number}) => (
   <group position={[0, 0, -0.6]}>
     <mesh position={[0, 1.1, -0.05]}><RB args={[1.2, 2.3, 0.08]} /><meshStandardMaterial color="#3b2d5c" roughness={0.8} /></mesh>
@@ -190,6 +222,7 @@ export const LieShot = ({spec, beat, dur, sec, seed, fpsRatio = 1, calStops = 0}
   const setNode = spec.set === 'Hallway' ? <Hallway /> : Set ? <Set {...(spec.setProps ?? {})} {...(spec.set === 'Bathroom' ? {flicker: flick} : {})} /> : null;
   return (
     <AbsoluteFill>
+      <AbsoluteFill style={{transform: weave(sec)}}>
       <Stage cam={cam} focus={focus} grade={spec.grade} flash={spec.flash ?? 0} exposure={(spec.exposure ?? 1.05) * Math.pow(2, calStops)}>
         <Lights preset={spec.light} keyPos={spec.keyPos} keyI={spec.flicker ? undefined : undefined} />
         {setNode}
@@ -206,6 +239,8 @@ export const LieShot = ({spec, beat, dur, sec, seed, fpsRatio = 1, calStops = 0}
         {spec.extra === 'jar' && <group position={[-0.35, 0.79, 0.05]}><CookieJar /></group>}
         {spec.extra === 'phoneDesk' && <group position={[0.55, 0.64, -2.32]} rotation={[-1.2, 0, 0]}><Phone text="5 MORE MIN?" /></group>}
       </Stage>
+      </AbsoluteFill>
+      <FilmLook sec={sec} grade={spec.grade} />
       {(spec.meters ?? []).map((m, i) => {
         const p = typeof m.on === 'number' ? headOf(spec.cast[m.on]) : m.on;
         const top: [number, number, number] = [p[0], p[1] + 0.62 * (typeof m.on === 'number' ? CAST[spec.cast[m.on].who].scale : 1), p[2]];

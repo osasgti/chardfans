@@ -10,7 +10,7 @@ export const RES = Number((getInputProps() as {res?: number}).res ?? 1);
 import {useThree} from '@react-three/fiber';
 import {SoftShadows, ContactShadows, Environment, Lightformer} from '@react-three/drei';
 import {EffectComposer, N8AO, DepthOfField, Bloom, Vignette, ChromaticAberration, HueSaturation, BrightnessContrast} from '@react-three/postprocessing';
-import {ACESFilmicToneMapping, Vector2, Vector3} from 'three';
+import {ACESFilmicToneMapping, Vector2, Vector3, Quaternion, Color, DoubleSide, AdditiveBlending} from 'three';
 import {C, W, H, NEAR, FAR} from '../style/tokens';
 import {LIGHTS, GRADES, Grade} from '../style/presets';
 
@@ -32,9 +32,26 @@ export const handheld = (cam: Cam, frame: number, seed: string): Cam => {
     target: [cam.target[0] + Math.sin(t * 0.5 + b) * 0.006, cam.target[1] + Math.sin(t * 0.61 + a) * 0.005, cam.target[2]]};
 };
 
+const Beam = ({from, to, color, opacity}: {from: [number, number, number]; to: [number, number, number]; color: string; opacity: number}) => {
+  const a = new Vector3(...from), b = new Vector3(...to), len = a.distanceTo(b);
+  const mid = a.clone().add(b).multiplyScalar(0.5);
+  const q = new Quaternion().setFromUnitVectors(new Vector3(0, 1, 0), a.clone().sub(b).normalize());
+  return (
+    <mesh position={mid.toArray()} quaternion={q} renderOrder={5}>
+      <cylinderGeometry args={[0.05, len * 0.42, len, 32, 1, true]} />
+      <shaderMaterial transparent depthWrite={false} side={DoubleSide} blending={AdditiveBlending} fog={false}
+        uniforms={{uColor: {value: new Color(color)}, uOp: {value: opacity}}}
+        vertexShader={`varying vec2 vUv; varying vec3 vN; varying vec3 vV; void main(){ vUv=uv; vec4 mv=modelViewMatrix*vec4(position,1.0); vN=normalize(normalMatrix*normal); vV=normalize(-mv.xyz); gl_Position=projectionMatrix*mv; }`}
+        fragmentShader={`uniform vec3 uColor; uniform float uOp; varying vec2 vUv; varying vec3 vN; varying vec3 vV;
+          void main(){ float edge = pow(abs(dot(vN, vV)), 2.0); float along = smoothstep(0.0, 0.25, vUv.y) * (0.35 + 0.65 * vUv.y);
+          gl_FragColor = vec4(uColor * edge * along * uOp, 1.0); }`} />
+    </mesh>
+  );
+};
+
 /** preset → LIGHTS (style/presets.ts). keyColor/keyI override the preset. `env` dims reflections for dark scenes. */
-export const Lights = ({preset = 'hallway', keyColor, keyI, keyPos = [-3.5, 5.5, 4], extra}: {
-  preset?: string; keyColor?: string; keyI?: number; keyPos?: [number, number, number]; extra?: React.ReactNode;
+export const Lights = ({preset = 'hallway', keyColor, keyI, keyPos = [-3.5, 5.5, 4], extra, beam = 0.16}: {
+  preset?: string; keyColor?: string; keyI?: number; keyPos?: [number, number, number]; extra?: React.ReactNode; beam?: number;
 }) => {
   const L = LIGHTS[preset] ?? LIGHTS.hallway;
   const kc = keyColor ?? L.key, ki = keyI ?? L.keyI;
@@ -51,6 +68,9 @@ export const Lights = ({preset = 'hallway', keyColor, keyI, keyPos = [-3.5, 5.5,
     <pointLight position={[0, 0.15, 1.2]} intensity={2.2} decay={1.8} color="#ff9a5c" />
     {/* kicker: subtle magenta on the shadow side */}
     <pointLight position={[-2.5, 1.4, -1.5]} intensity={2.5} decay={1.8} color="#ff6fd0" />
+    {/* fake volumetric beam from the key (backlog #63): additive cone, fades along its length and at its edges.
+        Pure shader, no time uniforms → deterministic. Fog makes it read. */}
+    {beam > 0 && <Beam from={keyPos} to={[0, 0.6, 0]} color={kc} opacity={beam} />}
     {!FAST && <SoftShadows size={18} samples={12} focus={0.6} />}
     <ContactShadows position={[0, 0.003, 0]} opacity={0.5} scale={10} blur={2.5} far={1.2} resolution={FAST ? 512 : 1024} frames={1} color="#120a1c" />
     {/* reflections for clearcoat heads + gold (no download: Lightformers only) */}
@@ -84,6 +104,8 @@ export const Stage = ({cam, focus, children, grade = 'wonder', flash = 0, exposu
   <ThreeCanvas width={W} height={H} dpr={RES} shadows="soft" camera={{fov: cam.fov, near: NEAR, far: FAR, position: cam.pos}}
     gl={{antialias: false, preserveDrawingBuffer: true, toneMapping: ACESFilmicToneMapping, toneMappingExposure: exposure ?? 1.05}}>
     <CameraApply cam={cam} />
+    {/* eye light (backlog #66): tiny, shadowless light at the lens so every eye gets a catch-light */}
+    <pointLight position={cam.pos} intensity={0.9} decay={2} color="#fff4e8" />
     {children}
     <PostFX focus={focus} g={GRADES[grade] ?? GRADES.wonder} flash={flash} />
   </ThreeCanvas>
