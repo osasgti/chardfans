@@ -18,4 +18,4 @@ for i, c in enumerate(cues):
     if i + 1 < len(cues): en = min(en, cues[i + 1][0]['start'] - 0.02)
     out.append(f"{i + 1}\n{ts(st)} --> {ts(en)}\n{' '.join(x['text'] for x in c)}\n")
 dst = sys.argv[2] if len(sys.argv) > 2 else os.path.join(ROOT, 'out/lie-meter_captions.srt')
-open(dst, 'w').write('\n'.join(out)); print(len(out), 'cues →', dst)
+open(dst, 'w', encoding='utf-8').write('\n'.join(out)); print(len(out), 'cues ->', dst)
