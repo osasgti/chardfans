@@ -76,6 +76,9 @@ scripts/
   promise_sketch.py        ✅ 20 s SFX+music sketch of the Promise Threads hook → out/promise_sound_sketch.wav
   vo_consistency.py        ✅ per-take level + voicing ratio, flags whispered/breathy TTS takes (§54.1)
   validate_shots.mjs       ✅ shot cast-reference validator (npm run validate)
+  audit_shots.mjs          ✅ geometric audit of every shot, same maths as the renderer: BLUR/CROP/BACK/CLIP/THREAD/EMPTY (npm run audit, `--old` = old focus rule) (§58)
+  still_cal.py             ✅ one GPU still per shot → luma per shot → exposure_cal.json + labelled contact sheets, no full render needed (npm run calibrate) (§58)
+  finish.py                ✅ final assembly: patches GPU dropout frames + two-pass −14 LUFS master + verification (called by render_chunks.sh) (§57.1)
   determinism.sh           ✅ same frame twice → identical hash
   render_chunks.sh         ✅ crash-safe chunked render (480-frame chunks, res=scale automatically) + concat + master (§53)
 public/
@@ -98,11 +101,12 @@ src/
   three/RB.tsx             ✅ bevelled drop-in for <boxGeometry> (every box in the sets uses it)
   three/LieSets.tsx        ✅ Bedroom, Kitchen(+dining), Classroom, Gym(casino night), Cafeteria(saved-seat backpack), Bathroom(+mirror), Void, Street, Rooftop,
                               props (Phone, CerealBox, CookieJar, Card, ChipStack), canvas-texture 3D Text      🔲 Stadium
+  lie/camera.ts            ✅ pure camera/cast/focus maths (CAST, headOf, camFor, focusPlan, projectCam…) shared by engine.tsx and audit_shots.mjs
   lie/                     ✅ the 5-minute video: engine.tsx (data → shot), shots.ts (76 shots), LieMeter.tsx,
                               LieVideo.tsx (sequencing, VO, music, ambience, cues, captions), timeline.json (generated),
                               reactions.ts (7 acted reactions: doubleTake/gulp/shrug/facepalm/deflate/celebrate/smugNod), ReactTest.tsx + ThreadTest.tsx (dev comps), engine helpers wristR/chestOf (thread anchors)
   promise/                 ✅ Promise Threads video: shots.ts (65 shots, `threads` spec), PromiseVideo.tsx (sequencing, VO, music, thread SFX derived from shots,
-                              Kai-wrist-before-twist validator), timeline.json (generated). Composition id `PromiseThreads`
+                              Kai-wrist-before-twist validator), timeline.json (generated), exposure_cal.json (still_cal.py). Composition id `PromiseThreads`
   three/props/             🔲 Coin (now inline in S02), Dice, Cards, Alarm, Vending, Roulette (§40)
   overlay/Overlays.tsx     ✅ project(), Title, Tag, OddsBadge, Letterbox
   overlay/Transitions.tsx  ✅ DipToBlack, WhipStreak, Flash
@@ -1608,6 +1612,31 @@ Promise Threads showed where the look still breaks. Each item is a rule plus how
 ### 57.3 Release checklist (copy into every video's done list)
 `npm run typecheck` · multi-frame backend test · 5 preview stills · chunked render · `luma_qa.py` (0 flashes) · `ebur128` (−14 ±1 LUFS, peak ≤ −1)
 · blackdetect (planned only) · 10 moments viewed · thumbnail composition · SRT (`make_srt.py <timeline> <out>`) · releases/ (files < 100 MB).
+
+---
+
+## 58. "Sometimes too blurry, sometimes weird": root causes and fixes (Nov 22 audit)
+
+Measured with `scripts/audit_shots.mjs` (every shot of both videos at start / middle / end) and `scripts/still_cal.py`
+(one GPU still per shot). Every number below came from those tools.
+
+| Symptom | Root cause | Fix (where) |
+|---|---|---|
+| **Faces blurry in some shots** | postprocessing's DOF blur is `smoothstep(0, range, |depth − focus|)`: it starts *at once*. The fixed `focalLength 0.03` (1.2 m) left a face fully crisp only within ±0.3 m, so in wides anyone half a step off the subject went soft. **19/66 Promise and 18/76 Lie Meter shots** had a visible face out of focus. | `focusPlan()` in `src/lie/camera.ts`: range = 4 × the depth span of all in-picture faces (+0.3 m head radius), so every visible face has blur ≤ 0.15 and backgrounds still melt. Now 0 / 0. |
+| **Point-aimed shots focused on nothing** | `cam.on` a point (hand, seat, sky) → focus on that point, faces near it blurred. | `focusPlan` picks the in-picture face nearest the screen centre when it's near the aim depth; `focusOn` overrides per shot. |
+| **Mirror shots blurry** | focus on the real head (back of head) while the viewer looks at the reflection ~2 m further. | `focusPlan` focuses the reflected face (`mirrorOf`). |
+| **Wides murky / near-black** | fog was fixed per preset (void `[4, 12]`): a wide camera at 7 m and an EWS at 11 m fogged the *subject* 40–90 %. | Fog now starts 1 m behind the subject (`Lights subjectDepth`). P035 luma 5 → 21. |
+| **Dark void beats unreadable** | the void's one top spot lights the origin only; characters off-centre stood in the dark. | Every void character gets a soft pool light + floor glow (engine, §57.2 rule 2). |
+| **Threads hatching across faces** | swarm/xray lines drawn in front of (or, xray, behind) the head. | `ThreadSwarm` face exclusion in screen space (`camPos` + `faces`, incl. mirror faces). |
+| **Thread ending in a face** (P004/P005) | alarm thread aimed at the sleeping head, not the chest. | end point moved to the chest. Audit `THREAD` check catches this class. |
+| **Per-shot exposure never worked** ("exposure changes did nothing", §56) | `toneMappingExposure` was passed in `gl={{…}}`, but it is not a WebGLRenderer constructor option, so it was silently ignored: every `exposure:` and every calibration value in both videos had no effect. | Setting `gl.toneMappingExposure` on the renderer is *also* ignored (the EffectComposer renders through its own buffers). Fixed with an `ExposureEffect` in the post chain (`Stage.tsx`), placed **after DepthOfField and before Bloom**: placed first, it broke the DOF depth input and blurred every face (A/B verified on P043). Verified: P024 luma 98 → 72 at −0.98 stops. Re-calibrate the Lie Meter (`exposure_cal.json` there was computed while this was broken). |
+| **Brightness jumping between cuts** (luma 5…98) | exposure calibration existed only for the Lie Meter. | `still_cal.py` + `src/promise/exposure_cal.json` wired into `PromiseVideo`. |
+| **Single white frames** | parallel GPU rendering drops a frame now and then. | `finish.py` (in `render_chunks.sh`) detects and patches them before mastering. |
+| **Master 2 dB hot / clipping** | `alimiter` auto make-up gain (`level=1` default). | `level=0` everywhere (`finish.py`, `npm run master`). |
+
+**Workflow from now on (before any full render):** `npm run typecheck` → `npm run audit` (must print 0 issues, or each one is
+marked with `intent`) → `npm run calibrate` (writes exposure, then run it again with `--measure-only` and check the sheets in
+`out/cal_promise/`) → render. Mark deliberate exceptions on the shot: `intent: ['back']` for a seen-from-behind subject.
 
 ---
 

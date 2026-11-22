@@ -149,7 +149,21 @@ export const Thread = ({from, to, state, t, thickness = 0.01, seed, light = true
 
 /** "Hundreds" of thin threads radiating from one wrist (one draw call). Directions and lengths are seeded. */
 /** xray: draw through walls (P033: "out through walls in every direction"). */
-export const ThreadSwarm = ({from, n = 120, t, seed, grey = 0.85, xray = false}: {from: V3; n?: number; t: number; seed: string; grey?: number; xray?: boolean}) => {
+/** Face exclusion (CLAUDE.md §57.2 rule 1): with `camPos` + `faces`, segments that would be drawn over a face (screen-space, so it
+ *  also works for xray lines behind the head) are dropped. The reveal's threads then frame the face instead of hatching across it. */
+const overFace = (p: number[], cam: V3 | undefined, faces: V3[]) => {
+  if (!cam) return false;
+  for (const f of faces) {
+    const fx = f[0] - cam[0], fy = f[1] - cam[1], fz = f[2] - cam[2], fd = Math.hypot(fx, fy, fz);
+    const px = p[0] - cam[0], py = p[1] - cam[1], pz = p[2] - cam[2];
+    const t = (px * fx + py * fy + pz * fz) / fd;                       // depth of p along the camera→face ray
+    if (t <= 0.05) continue;
+    const perp = Math.hypot(px - fx * t / fd, py - fy * t / fd, pz - fz * t / fd);
+    if (perp * (fd / t) < 0.5) return true;                             // within ~1.2 head radii of the face, as seen from the lens
+  }
+  return false;
+};
+export const ThreadSwarm = ({from, n = 120, t, seed, grey = 0.85, xray = false, camPos, faces = []}: {from: V3; n?: number; t: number; seed: string; grey?: number; xray?: boolean; camPos?: V3; faces?: V3[]}) => {
   const {pos, col} = useMemo(() => {
     const pos: number[] = [], col: number[] = [], g = new Color(GREY), go = new Color(GOLD);
     for (let k = 0; k < n; k++) {
@@ -161,16 +175,20 @@ export const ThreadSwarm = ({from, n = 120, t, seed, grey = 0.85, xray = false}:
         const u0 = i / seg, u1 = (i + 1) / seg;
         const p = (u0r: number) => { const u = 0.04 + u0r * 0.96; return [from[0] + dir.x * L * u, from[1] + dir.y * L * u - sagK * Math.sin(u * Math.PI) * L * 0.1, from[2] + dir.z * L * u]; };
         const f0 = 1 - 0.8 * u0, f1 = 1 - 0.8 * u1;   // far end fades into the fog (additive: darker = dimmer)
-        pos.push(...p(u0), ...p(u1)); col.push(c.r * f0, c.g * f0, c.b * f0, c.r * f1, c.g * f1, c.b * f1);
+        const a0 = p(u0), a1 = p(u1);
+        if (overFace(a0, camPos, faces) || overFace(a1, camPos, faces)) continue;
+        pos.push(...a0, ...a1); col.push(c.r * f0, c.g * f0, c.b * f0, c.r * f1, c.g * f1, c.b * f1);
       }
     }
     return {pos, col};
-  }, [from[0], from[1], from[2], n, seed, grey]);
+  }, [from[0], from[1], from[2], n, seed, grey, camPos?.[0], camPos?.[1], camPos?.[2], faces.map((f) => f.join(',')).join('|')]);
   const geo = useMemo(() => { const b = new BufferGeometry(); b.setAttribute('position', new Float32BufferAttribute(pos, 3)); b.setAttribute('color', new Float32BufferAttribute(col, 3)); return b; }, [pos, col]);
   // a few thick near threads in front of the hair-thin mass give the swarm depth layers (near / mid / far)
   const near = Array.from({length: Math.min(9, Math.round(n / 20))}, (_, k) => {
     const az = Math.PI * 0.5 + (random(seed + 'na' + k) - 0.5) * 2.2, el = (random(seed + 'ne' + k) - 0.4) * 0.9, L = 2.2 + random(seed + 'nl' + k) * 2;
     const to: V3 = [from[0] + Math.cos(az) * L, from[1] + Math.sin(el) * L * 0.6, from[2] + Math.abs(Math.sin(az)) * L * 0.8];
+    const mid = [(from[0] + to[0]) / 2, (from[1] + to[1]) / 2, (from[2] + to[2]) / 2];
+    if (overFace(mid, camPos, faces) || overFace(to, camPos, faces)) return null;
     return <Tube key={k} curve={makeCurve(from, to, 0.25, t, seed + 'n' + k)} r={0.007} color={random(seed + 'nc' + k) < grey ? GREY : GOLD} i={0.9} t={t} seed={seed + 'n' + k} pulse={0.3} />;
   });
   return <group>

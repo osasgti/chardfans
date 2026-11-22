@@ -100,7 +100,7 @@ export const SHOTS: ShotSpec[] = [
     meters: [{on: 0, value: 2, small: true}, {on: 1, value: 88, small: true, delay: 12}, {on: 2, value: 5, small: true, delay: 24}, {on: 3, value: 61, small: true, delay: 36}]},
   {line: 'L015c', w: 0.7, set: 'Hallway', light: 'hallway', grade: 'triumph', cam: {on: 0, size: 'cu', yaw: 10, move: 'push'},
     cast: [hero([0, 0], {expr: 'smug', tilt: 8})]},
-  {line: 'L015d', set: 'Rooftop', light: 'rooftop', grade: 'wonder', keyPos: [3, 3, -8], cam: {on: 0, size: 'wide', yaw: 25, pitch: 4, move: 'orbitL', amount: 1.6},
+  {line: 'L015d', intent: ['back'], set: 'Rooftop', light: 'rooftop', grade: 'wonder', keyPos: [3, 3, -8], cam: {on: 0, size: 'wide', yaw: 25, pitch: 4, move: 'orbitL', amount: 1.6},
     cast: [hero([0, -1.1], {rot: 180, expr: 'smug'})]},
   {line: 'L015d', set: 'Rooftop', light: 'rooftop', grade: 'wonder', keyPos: [3, 3, -8], keyI: 22, exposure: 0.9, cam: {on: 0, size: 'cu', yaw: 160, pitch: 2, move: 'push'},
     cast: [hero([0, -1.1], {rot: 180, expr: 'smug', turn: 25})]},

@@ -13,11 +13,31 @@ import {EffectComposer, N8AO, DepthOfField, Bloom, Vignette, ChromaticAberration
 import {ACESFilmicToneMapping, Vector2, Vector3, Quaternion, Color, DoubleSide, AdditiveBlending} from 'three';
 import {C, W, H, NEAR, FAR} from '../style/tokens';
 import {LIGHTS, GRADES, Grade} from '../style/presets';
+import {Effect, BlendFunction} from 'postprocessing';
+import {Uniform} from 'three';
+
+/** Scene exposure inside the post chain (CLAUDE.md §58). Renderer toneMappingExposure never reaches the image when an
+ *  EffectComposer renders through its own buffers, so per-shot exposure / calibration is applied here: a plain multiply of the
+ *  linear HDR colour, AFTER DepthOfField and before Bloom: first in the chain it broke the DOF depth input and blurred every face (§58). */
+class ExposureEffect extends Effect {
+  constructor(exposure = 1) {
+    super('ExposureEffect', 'uniform float exposure; void mainImage(const in vec4 inputColor, const in vec2 uv, out vec4 outputColor) { outputColor = vec4(inputColor.rgb * exposure, inputColor.a); }',
+      {blendFunction: BlendFunction.NORMAL, uniforms: new Map([['exposure', new Uniform(exposure)]])});
+  }
+}
+const Exposure = ({value}: {value: number}) => {
+  const fx = React.useMemo(() => new ExposureEffect(value), []);
+  (fx.uniforms.get('exposure') as Uniform).value = value;
+  return <primitive object={fx} dispose={null} />;
+};
 
 export type Cam = {pos: [number, number, number]; target: [number, number, number]; fov: number};
 
-const CameraApply = ({cam}: {cam: Cam}) => {
-  const {camera} = useThree();
+const CameraApply = ({cam, exposure}: {cam: Cam; exposure: number}) => {
+  const {camera, gl} = useThree();
+  // toneMappingExposure is NOT a WebGLRenderer constructor option: passing it in `gl={{…}}` was silently ignored, so every
+  // per-shot exposure / calibration value had no effect (CLAUDE.md §58). Set it on the renderer every frame instead.
+  gl.toneMappingExposure = 1; void exposure;   // applied by <Exposure> in PostFX instead
   camera.position.set(...cam.pos);
   camera.lookAt(new Vector3(...cam.target));
   (camera as any).fov = cam.fov; camera.near = NEAR; camera.far = FAR;
@@ -50,8 +70,8 @@ const Beam = ({from, to, color, opacity}: {from: [number, number, number]; to: [
 };
 
 /** preset → LIGHTS (style/presets.ts). keyColor/keyI override the preset. `env` dims reflections for dark scenes. */
-export const Lights = ({preset = 'hallway', keyColor, keyI, keyPos = [-3.5, 5.5, 4], extra, beam}: {
-  preset?: string; keyColor?: string; keyI?: number; keyPos?: [number, number, number]; extra?: React.ReactNode; beam?: number;
+export const Lights = ({preset = 'hallway', keyColor, keyI, keyPos = [-3.5, 5.5, 4], extra, beam, subjectDepth = 0}: {
+  preset?: string; keyColor?: string; keyI?: number; keyPos?: [number, number, number]; extra?: React.ReactNode; beam?: number; subjectDepth?: number;
 }) => {
   const L = LIGHTS[preset] ?? LIGHTS.hallway;
   // the beam needs a motivated indoor source; on exteriors/void/bathroom it read as grey haze over half the frame (check, Nov 18)
@@ -82,16 +102,18 @@ export const Lights = ({preset = 'hallway', keyColor, keyI, keyPos = [-3.5, 5.5,
       <Lightformer form="rect" intensity={1.5} color={C.fillCool} position={[4, 1.5, 1]} scale={[1, 4, 1]} />
       <Lightformer form="rect" intensity={0.6} color="#ffffff" position={[0, 6, 0]} rotation-x={Math.PI / 2} scale={[6, 6, 1]} />
     </Environment>
-    <fog attach="fog" args={[L.bg, L.fog[0], L.fog[1]]} />
+    {/* fog starts just behind the subject: fixed fog fogged wides 40–90% (a 7 m camera into fog [4, 12] = murky subject). */}
+    <fog attach="fog" args={[L.bg, L.fog[0] + Math.max(0, subjectDepth + 1 - L.fog[0]), L.fog[1] + Math.max(0, subjectDepth + 1 - L.fog[0])]} />
     <color attach="background" args={[L.bg]} />
   </>
   );
 };
 
-export const PostFX = ({focus, g = GRADES.wonder, flash = 0}: {focus: number; g?: Grade; flash?: number}) => (
+export const PostFX = ({focus, range = 0.03, g = GRADES.wonder, flash = 0, exposure = 1}: {focus: number; range?: number; g?: Grade; flash?: number; exposure?: number}) => (
   <EffectComposer multisampling={FAST ? 0 : 4}>
     {!FAST ? <N8AO aoRadius={0.6} distanceFalloff={1} intensity={2.2} color="#1a1030" /> : <></>}
-    <DepthOfField focusDistance={focus} focalLength={0.03} bokehScale={3} />
+    <DepthOfField focusDistance={focus} focalLength={range} bokehScale={3} />
+    <Exposure value={exposure} />
     <Bloom intensity={g.bloom + flash * 0.4} luminanceThreshold={0.72} luminanceSmoothing={0.2} mipmapBlur />
     <ChromaticAberration offset={new Vector2(g.ca * (1 + flash * 2), g.ca * 0.75 * (1 + flash * 2))} radialModulation modulationOffset={0.3} />
     <HueSaturation saturation={g.saturation} />
@@ -101,15 +123,15 @@ export const PostFX = ({focus, g = GRADES.wonder, flash = 0}: {focus: number; g?
   </EffectComposer>
 );
 
-export const Stage = ({cam, focus, children, grade = 'wonder', flash = 0, exposure}: {
-  cam: Cam; focus: number; children: React.ReactNode; grade?: string; flash?: number; exposure?: number;
+export const Stage = ({cam, focus, focusRange, children, grade = 'wonder', flash = 0, exposure}: {
+  cam: Cam; focus: number; focusRange?: number; children: React.ReactNode; grade?: string; flash?: number; exposure?: number;
 }) => (
   <ThreeCanvas width={W} height={H} dpr={RES} shadows="soft" camera={{fov: cam.fov, near: NEAR, far: FAR, position: cam.pos}}
-    gl={{antialias: false, preserveDrawingBuffer: true, toneMapping: ACESFilmicToneMapping, toneMappingExposure: exposure ?? 1.05}}>
-    <CameraApply cam={cam} />
+    gl={{antialias: false, preserveDrawingBuffer: true, toneMapping: ACESFilmicToneMapping}}>
+    <CameraApply cam={cam} exposure={exposure ?? 1.05} />
     {/* eye light (backlog #66): tiny, shadowless light at the lens so every eye gets a catch-light */}
     <pointLight position={cam.pos} intensity={0.9} decay={2} color="#fff4e8" />
     {children}
-    <PostFX focus={focus} g={GRADES[grade] ?? GRADES.wonder} flash={flash} />
+    <PostFX focus={focus} range={focusRange} exposure={exposure ?? 1.05} g={GRADES[grade] ?? GRADES.wonder} flash={flash} />
   </ThreeCanvas>
 );

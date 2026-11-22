@@ -27,5 +27,6 @@ done
 # video chunks are muted; audio renders once in one pass (no AAC seams at chunk joins)
 ffmpeg -v error -y -f concat -safe 0 -i "$D/list.txt" -c copy "$D/video.mp4"
 [ -s "$D/audio.wav" ] || npx remotion render out/bundle_$COMP "$COMP" "$D/audio.wav" --codec=wav --props="$PROPS" --timeout=240000 "${EXTRA[@]}" >"$D/log_audio.txt" 2>&1
-ffmpeg -v error -y -i "$D/video.mp4" -i "$D/audio.wav" -map 0:v -map 1:a -c:v copy -af "acompressor=threshold=-18dB:ratio=3:attack=10:release=150,loudnorm=I=-14:TP=-1.5:LRA=9,alimiter=limit=0.84:level=0" -ar 48000 -c:a aac -b:a 320k "$OUT"
+# dropout-frame patch + two-pass −14 LUFS master + verification (scripts/finish.py, CLAUDE.md §57.1)
+"${PY:-python3}" scripts/finish.py "$D/video.mp4" "$D/audio.wav" "$OUT"
 echo "DONE → $OUT"

@@ -8,6 +8,7 @@ import React from 'react';
 import {AbsoluteFill, Audio, Sequence, staticFile, useCurrentFrame, useVideoConfig, interpolate} from 'remotion';
 import {LieShot, Line, ShotSpec} from '../lie/engine';
 import timeline from './timeline.json';
+import CAL from './exposure_cal.json';
 import {SHOTS} from './shots';
 import {Captions} from '../overlay/Captions';
 import {Letterbox} from '../overlay/Overlays';
@@ -83,7 +84,9 @@ const THREAD_CUES: [number, string, number, number][] = P_SHOT_TIMES.flatMap((t)
 
 const ShotSeq = ({t}: {t: Timed}) => {
   const frame = useCurrentFrame(), {fps} = useVideoConfig(), r = fps / 30;
-  return <LieShot spec={SHOTS[t.i]} beat={frame / r} dur={t.durSec * 30} sec={t.startSec + frame / fps} seed={'p' + t.i} fpsRatio={r} lines={P_LINES} />;
+  const spec = SHOTS[t.i], k = SHOTS.filter((s) => s.line === spec.line).indexOf(spec);
+  const calStops = ((CAL as Record<string, number[]>)[spec.line] ?? [])[k] ?? 0;   // scripts/still_cal.py (§52.1)
+  return <LieShot spec={spec} beat={frame / r} dur={t.durSec * 30} sec={t.startSec + frame / fps} seed={'p' + t.i} fpsRatio={r} lines={P_LINES} calStops={calStops} />;
 };
 
 export const PromiseVideo = () => {

@@ -17,6 +17,9 @@ import {Tag, Title} from '../overlay/Overlays';
 import {C, W, H, ease, focusFor, NEAR, FAR} from '../style/tokens';
 import {LieMeter} from './LieMeter';
 import timeline from './timeline.json';
+import {CAST, CastSpec, Who, Pose, Prop, Size, Move, V3, wristR, chestOf, headOf, camFor, projectCam, focusPlan, deg} from './camera';
+export {CAST, wristR, chestOf, headOf, camFor, projectCam, focusPlan};
+export type {CastSpec, Who, Pose, Prop, Size, Move};
 import {Thread, ThreadSwarm, ThreadState} from '../three/Thread';
 
 export type Line = {id: string; act: string; text: string; start: number; end: number; audio: string | null; words: {text: string; start: number; end: number}[]};
@@ -24,55 +27,7 @@ export const LINES = timeline.lines as Line[];
 export const TOTAL = timeline.total as number;
 export const lineById = (id: string) => LINES.find((l) => l.id === id)!;
 
-/* ───────────── cast ───────────── */
-export type Who = 'hero' | 'mom' | 'brother' | 'maya' | 'dad' | 'teacher' | 'lucky' | 'dealer' | 'driver' | 'kidA' | 'kidB' | 'kidC' | 'kidD' | 'girl' | 'fig' | 'young' | 'grandma';
-type Look = {hoodie: string; hair: Hair; hairColor: string; glasses?: boolean; scale: number; expr: Expr};
-export const CAST: Record<Who, Look> = {
-  hero:    {hoodie: '#c8323a', hair: 'beanie',   hairColor: '#1b1622', scale: 1,    expr: 'smug'},
-  mom:     {hoodie: '#d29a2d', hair: 'bun',      hairColor: '#4a2e20', scale: 1.1,  expr: 'happy'},
-  brother: {hoodie: '#3d6fd6', hair: 'capBack',  hairColor: '#2f8f8a', scale: 0.8,  expr: 'neutral'},
-  maya:    {hoodie: '#2f8f8a', hair: 'ponytail', hairColor: '#2a1a12', scale: 0.98, expr: 'neutral'},
-  dad:     {hoodie: '#6b6f7a', hair: 'none',     hairColor: '#000',    scale: 1.12, expr: 'worried', glasses: true},
-  teacher: {hoodie: '#8a6fb0', hair: 'bob',      hairColor: '#3a2418', scale: 1.08, expr: 'bored'},
-  lucky:   {hoodie: '#2f8f8a', hair: 'capBack',  hairColor: '#c8323a', scale: 1,    expr: 'happy'},
-  dealer:  {hoodie: '#1b1622', hair: 'visor',    hairColor: '#2f8f8a', scale: 1.05, expr: 'smug'},
-  driver:  {hoodie: '#3f5466', hair: 'cap',      hairColor: '#1b1622', scale: 1.1,  expr: 'happy'},
-  kidA:    {hoodie: '#d29a2d', hair: 'cap',      hairColor: '#3d6fd6', scale: 0.97, expr: 'neutral'},
-  kidB:    {hoodie: '#c84a8a', hair: 'bob',      hairColor: '#2a1a12', scale: 0.95, expr: 'happy'},
-  kidC:    {hoodie: '#5aa05a', hair: 'none',     hairColor: '#000',    scale: 1.02, expr: 'neutral', glasses: true},
-  kidD:    {hoodie: '#e07a3a', hair: 'beanie',   hairColor: '#3b2d5c', scale: 0.99, expr: 'neutral'},
-  girl:    {hoodie: '#e35d8f', hair: 'ponytail', hairColor: '#6e4630', scale: 0.96, expr: 'neutral'},
-  young:   {hoodie: '#c8323a', hair: 'none',     hairColor: '#000',    scale: 0.7,  expr: 'happy'},
-  grandma: {hoodie: '#9a6fb0', hair: 'bun',      hairColor: '#cfc8d8', scale: 1.0,  expr: 'happy', glasses: true},
-  fig:     {hoodie: '#55506a', hair: 'none',     hairColor: '#000',    scale: 1,    expr: 'neutral'},
-};
-export type Pose = 'idle' | 'cheer' | 'point' | 'phone' | 'sit' | 'sleep' | 'slump' | 'hold' | 'shrug' | 'run';
-export type Prop = 'phone' | 'phoneText' | 'card' | 'cookie' | 'pan';
-export type CastSpec = {who: Who; id?: string; pos: [number, number]; rot?: number; expr?: Expr; pose?: Pose; talk?: boolean; hold?: Prop; turn?: number; tilt?: number; y?: number; react?: Reaction; reactAt?: number};
-
-/** Thread anchors (WHAT_IF_PROMISE_THREADS §6.2): right hand and chest in world space, from the same maths as Pill.tsx.
- *  Pill arm: pivot (±0.27, 0.93), hand at (0, −0.5) after rotating z by side·(0.12 + arm). Body is scaled then rotated by rotY. */
-const toWorld = (c: CastSpec, lx: number, ly: number, lz: number): [number, number, number] => {
-  const s = CAST[c.who].scale, r = (c.rot ?? 0) * deg, x = lx * s, y = ly * s, z = lz * s;
-  return [c.pos[0] + x * Math.cos(r) + z * Math.sin(r), (c.y ?? 0) + y, c.pos[1] - x * Math.sin(r) + z * Math.cos(r)];
-};
-export const wristR = (c: CastSpec, armR = 0.15): [number, number, number] => {
-  const th = 0.12 + armR;
-  return toWorld(c, 0.27 + 0.5 * Math.sin(th), 0.93 - 0.5 * Math.cos(th), 0.04);
-};
-export const chestOf = (c: CastSpec): [number, number, number] => toWorld(c, 0, 0.8, 0.2);
-
-/** head centre in world space (used by camera + meter) */
-export const headOf = (c: CastSpec): [number, number, number] => {
-  const s = CAST[c.who].scale;
-  if (c.pose === 'sleep') return [c.pos[0], 0.7, c.pos[1] - 1.53 * s];
-  const sit = c.pose === 'sit' ? -0.28 : 0;
-  return [c.pos[0], (c.y ?? 0) + sit + 1.53 * s, c.pos[1]];
-};
-
 /* ───────────── shot spec ───────────── */
-export type Size = 'ecu' | 'cu' | 'mcu' | 'med' | 'wide' | 'ews';
-export type Move = 'push' | 'pull' | 'orbitL' | 'orbitR' | 'crane' | 'drop' | 'lock' | 'dz' | 'truck' | 'snap';
 export type MeterSpec = {on: number | [number, number, number]; value: number; label?: string; mode?: 'normal' | 'mirror' | 'q' | 'fire' | 'fade'; delay?: number; from?: number; small?: boolean};
 /** Promise thread (WHAT_IF_PROMISE_THREADS §6). from/to: cast index (wrist → chest) or a world point. `at` = beat the state starts;
  *  `then` switches state later in the shot (e.g. held → burst). `swarm` draws n hair-thin threads from `from` instead. */
@@ -82,46 +37,10 @@ export type ShotSpec = {
   line: string; w?: number; set: string; setProps?: Record<string, unknown>; light: string; grade: string; keyPos?: [number, number, number]; keyI?: number;
   cam: {on: number | [number, number, number]; size: Size; yaw?: number; pitch?: number; move?: Move; amount?: number};
   cast: CastSpec[]; meters?: MeterSpec[]; tag?: string; title?: {words: string[]; emph?: number[]; y?: number; size?: number};
-  dust?: boolean; extra?: string; threads?: ThreadSpec[]; shake?: number; flash?: number; exposure?: number; mirror?: boolean; flicker?: boolean;
+  dust?: boolean; extra?: string; threads?: ThreadSpec[]; shake?: number; focusOn?: number | V3; intent?: string[]; flash?: number; exposure?: number; mirror?: boolean; flicker?: boolean;
 };
 
-const SIZE: Record<Size, [number, number]> = {ecu: [1.5, 20], cu: [3.4, 24], mcu: [3.6, 28], med: [4.4, 32], wide: [7.2, 38], ews: [11, 42]};
-const deg = Math.PI / 180;
 const E = Easing.bezier(0.45, 0, 0.2, 1);
-
-export const camFor = (spec: ShotSpec, k: number, beat: number, seed: string): Cam => {
-  const {cam} = spec;
-  const S = typeof cam.on === 'number' ? headOf(spec.cast[cam.on]) : cam.on;
-  const [d0, f0] = SIZE[cam.size];
-  let d = d0, fov = f0, yaw = (cam.yaw ?? 0) * deg, pitch = (cam.pitch ?? 4) * deg, lift = 0;
-  const a = cam.amount ?? 1;
-  switch (cam.move ?? 'push') {
-    case 'push': d = d0 * (1 - 0.16 * a * k); break;
-    case 'pull': d = d0 * (0.86 + 0.18 * a * k); break;
-    case 'orbitL': yaw += 14 * a * deg * k; break;
-    case 'orbitR': yaw -= 14 * a * deg * k; break;
-    case 'crane': pitch += (-14 + 20 * k) * a * deg; lift = -0.3 * (1 - k); break;
-    case 'drop': pitch += (22 - 18 * k) * a * deg; break;
-    case 'truck': yaw += (-10 + 20 * k) * a * deg; d = d0 * 1.05; break;
-    case 'snap': { const s = interpolate(k, [0, 0.12, 1], [0, 1, 1], {extrapolateRight: 'clamp'}); d = d0 * (1 - 0.25 * s); break; }
-    case 'dz': { // dolly-zoom: pull back while narrowing fov so the subject stays the same size
-      const dd = d0 * (0.85 + 0.6 * k); fov = 2 * Math.atan(Math.tan((f0 * deg) / 2) * (d0 * 0.85) / dd) / deg; d = dd; break; }
-    case 'lock': break;
-  }
-  const pos: [number, number, number] = [S[0] + d * Math.sin(yaw) * Math.cos(pitch), S[1] + lift + d * Math.sin(pitch), S[2] + d * Math.cos(yaw) * Math.cos(pitch)];
-  // headroom (master prompt F2/T1): the 2.39 letterbox hides ~25% of the height, so close sizes aim slightly ABOVE the head
-  // centre; the whole head then sits inside the visible band with a little room on top instead of cropping at the brows.
-  const ty = cam.size === 'cu' || cam.size === 'mcu' ? S[1] + 0.08 : S[1] - 0.04;
-  return handheld({pos, target: [S[0], ty, S[2]], fov}, beat, seed);
-};
-
-/** pure-math projection with a given camera (no render-order dependence) */
-export const projectCam = (cam: Cam, p: [number, number, number]) => {
-  const c = new PerspectiveCamera(cam.fov, W / H, NEAR, FAR);
-  c.position.set(...cam.pos); c.lookAt(new Vector3(...cam.target)); c.updateMatrixWorld(); c.updateProjectionMatrix();
-  const v = new Vector3(...p).project(c);
-  return {x: (v.x * 0.5 + 0.5) * W, y: (-v.y * 0.5 + 0.5) * H, visible: v.z < 1 && Math.abs(v.x) < 1.15 && Math.abs(v.y) < 1.15};
-};
 
 /* ───────────── speaking / poses ───────────── */
 /** Lip sync (backlog #6, #7): openness from the word envelope + a viseme from the letter being spoken.
@@ -258,8 +177,7 @@ export const LieShot = ({spec, beat, dur, sec, seed, fpsRatio = 1, calStops = 0,
   // impact shake (§35.2): 0.03 m, decays e^(−8t) over ~15 beats, two sines at different frequencies
   const sh = spec.shake !== undefined && beat >= spec.shake ? Math.exp(-8 * (beat - spec.shake) / 30) * 0.03 : 0;
   const cam = sh ? {...cam0, pos: [cam0.pos[0] + Math.sin(beat * 2.1) * sh, cam0.pos[1] + Math.sin(beat * 2.9 + 1) * sh * 0.7, cam0.pos[2]] as [number, number, number]} : cam0;
-  const S = typeof spec.cam.on === 'number' ? headOf(spec.cast[spec.cam.on]) : spec.cam.on;
-  const focus = focusFor(Math.hypot(cam.pos[0] - S[0], cam.pos[1] - S[1], cam.pos[2] - S[2]));
+  const fp = focusPlan(spec, cam);
   const line = lines.find((l) => l.id === spec.line);
   const Set = SETS[spec.set];
   const flick = spec.flicker ? (random('fl' + Math.floor(beat / 3)) > 0.82 ? 0.35 : 1) : 1;
@@ -267,8 +185,13 @@ export const LieShot = ({spec, beat, dur, sec, seed, fpsRatio = 1, calStops = 0,
   return (
     <AbsoluteFill>
       <AbsoluteFill style={{transform: weave(sec)}}>
-      <Stage cam={cam} focus={focus} grade={spec.grade} flash={spec.flash ?? 0} exposure={(spec.exposure ?? 1.05) * Math.pow(2, calStops)}>
-        <Lights preset={spec.light} keyPos={spec.keyPos} keyI={spec.keyI} />
+      <Stage cam={cam} focus={fp.focus} focusRange={fp.range} grade={spec.grade} flash={spec.flash ?? 0} exposure={(spec.exposure ?? 1.05) * Math.pow(2, calStops)}>
+        <Lights preset={spec.light} keyPos={spec.keyPos} keyI={spec.keyI} subjectDepth={fp.meters} />
+        {/* void: every character stands in its own soft pool of light (a dark scene still has a lit subject, CLAUDE.md §57.2 rule 2) */}
+        {spec.set === 'Void' && spec.cast.map((c, i) => { const h = headOf(c); return (<group key={'pool' + i}>
+          <pointLight position={[h[0], h[1] + 1.1, h[2] + 0.4]} intensity={4} distance={3.4} decay={2} color="#ffe2c0" />
+          <mesh position={[c.pos[0], 0.004, c.pos[1]]} rotation={[-Math.PI / 2, 0, 0]}><circleGeometry args={[0.9, 40]} /><meshBasicMaterial color="#6a5a9a" transparent opacity={0.22} depthWrite={false} toneMapped={false} /></mesh>
+        </group>); })}
         {setNode}
         {spec.dust !== false && <Dust frame={beat} n={FAST ? 30 : 60} />}
         {spec.cast.map((c, i) => {
@@ -285,7 +208,7 @@ export const LieShot = ({spec, beat, dur, sec, seed, fpsRatio = 1, calStops = 0,
           const end = (v: number | [number, number, number] | undefined, f: 'w' | 'c'): [number, number, number] =>
             typeof v === 'number' ? (f === 'w' ? wristR(spec.cast[v]) : chestOf(spec.cast[v])) : (v ?? [0, 1, 0]);
           const a = end(th.from, 'w');
-          if (th.swarm) return beat >= (th.at ?? 0) ? <ThreadSwarm key={'t' + i} from={a} n={th.swarm} t={sec} seed={seed + 'sw' + i} grey={th.grey ?? 0.85} xray={th.xray} /> : null;
+          if (th.swarm) return beat >= (th.at ?? 0) ? <ThreadSwarm key={'t' + i} from={a} n={th.swarm} t={sec} seed={seed + 'sw' + i} grey={th.grey ?? 0.85} xray={th.xray} camPos={cam.pos as V3} faces={[...spec.cast.map(headOf), ...(spec.mirror ? spec.cast.filter((c) => c.who === 'hero').map((c) => { const h = headOf(c); return [h[0], h[1], 2 * MIRROR_Z - h[2]] as V3; }) : [])]} /> : null;
           const late = th.then && beat >= th.then.at;
           const st = late ? th.then!.state : th.state, t0 = late ? th.then!.at : th.at ?? 0;
           if (beat < t0 && st === 'fresh') return null;
