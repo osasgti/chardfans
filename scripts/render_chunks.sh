@@ -11,7 +11,7 @@ case "$PROPS" in *'"res"'*) ;; *) PROPS="${PROPS%\}},\"res\":$SCALE}"; PROPS="${
 D=out/chunks_$COMP; mkdir -p "$D"; B=${REMOTION_BROWSER:-}
 EXTRA=(); [ -n "$B" ] && EXTRA+=(--browser-executable="$B")
 npx remotion bundle src/index.ts --out-dir out/bundle_$COMP >/dev/null
-TOTAL=$(npx remotion compositions out/bundle_$COMP "${EXTRA[@]}" 2>/dev/null | awk -v c="$COMP" '$1==c{print $4}')
+TOTAL=$(npx remotion compositions out/bundle_$COMP --props="$PROPS" "${EXTRA[@]}" 2>/dev/null | awk -v c="$COMP" '$1==c{print $4}')
 [ -n "$TOTAL" ] || { echo "could not read $COMP duration"; exit 1; }
 echo "$COMP: $TOTAL frames in chunks of $CH"
 : > "$D/list.txt"
