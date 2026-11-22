@@ -9,7 +9,7 @@ number here is a starting default chosen to match the reference look. Tune it af
 test renders, but change it only when the user asks or a shot clearly needs it. A video that ignores the lighting, depth-of-field and grading rules looks like
 a cheap 3D demo, not the reference.
 
-**Reading order:** start with **`prompts/MASTER_PROMPT_INSANE.md`** (the top-level quality bar and final checklist, it wins over this file) and `prompts/UPGRADE_BACKLOG.md` (125 numbered upgrades; tick them off as they ship). For buildable, file-level fixes with "done when" checks, use `prompts/FIX_LIST_V2.md` (120 items). To run an improvement session, paste `prompts/MASTER_LOOP.md`. To pick and spec the next video, paste `prompts/WHAT_IF_IDEA_ENGINE.md`. To render fast on a GPU, follow `docs/RENDER_ON_GPU.md`. Then **§36 (the master prompt)**, **§52 (consistency & polish, from real bugs)** and **§53 (render speed)**, which is the standard every video must meet. Then use
+**Reading order:** start with **`prompts/MASTER_PROMPT_INSANE.md`** (the top-level quality bar and final checklist, it wins over this file) and `prompts/UPGRADE_BACKLOG.md` (125 numbered upgrades; tick them off as they ship). For buildable, file-level fixes with "done when" checks, use `prompts/FIX_LIST_V2.md` (120 items). To run an improvement session, paste `prompts/MASTER_LOOP.md`. To pick and spec the next video, paste `prompts/WHAT_IF_IDEA_ENGINE.md`. To render fast on a GPU, follow `docs/RENDER_ON_GPU.md` and **§57** (real GTX 1650 numbers, Windows gotchas, the next-video graphics standard). Then **§36 (the master prompt)**, **§52 (consistency & polish, from real bugs)** and **§53 (render speed)**, which is the standard every video must meet. Then use
 §0–§35 as the toolbox, §32 for lessons from real renders, and §51 for how to keep improving.
 The working demo lives in `src/` (2 shots, 60fps, with full sound).
 Video projects have their own master prompt in `prompts/`. Finished: `prompts/WHAT_IF_LIE_METER.md` (5:00, TTS). **Next: `prompts/WHAT_IF_PROMISE_THREADS.md` + `_SHOTS.md`** (5:00, glowing promise threads).
@@ -115,7 +115,7 @@ src/
   shots/S01_Hook.tsx       ✅ demo shot 1      shots/S02_Reveal.tsx ✅ demo shot 2
 storyboard.json            🔲 optional, for long videos. Short videos hard-code shots in Main.tsx (the demo does)
 out/                       git-ignored renders, stills, qa/
-releases/                  ✅ finished deliverables committed on request (lie-meter v04 mp4 (v02–v03 are in git history), SRT, thumbnails; GitHub limit 100MB/file)
+releases/                  ✅ finished deliverables committed on request (lie-meter v04 mp4 (v02–v03 are in git history), SRT, thumbnails; promise-threads SRT + thumb (its 126MB mp4 is over the 100MB limit, kept locally); GitHub limit 100MB/file)
 ```
 **Rule:** when you add or remove a file, update this tree in the same commit. A wrong map misleads every future session.
 
@@ -1564,6 +1564,50 @@ Found and fixed:
 - **Brother hidden behind props (kitchen, L006):** jar moved aside; seated characters at scale <0.9 get `y: 0.1` so the mouth clears the table.
 Still open: shot 52 (EWS of the hero alone in the void) is near-black even at exposure 2.2. Decide whether that darkness is intended, or add a
 floor glow/spot ring so the figure reads.
+
+---
+
+## 57. First GPU render + the next-video graphics standard (Nov 22: Promise Threads v03, 1080p60 on a GTX 1650)
+
+### 57.1 What the GPU render taught us (all verified on the real machine)
+- **Speed:** GTX 1650 (4 GB) + ANGLE renders full-quality 1080p60 at **≈0.4 s/frame** (16,084 frames ≈ 1h50m incl. audio + master).
+  Concurrency **6** was fastest on 12 threads; 10 was *slower* (88 s vs 54 s per 120 frames): the GPU is the bottleneck, not the CPU.
+- **Backend on Windows:** `angle` works. `vulkan` renders a correct still but crashes under parallel rendering
+  (`Cannot read properties of null (reading 'alpha')` = lost WebGL context). Always test the backend with a *multi-frame render*, not a still.
+- **White-frame dropouts:** parallel GPU rendering produced **8 single pure-white frames** in 16k (0.05%). They are render
+  glitches, not content. `luma_qa.py` catches every one; patch with `freezeframes` in a `-filter_complex` chain
+  (`[v]split[a][b];[a][b]freezeframes=first=N:last=N:replace=N-1`), or re-render just those frames. **Never ship without luma_qa.**
+- **Mastering bug (fixed in render_chunks.sh):** `alimiter` defaults to `level=1` (auto make-up gain), which pushed every master to
+  −12 LUFS / +0.2 dBTP after loudnorm. Always `alimiter=…:level=0`. Measure with `ebur128=peak=true`, not trust.
+- **`render_chunks.sh` must read duration with the same `--props`:** without it a 60 fps render was sized at 24 fps and would have
+  stopped at 1:47 (fixed). When you stop a chunk render, kill the whole process tree (bash loop + node + chrome) or two loops write the same chunks.
+- **Windows setup:** ffmpeg via `winget install Gyan.FFmpeg --scope user` (its folder must be on PATH per command in Git Bash);
+  `python` not `python3` (the latter hits the Store stub); scripts that write text must pass `encoding='utf-8'`.
+
+### 57.2 Graphics standard for the NEXT video (build these in from shot one, not as a retrofit)
+Promise Threads showed where the look still breaks. Each item is a rule plus how to check it.
+1. **Faces must always be visible or deliberately hidden.** The threads/swarm crossing Kai's face in the reveal read as noise. Effects get a
+   *face-exclusion volume*: skip thread segments that pass within 0.45 m of any visible head unless the shot says `overFace: true`.
+2. **Every dark beat still has one lit subject.** 3:19–3:34 dropped to luma 4–9. Dark moods use a *small* bright subject (rim + floor ring +
+   one practical), never a dark frame. Gate: no 3-second window with mean luma < 15 except planned silences.
+3. **Signature effects get a hero lighting pass.** The burst, the reveal and the ending each need: a motivated light that flares on faces,
+   an impact stack (§35.2) and a 0.5 s slow-motion peak (time remap). Plan them in the shot list, not later.
+4. **Depth in every wide.** Wides with 4+ characters (hallway, cafeteria) read flat at phone size. Add a foreground element (blurred
+   locker edge, table corner, prop) at 0.6–1.2 m from camera in every wide and EWS.
+5. **Characters need hands that do things.** Static arms were the most "CG" thing in the stills. Every shot with a speaking character gets
+   one hand gesture keyed to a stressed word (point, open palm, touch chest), reusing the reactions system.
+6. **Real sets beat borrowed ones.** Borrowing the casino gym for lunch broke the story until the Cafeteria set existed. Build every set the
+   script names before look-dev; a set gets 3–5 storytelling details (§36.3) and a motivated practical.
+7. **Thumbnail is a composition, not a frame grab.** The v03 thumb was a frame from the reveal; next time build a `Thumb` composition (§43):
+   face at 40% height, one bold element (the glowing wrist), ≤3 words, rim ×1.5, tested at 168×94.
+8. **Render the vertical cut with the master.** Build `MainVertical` (§45) during shot-listing so the hook + signature shot ship as a Short
+   the same day as the 16:9 video.
+9. **One look-dev still per shot at full quality on the GPU** (~3 s each there) before the full render, tiled into contact sheets
+   (§56). The half-res CPU audits hid exposure and sharpness problems that only showed at 1080p.
+
+### 57.3 Release checklist (copy into every video's done list)
+`npm run typecheck` · multi-frame backend test · 5 preview stills · chunked render · `luma_qa.py` (0 flashes) · `ebur128` (−14 ±1 LUFS, peak ≤ −1)
+· blackdetect (planned only) · 10 moments viewed · thumbnail composition · SRT (`make_srt.py <timeline> <out>`) · releases/ (files < 100 MB).
 
 ---
 
