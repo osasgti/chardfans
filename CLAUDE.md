@@ -61,6 +61,7 @@ CLAUDE.md                  ✅ this playbook
 package.json               ✅ npm scripts: sfx, studio, still, render, master, qa, determinism, render:chunks, typecheck
 remotion.config.ts         ✅ GL from REMOTION_GL (default swangle; angle/egl on GPU), jpeg frames, h264 CRF 16
 docs/RENDER_ON_GPU.md      ✅ step-by-step fast render on your own computer (30–60×)
+prompts/RENDER_ON_PC_MASTER.md ✅ paste into Claude Code on your PC: setup, GPU pick, full Promise Threads render, QA gates, delivery
 scripts/
   sfxlib.py                ✅ synthesis building blocks (§36.6)
   make_sfx.py              ✅ 80 sounds + music stems + Promise Threads set (10 thread SFX, 4 'Promise' motif stems) → public/sfx/*.wav (git-ignored, run `npm run sfx`)
@@ -71,7 +72,7 @@ scripts/
   qa.sh                    ✅ cuts, contact sheet, loudness, black/frozen frames, flashes (§28, §52)
   luma_qa.py               ✅ 1-frame flash + brightness-range detector (§52.1)
   exposure_cal.py          ✅ per-shot exposure calibration → src/lie/exposure_cal.json + ffmpeg post filter (§52.1)
-  make_srt.py              ✅ timeline → SRT captions
+  make_srt.py              ✅ timeline → SRT captions (`make_srt.py [timeline.json] [out.srt]`, default Lie Meter)
   promise_sketch.py        ✅ 20 s SFX+music sketch of the Promise Threads hook → out/promise_sound_sketch.wav
   vo_consistency.py        ✅ per-take level + voicing ratio, flags whispered/breathy TTS takes (§54.1)
   validate_shots.mjs       ✅ shot cast-reference validator (npm run validate)
