@@ -41,7 +41,7 @@ export type ShotSpec = {
   line: string; w?: number; set: string; setProps?: Record<string, unknown>; light: string; grade: string; keyPos?: [number, number, number]; keyI?: number;
   cam: {on: number | [number, number, number]; size: Size; yaw?: number; pitch?: number; move?: Move; amount?: number; path?: [V3, V3]};
   cast: CastSpec[]; meters?: MeterSpec[]; tag?: string; title?: {words: string[]; emph?: number[]; y?: number; size?: number};
-  dust?: boolean; extra?: string; threads?: ThreadSpec[]; shake?: number; shakeKind?: 'light' | 'hit' | 'quake'; slowmo?: {at: number; len?: number; rate?: number}; rack?: {at: number; to: number}; whip?: 'in' | 'out' | 'both'; title3d?: {words: string[]; pos: [number, number, number]; size?: number}; net?: boolean; focusOn?: number | V3; intent?: string[]; flash?: number; exposure?: number; mirror?: boolean; flicker?: boolean;
+  dust?: boolean; extra?: string; threads?: ThreadSpec[]; shake?: number; shakeKind?: 'light' | 'hit' | 'quake'; slowmo?: {at: number; len?: number; rate?: number}; rack?: {at: number; to: number}; whip?: 'in' | 'out' | 'both'; callout?: {text: string; at: [number, number, number]; from?: number}; title3d?: {words: string[]; pos: [number, number, number]; size?: number}; net?: boolean; focusOn?: number | V3; intent?: string[]; flash?: number; exposure?: number; mirror?: boolean; flicker?: boolean;
 };
 
 const E = Easing.bezier(0.45, 0, 0.2, 1);
@@ -343,6 +343,18 @@ export const LieShot = ({spec, beat: beatIn, dur, sec, seed, fpsRatio = 1, calSt
       })}
       {(spec.whip === 'out' || spec.whip === 'both') && <WhipStreak beat={beat - dur} len={6} />}
       {(spec.whip === 'in' || spec.whip === 'both') && <WhipStreak beat={beat} len={6} />}
+      {/* F6 callout: a hand-drawn gold arrow draws itself (pathLength) to a 3D point, with a small Cinzel label */}
+      {spec.callout && (() => {
+        const co = spec.callout!, p = projectCam(cam, co.at), b0 = co.from ?? 24;
+        const e = Math.min(1, Math.max(0, (beat - b0) / 15)), out = Math.min(1, Math.max(0, (dur - 10 - beat) / 8)), side = p.x > W / 2 ? -1 : 1;
+        const lx = p.x + side * 260, ly = Math.max(190, p.y - 170);
+        const d = `M ${lx} ${ly + 26} Q ${(lx + p.x) / 2 + side * 40} ${ly - 30}, ${p.x + side * 16} ${p.y - 14}`;
+        return (<svg width={W} height={H} style={{position: 'absolute', left: 0, top: 0, opacity: out}}>
+          <path d={d} fill="none" stroke="#f2c46b" strokeWidth={3} strokeLinecap="round" pathLength={1} strokeDasharray={1} strokeDashoffset={1 - e} style={{filter: 'drop-shadow(0 0 6px rgba(242,196,107,.6))'}} />
+          {e > 0.95 && <path d={`M ${p.x + side * 16} ${p.y - 14} l ${side * 14} -4 M ${p.x + side * 16} ${p.y - 14} l ${side * 6} -14`} stroke="#f2c46b" strokeWidth={3} strokeLinecap="round" />}
+          <text x={lx} y={ly} textAnchor={side > 0 ? 'start' : 'end'} fontFamily="Cinzel" fontWeight={700} fontSize={30} letterSpacing="0.16em" fill="#f5ead2" opacity={Math.min(1, e * 1.6)} style={{filter: 'drop-shadow(0 2px 6px rgba(0,0,0,.8))'}}>{co.text}</text>
+        </svg>);
+      })()}
       {spec.tag && <Tag text={spec.tag} frame={beat} start={4} out={dur - 10} />}
       {spec.title && <div style={{position: 'absolute', inset: 0, transform: `translateX(${(0.5 - k) * 36}px)`}}><Title words={spec.title.words} frame={beat} start={6} y={spec.title.y ?? 0.2} size={spec.title.size ?? 76} emphasis={spec.title.emph ?? []} out={dur - 12} /></div>}
     </AbsoluteFill>

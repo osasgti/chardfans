@@ -85,6 +85,7 @@
 - ✅ C15 **Ending tapestry**: every kept thread weaves into a glowing net above the city.
 
 ## D. Lighting & look (15)
+- ✅ D00 **Calibration never brightens a clipping shot**: `still_cal.py` measures the share of pixels ≥ 235; above 2% it may only darken (void close-ups were being pushed +1 stop by their black backgrounds and blew out)
 - ✅ D0 **Close-ups get less key** (CLAUDE.md §52.1 rule, now wired in): key × 0.75 MCU, 0.6 CU, 0.5 ECU unless the shot sets `keyI`. The lens eye-light also fades with camera distance.
 - ✅ D1 No clipped faces: void light moved to the front-left at 1.3; soft-shoulder highlight roll-off in ExposureEffect.
 - 🔲 D2 **Two-colour lighting** on every shot: a warm key against a cool fill/rim, with a ≥ 2000 K difference.
@@ -122,7 +123,7 @@
 - 🔲 F3 **Title reveal FX**: letters assemble from thread fibres (the signature).
 - 🔲 F4 **Act cards** with a parallax thread-weave background and a chapter number.
 - 🔲 F5 **Counters** (promises kept / broken) as a rolling odometer in the corner on the stats beats.
-- 🔲 F6 **Callout arrows** (§8.3), drawn with pathLength, for the first time each concept appears.
+- 🔲 F6 **Callout arrows** (component `spec.callout` built in batch 16; the first use, on the opening CU, covered the face, so it is not placed yet) (§8.3), drawn with pathLength, for the first time each concept appears.
 - ✅ F7 **UI parallax**: overlays drift 2–4% against the camera pan.
 - ✅ F8 **Exit animations** on every graphic (an accelerated fade plus a −8 px rise), so nothing pops off.
 - ✅ F9 **Shimmer** on the gold emphasis words (an animated gradient).
@@ -140,7 +141,7 @@
 - ✅ G7 **Flash frames** on the snap and the ignite (2 beats, 0.25 opacity, never more than 3 per second).
 - ✅ G8 **Dip-to-black** only at the act breaks, with a whoosh_heavy.
 - 🔲 G9 **Montage split-screens** for "every promise" lists (2–3 panels sliding in).
-- 🔲 G10 **Loopable ending** that mirrors the first frame (vertical-cut ready).
+- ✅ G10 **Loopable ending** that mirrors the first frame (vertical-cut ready).
 
 ## H. Sound to match the motion (10)
 - ✅ H1 Cloth rustle on every gesture of B1 (vol 0.15, rate ±5%).
@@ -167,4 +168,4 @@
 - 🔲 I10 The user approves the motion test before every full render.
 - 🔲 I11 Update CLAUDE.md §1 and §50 when items ship.
 
-**Total: 131 items (86 done).**
+**Total: 132 items (88 done).**

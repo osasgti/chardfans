@@ -15,7 +15,7 @@ const HALL = {set: 'Hallway', light: 'hallway'} as const;
 
 export const SHOTS: ShotSpec[] = [
   /* ═════ HOOK ═════ */
-  {line: 'P001', ...V, grade: 'wonder', cam: {on: [-0.5, 1.15, 0], size: 'cu', yaw: 70, move: 'push'}, exposure: 0.95,
+  {line: 'P001', ...V, grade: 'wonder', cam: {on: 0, size: 'mcu', yaw: 55, move: 'push'}, exposure: 0.95,
     cast: [fig('giver', [-0.9, 0], {rot: 40, expr: 'happy', pose: 'hold'})], threads: [th(0, [1.6, 1.2, 0.4], 'fresh', {at: 30, thick: 0.009})]},
   {line: 'P001', w: 0.8, ...V, grade: 'wonder', cam: {on: [0, 1.3, 0], size: 'med', yaw: -8, move: 'orbitL'},
     cast: [fig('giver', [-0.62, 0], {rot: 70, expr: 'happy', pose: 'pinky'}), kai([0.62, 0], {rot: -70, expr: 'neutral', pose: 'pinkyL'})], threads: [th(0, 1, 'held', {thick: 0.01})],

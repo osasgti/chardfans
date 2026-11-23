@@ -50,6 +50,13 @@ def luma(p):
     try: m = re.search(r'YAVG=([\d.]+)', open(os.path.join(out, '_y.txt')).read())
     except OSError: return None
     return float(m.group(1)) if m else None
+def clipped(p):
+    # share of pixels at luma >= 235 (blown highlights): the mean can be low in a dark void while the face is already white
+    subprocess.run([ffmpeg, '-v', 'error', '-y', '-i', p, '-vf', 'format=gray,lutyuv=y=if(gte(val\,235)\,255\,0),signalstats,metadata=print:key=lavfi.signalstats.YAVG:file=_c.txt', '-f', 'null', '-'],
+                   capture_output=True, text=True, cwd=out)
+    try: m = re.search(r'YAVG=([\d.]+)', open(os.path.join(out, '_c.txt')).read())
+    except OSError: return 0
+    return float(m.group(1)) / 255 if m else 0
 cal, rep = {}, []
 for name, lid, k, grade, f in plan:
     y = luma(os.path.join(out, name + '.jpg'))
@@ -58,10 +65,12 @@ for name, lid, k, grade, f in plan:
     else:
         delta = STRENGTH * math.log2(TARGET[grade] / max(y, 1))   # correction relative to what is already applied
         stops = max(-MAX_DOWN, min(MAX_UP, applied + delta))
+        cl = clipped(os.path.join(out, name + '.jpg'))
+        if cl > 0.02: stops = min(stops, applied - 0.25)   # highlights already blow out: never brighten, pull down instead
         if abs(stops) < 0.1: stops = 0.0
     cal.setdefault(lid, []).append(round(stops, 2))
     flag = '' if y is None or abs(math.log2(TARGET[grade] / max(y, 1))) < 0.32 else '  <- off target'
-    rep.append(f'{name:9s} {grade:11s} luma {y if y is None else round(y, 1)!s:>6} target {TARGET[grade]:3d}  applied {applied:+.2f}  next {stops:+.2f}{flag}')
+    rep.append(f'{name:9s} {grade:11s} luma {y if y is None else round(y, 1)!s:>6} target {TARGET[grade]:3d}  applied {applied:+.2f}  next {stops:+.2f}{flag}' + (f'  clip {cl*100:.1f}%' if y is not None and cl > 0.02 else ''))
 open(os.path.join(out, 'report.txt'), 'w', encoding='utf-8').write('\n'.join(rep)); print('\n'.join(rep))
 if not MEASURE_ONLY:
     json.dump(cal, open(calp, 'w'), indent=1); print('wrote', calp)
