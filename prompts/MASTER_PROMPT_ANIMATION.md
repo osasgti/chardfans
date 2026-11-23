@@ -127,7 +127,7 @@
 - ✅ F9 **Shimmer** on the gold emphasis words (an animated gradient).
 - ✅ F10 **Lower-third name tags** the first time each character appears.
 - ✅ F11 **End card** with a subscribe area, and the thread knot as a logo mark.
-- 🔲 F12 **Thumbnail composition** (`Thumb`, §43): the face at 40% of the height, a glowing wrist, ≤ 3 words, 3 variants.
+- ✅ F12 **Thumbnail composition** (`Thumb`, §43): the face at 40% of the height, a glowing wrist, ≤ 3 words, 3 variants.
 
 ## G. Edit & transitions (10)
 - 🔲 G1 **Match cuts** on the thread: same screen position across the cut.
@@ -166,4 +166,4 @@
 - 🔲 I10 The user approves the motion test before every full render.
 - 🔲 I11 Update CLAUDE.md §1 and §50 when items ship.
 
-**Total: 130 items (66 done).**
+**Total: 130 items (67 done).**

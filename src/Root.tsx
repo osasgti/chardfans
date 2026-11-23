@@ -1,3 +1,4 @@
+import {PromiseThumb} from './promise/Thumb';
 import {Composition, getInputProps} from 'remotion';
 import {Main} from './Main';
 import {LieVideo, LIE_TOTAL} from './lie/LieVideo';
@@ -16,6 +17,7 @@ export const Root = () => (
     <Composition id="LieMeter" component={LieVideo} durationInFrames={Math.ceil(LIE_TOTAL * LIE_FPS)} fps={LIE_FPS} width={W} height={H} />
     {/* "What if every promise left a glowing thread?" (prompts/WHAT_IF_PROMISE_THREADS.md) */}
     <Composition id="PromiseThreads" component={PromiseVideo} durationInFrames={Math.ceil(P_TOTAL * LIE_FPS)} fps={LIE_FPS} width={W} height={H} />
+    <Composition id="PromiseThumb" component={PromiseThumb} durationInFrames={1} fps={30} width={W} height={H} defaultProps={{v: 0}} />
     {/* dev: reaction library check (FIX_LIST_V2 #15) */}
     <Composition id="ThreadTest" component={ThreadTest} durationInFrames={90} fps={30} width={W} height={H} />
     <Composition id="ReactTest" component={ReactTest} durationInFrames={60} fps={30} width={W} height={H} />

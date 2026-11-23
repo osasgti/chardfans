@@ -78,6 +78,7 @@ scripts/
   validate_shots.mjs       ✅ shot cast-reference validator (npm run validate)
   audit_shots.mjs          ✅ geometric audit of every shot, same maths as the renderer: BLUR/CROP/BACK/CLIP/THREAD/EMPTY (npm run audit, `--old` = old focus rule) (§58)
   still_cal.py             ✅ one GPU still per shot → luma per shot → exposure_cal.json + labelled contact sheets, no full render needed (npm run calibrate) (§58)
+  motion_qa.py             ✅ STILL (frozen seconds) + CLIP (blown highlights) detector (MASTER_PROMPT_ANIMATION I2/I3)
   finish.py                ✅ final assembly: patches GPU dropout frames + two-pass −14 LUFS master + verification (called by render_chunks.sh) (§57.1)
   determinism.sh           ✅ same frame twice → identical hash
   render_chunks.sh         ✅ crash-safe chunked render (480-frame chunks, res=scale automatically) + concat + master (§53)
@@ -106,7 +107,7 @@ src/
                               LieVideo.tsx (sequencing, VO, music, ambience, cues, captions), timeline.json (generated),
                               reactions.ts (7 acted reactions: doubleTake/gulp/shrug/facepalm/deflate/celebrate/smugNod), ReactTest.tsx + ThreadTest.tsx (dev comps), engine helpers wristR/chestOf (thread anchors)
   promise/                 ✅ Promise Threads video: shots.ts (65 shots, `threads` spec), PromiseVideo.tsx (sequencing, VO, music, thread SFX derived from shots,
-                              Kai-wrist-before-twist validator), timeline.json (generated), exposure_cal.json (still_cal.py). Composition id `PromiseThreads`
+                              Kai-wrist-before-twist validator), timeline.json (generated), exposure_cal.json (still_cal.py), Thumb.tsx (`PromiseThumb`, 3 variants via `v`). Composition id `PromiseThreads`
   three/props/             🔲 Coin (now inline in S02), Dice, Cards, Alarm, Vending, Roulette (§40)
   overlay/Overlays.tsx     ✅ project(), Title, Tag, OddsBadge, Letterbox
   overlay/Transitions.tsx  ✅ DipToBlack, WhipStreak, Flash
