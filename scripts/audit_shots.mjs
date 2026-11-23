@@ -67,9 +67,17 @@ SHOTS.forEach((spec, idx) => {
   if ((spec.cam.move ?? 'push') === 'lock' && !spec.cast.some((c) => c.talk || c.react) && !spec.extra && !(spec.threads ?? []).length) found.add('STATIC locked camera, no talker, reaction, thread or extra');
   const prev = SHOTS[idx - 1];
   if (prev && prev.cam.size === spec.cam.size && (prev.cam.move ?? 'push') === (spec.cam.move ?? 'push') && prev.set === spec.set) found.add(`RHYTHM same size + move + set as the previous shot (${spec.cam.size}/${spec.cam.move ?? 'push'})`);
+  // A15 matched motion: lateral (screen-x) camera drift at the end of the previous shot vs the start of this one
+  if (prev && !spec.whip && !prev.whip) {
+    const lat = (sp, k0, k1, sd) => { const a = camFor(sp, k0, k0 * 90, sd), b = camFor(sp, k1, k1 * 90, sd);
+      const f = [a.target[0] - a.pos[0], a.target[2] - a.pos[2]], n = Math.hypot(...f), r = [-f[1] / n, f[0] / n];
+      return ((b.pos[0] - a.pos[0]) * r[0] + (b.pos[2] - a.pos[2]) * r[1]) / Math.max(0.5, Math.hypot(a.target[0] - a.pos[0], a.target[2] - a.pos[2])); };
+    const e = lat(prev, 0.85, 1, 's' + (idx - 1)), b = lat(spec, 0, 0.15, 's' + idx);
+    if (Math.abs(e) > 0.01 && Math.abs(b) > 0.01 && Math.sign(e) !== Math.sign(b) && prev.set === spec.set) found.add(`MOTION camera drifts ${e > 0 ? 'right' : 'left'} into the cut, then ${b > 0 ? 'right' : 'left'} out of it`);
+  }
   if (found.size) issues.push([tag, [...found]]);
   else if (all) console.log(tag, 'ok');
 });
 for (const [t, f] of issues) { console.log(t); for (const x of f) console.log('    ' + x); }
 const count = (k) => issues.filter(([, f]) => f.some((x) => x.startsWith(k))).length;
-console.log(`\n${SHOTS.length} shots · ${issues.length} with issues · BLUR ${count('BLUR')} · CROP ${count('CROP')} · BACK ${count('BACK')} · CLIP ${count('CLIP')} · THREAD ${count('THREAD')} · EMPTY ${count('EMPTY')} · STATIC ${count('STATIC')} · RHYTHM ${count('RHYTHM')}`);
+console.log(`\n${SHOTS.length} shots · ${issues.length} with issues · BLUR ${count('BLUR')} · CROP ${count('CROP')} · BACK ${count('BACK')} · CLIP ${count('CLIP')} · THREAD ${count('THREAD')} · EMPTY ${count('EMPTY')} · STATIC ${count('STATIC')} · RHYTHM ${count('RHYTHM')} · MOTION ${count('MOTION')}`);

@@ -33,7 +33,7 @@
 - 🔲 A12 **Arc to reveal**: an orbit that moves a foreground object off the subject in the first 20% of the shot.
 - 🔲 A13 **Follow cam** on walking or running characters: the target leads the subject by 0.3 m in the direction of travel.
 - ✅ A14 **Overshoot settles**: push and snap moves overshoot by 2% and spring back (damping 12).
-- 🔲 A15 **Matched motion across cuts**: if shot A ends moving left, shot B starts moving left (`move` direction checked by `validate_shots`).
+- ✅ A15 **Matched motion across cuts** (audit `MOTION` check + `cam.arc` override; 10 of 11 same-set reversals fixed automatically, P044 kept: its pull dominates): if shot A ends moving left, shot B starts moving left (`move` direction checked by `validate_shots`).
 - ✅ A16 **Low hero angles** for confident or triumph beats (pitch −8 to −12°), and high angles for small or alone beats.
 - ✅ A17 **Impact shake presets**: `light` (0.012), `hit` (0.03), `quake` (0.06 + roll), each with its own decay.
 - ✅ A18 **Parallax foreground cards** in every wide: a blurred locker edge, plant or chair at 0.8 m from the camera.
@@ -168,4 +168,4 @@
 - 🔲 I10 The user approves the motion test before every full render.
 - ✅ I11 Update CLAUDE.md §1 and §50 when items ship.
 
-**Total: 132 items (99 done).**
+**Total: 132 items (100 done).**
