@@ -18,7 +18,7 @@ export const SHOTS: ShotSpec[] = [
   {line: 'P001', ...V, grade: 'wonder', cam: {on: [-0.5, 1.15, 0], size: 'cu', yaw: 70, move: 'push'}, exposure: 0.95,
     cast: [fig('giver', [-0.9, 0], {rot: 40, expr: 'happy', pose: 'hold'})], threads: [th(0, [1.6, 1.2, 0.4], 'fresh', {at: 30, thick: 0.009})]},
   {line: 'P001', w: 0.8, ...V, grade: 'wonder', cam: {on: [0, 1.3, 0], size: 'med', yaw: -8, move: 'orbitL'},
-    cast: [fig('giver', [-0.9, 0], {rot: 40, expr: 'happy', pose: 'hold'}), kai([0.9, 0], {rot: -40, expr: 'neutral', name: 'YOU'})], threads: [th(0, 1, 'held', {thick: 0.01})],
+    cast: [fig('giver', [-0.62, 0], {rot: 70, expr: 'happy', pose: 'pinky'}), kai([0.62, 0], {rot: -70, expr: 'neutral', pose: 'pinkyL'})], threads: [th(0, 1, 'held', {thick: 0.01})],
     title: {words: ['WHAT', 'IF', 'PROMISES', 'LEFT', 'A', 'THREAD?'], emph: [5], y: 0.22, size: 64}},
   {line: 'P002', ...V, grade: 'wonder', cam: {on: 1, size: 'cu', yaw: -25, move: 'push'},
     cast: [fig('giver', [-0.9, 0], {rot: 40, expr: 'happy', pose: 'hold'}), kai([0.9, 0], {rot: -40, expr: 'neutral', exprAt: {at: 16, to: 'happy'}, tilt: 5})], threads: [th(0, 1, 'held', {thick: 0.012})]},

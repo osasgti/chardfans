@@ -58,7 +58,7 @@
 - 🔲 B15 **Secondary motion**: the hood and drawstrings lag the torso by 3 beats (a spring on the rotation delta).
 - ✅ B16 **Breathing that shows emotion**: a big sigh (shoulders up, then drop) on sad lines.
 - 🔲 B17 **Crowd variation**: 3 idle loops × random phase × speed 0.9–1.1, and one "hero extra" per crowd doing something unique.
-- 🔲 B18 **Hug, handshake and pinky-promise poses** for the promise moments (two-character contact pose, wrist-to-wrist).
+- ✅ B18 **Hug, handshake and pinky-promise poses** for the promise moments (two-character contact pose, wrist-to-wrist).
 - ✅ B19 **Jump celebrate** with squash on landing and a dust puff.
 - 🔲 B20 **Sit-down and stand-up** transitions, not teleporting between poses.
 - 🔲 B21 **Phone acting**: thumb taps, a screen glow on the face, and a pocket put-away.
@@ -167,4 +167,4 @@
 - 🔲 I10 The user approves the motion test before every full render.
 - 🔲 I11 Update CLAUDE.md §1 and §50 when items ship.
 
-**Total: 131 items (77 done).**
+**Total: 131 items (78 done).**

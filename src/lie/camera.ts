@@ -36,7 +36,7 @@ export const CAST: Record<Who, Look> = {
   grandma: {hoodie: '#9a6fb0', hair: 'bun',      hairColor: '#cfc8d8', scale: 1.0,  expr: 'happy', glasses: true},
   fig:     {hoodie: '#55506a', hair: 'none',     hairColor: '#000',    scale: 1,    expr: 'neutral'},
 };
-export type Pose = 'idle' | 'cheer' | 'point' | 'phone' | 'sit' | 'sleep' | 'slump' | 'hold' | 'shrug' | 'run';
+export type Pose = 'idle' | 'cheer' | 'point' | 'phone' | 'sit' | 'sleep' | 'slump' | 'hold' | 'shrug' | 'run' | 'pinky' | 'pinkyL';
 export type Prop = 'phone' | 'phoneText' | 'card' | 'cookie' | 'pan';
 export type CastSpec = {who: Who; id?: string; pos: [number, number]; rot?: number; expr?: Expr; pose?: Pose; talk?: boolean; hold?: Prop; turn?: number; tilt?: number; y?: number; react?: Reaction; reactAt?: number; enter?: [number, number]; enterLen?: number; name?: string; exprAt?: {at: number; to: Expr}};
 

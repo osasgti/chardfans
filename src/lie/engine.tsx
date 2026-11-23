@@ -78,6 +78,9 @@ const poseArgs = (pose: Pose | undefined, beat: number, id: string) => {
     case 'point': return {armL: 0.15, armR: 1.45};
     case 'phone': return {armL: 0.15, armR: 2.55};
     case 'hold': return {armL: 0.15, armR: 0.9};
+    // B18 pinky promise: right arm reaches forward and in, a small seeded wobble as the fingers hook
+    case 'pinkyL': return {armR: 0.15 + 0.03 * Math.sin(t * 1.1 + ph), armL: 0.42 + 0.03 * Math.sin(t * 5 + ph), armLx: -1.15 + 0.04 * Math.sin(t * 4 + ph)};
+    case 'pinky': return {armL: 0.15 + 0.03 * Math.sin(t * 1.3 + ph), armR: 0.42 + 0.03 * Math.sin(t * 5 + ph), armRx: -1.15 + 0.04 * Math.sin(t * 4 + ph)};
     case 'shrug': return {armL: 0.75, armR: 0.75};
     case 'slump': return {armL: 0.05, armR: 0.05};
     case 'run': return {armL: 0.15 + 0.6 * Math.sin(t * 12), armR: 0.15 - 0.6 * Math.sin(t * 12)};
@@ -122,7 +125,7 @@ export const Actor = ({c, beat, sec, line, mirrored = false, speaker}: {c: CastS
     <Pill id={id} frame={beat} position={sleep ? [0, 0, 0] : [c.pos[0] + wx, (c.y ?? 0) + sit + run + R.dy + (sleep ? 0 : bob) + Math.abs(wsw) * 0.035, z]} rotY={sleep ? 0 : rotY}
       hoodie={L.hoodie} hat={L.hair} hatColor={L.hairColor} glasses={L.glasses} expr={c.exprAt && beat >= c.exprAt.at ? c.exprAt.to : c.expr ?? L.expr} forceBlink={c.exprAt ? Math.max(0, 1 - Math.abs(beat - c.exprAt.at) / 3) : 0} scale={s}
       headTurn={(c.turn ?? 0) * deg + R.headTurn + (!c.talk && speaker && !sleep ? Math.max(-0.55, Math.min(0.55, (Math.atan2(speaker[0] - c.pos[0], speaker[1] - c.pos[1]) - (c.rot ?? 0) * deg) * 0.5)) * Math.min(1, Math.max(0, (beat - 6) / 12)) : 0) + (c.talk ? Math.sin(beat / 30 * 2.3) * 0.04 : 0)} squash={R.squash + st * 0.04 - sigh * 0.02} lean={R.lean + (c.talk ? st * 0.06 : 0.025 * Math.sin(t * 0.6 + ph))} turnLag={(reactAt(c.react, beat - 4, c.reactAt).headTurn - R.headTurn) + (c.talk ? (Math.sin((beat - 4) / 30 * 2.3) - Math.sin(beat / 30 * 2.3)) * 0.04 : 0)} headTilt={(c.tilt ?? 0) * deg + R.headTilt - 0.32 * wristLook - 0.06 * sigh} nod={st * 0.06} brow={Math.max(st, c.talk && line?.text.trim().endsWith('?') ? 0.6 : 0)}
-      mouth={mouth} armL={base.armL + R.armL + sigh * 0.06} armR={base.armR + R.armR + sigh * 0.06 + wristLook * 0.5} legSwing={wsw * 0.45} armLx={wsw * 0.5 + R.armLx + (free && c.talk ? st * 0.35 : 0)} armRx={-wsw * 0.5 + R.armRx + (free ? gest * 0.4 : 0)} rightHand={<PropMesh p={c.hold} text={c.hold === 'phoneText' ? 'we\'re good, right?' : undefined} />}
+      mouth={mouth} armL={base.armL + R.armL + sigh * 0.06} armR={base.armR + R.armR + sigh * 0.06 + wristLook * 0.5} legSwing={wsw * 0.45} armLx={wsw * 0.5 + ((base0 as {armLx?: number}).armLx ?? 0) + R.armLx + (free && c.talk ? st * 0.35 : 0)} armRx={-wsw * 0.5 + ((base0 as {armRx?: number}).armRx ?? 0) + R.armRx + (free ? gest * 0.4 : 0)} rightHand={<PropMesh p={c.hold} text={c.hold === 'phoneText' ? 'we\'re good, right?' : undefined} />}
       look={c.talk ? Math.round(Math.sin(t * 0.9 + ph)) * 2 : Math.round(Math.sin(t * 0.7 + random(id) * 9) * 1.4) * 5} />
   );
   if (sleep) return <group position={[c.pos[0], 0.62, c.pos[1]]} rotation={[-Math.PI / 2, 0, 0]}>{body}</group>;
