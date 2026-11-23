@@ -5,6 +5,7 @@
 import {RB} from '../three/RB';
 import React from 'react';
 import {LIGHTS} from '../style/presets';
+import {Color} from 'three';
 import {Text as Text3} from '../three/LieSets';
 import {WhipStreak} from '../overlay/Transitions';
 import {AbsoluteFill, interpolate, Easing, random, Audio, Sequence, staticFile} from 'remotion';
@@ -76,7 +77,7 @@ const poseArgs = (pose: Pose | undefined, beat: number, id: string) => {
   switch (pose) {
     case 'cheer': return {armL: 2.7 + 0.15 * Math.sin(t * 9 + ph), armR: 2.7 + 0.15 * Math.sin(t * 9 + ph + 1)};
     case 'point': return {armL: 0.15, armR: 1.45};
-    case 'phone': return {armL: 0.15, armR: 2.55};
+    case 'phone': return {armL: 0.15 + 0.05 * Math.max(0, Math.sin(t * 7 + ph)) * (Math.sin(t * 0.9 + ph) > 0 ? 1 : 0), armR: 2.55 + 0.03 * Math.sin(t * 3.3 + ph)};
     case 'hold': return {armL: 0.15, armR: 0.9};
     // B18 pinky promise: right arm reaches forward and in, a small seeded wobble as the fingers hook
     case 'pinkyL': return {armR: 0.15 + 0.03 * Math.sin(t * 1.1 + ph), armL: 0.42 + 0.03 * Math.sin(t * 5 + ph), armLx: -1.15 + 0.04 * Math.sin(t * 4 + ph)};
@@ -128,7 +129,11 @@ export const Actor = ({c, beat, sec, line, mirrored = false, speaker}: {c: CastS
       mouth={mouth} armL={base.armL + R.armL + sigh * 0.06} armR={base.armR + R.armR + sigh * 0.06 + wristLook * 0.5} legSwing={wsw * 0.45} armLx={wsw * 0.5 + ((base0 as {armLx?: number}).armLx ?? 0) + R.armLx + (free && c.talk ? st * 0.35 : 0)} armRx={-wsw * 0.5 + ((base0 as {armRx?: number}).armRx ?? 0) + R.armRx + (free ? gest * 0.4 : 0)} rightHand={<PropMesh p={c.hold} text={c.hold === 'phoneText' ? 'we\'re good, right?' : undefined} />}
       look={c.talk ? Math.round(Math.sin(t * 0.9 + ph)) * 2 : Math.round(Math.sin(t * 0.7 + random(id) * 9) * 1.4) * 5} />
   );
-  if (sleep) return <group position={[c.pos[0], 0.62, c.pos[1]]} rotation={[-Math.PI / 2, 0, 0]}>{body}</group>;
+  if (sleep) return <group position={[c.pos[0], 0.62, c.pos[1]]} rotation={[-Math.PI / 2, 0, 0]}>
+    <group rotation={[0, 0, Math.max(0, Math.sin(t * 0.7 + ph) - 0.93) * 2.2 * Math.sin(t * 14)]}>{body}</group></group>;
+  const phoneGlow = (c.hold === 'phone' || c.hold === 'phoneText') && !mirrored ? (() => { const h = headOf(c), a = (c.rot ?? 0) * deg;
+    return <pointLight position={[h[0] + Math.sin(a) * 0.35, h[1] - 0.25, h[2] + Math.cos(a) * 0.35]} intensity={0.35 * (0.9 + 0.1 * Math.sin(t * 2))} distance={1.2} decay={2} color="#9fc4ff" />; })() : null;
+  if (phoneGlow) return <>{phoneGlow}{mirrored ? <group scale={[-1, 1, 1]}>{body}</group> : body}</>;
   return mirrored ? <group scale={[-1, 1, 1]}>{body}</group> : body;
 };
 
@@ -209,6 +214,10 @@ export const LieShot = ({spec, beat: beatIn, dur, sec, seed, fpsRatio = 1, calSt
     const cs = Math.cos(-yawW), sn = Math.sin(-yawW);
     cam.target = [cam.pos[0] + dx * cs - dz * sn, cam.target[1], cam.pos[2] + dx * sn + dz * cs] as typeof cam.target;
   }
+  // D4 emotion light: when a thread breaks in this shot, the key light drains from warm to cold over 1 s
+  const brk = (spec.threads ?? []).map((th) => th.then?.state === 'broken' ? th.then.at : th.state === 'broken' && th.at ? th.at : -1).filter((x) => x >= 0)[0];
+  const coldK = brk !== undefined ? Math.min(1, Math.max(0, (beat - brk) / 30)) : 0;
+  const coldKey = coldK > 0 ? '#' + new Color((LIGHTS[spec.light ?? 'hallway'] ?? LIGHTS.hallway).key).lerp(new Color('#8ea4ff'), coldK * 0.75).getHexString() : undefined;
   const fpA = focusPlan(spec, cam);
   const rk = spec.rack ? Math.min(1, Math.max(0, (beat - spec.rack.at) / 12)) : 0, rke = rk * rk * (3 - 2 * rk);
   const fpB = spec.rack ? focusPlan({...spec, focusOn: spec.rack.to}, cam) : fpA;
@@ -222,7 +231,7 @@ export const LieShot = ({spec, beat: beatIn, dur, sec, seed, fpsRatio = 1, calSt
     <AbsoluteFill>
       <AbsoluteFill style={{transform: weave(sec)}}>
       <Stage cam={cam} focus={fp.focus} focusRange={fp.range} grade={spec.grade} flash={spec.flash ?? 0} exposure={(spec.exposure ?? 1.05) * Math.pow(2, calStops)}>
-        <Lights preset={spec.light} keyPos={spec.keyPos} keyI={spec.keyI ?? ((LIGHTS[spec.light ?? 'hallway'] ?? LIGHTS.hallway).keyI * ({ecu: 0.5, cu: 0.6, mcu: 0.75} as Record<string, number>)[spec.cam.size] || undefined)} subjectDepth={fp.meters} />
+        <Lights preset={spec.light} keyColor={coldKey} keyPos={spec.keyPos} keyI={spec.keyI ?? ((LIGHTS[spec.light ?? 'hallway'] ?? LIGHTS.hallway).keyI * ({ecu: 0.5, cu: 0.6, mcu: 0.75} as Record<string, number>)[spec.cam.size] || undefined)} subjectDepth={fp.meters} />
         {/* void: every character stands in its own soft pool of light (a dark scene still has a lit subject, CLAUDE.md §57.2 rule 2) */}
         {spec.set === 'Void' && spec.cast.map((c, i) => { const h = headOf(c); return (<group key={'pool' + i}>
           <pointLight position={[h[0] - 0.9, h[1] + 0.3, h[2] + 1.4]} intensity={1.3} distance={3.2} decay={2} color="#ffd2a8" />
@@ -335,7 +344,7 @@ export const LieShot = ({spec, beat: beatIn, dur, sec, seed, fpsRatio = 1, calSt
       {(spec.whip === 'out' || spec.whip === 'both') && <WhipStreak beat={beat - dur} len={6} />}
       {(spec.whip === 'in' || spec.whip === 'both') && <WhipStreak beat={beat} len={6} />}
       {spec.tag && <Tag text={spec.tag} frame={beat} start={4} out={dur - 10} />}
-      {spec.title && <Title words={spec.title.words} frame={beat} start={6} y={spec.title.y ?? 0.2} size={spec.title.size ?? 76} emphasis={spec.title.emph ?? []} out={dur - 12} />}
+      {spec.title && <div style={{position: 'absolute', inset: 0, transform: `translateX(${(0.5 - k) * 36}px)`}}><Title words={spec.title.words} frame={beat} start={6} y={spec.title.y ?? 0.2} size={spec.title.size ?? 76} emphasis={spec.title.emph ?? []} out={dur - 12} /></div>}
     </AbsoluteFill>
   );
 };

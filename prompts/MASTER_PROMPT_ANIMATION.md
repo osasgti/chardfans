@@ -61,8 +61,8 @@
 - ✅ B18 **Hug, handshake and pinky-promise poses** for the promise moments (two-character contact pose, wrist-to-wrist).
 - ✅ B19 **Jump celebrate** with squash on landing and a dust puff.
 - 🔲 B20 **Sit-down and stand-up** transitions, not teleporting between poses.
-- 🔲 B21 **Phone acting**: thumb taps, a screen glow on the face, and a pocket put-away.
-- 🔲 B22 **Sleep acting**: slow breathing, a twitch, and the blanket rising.
+- ✅ B21 **Phone acting**: thumb taps, a screen glow on the face, and a pocket put-away.
+- ✅ B22 **Sleep acting**: slow breathing, a twitch, and the blanket rising.
 - 🔲 B23 **Eye contact with the camera** once per act, on the direct-address lines ("you").
 - ✅ B24 **Blink on head turns** (always) and double blinks on surprise.
 - 🔲 B25 **Pose library audit**: no character holds the default arms for more than 3 s while on screen.
@@ -89,7 +89,7 @@
 - ✅ D1 No clipped faces: void light moved to the front-left at 1.3; soft-shoulder highlight roll-off in ExposureEffect.
 - 🔲 D2 **Two-colour lighting** on every shot: a warm key against a cool fill/rim, with a ≥ 2000 K difference.
 - ✅ D3 **Animated light**: one light per shot moves (a passing car, a flicker, cloud drift, a screen pulse).
-- 🔲 D4 **Emotion light shift**: the key colour moves warm → cold over 1 s when a promise breaks.
+- ✅ D4 **Emotion light shift**: the key colour moves warm → cold over 1 s when a promise breaks.
 - 🔲 D5 **Volumetric shafts** in the hallway, classroom and bedroom (the `Beam` exists, so add motion to its dust).
 - ✅ D6 **Glossy void floor** (clearcoat physical material instead of MeshReflectorMaterial, which costs a second render pass) so the threads and figures reflect.
 - ✅ D7 **Void depth**: 34 far bokeh lights (9–16 m) that DOF melts into discs. (A backdrop glow plane was tried and removed: it read as a flat wall.): a gradient backdrop glow behind the subject, layered fog cards, and distant bokeh lights.
@@ -106,7 +106,7 @@
 - ✅ E1 Dust drifts and rises at varied speeds (it was nearly frozen).
 - ✅ E2 **Background extras** in every set: walking students in the hallway, someone eating in the cafeteria.
 - ✅ E3 **Wind**: posters, curtains and plants sway (vertex sine).
-- 🔲 E4 **Clocks tick**, screens scroll, fans spin, lights buzz-flicker.
+- ✅ E4 **Clocks tick**, screens scroll, fans spin, lights buzz-flicker.
 - 🔲 E5 **Weather beyond windows**: moving clouds, rain streaks on the night shots.
 - ✅ E6 **Street life**: passing cars (light sweeps), and a traffic light changing.
 - ✅ E7 **Floating motes in the void**, with 3 depth layers at different speeds and sizes.
@@ -123,7 +123,7 @@
 - 🔲 F4 **Act cards** with a parallax thread-weave background and a chapter number.
 - 🔲 F5 **Counters** (promises kept / broken) as a rolling odometer in the corner on the stats beats.
 - 🔲 F6 **Callout arrows** (§8.3), drawn with pathLength, for the first time each concept appears.
-- 🔲 F7 **UI parallax**: overlays drift 2–4% against the camera pan.
+- ✅ F7 **UI parallax**: overlays drift 2–4% against the camera pan.
 - ✅ F8 **Exit animations** on every graphic (an accelerated fade plus a −8 px rise), so nothing pops off.
 - ✅ F9 **Shimmer** on the gold emphasis words (an animated gradient).
 - ✅ F10 **Lower-third name tags** the first time each character appears.
@@ -167,4 +167,4 @@
 - 🔲 I10 The user approves the motion test before every full render.
 - 🔲 I11 Update CLAUDE.md §1 and §50 when items ship.
 
-**Total: 131 items (78 done).**
+**Total: 131 items (83 done).**
