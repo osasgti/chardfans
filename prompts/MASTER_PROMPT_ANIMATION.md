@@ -27,7 +27,7 @@
 - ✅ A6 **Speed ramps** on signature shots: `timeRemap` on the shot spec, slow motion (0.3×) at the peak frame for 0.5 s.
 - ✅ A7 **Punch-in on stressed words**: fov −1.2° over 3 beats on each stressed word of the speaker in frame.
 - 🔲 A8 **Whip pans** between related shots (once a minute): ±35° yaw over the last and first 5 beats, plus `WhipStreak` and a `whip` SFX.
-- 🔲 A9 **Rack focus** moves: `focusOn` keyframes `[{at, target}]`, eased over 12 beats, with a 1.5% fov focus breathing.
+- ✅ A9 **Rack focus** moves: `focusOn` keyframes `[{at, target}]`, eased over 12 beats, with a 1.5% fov focus breathing.
 - 🔲 A10 **Dolly zoom** on the 2 biggest realisations (the existing `dz` move, used on purpose).
 - 🔲 A11 **Crane reveals** opening every new set: start low behind a foreground object and rise over it.
 - 🔲 A12 **Arc to reveal**: an orbit that moves a foreground object off the subject in the first 20% of the shot.
@@ -51,12 +51,12 @@
 - ✅ B8 **Entrances and exits**: characters walk into frame on act openings instead of standing pre-placed.
 - ✅ B9 **Weight shifts** every 3–5 s: the hip moves 2 cm, the shoulders counter-tilt.
 - 🔲 B10 **Hand-to-face** gestures: chin scratch, rubbing the neck (nervous), facepalm (exists in reactions, so use it).
-- 🔲 B11 **Wrist look**: Kai glances down at the thread wrist whenever a thread is mentioned.
+- ✅ B11 **Wrist look**: Kai glances down at the thread wrist whenever a thread is mentioned.
 - 🔲 B12 **Expression transitions**: blend between faces over 3 beats (squint → smile) instead of hard swaps.
 - ✅ B13 **Brow acting**: worried brows on tension lines, raised brows on questions (the line ends with "?").
 - 🔲 B14 **Smear frames** on the fastest arm swings (stretch ×1.3 for 1–2 frames).
 - 🔲 B15 **Secondary motion**: the hood and drawstrings lag the torso by 3 beats (a spring on the rotation delta).
-- 🔲 B16 **Breathing that shows emotion**: a big sigh (shoulders up, then drop) on sad lines.
+- ✅ B16 **Breathing that shows emotion**: a big sigh (shoulders up, then drop) on sad lines.
 - 🔲 B17 **Crowd variation**: 3 idle loops × random phase × speed 0.9–1.1, and one "hero extra" per crowd doing something unique.
 - 🔲 B18 **Hug, handshake and pinky-promise poses** for the promise moments (two-character contact pose, wrist-to-wrist).
 - ✅ B19 **Jump celebrate** with squash on landing and a dust puff.
@@ -132,7 +132,7 @@
 ## G. Edit & transitions (10)
 - 🔲 G1 **Match cuts** on the thread: same screen position across the cut.
 - 🔲 G2 **Zoom-through** transitions into a glowing thread or a dark hoodie.
-- 🔲 G3 **J/L cuts**: the next scene's ambience pre-laps by 0.4 s (twice per minute minimum).
+- ✅ G3 **J/L cuts**: the next scene's ambience pre-laps by 0.4 s (twice per minute minimum).
 - 🔲 G4 **Cut on action**: cuts land mid-gesture (B1 gestures make this possible).
 - 🔲 G5 **Average shot length 2.5 s** in montages, and 4–5 s on emotional beats (check the cut list).
 - 🔲 G6 **Breath shots** after every big reveal (3 s of slow drift, music only).
@@ -145,13 +145,13 @@
 - ✅ H1 Cloth rustle on every gesture of B1 (vol 0.15, rate ±5%).
 - ✅ H2 Footsteps under B7 walks.
 - ✅ H3 A camera whoosh on every A3 cut-in with momentum > 0.5 (quiet, 0.2).
-- 🔲 H4 A thread hum that follows the pulse (C1).
+- ✅ H4 A thread hum that follows the pulse (C1).
 - 🔲 H5 Snap: crack + sub + reverse tail, and silence 6 beats before it.
 - 🔲 H6 Ignite: riser → impact → sparkle → music swell.
 - 🔲 H7 Spatial panning from the screen x position (§36.6 rule 6).
 - ✅ H8 Stingers on the act cards.
 - 🔲 H9 Music hits on the cut downbeats (the tempo map, §36.7).
-- 🔲 H10 Room tone per set crossfading across cuts.
+- ✅ H10 Room tone per set crossfading across cuts.
 
 ## I. Process & QA (11)
 - 🔲 I1 `npm run motion` renders a 10 s, half-scale clip of any shot: `node scripts/motion_test.mjs P020`.
@@ -166,4 +166,4 @@
 - 🔲 I10 The user approves the motion test before every full render.
 - 🔲 I11 Update CLAUDE.md §1 and §50 when items ship.
 
-**Total: 130 items (53 done).**
+**Total: 130 items (59 done).**

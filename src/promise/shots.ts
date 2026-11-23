@@ -93,7 +93,7 @@ export const SHOTS: ShotSpec[] = [
   /* ═════ ACT 3 — IT TURNS ═════ */
   {line: 'P021', set: 'Hallway', light: 'hallwayNight', grade: 'tension', cam: {on: 0, size: 'wide', yaw: -20, move: 'push'},
     cast: [{who: 'maya', pos: [0.8, -2.2], rot: 0, expr: 'neutral', enter: [0, -2.4], enterLen: 40, name: 'MAYA'}, kai([-0.8, 0.4], {rot: 150, expr: 'neutral'})]},
-  {line: 'P022', set: 'Hallway', light: 'hallwayNight', grade: 'tension', cam: {on: [0, 1.2, -0.9], size: 'med', yaw: 70, move: 'orbitR'},
+  {rack: {at: 18, to: 1}, line: 'P022', set: 'Hallway', light: 'hallwayNight', grade: 'tension', cam: {on: [0, 1.2, -0.9], size: 'med', yaw: 70, move: 'orbitR'},
     cast: [{who: 'maya', pos: [0.8, -2.2], rot: -30, expr: 'neutral'}, kai([-0.8, 0.4], {rot: 150, expr: 'worried'})], threads: [th(0, 1, 'slack', {thick: 0.006})]},
   {line: 'P023', ...V, grade: 'wonder', exposure: 1.2, cam: {on: [0, 0.9, 0], size: 'med', yaw: 10, move: 'push'}, tag: 'SECOND GRADE',
     cast: [{who: 'young', id: 'ykai', pos: [0.5, 0], rot: -40, expr: 'happy'}, {who: 'maya', id: 'ymaya', pos: [-0.5, 0], rot: 40, expr: 'happy', talk: true}],

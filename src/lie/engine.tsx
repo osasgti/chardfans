@@ -37,7 +37,7 @@ export type ShotSpec = {
   line: string; w?: number; set: string; setProps?: Record<string, unknown>; light: string; grade: string; keyPos?: [number, number, number]; keyI?: number;
   cam: {on: number | [number, number, number]; size: Size; yaw?: number; pitch?: number; move?: Move; amount?: number};
   cast: CastSpec[]; meters?: MeterSpec[]; tag?: string; title?: {words: string[]; emph?: number[]; y?: number; size?: number};
-  dust?: boolean; extra?: string; threads?: ThreadSpec[]; shake?: number; shakeKind?: 'light' | 'hit' | 'quake'; slowmo?: {at: number; len?: number; rate?: number}; focusOn?: number | V3; intent?: string[]; flash?: number; exposure?: number; mirror?: boolean; flicker?: boolean;
+  dust?: boolean; extra?: string; threads?: ThreadSpec[]; shake?: number; shakeKind?: 'light' | 'hit' | 'quake'; slowmo?: {at: number; len?: number; rate?: number}; rack?: {at: number; to: number}; focusOn?: number | V3; intent?: string[]; flash?: number; exposure?: number; mirror?: boolean; flicker?: boolean;
 };
 
 const E = Easing.bezier(0.45, 0, 0.2, 1);
@@ -109,12 +109,17 @@ export const Actor = ({c, beat, sec, line, mirrored = false, speaker}: {c: CastS
   const free = !c.pose || c.pose === 'idle' || c.pose === 'shrug';
   const gest = free ? (c.talk ? 0.35 * talkW * (0.5 + 0.5 * Math.sin(t * 4.2 + ph)) + 0.9 * st : 0.08 * Math.sin(t * 0.9 + ph)) : 0;
   const base = {armL: base0.armL + (free && c.talk ? 0.45 * st + 0.12 * talkW * Math.sin(t * 3.1 + ph + 1) : 0), armR: base0.armR + gest};
-  const bob = (c.talk ? 0.012 * talkW * Math.abs(Math.sin(t * 6 + ph)) + 0.02 * st : 0.006 * Math.sin(t * 1.4 + ph));
+  // B11: the hero glances down at the thread wrist when the narration says thread/wrist/promise
+  const ww = c.who === 'hero' && !sleep && line ? line.words.find((w) => /thread|wrist|promise/i.test(w.text) && sec > w.start - 0.25 && sec < w.end + 0.9) : undefined;
+  const wristLook = ww ? Math.sin(Math.min(1, Math.max(0, (sec - ww.start + 0.25) / (ww.end - ww.start + 1.15))) * Math.PI) : 0;
+  // B16: sad characters sigh every 4 s (shoulders rise 0.4 s, then drop and slump)
+  const sp4 = ((t + random(id + 's') * 4) % 4) / 4, sigh = c.expr === 'sad' ? (sp4 < 0.15 ? Math.sin(sp4 / 0.15 * Math.PI / 2) : sp4 < 0.35 ? 1 - (sp4 - 0.15) / 0.2 * 1.3 : -0.3 * (1 - (sp4 - 0.35) / 0.65)) : 0;
+  const bob = sigh * 0.018 + (c.talk ? 0.012 * talkW * Math.abs(Math.sin(t * 6 + ph)) + 0.02 * st : 0.006 * Math.sin(t * 1.4 + ph));
   const body = (
     <Pill id={id} frame={beat} position={sleep ? [0, 0, 0] : [c.pos[0] + wx, (c.y ?? 0) + sit + run + R.dy + (sleep ? 0 : bob) + Math.abs(wsw) * 0.035, z]} rotY={sleep ? 0 : rotY}
       hoodie={L.hoodie} hat={L.hair} hatColor={L.hairColor} glasses={L.glasses} expr={c.expr ?? L.expr} scale={s}
-      headTurn={(c.turn ?? 0) * deg + R.headTurn + (!c.talk && speaker && !sleep ? Math.max(-0.55, Math.min(0.55, (Math.atan2(speaker[0] - c.pos[0], speaker[1] - c.pos[1]) - (c.rot ?? 0) * deg) * 0.5)) * Math.min(1, Math.max(0, (beat - 6) / 12)) : 0) + (c.talk ? Math.sin(beat / 30 * 2.3) * 0.04 : 0)} squash={R.squash + st * 0.04} lean={R.lean + (c.talk ? st * 0.06 : 0.025 * Math.sin(t * 0.6 + ph))} turnLag={(reactAt(c.react, beat - 4, c.reactAt).headTurn - R.headTurn) + (c.talk ? (Math.sin((beat - 4) / 30 * 2.3) - Math.sin(beat / 30 * 2.3)) * 0.04 : 0)} headTilt={(c.tilt ?? 0) * deg + R.headTilt} nod={st * 0.06} brow={Math.max(st, c.talk && line?.text.trim().endsWith('?') ? 0.6 : 0)}
-      mouth={mouth} armL={base.armL + R.armL} armR={base.armR + R.armR} legSwing={wsw * 0.45} armLx={wsw * 0.5 + R.armLx + (free && c.talk ? st * 0.35 : 0)} armRx={-wsw * 0.5 + R.armRx + (free ? gest * 0.4 : 0)} rightHand={<PropMesh p={c.hold} text={c.hold === 'phoneText' ? 'we\'re good, right?' : undefined} />}
+      headTurn={(c.turn ?? 0) * deg + R.headTurn + (!c.talk && speaker && !sleep ? Math.max(-0.55, Math.min(0.55, (Math.atan2(speaker[0] - c.pos[0], speaker[1] - c.pos[1]) - (c.rot ?? 0) * deg) * 0.5)) * Math.min(1, Math.max(0, (beat - 6) / 12)) : 0) + (c.talk ? Math.sin(beat / 30 * 2.3) * 0.04 : 0)} squash={R.squash + st * 0.04 - sigh * 0.02} lean={R.lean + (c.talk ? st * 0.06 : 0.025 * Math.sin(t * 0.6 + ph))} turnLag={(reactAt(c.react, beat - 4, c.reactAt).headTurn - R.headTurn) + (c.talk ? (Math.sin((beat - 4) / 30 * 2.3) - Math.sin(beat / 30 * 2.3)) * 0.04 : 0)} headTilt={(c.tilt ?? 0) * deg + R.headTilt - 0.32 * wristLook - 0.06 * sigh} nod={st * 0.06} brow={Math.max(st, c.talk && line?.text.trim().endsWith('?') ? 0.6 : 0)}
+      mouth={mouth} armL={base.armL + R.armL + sigh * 0.06} armR={base.armR + R.armR + sigh * 0.06 + wristLook * 0.5} legSwing={wsw * 0.45} armLx={wsw * 0.5 + R.armLx + (free && c.talk ? st * 0.35 : 0)} armRx={-wsw * 0.5 + R.armRx + (free ? gest * 0.4 : 0)} rightHand={<PropMesh p={c.hold} text={c.hold === 'phoneText' ? 'we\'re good, right?' : undefined} />}
       look={c.talk ? Math.round(Math.sin(t * 0.9 + ph)) * 2 : Math.round(Math.sin(t * 0.7 + random(id) * 9) * 1.4) * 5} />
   );
   if (sleep) return <group position={[c.pos[0], 0.62, c.pos[1]]} rotation={[-Math.PI / 2, 0, 0]}>{body}</group>;
@@ -192,7 +197,11 @@ export const LieShot = ({spec, beat: beatIn, dur, sec, seed, fpsRatio = 1, calSt
   // impact shake (§35.2): 0.03 m, decays e^(−8t) over ~15 beats, two sines at different frequencies
   const sh = spec.shake !== undefined && beat >= spec.shake ? Math.exp(-(spec.shakeKind === 'quake' ? 5 : 8) * (beat - spec.shake) / 30) * ({light: 0.012, hit: 0.03, quake: 0.06}[spec.shakeKind ?? 'hit']) : 0;
   const cam = sh ? {...cam0, pos: [cam0.pos[0] + Math.sin(beat * 2.1) * sh, cam0.pos[1] + Math.sin(beat * 2.9 + 1) * sh * 0.7, cam0.pos[2]] as [number, number, number]} : cam0;
-  const fp = focusPlan(spec, cam);
+  const fpA = focusPlan(spec, cam);
+  const rk = spec.rack ? Math.min(1, Math.max(0, (beat - spec.rack.at) / 12)) : 0, rke = rk * rk * (3 - 2 * rk);
+  const fpB = spec.rack ? focusPlan({...spec, focusOn: spec.rack.to}, cam) : fpA;
+  const fp = spec.rack ? {...fpA, focus: fpA.focus + (fpB.focus - fpA.focus) * rke, range: Math.min(fpA.range, fpB.range) * 0.45, meters: fpA.meters + (fpB.meters - fpA.meters) * rke} : fpA;
+  if (spec.rack) cam.fov *= 1 + 0.015 * Math.sin(rk * Math.PI);
   const line = lines.find((l) => l.id === spec.line);
   const Set = SETS[spec.set];
   const flick = spec.flicker ? (random('fl' + Math.floor(beat / 3)) > 0.82 ? 0.35 : 1) : 1;
