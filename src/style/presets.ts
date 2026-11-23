@@ -10,6 +10,7 @@ export const kelvin = (k: number): string => {
 };
 
 export type LightPreset = {key: string; keyI: number; fill: string; fillI: number; rim: string; rimI: number; fog: [number, number]; bg: string; exposure: number};
+// D2 two-colour rule: every preset pairs a warm (≤ 3500 K / amber) with a cool (≥ 7000 K / violet-blue) source
 export const LIGHTS: Record<string, LightPreset> = {
   hallway:   {key: kelvin(3200), keyI: 70, fill: '#7b6cff', fillI: 9,  rim: kelvin(8000), rimI: 55, fog: [6, 18], bg: '#14101f', exposure: 1.05},
   classroom: {key: kelvin(5600), keyI: 55, fill: '#8f7dff', fillI: 12, rim: kelvin(9000), rimI: 40, fog: [8, 22], bg: '#1d1830', exposure: 1.1},
@@ -17,15 +18,15 @@ export const LIGHTS: Record<string, LightPreset> = {
   casino:    {key: kelvin(3000), keyI: 85, fill: '#ff5fc8', fillI: 8,  rim: '#ffd27a', rimI: 50, fog: [6, 16], bg: '#160d14', exposure: 1.05},
   stadium:   {key: kelvin(6500), keyI: 80, fill: '#5a7dff', fillI: 14, rim: '#ffffff', rimI: 60, fog: [10, 40], bg: '#0b1020', exposure: 1.0},
   kitchen:   {key: kelvin(5200), keyI: 60, fill: '#8f7dff', fillI: 10, rim: kelvin(3200), rimI: 40, fog: [7, 20], bg: '#1d1626', exposure: 1.1},
-  kitchenNight: {key: '#7fa8ff', keyI: 28, fill: '#2a2f6a', fillI: 4, rim: '#6f8cff', rimI: 25, fog: [4, 12], bg: '#07060d', exposure: 0.95},
+  kitchenNight: {key: '#7fa8ff', keyI: 28, fill: '#2a2f6a', fillI: 4, rim: kelvin(2900), rimI: 25, fog: [4, 12], bg: '#07060d', exposure: 0.95},
   dawn:      {key: kelvin(2900), keyI: 85, fill: '#9f8dff', fillI: 8, rim: kelvin(3500), rimI: 55, fog: [6, 18], bg: '#24160f', exposure: 1.12},
   gym:       {key: kelvin(3000), keyI: 80, fill: '#ff5fc8', fillI: 9, rim: '#ffd27a', rimI: 45, fog: [6, 18], bg: '#140b14', exposure: 1.05},
-  bathroom:  {key: '#e8f4ff', keyI: 55, fill: '#7b8cff', fillI: 5, rim: '#9fc4ff', rimI: 30, fog: [4, 12], bg: '#0b0d12', exposure: 1.0},
+  bathroom:  {key: '#e8f4ff', keyI: 55, fill: '#7b8cff', fillI: 5, rim: kelvin(3000), rimI: 30, fog: [4, 12], bg: '#0b0d12', exposure: 1.0},
   bathroomWarm: {key: kelvin(3400), keyI: 65, fill: '#b49dff', fillI: 8, rim: kelvin(3000), rimI: 40, fog: [5, 14], bg: '#1a120c', exposure: 1.08},
   street:    {key: kelvin(5600), keyI: 75, fill: '#7b9cff', fillI: 12, rim: '#ffffff', rimI: 40, fog: [10, 35], bg: '#1d2338', exposure: 1.08},
   rooftop:   {key: kelvin(2600), keyI: 80, fill: '#7a5aa8', fillI: 10, rim: '#ffb07a', rimI: 70, fog: [12, 45], bg: '#3a2448', exposure: 1.05},
-  hallwayNight: {key: kelvin(6500), keyI: 35, fill: '#2f3f8a', fillI: 5, rim: '#8fb0ff', rimI: 35, fog: [4, 14], bg: '#08070f', exposure: 0.95},
-  void:      {key: kelvin(4000), keyI: 90, fill: '#000000', fillI: 0,  rim: '#9fc4ff', rimI: 35, fog: [4, 12], bg: '#0c0a14', exposure: 1.0},
+  hallwayNight: {key: kelvin(6500), keyI: 35, fill: '#2f3f8a', fillI: 5, rim: '#ffb47a', rimI: 35, fog: [4, 14], bg: '#08070f', exposure: 0.95},
+  void:      {key: kelvin(3400), keyI: 90, fill: '#5a4a9a', fillI: 3,  rim: '#9fc4ff', rimI: 35, fog: [4, 12], bg: '#0c0a14', exposure: 1.0},
 };
 
 export type Grade = {saturation: number; contrast: number; bloom: number; vignette: number; grain: number; ca: number};

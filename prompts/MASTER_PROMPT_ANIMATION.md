@@ -88,7 +88,7 @@
 - ✅ D00 **Calibration never brightens a clipping shot**: `still_cal.py` measures the share of pixels ≥ 235; above 2% it may only darken (void close-ups were being pushed +1 stop by their black backgrounds and blew out)
 - ✅ D0 **Close-ups get less key** (CLAUDE.md §52.1 rule, now wired in): key × 0.75 MCU, 0.6 CU, 0.5 ECU unless the shot sets `keyI`. The lens eye-light also fades with camera distance.
 - ✅ D1 No clipped faces: void light moved to the front-left at 1.3; soft-shoulder highlight roll-off in ExposureEffect.
-- 🔲 D2 **Two-colour lighting** on every shot: a warm key against a cool fill/rim, with a ≥ 2000 K difference.
+- ✅ D2 **Two-colour lighting** on every shot: a warm key against a cool fill/rim, with a ≥ 2000 K difference.
 - ✅ D3 **Animated light**: one light per shot moves (a passing car, a flicker, cloud drift, a screen pulse).
 - ✅ D4 **Emotion light shift**: the key colour moves warm → cold over 1 s when a promise breaks.
 - 🔲 D5 **Volumetric shafts** in the hallway, classroom and bedroom (the `Beam` exists, so add motion to its dust).
@@ -168,4 +168,4 @@
 - 🔲 I10 The user approves the motion test before every full render.
 - 🔲 I11 Update CLAUDE.md §1 and §50 when items ship.
 
-**Total: 132 items (90 done).**
+**Total: 132 items (91 done).**
