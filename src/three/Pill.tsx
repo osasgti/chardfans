@@ -55,9 +55,11 @@ export const Pill = ({id, frame, position = [0, 0, 0], rotY = 0, hoodie = C.red,
       <group scale={[1, breath, 1]} rotation={[lean, 0, shift]}>
         <mesh position={[0, 0.72, 0]} castShadow receiveShadow><capsuleGeometry args={[0.22, 0.36, 8, 24]} />{cloth}</mesh>
         {[-1, 1].map((s) => (
-          <mesh key={s} position={[s * 0.045, 0.78, 0.215]}><RB args={[0.016, 0.17, 0.012]} /><meshStandardMaterial color="#f4f0f8" /></mesh>
+          // B15 follow-through: drawstrings hang from the collar and swing behind turns, leans and steps (pivot at the top)
+          <group key={s} position={[s * 0.045, 0.865, 0.215]} rotation={[Math.max(-0.1, lean * -0.9 + Math.abs(legSwing) * 0.25), 0, turnLag * 2.2 + Math.sin(t * 2.6 + ph + s) * 0.04 + legSwing * 0.3 * s]}>
+            <mesh position={[0, -0.085, 0]}><RB args={[0.016, 0.17, 0.012]} /><meshStandardMaterial color="#f4f0f8" /></mesh></group>
         ))}
-        <mesh position={[0, 0.98, -0.1]} rotation={[0.3, 0, 0]}><torusGeometry args={[0.13, 0.05, 12, 24, Math.PI]} />{cloth}</mesh>
+        <mesh position={[0, 0.98, -0.1]} rotation={[0.3 + lean * 0.5 + Math.abs(legSwing) * 0.12, 0, -turnLag * 1.4]}><torusGeometry args={[0.13, 0.05, 12, 24, Math.PI]} />{cloth}</mesh>
         {arm(-1, armL, armLx)}{arm(1, armR, armRx)}
         <mesh position={[0, 1.04, 0]}><cylinderGeometry args={[0.05, 0.05, 0.2, 12]} /><meshStandardMaterial color={C.lavender} /></mesh>
         <group position={[0, 1.13, 0]} rotation={[nod, headTurn + drift, headTilt + driftTilt - shift * 0.6]} scale={sq}>

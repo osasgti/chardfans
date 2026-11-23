@@ -55,7 +55,7 @@
 - ✅ B12 **Expression transitions**: `exprAt: {at, to}` swaps the face under a forced blink (the classic animator trick, since the canvas face cannot cross-fade).
 - ✅ B13 **Brow acting**: worried brows on tension lines, raised brows on questions (the line ends with "?").
 - 🔲 B14 **Smear frames** on the fastest arm swings (stretch ×1.3 for 1–2 frames).
-- 🔲 B15 **Secondary motion**: the hood and drawstrings lag the torso by 3 beats (a spring on the rotation delta).
+- ✅ B15 **Secondary motion**: the hood and drawstrings lag the torso by 3 beats (a spring on the rotation delta).
 - ✅ B16 **Breathing that shows emotion**: a big sigh (shoulders up, then drop) on sad lines.
 - 🔲 B17 **Crowd variation**: 3 idle loops × random phase × speed 0.9–1.1, and one "hero extra" per crowd doing something unique.
 - ✅ B18 **Hug, handshake and pinky-promise poses** for the promise moments (two-character contact pose, wrist-to-wrist).
@@ -168,4 +168,4 @@
 - 🔲 I10 The user approves the motion test before every full render.
 - 🔲 I11 Update CLAUDE.md §1 and §50 when items ship.
 
-**Total: 132 items (93 done).**
+**Total: 132 items (94 done).**

@@ -274,7 +274,7 @@ export const LieShot = ({spec, beat: beatIn, dur, sec, seed, fpsRatio = 1, calSt
           return beat >= at ? <Thread key={'net' + i} from={a} to={b} state="fresh" t={(beat - at) / 30} thickness={0.007} seed={'net' + i} light={false} /> : null;
         })}
         {/* E2 background extras: two students walk along the lockers in hallway shots (16-beat step cycle) */}
-        {spec.set === 'Hallway' && [0, 1].map((k) => {
+        {spec.set === 'Hallway' && !spec.cast.some((c) => c.enter || c.name) && [0, 1].map((k) => {
           const tt = sec + k * 4.3, dir = k ? -1 : 1, ph = (tt * 0.11 + random(seed + 'ex' + k)) % 1, x = dir * (-6 + ph * 12), sw = Math.sin(tt * Math.PI * 2 * 1.8);
           return <Pill key={'ex' + k} id={'extra' + k} frame={beat} position={[x, Math.abs(sw) * 0.03, -2.62 + k * 0.1]} rotY={dir * Math.PI / 2} hoodie={k ? '#6a5a9a' : '#8a5a3c'}
             hat={k ? 'cap' : 'bob'} scale={0.94} legSwing={sw * 0.42} armLx={sw * 0.45} armRx={-sw * 0.45} />;
