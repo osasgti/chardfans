@@ -61,8 +61,8 @@ export const mirrorOf = (p: V3): V3 => [p[0], p[1], 2 * MIRROR_Z - p[2]];
 
 /* ───────────── camera ───────────── */
 export type Size = 'ecu' | 'cu' | 'mcu' | 'med' | 'wide' | 'ews';
-export type Move = 'push' | 'pull' | 'orbitL' | 'orbitR' | 'crane' | 'drop' | 'lock' | 'dz' | 'truck' | 'snap';
-export type CamSpec = {on: number | V3; size: Size; yaw?: number; pitch?: number; move?: Move; amount?: number};
+export type Move = 'push' | 'pull' | 'orbitL' | 'orbitR' | 'crane' | 'drop' | 'lock' | 'dz' | 'truck' | 'snap' | 'along';
+export type CamSpec = {on: number | V3; size: Size; yaw?: number; pitch?: number; move?: Move; amount?: number; path?: [V3, V3]};
 /** what a shot must provide for camera + focus maths (ShotSpec in engine.tsx is a superset) */
 /** intent: audit exceptions that are deliberate ('back' = subject seen from behind) */
 export type ShotGeom = {cam: CamSpec; cast: CastSpec[]; mirror?: boolean; focusOn?: number | V3; intent?: string[]};
@@ -100,6 +100,12 @@ export const camFor = (spec: ShotGeom, k: number, beat: number, seed: string): C
   if (cam.pitch === undefined) pitch += (grade === 'triumph' ? -7 : grade === 'consequence' ? 6 : 0) * deg;   // A16 hero low / alone high angles
   yaw += (sd > 0.5 ? 1 : -1) * 4 * deg * k; lift += 0.06 * Math.sin(k * Math.PI);
   const inMo = Math.exp(-beat / 7); d *= 1 + 0.07 * inMo; yaw += (sd > 0.5 ? -1 : 1) * 2.5 * deg * inMo;
+  // C14 thread-cam: the lens rides a path laid along a thread (cam.path), looking at the aim point; skips the orbit maths
+  if (cam.move === 'along' && cam.path) {
+    const [p0, p1] = cam.path, u = k * k * (3 - 2 * k);
+    const pp: V3 = [p0[0] + (p1[0] - p0[0]) * u, p0[1] + (p1[1] - p0[1]) * u + 0.03 * Math.sin(k * Math.PI * 2), p0[2] + (p1[2] - p0[2]) * u];
+    return {...handheld({pos: pp, target: S, fov: f0}, beat, seed), roll: Math.sin(k * Math.PI) * 3 * deg};
+  }
   const pos: V3 = [S[0] + d * Math.sin(yaw) * Math.cos(pitch), S[1] + lift + d * Math.sin(pitch), S[2] + d * Math.cos(yaw) * Math.cos(pitch)];
   const ty = cam.size === 'cu' || cam.size === 'mcu' ? S[1] + 0.08 : S[1] - 0.04;
   // A5 dutch breathing (±0.6°, tension ±2.5°) · A19 lens breathing (fov ±0.4°)

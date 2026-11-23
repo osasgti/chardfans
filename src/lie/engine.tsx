@@ -38,7 +38,7 @@ export type ThreadSpec = {from: number | [number, number, number]; to?: number |
   then?: {state: ThreadState; at: number}; swarm?: number; grey?: number; xray?: boolean};
 export type ShotSpec = {
   line: string; w?: number; set: string; setProps?: Record<string, unknown>; light: string; grade: string; keyPos?: [number, number, number]; keyI?: number;
-  cam: {on: number | [number, number, number]; size: Size; yaw?: number; pitch?: number; move?: Move; amount?: number};
+  cam: {on: number | [number, number, number]; size: Size; yaw?: number; pitch?: number; move?: Move; amount?: number; path?: [V3, V3]};
   cast: CastSpec[]; meters?: MeterSpec[]; tag?: string; title?: {words: string[]; emph?: number[]; y?: number; size?: number};
   dust?: boolean; extra?: string; threads?: ThreadSpec[]; shake?: number; shakeKind?: 'light' | 'hit' | 'quake'; slowmo?: {at: number; len?: number; rate?: number}; rack?: {at: number; to: number}; whip?: 'in' | 'out' | 'both'; title3d?: {words: string[]; pos: [number, number, number]; size?: number}; net?: boolean; focusOn?: number | V3; intent?: string[]; flash?: number; exposure?: number; mirror?: boolean; flicker?: boolean;
 };

@@ -81,7 +81,7 @@
 - 🔲 C11 **Colour grammar**: gold = kept, grey = broken, red = lie, blue-white = new. Write it in a legend card once.
 - ✅ C12 **Depth-sorted glow**: near threads get bigger bloom, far ones a soft haze.
 - 🔲 C13 **Thread sound sync**: each pulse has a soft tick, the snap has a crack plus a reverse tail (SFX exist).
-- 🔲 C14 **Thread-cam**: one shot travels along a thread from wrist to wrist (camera on a CatmullRom curve).
+- 🔲 C14 **Thread-cam** (move `along` + `cam.path` exists in camera.ts; the first test on P003 flew too close: heads filled the frame and the thread was lost. Needs a path 1.5 m+ off the thread and a wider fov): one shot travels along a thread from wrist to wrist (camera on a CatmullRom curve).
 - ✅ C15 **Ending tapestry**: every kept thread weaves into a glowing net above the city.
 
 ## D. Lighting & look (15)
