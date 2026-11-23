@@ -20,7 +20,7 @@ ffmpeg = shutil.which('ffmpeg') or next((os.path.join(d, 'ffmpeg.exe') for d, _,
 tl = json.load(open(os.path.join(ROOT, f'src/{VID}/timeline.json'))); lines, total = tl['lines'], tl['total']
 src = open(os.path.join(ROOT, f'src/{VID}/shots.ts'), encoding='utf-8').read()
 shots = [(m.group(1), float(m.group(2) or 1), m.group(3)) for m in
-         re.finditer(r"\{line: '(" + LID + r"\d+[a-z]?)'(?:, w: ([\d.]+))?,[^\n]*?grade: '(\w+)'", src)]
+         re.finditer(r"^\s*\{[^\n]*?\bline: '(" + LID + r"\d+[a-z]?)'(?:, w: ([\d.]+))?,[^\n]*?grade: '(\w+)'", src, re.M)]   # shots may start with other keys
 plan = []
 for li, l in enumerate(lines):
     ws = l['start'] - 0.25 if li else 0; we = lines[li + 1]['start'] - 0.25 if li < len(lines) - 1 else total
