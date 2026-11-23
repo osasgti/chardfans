@@ -5,7 +5,7 @@
 import {RB} from './RB';
 import React, {useMemo} from 'react';
 import {CanvasTexture} from 'three';
-import {random} from 'remotion';
+import {random, useCurrentFrame, useVideoConfig} from 'remotion';
 import {RoundedBox} from '@react-three/drei';
 import {C} from '../style/tokens';
 
@@ -284,8 +284,48 @@ export const Void = ({ring = true}: {ring?: boolean}) => (
   </group>
 );
 
+/* ───── environment life (MASTER_PROMPT_ANIMATION E3, E6, E8, E11): all frame-derived, seeded ───── */
+const useT = () => useCurrentFrame() / useVideoConfig().fps;
+/** E6: a car passes every 7 s, headlights first: warm light sweeps across the street and the cast */
+const PassingCars = () => {
+  const t = useT();
+  return (<group>{[0, 1].map((k) => {
+    const ph = ((t + k * 3.6 + 1.2) % 7) / 7, dir = k ? -1 : 1, x = dir * (-16 + ph * 32);
+    const col = k ? '#ff3b3b' : '#fff2cf';
+    return (<group key={k} position={[x, 0, 4.6 + k * 1.2]}>
+      <mesh position={[0, 0.55, 0]} castShadow><RB args={[3.6, 0.9, 1.7]} />{std(k ? '#3d6fd6' : '#2a2530', 0.4)}</mesh>
+      <mesh position={[0, 1.15, 0]}><RB args={[2.0, 0.6, 1.5]} />{std('#1a1620', 0.3, 0.4)}</mesh>
+      {[0.55, -0.55].map((z) => <mesh key={z} position={[dir * 1.82, 0.62, z]}><sphereGeometry args={[0.1, 10, 10]} /><meshBasicMaterial color={col} toneMapped={false} /></mesh>)}
+      <pointLight position={[dir * 2.6, 0.8, -0.8]} intensity={2.2} distance={7} decay={2} color={col} />
+    </group>);
+  })}</group>);
+};
+/** E11: a few birds cross the sky (wing flap = V that opens and closes) */
+const Birds = ({y = 5, z = -9}: {y?: number; z?: number}) => {
+  const t = useT();
+  return (<group>{Array.from({length: 5}).map((_, i) => {
+    const x = -12 + ((t * 1.3 + random('bx' + i) * 24) % 24), yy = y + random('by' + i) * 1.6 + Math.sin(t * 0.8 + i) * 0.15;
+    const f = Math.sin(t * 9 + i * 2) * 0.6;
+    return (<group key={i} position={[x, yy, z - random('bz' + i) * 3]}>
+      {[-1, 1].map((s) => <mesh key={s} position={[s * 0.09, 0, 0]} rotation={[0, 0, s * (0.35 + f)]}><boxGeometry args={[0.18, 0.02, 0.05]} /><meshBasicMaterial color="#2a2236" /></mesh>)}
+    </group>);
+  })}</group>);
+};
+/** E8: steam curls rising off warm food */
+const Steam = ({pos}: {pos: [number, number, number]}) => {
+  const t = useT();
+  return (<group position={pos}>{Array.from({length: 7}).map((_, i) => {
+    const life = (t * 0.45 + i / 7) % 1;
+    return (<mesh key={i} position={[Math.sin(life * 5 + i) * 0.04, life * 0.45, Math.cos(life * 4 + i) * 0.03]} scale={0.03 + life * 0.07}>
+      <sphereGeometry args={[1, 10, 10]} /><meshBasicMaterial color="#f3ecf8" transparent opacity={0.22 * Math.sin(life * Math.PI)} depthWrite={false} />
+    </mesh>);
+  })}</group>);
+};
+
 export const Street = () => (
   <group>
+    <PassingCars />
+    <Birds y={5.5} z={-10} />
     <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, 0, 2]} receiveShadow><planeGeometry args={[40, 8]} />{std('#3a3542', 0.8)}</mesh>
     <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, 0.08, -1.5]} receiveShadow><planeGeometry args={[40, 3]} />{std('#8f8a94', 0.8)}</mesh>
     <mesh position={[0, 0.04, -0.02]}><RB args={[40, 0.08, 0.15]} />{std('#77727c')}</mesh>
@@ -310,6 +350,7 @@ export const Street = () => (
 
 export const Rooftop = () => (
   <group>
+    <Birds y={3.4} z={-9} />
     <mesh rotation={[-Math.PI / 2, 0, 0]} receiveShadow><planeGeometry args={[12, 12]} />{std('#5a5466', 0.9)}</mesh>
     <mesh position={[0, 0.5, -1.6]} castShadow receiveShadow><RB args={[12, 1.0, 0.3]} />{std('#6d6578', 0.8)}</mesh>
     {/* sky dome gradient: big emissive back plane + sun */}
@@ -349,6 +390,7 @@ const LunchTable = ({z, x = 0, len = 5}: {z: number; x?: number; len?: number}) 
 );
 export const Cafeteria = ({saved = true}: {saved?: boolean}) => (
   <group>
+    <Steam pos={[-0.55, 0.86, 0.95]} />
     <Floor color="#c9c2d4" planks={false} />
     <Wall color="#3b2d5c" z={-5} />
     <LunchTable z={0.35} />
@@ -381,15 +423,19 @@ export const Cafeteria = ({saved = true}: {saved?: boolean}) => (
 
 export const SETS: Record<string, React.FC<any>> = {Bedroom, Kitchen, Classroom, Gym, Bathroom, Void, Street, Rooftop, Cafeteria};
 
+const PosterSway = ({h, seed, children}: {h: number; seed: string; children: React.ReactNode}) => {
+  const t = useT(), a = Math.sin(t * 1.1 + random('ps' + seed) * 6) * 0.012 + Math.sin(t * 2.3 + random('pt' + seed) * 6) * 0.005;
+  return <group position={[0, h / 2, 0]} rotation={[a * 0.6, 0, a]}><group position={[0, -h / 2, 0]}>{children}</group></group>;
+};
 /** Wall poster (backlog #51): coloured card, white border, short readable headline. */
 export const Poster = ({pos, w = 0.6, h = 0.85, color = '#c8323a', title, sub, rot = 0}: {pos: [number, number, number]; w?: number; h?: number; color?: string; title: string; sub?: string; rot?: number}) => (
-  <group position={pos} rotation={[0, 0, rot]}>
+  <group position={pos} rotation={[0, 0, rot]}><PosterSway h={h} seed={title}>
     <mesh><planeGeometry args={[w + 0.04, h + 0.04]} />{std('#efe8f5', 0.8)}</mesh>
     <mesh position={[0, 0, 0.002]}><planeGeometry args={[w, h]} />{std(color, 0.85)}</mesh>
     <Text position={[0, h * 0.18, 0.004]} fontSize={w * 0.16} color="#f5ead2">{title}</Text>
     {sub && <Text position={[0, -h * 0.12, 0.004]} fontSize={w * 0.08} color="#f5ead2" font="Inter">{sub}</Text>}
     <mesh position={[0, h / 2 - 0.02, 0.006]}><circleGeometry args={[0.015, 10]} />{std('#9aa0aa', 0.3, 0.8)}</mesh>
-  </group>
+  </PosterSway></group>
 );
 /** Wall clock (backlog #52): hands set from a story time (minutes past midnight); seconds hand ticks with the frame. */
 export const WallClock = ({pos, r = 0.22, time = 8 * 60 + 2, frame = 0}: {pos: [number, number, number]; r?: number; time?: number; frame?: number}) => {

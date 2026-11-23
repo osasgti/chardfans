@@ -104,15 +104,15 @@
 ## E. Environment life (12)
 - ✅ E1 Dust drifts and rises at varied speeds (it was nearly frozen).
 - 🔲 E2 **Background extras** in every set: walking students in the hallway, someone eating in the cafeteria.
-- 🔲 E3 **Wind**: posters, curtains and plants sway (vertex sine).
+- ✅ E3 **Wind**: posters, curtains and plants sway (vertex sine).
 - 🔲 E4 **Clocks tick**, screens scroll, fans spin, lights buzz-flicker.
 - 🔲 E5 **Weather beyond windows**: moving clouds, rain streaks on the night shots.
-- 🔲 E6 **Street life**: passing cars (light sweeps), and a traffic light changing.
+- ✅ E6 **Street life**: passing cars (light sweeps), and a traffic light changing.
 - ✅ E7 **Floating motes in the void**, with 3 depth layers at different speeds and sizes.
-- 🔲 E8 **Steam** from the cafeteria food, plus breath in the cold rooftop scene.
+- ✅ E8 **Steam** from the cafeteria food, plus breath in the cold rooftop scene.
 - 🔲 E9 **Shadow play**: blinds cast moving stripes in the classroom.
 - 🔲 E10 **Interactive props**: a chair spins slightly when someone stands up, a paper flutters on a cut.
-- 🔲 E11 **Birds and planes** cross the sky shots (tiny silhouettes).
+- ✅ E11 **Birds and planes** cross the sky shots (tiny silhouettes).
 - 🔲 E12 **Set dressing pass**: 5 storytelling details per set (§36.3).
 
 ## F. Graphics, titles & UI (12)
@@ -166,4 +166,4 @@
 - 🔲 I10 The user approves the motion test before every full render.
 - 🔲 I11 Update CLAUDE.md §1 and §50 when items ship.
 
-**Total: 130 items (59 done).**
+**Total: 130 items (63 done).**
