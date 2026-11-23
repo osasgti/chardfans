@@ -166,6 +166,6 @@
 - 🔲 I8 Look-dev stills at full quality on the GPU for every changed shot (§57.2 rule 9).
 - 🔲 I9 The vertical cut renders with the master (§45).
 - 🔲 I10 The user approves the motion test before every full render.
-- 🔲 I11 Update CLAUDE.md §1 and §50 when items ship.
+- ✅ I11 Update CLAUDE.md §1 and §50 when items ship.
 
-**Total: 132 items (98 done).**
+**Total: 132 items (99 done).**

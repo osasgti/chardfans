@@ -78,6 +78,7 @@ scripts/
   validate_shots.mjs       ✅ shot cast-reference validator (npm run validate)
   audit_shots.mjs          ✅ geometric audit of every shot, same maths as the renderer: BLUR/CROP/BACK/CLIP/THREAD/EMPTY (npm run audit, `--old` = old focus rule) (§58)
   still_cal.py             ✅ one GPU still per shot → luma per shot → exposure_cal.json + labelled contact sheets, no full render needed (npm run calibrate) (§58)
+  motion_test.py           ✅ one line → half-scale clip + GIF flip-book + contact sheet + motion_qa (`python scripts/motion_test.py P021`)
   motion_qa.py             ✅ STILL (frozen seconds) + CLIP (blown highlights) detector (MASTER_PROMPT_ANIMATION I2/I3)
   finish.py                ✅ final assembly: patches GPU dropout frames + two-pass −14 LUFS master + verification (called by render_chunks.sh) (§57.1)
   determinism.sh           ✅ same frame twice → identical hash
@@ -1638,6 +1639,35 @@ Measured with `scripts/audit_shots.mjs` (every shot of both videos at start / mi
 **Workflow from now on (before any full render):** `npm run typecheck` → `npm run audit` (must print 0 issues, or each one is
 marked with `intent`) → `npm run calibrate` (writes exposure, then run it again with `--measure-only` and check the sheets in
 `out/cal_promise/`) → render. Mark deliberate exceptions on the shot: `intent: ['back']` for a seen-from-behind subject.
+
+---
+
+## 59. Animation pass (Nov 23: `prompts/MASTER_PROMPT_ANIMATION.md`, "too static, too bright")
+
+The full list with ticks lives in the prompt file. What exists now, by where it lives:
+
+| Where | Feature (shot-spec key) |
+|---|---|
+| `camera.ts camFor` | bigger push/pull/orbit · secondary arc + rise on every shot · cut-in momentum · 3-axis handheld · roll (dutch breathing, tension ±2.5°) · lens breathing · low/high angle by grade · push/snap overshoot · `move: 'along'` + `cam.path` (thread-cam, not used yet) |
+| `engine.tsx LieShot` | punch-in on stressed words · `slowmo: {at, len, rate}` · `shakeKind` light/hit/quake · `rack: {at, to}` · `whip: 'in'/'out'/'both'` · `title3d` · `net` (ending tapestry) · `callout` · parallax foreground edge in wides · hallway extras · cold key when a thread breaks · close-up key scaling (MCU 0.75, CU 0.6, ECU 0.5) |
+| `engine.tsx Actor` | talk gestures + stress palms · listeners turn to speaker · `enter: [dx, dz]` walk-ins · `exprAt` (swap under a blink) · `lookCam` · wrist glance on thread/wrist/promise · sighs (sad) · phone tapping + screen glow · sleep twitch · poses `pinky` / `pinkyL` |
+| `Pill.tsx` | `legSwing` · `forceBlink` · blink on head turns · drawstring/hood follow-through |
+| `Thread.tsx` | pulse light on faces · snap flash + falling embers · ignite fire front · depth-scaled halo · swarm sway |
+| `Stage.tsx` | ExposureEffect with a soft highlight shoulder (3D never reaches pure white) + warm halation · animated kicker · eye light fades with distance · void rim ×1.4 |
+| `LieSets.tsx` | glossy void floor + far bokeh · passing cars · birds · steam · swaying posters |
+| `PromiseVideo.tsx` | cut whooshes · cloth rustles on stressed words · footsteps under walk-ins · whip SFX · ignite/snap stingers · act cards · end card |
+| `reactions.ts` | `neckRub` (reads as a nervous hand to the chest; Pill has no elbow) |
+| `Thumb.tsx` | `PromiseThumb` composition, 3 variants |
+| QA | `motion_qa.py` (STILL / CLIP) · audit STATIC + RHYTHM · `still_cal.py` never brightens a shot with > 2% pixels ≥ 235 |
+
+**Lessons (all from test renders this pass):**
+- Mean-luma calibration is fooled by dark backgrounds: a void close-up reads "too dark" while the white head already clips. Measure highlights too (§58, `still_cal.py`).
+- Close-ups need less key light; this rule was in §52.1 but never wired in until now.
+- A glow *plane* behind the subject reads as a flat wall; use far bokeh points instead.
+- Faint "ghost threads" as slack Thread tubes read as heavy amber bands; the thread shader is too strong for background use.
+- Name tags and background extras fight: no extras in walk-in or name-tag shots.
+- Thread-cam paths must stay ≥ 1.5 m off the thread, or heads fill the frame.
+- Inserting shots shifts `exposure_cal.json` slots (per index): re-calibrate after any shot insert.
 
 ---
 
