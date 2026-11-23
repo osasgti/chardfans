@@ -18,7 +18,7 @@ export const SHOTS: ShotSpec[] = [
   {line: 'P001', ...V, grade: 'wonder', cam: {on: [-0.5, 1.15, 0], size: 'cu', yaw: 70, move: 'push'}, exposure: 0.95,
     cast: [fig('giver', [-0.9, 0], {rot: 40, expr: 'happy', pose: 'hold'})], threads: [th(0, [1.6, 1.2, 0.4], 'fresh', {at: 30, thick: 0.009})]},
   {line: 'P001', w: 0.8, ...V, grade: 'wonder', cam: {on: [0, 1.3, 0], size: 'med', yaw: -8, move: 'orbitL'},
-    cast: [fig('giver', [-0.9, 0], {rot: 40, expr: 'happy', pose: 'hold'}), kai([0.9, 0], {rot: -40, expr: 'neutral'})], threads: [th(0, 1, 'held', {thick: 0.01})],
+    cast: [fig('giver', [-0.9, 0], {rot: 40, expr: 'happy', pose: 'hold'}), kai([0.9, 0], {rot: -40, expr: 'neutral', name: 'YOU'})], threads: [th(0, 1, 'held', {thick: 0.01})],
     title: {words: ['WHAT', 'IF', 'PROMISES', 'LEFT', 'A', 'THREAD?'], emph: [5], y: 0.22, size: 64}},
   {line: 'P002', ...V, grade: 'wonder', cam: {on: 1, size: 'cu', yaw: -25, move: 'push'},
     cast: [fig('giver', [-0.9, 0], {rot: 40, expr: 'happy', pose: 'hold'}), kai([0.9, 0], {rot: -40, expr: 'happy', tilt: 5})], threads: [th(0, 1, 'held', {thick: 0.012})]},
@@ -92,7 +92,7 @@ export const SHOTS: ShotSpec[] = [
 
   /* ═════ ACT 3 — IT TURNS ═════ */
   {line: 'P021', set: 'Hallway', light: 'hallwayNight', grade: 'tension', cam: {on: 0, size: 'wide', yaw: -20, move: 'push'},
-    cast: [{who: 'maya', pos: [0.8, -2.2], rot: 0, expr: 'neutral', enter: [0, -2.4], enterLen: 40}, kai([-0.8, 0.4], {rot: 150, expr: 'neutral'})]},
+    cast: [{who: 'maya', pos: [0.8, -2.2], rot: 0, expr: 'neutral', enter: [0, -2.4], enterLen: 40, name: 'MAYA'}, kai([-0.8, 0.4], {rot: 150, expr: 'neutral'})]},
   {line: 'P022', set: 'Hallway', light: 'hallwayNight', grade: 'tension', cam: {on: [0, 1.2, -0.9], size: 'med', yaw: 70, move: 'orbitR'},
     cast: [{who: 'maya', pos: [0.8, -2.2], rot: -30, expr: 'neutral'}, kai([-0.8, 0.4], {rot: 150, expr: 'worried'})], threads: [th(0, 1, 'slack', {thick: 0.006})]},
   {line: 'P023', ...V, grade: 'wonder', exposure: 1.2, cam: {on: [0, 0.9, 0], size: 'med', yaw: 10, move: 'push'}, tag: 'SECOND GRADE',

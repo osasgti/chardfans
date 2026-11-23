@@ -267,6 +267,16 @@ export const LieShot = ({spec, beat: beatIn, dur, sec, seed, fpsRatio = 1, calSt
         const v = Math.round(random('om' + i) * 100);
         return p.visible && !tooClose && p.y < H - 260 ? <LieMeter key={'o' + i} beat={beat} start={i * 4} land={i * 4 + 25} x={p.x} y={p.y} value={v} small dur={dur} /> : null;
       })}
+      {spec.cast.map((c, i) => {
+        if (!c.name) return null;
+        const h = projectCam(cam, headOf(c)), side = h.x > W * 0.62 ? -1 : 1;
+        const op = Math.min(ease(beat, [10, 20], [0, 1]), ease(beat, [Math.min(dur - 14, 96), Math.min(dur - 4, 106)], [1, 0]));
+        const x = Math.max(60, Math.min(W - 360, h.x + side * 190 - (side < 0 ? 300 : 0))), y = Math.max(220, Math.min(H - 330, h.y + 150));
+        return (<div key={'nm' + i} style={{position: 'absolute', left: x, top: y, opacity: op, transform: `translateX(${(1 - op) * side * -16}px)`}}>
+          <div style={{width: Math.round(60 * op) + 'px', height: 2, background: C.gold, boxShadow: '0 0 10px rgba(242,196,107,.6)', marginBottom: 8}} />
+          <div style={{fontFamily: 'Cinzel', fontWeight: 700, fontSize: 44, letterSpacing: '0.18em', color: C.cream, textShadow: '0 2px 12px rgba(0,0,0,.85), 0 0 18px rgba(242,196,107,.35)'}}>{c.name}</div>
+        </div>);
+      })}
       {spec.tag && <Tag text={spec.tag} frame={beat} start={4} out={dur - 10} />}
       {spec.title && <Title words={spec.title.words} frame={beat} start={6} y={spec.title.y ?? 0.2} size={spec.title.size ?? 76} emphasis={spec.title.emph ?? []} out={dur - 12} />}
     </AbsoluteFill>

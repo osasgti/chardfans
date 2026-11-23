@@ -273,7 +273,13 @@ export const BathroomReflection = () => (
 
 export const Void = ({ring = true}: {ring?: boolean}) => (
   <group>
-    <mesh rotation={[-Math.PI / 2, 0, 0]} receiveShadow><planeGeometry args={[40, 40]} />{std('#120e1c', 0.9)}</mesh>
+    <mesh rotation={[-Math.PI / 2, 0, 0]} receiveShadow><planeGeometry args={[40, 40]} /><meshPhysicalMaterial color="#120e1c" roughness={0.32} metalness={0.25} clearcoat={0.6} clearcoatRoughness={0.35} envMapIntensity={0.5} /></mesh>
+    {/* far bokeh: small warm/violet lights 9-16 m back; depth of field turns them into soft discs (backlog D7) */}
+    {Array.from({length: 34}).map((_, i) => {
+      const x = (random('vbx' + i) - 0.5) * 22, y = 0.4 + random('vby' + i) * 4.5, z = -9 - random('vbz' + i) * 7;
+      const c = random('vbc' + i) < 0.6 ? '#f2c46b' : random('vbc' + i) < 0.85 ? '#9a7ad8' : '#ff9a6a';
+      return <mesh key={'vb' + i} position={[x, y, z]}><sphereGeometry args={[0.035 + random('vbs' + i) * 0.05, 8, 8]} /><meshBasicMaterial color={c} toneMapped={false} fog={false} transparent opacity={0.55 + random('vbo' + i) * 0.35} /></mesh>;
+    })}
     {ring && <mesh position={[0, 0.003, 0]} rotation={[-Math.PI / 2, 0, 0]}><ringGeometry args={[0.9, 1.0, 64]} />{glow('#6a5a9a', 0.6)}</mesh>}
   </group>
 );

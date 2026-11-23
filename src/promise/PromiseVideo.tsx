@@ -185,6 +185,17 @@ export const PromiseVideo = () => {
       <AbsoluteFill style={{pointerEvents: 'none', mixBlendMode: 'screen', background: 'radial-gradient(circle at 50% 50%, #f2c46b, transparent 70%)',
         opacity: interpolate(sec, [burst, burst + 0.08, burst + 0.6], [0, 0.35, 0], {extrapolateLeft: 'clamp', extrapolateRight: 'clamp'})}} />
       <AbsoluteFill style={{background: '#000', opacity: Math.max(fadeIn, fadeOut, dip, interpolate(sec, [silence, silence + 0.15, silence + 0.8, silence + 1.2], [0, 1, 1, 0], {extrapolateLeft: 'clamp', extrapolateRight: 'clamp'}))}} />
+      {/* F11 end card: a knot mark draws itself, then the title; sits above the final fade so it holds on black */}
+      {sec > P_TOTAL - 4.2 && (() => {
+        const e = interpolate(sec, [P_TOTAL - 4.2, P_TOTAL - 2.6], [0, 1], {extrapolateLeft: 'clamp', extrapolateRight: 'clamp'});
+        const t2 = interpolate(sec, [P_TOTAL - 3.0, P_TOTAL - 2.2], [0, 1], {extrapolateLeft: 'clamp', extrapolateRight: 'clamp'});
+        return (<AbsoluteFill style={{alignItems: 'center', justifyContent: 'center', flexDirection: 'column'}}>
+          <svg width={150} height={150} viewBox="-60 -60 120 120" style={{filter: 'drop-shadow(0 0 14px rgba(242,196,107,.7))'}}>
+            <path d="M -50 18 C -20 18, -30 -40, 0 -40 C 30 -40, 20 18, 50 18 M -50 -18 C -20 -18, -30 40, 0 40 C 30 40, 20 -18, 50 -18" fill="none" stroke="#f2c46b" strokeWidth={4} strokeLinecap="round" pathLength={1} strokeDasharray={1} strokeDashoffset={1 - e} />
+          </svg>
+          <div style={{marginTop: 18, fontFamily: 'Cinzel', fontWeight: 700, fontSize: 54, letterSpacing: `${0.34 - 0.14 * t2}em`, color: '#f5ead2', opacity: t2, textShadow: '0 0 18px rgba(242,196,107,.45)'}}>PROMISE THREADS</div>
+        </AbsoluteFill>);
+      })()}
     </AbsoluteFill>
   );
 };
