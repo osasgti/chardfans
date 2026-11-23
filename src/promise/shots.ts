@@ -69,7 +69,7 @@ export const SHOTS: ShotSpec[] = [
     threads: [th(0, 1, 'slack'), th(1, 2, 'slack'), th(2, 3, 'slack'), th(3, 0, 'slack'), th(0, 2, 'slack')]},
 
   /* ═════ ACT 2 — USING IT ═════ */
-  {line: 'P013', ...HALL, grade: 'fun', cam: {on: 0, size: 'mcu', yaw: 15, move: 'push'}, cast: [kai([0, 0], {expr: 'smug', tilt: 8})]},
+  {line: 'P013', ...HALL, grade: 'fun', cam: {on: 0, size: 'mcu', yaw: 15, move: 'push'}, cast: [kai([0, 0], {expr: 'smug', tilt: 8, rot: -25, lookCam: 12})]},
   {line: 'P014', ...HALL, grade: 'fun', cam: {on: [0, 1.4, -0.6], size: 'med', yaw: 30, move: 'orbitL'},
     cast: [{who: 'lucky', pos: [-0.7, -1.2], rot: 30, talk: true, pose: 'shrug'}, kai([0.6, 0], {rot: -150, expr: 'smug'})], threads: [th(0, 1, 'slack', {thick: 0.005})]},
   {line: 'P014', w: 0.6, ...HALL, grade: 'fun', cam: {on: 0, size: 'cu', yaw: -20, move: 'push'}, cast: [kai([0.6, 0], {expr: 'smug', tilt: -6, react: 'smugNod', reactAt: 20})]},
@@ -192,5 +192,5 @@ export const SHOTS: ShotSpec[] = [
   {line: 'P048', ...V, grade: 'wonder', cam: {on: 0, size: 'mcu', yaw: 0, move: 'push'}, cast: [kai([0, 0], {expr: 'neutral', pose: 'hold'})]},
   // ending mirrors the opening: one fresh gold thread spools toward the camera (the viewer)
   {line: 'P049', ...V, grade: 'wonder', cam: {on: [0.3, 1.1, 0.2], size: 'cu', yaw: 0, move: 'push'},
-    cast: [kai([0, 0], {expr: 'smug', pose: 'hold', tilt: 6})], threads: [th(0, [0.6, 1.3, 6], 'fresh', {at: 40, thick: 0.01})]},
+    cast: [kai([0, 0], {expr: 'smug', pose: 'hold', tilt: 6, rot: 20, lookCam: 24})], threads: [th(0, [0.6, 1.3, 6], 'fresh', {at: 40, thick: 0.01})]},
 ];

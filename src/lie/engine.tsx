@@ -96,7 +96,7 @@ const PropMesh = ({p, text}: {p?: Prop; text?: string}) => {
   return <mesh rotation={[0, 0, 0]}><cylinderGeometry args={[0.12, 0.1, 0.05, 20]} /><meshStandardMaterial color="#2a2a30" roughness={0.35} metalness={0.6} /></mesh>;
 };
 
-export const Actor = ({c, beat, sec, line, mirrored = false, speaker}: {c: CastSpec; beat: number; sec: number; line?: Line; mirrored?: boolean; speaker?: [number, number]}) => {
+export const Actor = ({c, beat, sec, line, mirrored = false, speaker, camPos}: {c: CastSpec; beat: number; sec: number; line?: Line; mirrored?: boolean; speaker?: [number, number]; camPos?: number[]}) => {
   const L = CAST[c.who]; const id = c.id ?? c.who;
   const s = L.scale; const sit = c.pose === 'sit' ? -0.28 : 0; const sleep = c.pose === 'sleep';
   const mouth = c.talk ? mouthAt(line, sec) : 0;
@@ -125,7 +125,7 @@ export const Actor = ({c, beat, sec, line, mirrored = false, speaker}: {c: CastS
   const body = (
     <Pill id={id} frame={beat} position={sleep ? [0, 0, 0] : [c.pos[0] + wx, (c.y ?? 0) + sit + run + R.dy + (sleep ? 0 : bob) + Math.abs(wsw) * 0.035, z]} rotY={sleep ? 0 : rotY}
       hoodie={L.hoodie} hat={L.hair} hatColor={L.hairColor} glasses={L.glasses} expr={c.exprAt && beat >= c.exprAt.at ? c.exprAt.to : c.expr ?? L.expr} forceBlink={c.exprAt ? Math.max(0, 1 - Math.abs(beat - c.exprAt.at) / 3) : 0} scale={s}
-      headTurn={(c.turn ?? 0) * deg + R.headTurn + (!c.talk && speaker && !sleep ? Math.max(-0.55, Math.min(0.55, (Math.atan2(speaker[0] - c.pos[0], speaker[1] - c.pos[1]) - (c.rot ?? 0) * deg) * 0.5)) * Math.min(1, Math.max(0, (beat - 6) / 12)) : 0) + (c.talk ? Math.sin(beat / 30 * 2.3) * 0.04 : 0)} squash={R.squash + st * 0.04 - sigh * 0.02} lean={R.lean + (c.talk ? st * 0.06 : 0.025 * Math.sin(t * 0.6 + ph))} turnLag={(reactAt(c.react, beat - 4, c.reactAt).headTurn - R.headTurn) + (c.talk ? (Math.sin((beat - 4) / 30 * 2.3) - Math.sin(beat / 30 * 2.3)) * 0.04 : 0)} headTilt={(c.tilt ?? 0) * deg + R.headTilt - 0.32 * wristLook - 0.06 * sigh} nod={st * 0.06} brow={Math.max(st, c.talk && line?.text.trim().endsWith('?') ? 0.6 : 0)}
+      headTurn={(c.turn ?? 0) * deg + R.headTurn + (c.lookCam !== undefined && camPos && beat >= c.lookCam ? Math.max(-0.7, Math.min(0.7, Math.atan2(camPos[0] - c.pos[0], camPos[2] - c.pos[1]) - (c.rot ?? 0) * deg - (c.turn ?? 0) * deg)) * Math.min(1, (beat - c.lookCam) / 8) : 0) + (!c.talk && speaker && !sleep ? Math.max(-0.55, Math.min(0.55, (Math.atan2(speaker[0] - c.pos[0], speaker[1] - c.pos[1]) - (c.rot ?? 0) * deg) * 0.5)) * Math.min(1, Math.max(0, (beat - 6) / 12)) : 0) + (c.talk ? Math.sin(beat / 30 * 2.3) * 0.04 : 0)} squash={R.squash + st * 0.04 - sigh * 0.02} lean={R.lean + (c.talk ? st * 0.06 : 0.025 * Math.sin(t * 0.6 + ph))} turnLag={(reactAt(c.react, beat - 4, c.reactAt).headTurn - R.headTurn) + (c.talk ? (Math.sin((beat - 4) / 30 * 2.3) - Math.sin(beat / 30 * 2.3)) * 0.04 : 0)} headTilt={(c.tilt ?? 0) * deg + R.headTilt - 0.32 * wristLook - 0.06 * sigh} nod={st * 0.06} brow={Math.max(st, c.talk && line?.text.trim().endsWith('?') ? 0.6 : 0)}
       mouth={mouth} armL={base.armL + R.armL + sigh * 0.06} armR={base.armR + R.armR + sigh * 0.06 + wristLook * 0.5} legSwing={wsw * 0.45} armLx={wsw * 0.5 + ((base0 as {armLx?: number}).armLx ?? 0) + R.armLx + (free && c.talk ? st * 0.35 : 0)} armRx={-wsw * 0.5 + ((base0 as {armRx?: number}).armRx ?? 0) + R.armRx + (free ? gest * 0.4 : 0)} rightHand={<PropMesh p={c.hold} text={c.hold === 'phoneText' ? 'we\'re good, right?' : undefined} />}
       look={c.talk ? Math.round(Math.sin(t * 0.9 + ph)) * 2 : Math.round(Math.sin(t * 0.7 + random(id) * 9) * 1.4) * 5} />
   );
@@ -243,7 +243,7 @@ export const LieShot = ({spec, beat: beatIn, dur, sec, seed, fpsRatio = 1, calSt
           // FIX_LIST_V2 #26: a character whose meter lands ≥90% reacts (gulp) unless the shot says otherwise
           const hot = (spec.meters ?? []).some((m) => m.on === i && m.value >= 90 && m.mode !== 'q');
           const cc = hot && !c.react ? {...c, react: 'gulp' as const, reactAt: c.reactAt ?? Math.round(dur * 0.55)} : c;
-          const sp = spec.cast.find((x) => x.talk); return <Actor key={i} c={cc} beat={beat} sec={sec} line={line} speaker={sp && sp !== c ? sp.pos : undefined} />;
+          const sp = spec.cast.find((x) => x.talk); return <Actor key={i} c={cc} beat={beat} sec={sec} line={line} speaker={sp && sp !== c ? sp.pos : undefined} camPos={cam.pos} />;
         })}
         {/* A18 parallax foreground: in wides/EWS of real sets a dark vertical edge (locker, door frame, plant) sits 0.9 m from the lens at the
             frame edge; the DOF melts it and the camera move slides it fast, which sells depth */}

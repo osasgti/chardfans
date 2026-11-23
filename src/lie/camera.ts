@@ -38,7 +38,7 @@ export const CAST: Record<Who, Look> = {
 };
 export type Pose = 'idle' | 'cheer' | 'point' | 'phone' | 'sit' | 'sleep' | 'slump' | 'hold' | 'shrug' | 'run' | 'pinky' | 'pinkyL';
 export type Prop = 'phone' | 'phoneText' | 'card' | 'cookie' | 'pan';
-export type CastSpec = {who: Who; id?: string; pos: [number, number]; rot?: number; expr?: Expr; pose?: Pose; talk?: boolean; hold?: Prop; turn?: number; tilt?: number; y?: number; react?: Reaction; reactAt?: number; enter?: [number, number]; enterLen?: number; name?: string; exprAt?: {at: number; to: Expr}};
+export type CastSpec = {who: Who; id?: string; pos: [number, number]; rot?: number; expr?: Expr; pose?: Pose; talk?: boolean; hold?: Prop; turn?: number; tilt?: number; y?: number; react?: Reaction; reactAt?: number; enter?: [number, number]; enterLen?: number; name?: string; exprAt?: {at: number; to: Expr}; lookCam?: number};
 
 /** Thread anchors (WHAT_IF_PROMISE_THREADS §6.2): same maths as Pill.tsx (arm pivot (±0.27, 0.93), hand 0.5 down the arm). */
 const toWorld = (c: CastSpec, lx: number, ly: number, lz: number): V3 => {

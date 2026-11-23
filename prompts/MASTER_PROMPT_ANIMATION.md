@@ -63,7 +63,7 @@
 - 🔲 B20 **Sit-down and stand-up** transitions, not teleporting between poses.
 - ✅ B21 **Phone acting**: thumb taps, a screen glow on the face, and a pocket put-away.
 - ✅ B22 **Sleep acting**: slow breathing, a twitch, and the blanket rising.
-- 🔲 B23 **Eye contact with the camera** once per act, on the direct-address lines ("you").
+- ✅ B23 **Eye contact with the camera** once per act, on the direct-address lines ("you").
 - ✅ B24 **Blink on head turns** (always) and double blinks on surprise.
 - 🔲 B25 **Pose library audit**: no character holds the default arms for more than 3 s while on screen.
 
@@ -168,4 +168,4 @@
 - 🔲 I10 The user approves the motion test before every full render.
 - 🔲 I11 Update CLAUDE.md §1 and §50 when items ship.
 
-**Total: 132 items (95 done).**
+**Total: 132 items (96 done).**
