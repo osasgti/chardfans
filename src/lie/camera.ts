@@ -12,7 +12,7 @@ export const W = 1920, H = 1080, NEAR = 0.1, FAR = 40;
 export const MIRROR_Z = -1.2;
 export const deg = Math.PI / 180;
 export type V3 = [number, number, number];
-export type Cam = {pos: V3; target: V3; fov: number};
+export type Cam = {pos: V3; target: V3; fov: number; roll?: number};
 
 /* ───────────── cast ───────────── */
 export type Who = 'hero' | 'mom' | 'brother' | 'maya' | 'dad' | 'teacher' | 'lucky' | 'dealer' | 'driver' | 'kidA' | 'kidB' | 'kidC' | 'kidD' | 'girl' | 'fig' | 'young' | 'grandma';
@@ -71,7 +71,7 @@ export const SIZE: Record<Size, [number, number]> = {ecu: [1.5, 20], cu: [3.4, 2
 
 export const handheld = (cam: Cam, frame: number, seed: string): Cam => {
   const t = frame / 30, a = random(seed + 'a') * 9, b = random(seed + 'b') * 9;
-  return {...cam, pos: [cam.pos[0] + Math.sin(t * 0.7 + a) * 0.012, cam.pos[1] + Math.sin(t * 0.93 + b) * 0.009, cam.pos[2]],
+  return {...cam, pos: [cam.pos[0] + Math.sin(t * 0.7 + a) * 0.018 + Math.sin(t * 1.9 + b) * 0.004, cam.pos[1] + Math.sin(t * 0.93 + b) * 0.013, cam.pos[2] + Math.sin(t * 0.41 + a) * 0.01],
     target: [cam.target[0] + Math.sin(t * 0.5 + b) * 0.006, cam.target[1] + Math.sin(t * 0.61 + a) * 0.005, cam.target[2]]};
 };
 
@@ -83,20 +83,29 @@ export const camFor = (spec: ShotGeom, k: number, beat: number, seed: string): C
   let d = d0, fov = f0, yaw = (cam.yaw ?? 0) * deg, pitch = (cam.pitch ?? 4) * deg, lift = 0;
   const a = cam.amount ?? 1;
   switch (cam.move ?? 'push') {
-    case 'push': d = d0 * (1 - 0.16 * a * k); break;
-    case 'pull': d = d0 * (0.86 + 0.18 * a * k); break;
-    case 'orbitL': yaw += 14 * a * deg * k; break;
-    case 'orbitR': yaw -= 14 * a * deg * k; break;
+    case 'push': d = d0 * (1 - 0.24 * a * k - 0.02 * a * Math.sin(clamp01((k - 0.7) / 0.3) * Math.PI)); yaw += 5 * a * deg * k; break;
+    case 'pull': d = d0 * (0.82 + 0.26 * a * k); yaw -= 5 * a * deg * k; break;
+    case 'orbitL': yaw += 22 * a * deg * k; break;
+    case 'orbitR': yaw -= 22 * a * deg * k; break;
     case 'crane': pitch += (-14 + 20 * k) * a * deg; lift = -0.3 * (1 - k); break;
     case 'drop': pitch += (22 - 18 * k) * a * deg; break;
     case 'truck': yaw += (-10 + 20 * k) * a * deg; d = d0 * 1.05; break;
-    case 'snap': { const s = clamp01(k / 0.12); d = d0 * (1 - 0.25 * s); break; }
+    case 'snap': { const s = clamp01(k / 0.12); d = d0 * (1 - 0.25 * s - 0.03 * Math.sin(clamp01((k - 0.08) / 0.3) * Math.PI)); break; }
     case 'dz': { const dd = d0 * (0.85 + 0.6 * k); fov = 2 * Math.atan(Math.tan((f0 * deg) / 2) * (d0 * 0.85) / dd) / deg; d = dd; break; }
-    case 'lock': break;
+    case 'lock': d = d0 * (1 - 0.05 * k); break;
   }
+  // MOTION PASS (prompts/MASTER_PROMPT_ANIMATION.md A1-A4): secondary arc + rise on every shot, and cut-in momentum
+  const sd = random(seed + 'sec');
+  const grade = (spec as {grade?: string}).grade;
+  if (cam.pitch === undefined) pitch += (grade === 'triumph' ? -7 : grade === 'consequence' ? 6 : 0) * deg;   // A16 hero low / alone high angles
+  yaw += (sd > 0.5 ? 1 : -1) * 4 * deg * k; lift += 0.06 * Math.sin(k * Math.PI);
+  const inMo = Math.exp(-beat / 7); d *= 1 + 0.07 * inMo; yaw += (sd > 0.5 ? -1 : 1) * 2.5 * deg * inMo;
   const pos: V3 = [S[0] + d * Math.sin(yaw) * Math.cos(pitch), S[1] + lift + d * Math.sin(pitch), S[2] + d * Math.cos(yaw) * Math.cos(pitch)];
   const ty = cam.size === 'cu' || cam.size === 'mcu' ? S[1] + 0.08 : S[1] - 0.04;
-  return handheld({pos, target: [S[0], ty, S[2]], fov}, beat, seed);
+  // A5 dutch breathing (±0.6°, tension ±2.5°) · A19 lens breathing (fov ±0.4°)
+  const roll = Math.sin(beat / 30 * 0.45 + sd * 9) * (grade === 'tension' ? 2.5 : 0.6) * deg;
+  fov += Math.sin(beat / 30 * 0.6 + sd * 5) * 0.4;
+  return {...handheld({pos, target: [S[0], ty, S[2]], fov}, beat, seed), roll};
 };
 
 export const projectCam = (cam: Cam, p: V3) => {

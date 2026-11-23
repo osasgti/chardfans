@@ -63,9 +63,13 @@ SHOTS.forEach((spec, idx) => {
     }
     if (!seen.length && !(spec.threads ?? []).length && !spec.extra && !spec.meters?.length && !spec.title) found.add('EMPTY no face, thread or prop in picture');
   }
+  // I5 STATIC: locked camera with nothing alive in it · A20 rhythm: same size AND move as the previous shot
+  if ((spec.cam.move ?? 'push') === 'lock' && !spec.cast.some((c) => c.talk || c.react) && !spec.extra && !(spec.threads ?? []).length) found.add('STATIC locked camera, no talker, reaction, thread or extra');
+  const prev = SHOTS[idx - 1];
+  if (prev && prev.cam.size === spec.cam.size && (prev.cam.move ?? 'push') === (spec.cam.move ?? 'push') && prev.set === spec.set) found.add(`RHYTHM same size + move + set as the previous shot (${spec.cam.size}/${spec.cam.move ?? 'push'})`);
   if (found.size) issues.push([tag, [...found]]);
   else if (all) console.log(tag, 'ok');
 });
 for (const [t, f] of issues) { console.log(t); for (const x of f) console.log('    ' + x); }
 const count = (k) => issues.filter(([, f]) => f.some((x) => x.startsWith(k))).length;
-console.log(`\n${SHOTS.length} shots · ${issues.length} with issues · BLUR ${count('BLUR')} · CROP ${count('CROP')} · BACK ${count('BACK')} · CLIP ${count('CLIP')} · THREAD ${count('THREAD')} · EMPTY ${count('EMPTY')}`);
+console.log(`\n${SHOTS.length} shots · ${issues.length} with issues · BLUR ${count('BLUR')} · CROP ${count('CROP')} · BACK ${count('BACK')} · CLIP ${count('CLIP')} · THREAD ${count('THREAD')} · EMPTY ${count('EMPTY')} · STATIC ${count('STATIC')} · RHYTHM ${count('RHYTHM')}`);

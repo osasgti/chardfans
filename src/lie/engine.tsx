@@ -89,7 +89,7 @@ const PropMesh = ({p, text}: {p?: Prop; text?: string}) => {
   return <mesh rotation={[0, 0, 0]}><cylinderGeometry args={[0.12, 0.1, 0.05, 20]} /><meshStandardMaterial color="#2a2a30" roughness={0.35} metalness={0.6} /></mesh>;
 };
 
-export const Actor = ({c, beat, sec, line, mirrored = false}: {c: CastSpec; beat: number; sec: number; line?: Line; mirrored?: boolean}) => {
+export const Actor = ({c, beat, sec, line, mirrored = false, speaker}: {c: CastSpec; beat: number; sec: number; line?: Line; mirrored?: boolean; speaker?: [number, number]}) => {
   const L = CAST[c.who]; const id = c.id ?? c.who;
   const s = L.scale; const sit = c.pose === 'sit' ? -0.28 : 0; const sleep = c.pose === 'sleep';
   const mouth = c.talk ? mouthAt(line, sec) : 0;
@@ -98,13 +98,19 @@ export const Actor = ({c, beat, sec, line, mirrored = false}: {c: CastSpec; beat
   const run = c.pose === 'run' ? Math.abs(Math.sin(beat / 30 * 12)) * 0.05 : 0;
   const R = reactAt(c.react, beat, c.reactAt);
   const st = c.talk ? stressAt(line, sec) : 0;
-  const base = poseArgs(c.pose, beat, id);
+  const base0 = poseArgs(c.pose, beat, id);
+  // MOTION PASS B1-B6: talkers gesture on every word (beat hand + stressed-word open palm), listeners sway and glance
+  const t = beat / 30, ph = random(id + 'g') * 6, talkW = c.talk && mouth > 0 ? 1 : 0;
+  const free = !c.pose || c.pose === 'idle' || c.pose === 'shrug';
+  const gest = free ? (c.talk ? 0.35 * talkW * (0.5 + 0.5 * Math.sin(t * 4.2 + ph)) + 0.9 * st : 0.08 * Math.sin(t * 0.9 + ph)) : 0;
+  const base = {armL: base0.armL + (free && c.talk ? 0.45 * st + 0.12 * talkW * Math.sin(t * 3.1 + ph + 1) : 0), armR: base0.armR + gest};
+  const bob = (c.talk ? 0.012 * talkW * Math.abs(Math.sin(t * 6 + ph)) + 0.02 * st : 0.006 * Math.sin(t * 1.4 + ph));
   const body = (
-    <Pill id={id} frame={beat} position={sleep ? [0, 0, 0] : [c.pos[0], (c.y ?? 0) + sit + run + R.dy, z]} rotY={sleep ? 0 : rotY}
+    <Pill id={id} frame={beat} position={sleep ? [0, 0, 0] : [c.pos[0], (c.y ?? 0) + sit + run + R.dy + (sleep ? 0 : bob), z]} rotY={sleep ? 0 : rotY}
       hoodie={L.hoodie} hat={L.hair} hatColor={L.hairColor} glasses={L.glasses} expr={c.expr ?? L.expr} scale={s}
-      headTurn={(c.turn ?? 0) * deg + R.headTurn + (c.talk ? Math.sin(beat / 30 * 2.3) * 0.04 : 0)} squash={R.squash} lean={R.lean} turnLag={(reactAt(c.react, beat - 4, c.reactAt).headTurn - R.headTurn) + (c.talk ? (Math.sin((beat - 4) / 30 * 2.3) - Math.sin(beat / 30 * 2.3)) * 0.04 : 0)} headTilt={(c.tilt ?? 0) * deg + R.headTilt} nod={st * 0.06} brow={st}
-      mouth={mouth} armL={base.armL + R.armL} armR={base.armR + R.armR} armLx={R.armLx} armRx={R.armRx} rightHand={<PropMesh p={c.hold} text={c.hold === 'phoneText' ? 'we\'re good, right?' : undefined} />}
-      look={c.talk ? 0 : Math.round(Math.sin(beat / 30 * 0.7 + random(id) * 9)) * 5} />
+      headTurn={(c.turn ?? 0) * deg + R.headTurn + (!c.talk && speaker && !sleep ? Math.max(-0.55, Math.min(0.55, (Math.atan2(speaker[0] - c.pos[0], speaker[1] - c.pos[1]) - (c.rot ?? 0) * deg) * 0.5)) * Math.min(1, Math.max(0, (beat - 6) / 12)) : 0) + (c.talk ? Math.sin(beat / 30 * 2.3) * 0.04 : 0)} squash={R.squash + st * 0.04} lean={R.lean + (c.talk ? st * 0.06 : 0.025 * Math.sin(t * 0.6 + ph))} turnLag={(reactAt(c.react, beat - 4, c.reactAt).headTurn - R.headTurn) + (c.talk ? (Math.sin((beat - 4) / 30 * 2.3) - Math.sin(beat / 30 * 2.3)) * 0.04 : 0)} headTilt={(c.tilt ?? 0) * deg + R.headTilt} nod={st * 0.06} brow={Math.max(st, c.talk && line?.text.trim().endsWith('?') ? 0.6 : 0)}
+      mouth={mouth} armL={base.armL + R.armL} armR={base.armR + R.armR} armLx={R.armLx + (free && c.talk ? st * 0.35 : 0)} armRx={R.armRx + (free ? gest * 0.4 : 0)} rightHand={<PropMesh p={c.hold} text={c.hold === 'phoneText' ? 'we\'re good, right?' : undefined} />}
+      look={c.talk ? Math.round(Math.sin(t * 0.9 + ph)) * 2 : Math.round(Math.sin(t * 0.7 + random(id) * 9) * 1.4) * 5} />
   );
   if (sleep) return <group position={[c.pos[0], 0.62, c.pos[1]]} rotation={[-Math.PI / 2, 0, 0]}>{body}</group>;
   return mirrored ? <group scale={[-1, 1, 1]}>{body}</group> : body;
@@ -173,7 +179,9 @@ const Shards = ({k}: {k: number}) => (
 /* ───────────── the shot ───────────── */
 export const LieShot = ({spec, beat, dur, sec, seed, fpsRatio = 1, calStops = 0, lines = LINES}: {spec: ShotSpec; beat: number; dur: number; sec: number; seed: string; fpsRatio?: number; calStops?: number; lines?: Line[]}) => {
   const k = interpolate(beat, [0, dur], [0, 1], {easing: E, extrapolateLeft: 'clamp', extrapolateRight: 'clamp'});
-  const cam0 = camFor(spec, k, beat, seed);
+  const camB = camFor(spec, k, beat, seed);
+  // A7 punch-in: fov tightens 1.2° on the speaker's stressed words
+  const cam0 = spec.cast.some((x) => x.talk) ? {...camB, fov: camB.fov - 1.2 * stressAt(lines.find((l) => l.id === spec.line), sec)} : camB;
   // impact shake (§35.2): 0.03 m, decays e^(−8t) over ~15 beats, two sines at different frequencies
   const sh = spec.shake !== undefined && beat >= spec.shake ? Math.exp(-8 * (beat - spec.shake) / 30) * 0.03 : 0;
   const cam = sh ? {...cam0, pos: [cam0.pos[0] + Math.sin(beat * 2.1) * sh, cam0.pos[1] + Math.sin(beat * 2.9 + 1) * sh * 0.7, cam0.pos[2]] as [number, number, number]} : cam0;
@@ -189,7 +197,7 @@ export const LieShot = ({spec, beat, dur, sec, seed, fpsRatio = 1, calStops = 0,
         <Lights preset={spec.light} keyPos={spec.keyPos} keyI={spec.keyI} subjectDepth={fp.meters} />
         {/* void: every character stands in its own soft pool of light (a dark scene still has a lit subject, CLAUDE.md §57.2 rule 2) */}
         {spec.set === 'Void' && spec.cast.map((c, i) => { const h = headOf(c); return (<group key={'pool' + i}>
-          <pointLight position={[h[0], h[1] + 1.1, h[2] + 0.4]} intensity={4} distance={3.4} decay={2} color="#ffe2c0" />
+          <pointLight position={[h[0] - 0.9, h[1] + 0.3, h[2] + 1.4]} intensity={1.3} distance={3.2} decay={2} color="#ffd2a8" />
           <mesh position={[c.pos[0], 0.004, c.pos[1]]} rotation={[-Math.PI / 2, 0, 0]}><circleGeometry args={[0.9, 40]} /><meshBasicMaterial color="#6a5a9a" transparent opacity={0.22} depthWrite={false} toneMapped={false} /></mesh>
         </group>); })}
         {setNode}
@@ -198,7 +206,7 @@ export const LieShot = ({spec, beat, dur, sec, seed, fpsRatio = 1, calStops = 0,
           // FIX_LIST_V2 #26: a character whose meter lands ≥90% reacts (gulp) unless the shot says otherwise
           const hot = (spec.meters ?? []).some((m) => m.on === i && m.value >= 90 && m.mode !== 'q');
           const cc = hot && !c.react ? {...c, react: 'gulp' as const, reactAt: c.reactAt ?? Math.round(dur * 0.55)} : c;
-          return <Actor key={i} c={cc} beat={beat} sec={sec} line={line} />;
+          const sp = spec.cast.find((x) => x.talk); return <Actor key={i} c={cc} beat={beat} sec={sec} line={line} speaker={sp && sp !== c ? sp.pos : undefined} />;
         })}
         {spec.mirror && <>
           <BathroomReflection />

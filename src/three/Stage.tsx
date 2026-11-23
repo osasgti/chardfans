@@ -1,3 +1,4 @@
+import {useCurrentFrame} from 'remotion';
 import React from 'react';
 import {ThreeCanvas} from '@remotion/three';
 import {random, getInputProps} from 'remotion';
@@ -21,7 +22,7 @@ import {Uniform} from 'three';
  *  linear HDR colour, AFTER DepthOfField and before Bloom: first in the chain it broke the DOF depth input and blurred every face (§58). */
 class ExposureEffect extends Effect {
   constructor(exposure = 1) {
-    super('ExposureEffect', 'uniform float exposure; void mainImage(const in vec4 inputColor, const in vec2 uv, out vec4 outputColor) { outputColor = vec4(inputColor.rgb * exposure, inputColor.a); }',
+    super('ExposureEffect', 'uniform float exposure; void mainImage(const in vec4 inputColor, const in vec2 uv, out vec4 outputColor) { vec3 c = inputColor.rgb * exposure; vec3 k = 0.70 + 0.22 * (1.0 - exp(-(c - 0.70) / 0.22)); outputColor = vec4(mix(c, k, step(0.72, c)), inputColor.a); }',
       {blendFunction: BlendFunction.NORMAL, uniforms: new Map([['exposure', new Uniform(exposure)]])});
   }
 }
@@ -31,7 +32,7 @@ const Exposure = ({value}: {value: number}) => {
   return <primitive object={fx} dispose={null} />;
 };
 
-export type Cam = {pos: [number, number, number]; target: [number, number, number]; fov: number};
+export type Cam = {pos: [number, number, number]; target: [number, number, number]; fov: number; roll?: number};
 
 const CameraApply = ({cam, exposure}: {cam: Cam; exposure: number}) => {
   const {camera, gl} = useThree();
@@ -40,6 +41,7 @@ const CameraApply = ({cam, exposure}: {cam: Cam; exposure: number}) => {
   gl.toneMappingExposure = 1; void exposure;   // applied by <Exposure> in PostFX instead
   camera.position.set(...cam.pos);
   camera.lookAt(new Vector3(...cam.target));
+  if (cam.roll) camera.rotateZ(cam.roll);
   (camera as any).fov = cam.fov; camera.near = NEAR; camera.far = FAR;
   camera.updateProjectionMatrix();
   return null;
@@ -78,6 +80,7 @@ export const Lights = ({preset = 'hallway', keyColor, keyI, keyPos = [-3.5, 5.5,
   const BEAM: Record<string, number> = {hallway: 0.12, bedroom: 0.14, kitchen: 0.1, classroom: 0.12, casino: 0.14, gym: 0.14, dawn: 0.12, bathroomWarm: 0.08};
   beam = beam ?? Number((getInputProps() as {beam?: number}).beam ?? BEAM[preset] ?? 0);
   const kc = keyColor ?? L.key, ki = keyI ?? L.keyI;
+  const lt = useCurrentFrame() / 30;   // D3: one light always moves (kicker drifts and breathes)
   return (
   <>
     {extra}
@@ -86,11 +89,11 @@ export const Lights = ({preset = 'hallway', keyColor, keyI, keyPos = [-3.5, 5.5,
     <spotLight position={keyPos} angle={0.55} penumbra={0.9} intensity={ki} decay={1.6} color={kc}
       castShadow shadow-mapSize={FAST ? [1024, 1024] : [2048, 2048]} shadow-bias={-0.0004} shadow-normalBias={0.02} />
     <pointLight position={[4, 2.2, 2]} intensity={L.fillI} decay={1.6} color={L.fill} />
-    <spotLight position={[0.5, 4, -4]} angle={0.6} penumbra={1} intensity={L.rimI} decay={1.5} color={L.rim} />
+    <spotLight position={[0.5, 4, -4]} angle={0.6} penumbra={1} intensity={L.rimI * (preset === 'void' ? 1.4 : 1)} decay={1.5} color={L.rim} />
     {/* bounce: warm floor light up onto chins (§36.3) */}
     <pointLight position={[0, 0.15, 1.2]} intensity={2.2} decay={1.8} color="#ff9a5c" />
     {/* kicker: subtle magenta on the shadow side */}
-    <pointLight position={[-4.5, 2.4, -3.5]} intensity={1.3} decay={2} color="#ff6fd0" />
+    <pointLight position={[-4.5 + Math.sin(lt * 0.35) * 0.8, 2.4 + Math.sin(lt * 0.5) * 0.3, -3.5]} intensity={1.3 * (1 + 0.25 * Math.sin(lt * 0.8))} decay={2} color="#ff6fd0" />
     {/* fake volumetric beam from the key (backlog #63): additive cone, fades along its length and at its edges.
         Pure shader, no time uniforms → deterministic. Fog makes it read. */}
     {beam > 0 && <Beam from={keyPos} to={[0, 0.6, 0]} color={kc} opacity={beam} />}

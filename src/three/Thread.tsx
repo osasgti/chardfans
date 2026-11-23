@@ -87,7 +87,7 @@ export const Thread = ({from, to, state, t, thickness = 0.01, seed, light = true
         <Knot p={from} r={r} color={col} />
         {p >= 1 && <Knot p={to} r={r} color={col} />}
         {state === 'fresh' && p < 1 && <mesh position={tip}><sphereGeometry args={[r * 2.6, 12, 12]} /><meshBasicMaterial color="#fff6dc" toneMapped={false} /></mesh>}
-        {light && <pointLight position={mid} color={col} intensity={state === 'slack' ? 0.15 : 0.4} distance={2.5} decay={2} />}
+        {light && <pointLight position={mid} color={col} intensity={(state === 'slack' ? 0.15 : 0.55) * (0.8 + 0.35 * Math.max(0, Math.sin(t * 4.2)))} distance={2.6} decay={2} />}
       </group>
     );
   }
@@ -109,11 +109,19 @@ export const Thread = ({from, to, state, t, thickness = 0.01, seed, light = true
       dust.push(p.x + (random(seed + 'dx' + k) - 0.5) * 0.16 + Math.sin(life * 6 + k) * 0.03, p.y + 0.02 + life * 0.45, p.z + (random(seed + 'dz' + k) - 0.5) * 0.16);
     }
     const endP = c.getPoint(0.95);
+    // C4 snap: white flash at the break for 0.12 s, then hot embers fall with gravity for 1.2 s
+    const brk = c.getPoint(0.85), embers: number[] = [];
+    if (t < 1.2) for (let k = 0; k < 40; k++) {
+      const vx = (random(seed + 'ex' + k) - 0.5) * 1.4, vy = random(seed + 'ey' + k) * 1.1, vz = (random(seed + 'ez' + k) - 0.5) * 1.4;
+      embers.push(brk.x + vx * t, Math.max(0.01, brk.y + 0.15 + vy * t - 2.4 * t * t), brk.z + vz * t);
+    }
     return (
       <group>
         <Tube curve={main} r={r * 0.9} color={GREY} i={0.7} t={t} seed={seed} pulse={0} halo={false} />
         {fr.map((f, k) => <Tube key={k} curve={f} r={r * 0.4} color={GREY} i={0.6} t={t} seed={seed + k} pulse={0} halo={false} />)}
         <Points pos={dust} color="#b8b2c2" size={0.02} opacity={0.45} />
+        {t < 1.2 && <Points pos={embers} color="#ffb35a" size={0.03} opacity={1 - t / 1.2} />}
+        {t < 0.12 && <mesh position={brk}><sphereGeometry args={[0.09, 14, 14]} /><meshBasicMaterial color="#fff6dc" transparent opacity={1 - t / 0.12} toneMapped={false} /></mesh>}
         {/* scuff where the dead thread drags on the floor */}
         <mesh position={[endP.x, 0.004, endP.z]} rotation={[-Math.PI / 2, 0, random(seed + 'sc') * 3]}><circleGeometry args={[0.22, 24]} /><meshBasicMaterial color="#3a3444" transparent opacity={0.35} depthWrite={false} /></mesh>
       </group>
@@ -124,7 +132,7 @@ export const Thread = ({from, to, state, t, thickness = 0.01, seed, light = true
   if (t < 0.27) {
     const flash = t > 0.2 ? 1 : 0;
     return <group><Tube curve={c} r={r * (1 + t * 2)} color={flash ? '#fff6dc' : GOLD} i={2.2 + t * 4} t={t} seed={seed} pulse={1} />
-      {light && <pointLight position={c.getPoint(0.5)} color={GOLD} intensity={0.6 + t * 10} distance={3} decay={2} />}</group>;
+      {light && <pointLight position={c.getPoint(0.5)} color={GOLD} intensity={0.6 + t * 5} distance={3} decay={2} />}</group>;
   }
   const s = t - 0.27, sparks: number[] = [], n = 240;
   for (let k = 0; k < n; k++) {
@@ -142,7 +150,7 @@ export const Thread = ({from, to, state, t, thickness = 0.01, seed, light = true
       <Points pos={sparks.map((v, i) => v + (i % 3 === 1 ? -0.01 : 0))} color="#fff6dc" size={0.015} opacity={fade} />
       {s < 0.6 && <mesh position={ring} rotation={[Math.PI / 2, 0, 0]}><ringGeometry args={[rs, rs + 0.02, 48]} /><meshBasicMaterial color={GOLD} transparent opacity={(1 - s / 0.6) * 0.6} blending={AdditiveBlending} depthWrite={false} toneMapped={false} side={2} /></mesh>}
       {/* warm flare across every nearby face as it fires */}
-      {light && <pointLight position={ring} color={GOLD} intensity={3 * fade + 9 * Math.exp(-4 * s)} distance={5} decay={2} />}
+      {light && <pointLight position={ring} color={GOLD} intensity={1.1 * fade + 3.2 * Math.exp(-4 * s)} distance={4} decay={2} />}
     </group>
   );
 };

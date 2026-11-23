@@ -14,6 +14,9 @@ export const Captions = ({words, seconds, maxWords = 5, bottom = 150}: {words: W
           const active = seconds >= w.start && seconds < w.end;
           return (<span key={k} style={{fontFamily: UI, fontWeight: 700, fontSize: 40, margin: '0 7px',
             color: active ? C.gold : C.cream, opacity: seconds >= w.start ? 1 : 0.45,
+            display: 'inline-block', transform: `scale(${active ? 1 + 0.08 * Math.sin(Math.min(1, (seconds - w.start) / 0.12) * Math.PI / 2) : 1})`,
+            backgroundImage: active ? 'linear-gradient(#f2c46b,#f2c46b)' : 'none', backgroundRepeat: 'no-repeat', backgroundPosition: '0 100%',
+            backgroundSize: `${active ? Math.min(100, (seconds - w.start) / Math.max(0.05, w.end - w.start) * 100) : 0}% 3px`,
             textShadow: active ? '0 0 14px rgba(242,196,107,.6)' : 'none'}}>{w.text}</span>);
         })}
       </span>
