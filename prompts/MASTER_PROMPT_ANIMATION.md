@@ -136,7 +136,7 @@
 - 🔲 G2 **Zoom-through** transitions into a glowing thread or a dark hoodie.
 - ✅ G3 **J/L cuts**: the next scene's ambience pre-laps by 0.4 s (twice per minute minimum).
 - 🔲 G4 **Cut on action**: cuts land mid-gesture (B1 gestures make this possible).
-- 🔲 G5 **Average shot length 2.5 s** in montages, and 4–5 s on emotional beats (check the cut list).
+- ✅ G5 **Average shot length 2.5 s** (batch 21: measured mean 4.1 s / longest 10.5 s; the 4 longest fun/triumph holds P012, P015, P017, P020 each got a second angle, 66 → 70 shots. Re-calibrate exposure after inserting shots: cal slots are per index) in montages, and 4–5 s on emotional beats (check the cut list).
 - 🔲 G6 **Breath shots** after every big reveal (3 s of slow drift, music only).
 - ✅ G7 **Flash frames** on the snap and the ignite (2 beats, 0.25 opacity, never more than 3 per second).
 - ✅ G8 **Dip-to-black** only at the act breaks, with a whoosh_heavy.
@@ -168,4 +168,4 @@
 - 🔲 I10 The user approves the motion test before every full render.
 - 🔲 I11 Update CLAUDE.md §1 and §50 when items ship.
 
-**Total: 132 items (94 done).**
+**Total: 132 items (95 done).**

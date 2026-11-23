@@ -64,6 +64,11 @@ export const SHOTS: ShotSpec[] = [
     threads: [th(0, 1, 'slack'), th(1, 2, 'slack'), th(2, 3, 'slack'), th(3, 0, 'slack'), th(0, 2, 'slack')]},
 
   /* ═════ ACT 2 — USING IT ═════ */
+  {line: 'P012', w: 0.75, ...HALL, grade: 'fun', cam: {on: 2, size: 'med', yaw: -25, move: 'orbitR'},
+    cast: [{who: 'kidA', pos: [-1.8, -1.6], rot: 20, talk: true}, {who: 'kidC', pos: [-0.6, -1.8]}, {who: 'girl', pos: [0.6, -1.6], talk: true}, {who: 'kidD', pos: [1.8, -1.7], rot: -20}],
+    threads: [th(0, 1, 'slack'), th(1, 2, 'slack'), th(2, 3, 'slack'), th(3, 0, 'slack'), th(0, 2, 'slack')]},
+
+  /* ═════ ACT 2 — USING IT ═════ */
   {line: 'P013', ...HALL, grade: 'fun', cam: {on: 0, size: 'mcu', yaw: 15, move: 'push'}, cast: [kai([0, 0], {expr: 'smug', tilt: 8})]},
   {line: 'P014', ...HALL, grade: 'fun', cam: {on: [0, 1.4, -0.6], size: 'med', yaw: 30, move: 'orbitL'},
     cast: [{who: 'lucky', pos: [-0.7, -1.2], rot: 30, talk: true, pose: 'shrug'}, kai([0.6, 0], {rot: -150, expr: 'smug'})], threads: [th(0, 1, 'slack', {thick: 0.005})]},
@@ -72,9 +77,15 @@ export const SHOTS: ShotSpec[] = [
     cast: [{who: 'teacher', pos: [0.5, -3.3], rot: 0, talk: true}, kai([-0.7, -0.35], {pose: 'sit', rot: 180}), {who: 'kidB', pos: [0.7, -0.35], rot: 180, pose: 'sit'},
       {who: 'kidC', pos: [-2.1, -0.35], rot: 180, pose: 'sit'}, {who: 'kidD', pos: [2.1, -0.35], rot: 180, pose: 'sit'}],
     threads: [th(0, 1, 'held', {thick: 0.006}), th(0, 2, 'held', {thick: 0.006}), th(0, 3, 'held', {thick: 0.006}), th(0, 4, 'held', {thick: 0.006})]},
+  {line: 'P015', w: 0.75, set: 'Classroom', light: 'classroom', grade: 'fun', keyPos: [-4, 4, -1], cam: {on: 0, size: 'mcu', yaw: 15, move: 'orbitL'},
+    cast: [{who: 'teacher', pos: [0.5, -3.3], rot: 0, talk: true}, kai([-0.7, -0.35], {pose: 'sit', rot: 180}), {who: 'kidB', pos: [0.7, -0.35], rot: 180, pose: 'sit'},
+      {who: 'kidC', pos: [-2.1, -0.35], rot: 180, pose: 'sit'}, {who: 'kidD', pos: [2.1, -0.35], rot: 180, pose: 'sit'}],
+    threads: [th(0, 1, 'held', {thick: 0.006}), th(0, 2, 'held', {thick: 0.006}), th(0, 3, 'held', {thick: 0.006}), th(0, 4, 'held', {thick: 0.006})]},
   {line: 'P016', set: 'Classroom', light: 'classroom', grade: 'fun', keyPos: [-4, 4, -1], cam: {on: 0, size: 'mcu', yaw: 25, pitch: 6, move: 'push'},
     cast: [{who: 'teacher', pos: [0.5, -3.3], rot: 15, turn: 15, expr: 'bored', react: 'deflate', reactAt: 25}], threads: [th(0, [0, 1.0, -0.4], 'held', {thick: 0.006}), th(0, [-1.4, 1.0, -0.4], 'held', {thick: 0.006})]},
   {line: 'P017', set: 'Gym', light: 'gym', grade: 'triumph', cam: {on: 0, size: 'mcu', yaw: 42, pitch: 12, move: 'orbitR'}, tag: 'CASINO NIGHT',
+    cast: [{who: 'dealer', pos: [0, -0.95], rot: 0, talk: true, pose: 'hold', hold: 'card'}, kai([0, 0.95], {rot: 180})], threads: [th(0, 1, 'broken')]},
+  {line: 'P017', w: 0.75, set: 'Gym', light: 'gym', grade: 'triumph', cam: {on: 1, size: 'cu', yaw: 195, move: 'push'},
     cast: [{who: 'dealer', pos: [0, -0.95], rot: 0, talk: true, pose: 'hold', hold: 'card'}, kai([0, 0.95], {rot: 180})], threads: [th(0, 1, 'broken')]},
   {line: 'P018', ...HALL, grade: 'triumph', cam: {on: 0, size: 'med', yaw: 0, move: 'pull'},
     cast: [kai([0, -0.6], {expr: 'smug'}), {who: 'kidA', pos: [-0.9, -0.1], rot: -40, talk: true}, {who: 'kidB', pos: [0.9, -0.2], rot: 40, talk: true}],
@@ -87,6 +98,11 @@ export const SHOTS: ShotSpec[] = [
     cast: [{who: 'kidA', pos: [-0.6, -1.2], rot: 30, talk: true}, {who: 'kidD', pos: [0.6, -1.2], rot: -30}, kai([0, 0.4], {pose: 'point', rot: 180})],
     threads: [th(0, 2, 'held'), th(1, 2, 'broken')]},
   {line: 'P020', w: 1.4, ...HALL, grade: 'triumph', cam: {on: 0, size: 'med', yaw: 0, pitch: -6, move: 'pull'}, exposure: 1.1, title: {words: ['ORGANISED', 'BY', 'LIGHT'], emph: [2], y: 0.22, size: 60},
+    cast: [kai([0, 0.2], {expr: 'smug', pose: 'run', tilt: 5}), {who: 'kidA', pos: [-1.3, -0.8], rot: 40}, {who: 'kidB', pos: [1.3, -0.8], rot: -40}, {who: 'girl', pos: [-1.6, -2.2], rot: 30}, {who: 'kidC', pos: [1.6, -2.2], rot: -30}],
+    threads: [th(1, 3, 'held'), th(2, 4, 'held'), th(3, 4, 'slack'), th(1, 2, 'held', {thick: 0.006})]},
+
+  /* ═════ ACT 3 — IT TURNS ═════ */
+  {line: 'P020', w: 0.75, ...HALL, grade: 'triumph', cam: {on: 0, size: 'cu', yaw: 15, pitch: -10, move: 'snap'}, exposure: 1.1,
     cast: [kai([0, 0.2], {expr: 'smug', pose: 'run', tilt: 5}), {who: 'kidA', pos: [-1.3, -0.8], rot: 40}, {who: 'kidB', pos: [1.3, -0.8], rot: -40}, {who: 'girl', pos: [-1.6, -2.2], rot: 30}, {who: 'kidC', pos: [1.6, -2.2], rot: -30}],
     threads: [th(1, 3, 'held'), th(2, 4, 'held'), th(3, 4, 'slack'), th(1, 2, 'held', {thick: 0.006})]},
 
