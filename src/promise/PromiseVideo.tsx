@@ -82,6 +82,18 @@ const THREAD_CUES: [number, string, number, number][] = P_SHOT_TIMES.flatMap((t)
   return out.slice(0, 3);
 });
 
+/** H3: a quiet whoosh peaking on every cut (varied rate) · H1: cloth rustle on stressed words of on-screen talkers (max 3 per line) */
+const CUT_CUES: [number, number][] = P_SHOT_TIMES.slice(1).map((t, i) => [t.startSec - 0.18, 0.92 + ((i * 5) % 11) * 0.016]);
+/** H2: footsteps under walk-ins (3.8 steps/s while the walk lasts, last steps softer) */
+const STEP_CUES: [number, number][] = P_SHOT_TIMES.flatMap((t) => SHOTS[t.i].cast.filter((c) => c.enter).flatMap((c) => {
+  const len = (c.enterLen ?? 30) / 30, n = Math.floor(len * 3.8);
+  return Array.from({length: n}, (_, k) => [t.startSec + k / 3.8, 0.2 * (1 - 0.5 * k / n)] as [number, number]);
+}));
+const RUSTLE_CUES: number[] = P_LINES.flatMap((l) => {
+  const talks = P_SHOT_TIMES.some((t) => SHOTS[t.i].line === l.id && SHOTS[t.i].cast.some((c) => c.talk));
+  if (!talks) return [];
+  return l.words.filter((w) => { const b = w.text.replace(/[^A-Za-z]/g, ''); return (b.length >= 2 && b === b.toUpperCase()) || b.length >= 7; }).slice(0, 3).map((w) => w.start - 0.04);
+});
 const ShotSeq = ({t}: {t: Timed}) => {
   const frame = useCurrentFrame(), {fps} = useVideoConfig(), r = fps / 30;
   const spec = SHOTS[t.i], k = SHOTS.filter((s) => s.line === spec.line).indexOf(spec);
@@ -143,6 +155,9 @@ export const PromiseVideo = () => {
       <Cue src="reverse_cymbal" at={0.2} vol={0.2} fps={fps} />
       {ACTS.slice(1).map((a) => <Cue key={a} src="whoosh_heavy" at={ACT_START(a) - 1.5} vol={0.4} fps={fps} />)}
       {THREAD_CUES.map(([at, s, v, r], i) => <Cue key={'tc' + i} src={s} at={at} vol={v} rate={r} fps={fps} />)}
+      {CUT_CUES.map(([at, r], i) => <Cue key={'cw' + i} src="whoosh_short" at={at} vol={0.1} rate={r} fps={fps} duck={0.5} />)}
+      {STEP_CUES.map(([at, v], i) => <Cue key={'st' + i} src="step_wood" at={at} vol={v} rate={0.95 + (i % 5) * 0.025} fps={fps} duck={0.8} />)}
+      {RUSTLE_CUES.map((at, i) => <Cue key={'cr' + i} src="cloth_rustle" at={at} vol={0.13} rate={0.94 + (i % 7) * 0.02} fps={fps} duck={0.8} />)}
       <Cue src="alarm_beep" at={L('P004').start + 0.8} vol={0.22} fps={fps} />
       <Cue src="kid_laugh" at={L('P008').end + 0.3} vol={0.14} fps={fps} />
       <Cue src="stinger_good" at={L('P013').start} vol={0.3} fps={fps} />

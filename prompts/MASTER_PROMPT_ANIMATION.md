@@ -24,7 +24,7 @@
 - ✅ A3 Cut-in momentum: each shot starts 7% further out and 2.5° off-axis, then settles in over about 0.25 s (`exp(-beat/7)`). Cuts feel like landings.
 - ✅ A4 A richer handheld: 3 axes, two frequencies (18 mm, 13 mm, 10 mm). (`handheld`)
 - ✅ A5 Camera **roll** (dutch breathing ±0.6°, and ±4° on tension shots): add `roll` to `Cam`, then apply `camera.up` in `CameraApply`.
-- 🔲 A6 **Speed ramps** on signature shots: `timeRemap` on the shot spec, slow motion (0.3×) at the peak frame for 0.5 s.
+- ✅ A6 **Speed ramps** on signature shots: `timeRemap` on the shot spec, slow motion (0.3×) at the peak frame for 0.5 s.
 - ✅ A7 **Punch-in on stressed words**: fov −1.2° over 3 beats on each stressed word of the speaker in frame.
 - 🔲 A8 **Whip pans** between related shots (once a minute): ±35° yaw over the last and first 5 beats, plus `WhipStreak` and a `whip` SFX.
 - 🔲 A9 **Rack focus** moves: `focusOn` keyframes `[{at, target}]`, eased over 12 beats, with a 1.5% fov focus breathing.
@@ -35,7 +35,7 @@
 - ✅ A14 **Overshoot settles**: push and snap moves overshoot by 2% and spring back (damping 12).
 - 🔲 A15 **Matched motion across cuts**: if shot A ends moving left, shot B starts moving left (`move` direction checked by `validate_shots`).
 - ✅ A16 **Low hero angles** for confident or triumph beats (pitch −8 to −12°), and high angles for small or alone beats.
-- 🔲 A17 **Impact shake presets**: `light` (0.012), `hit` (0.03), `quake` (0.06 + roll), each with its own decay.
+- ✅ A17 **Impact shake presets**: `light` (0.012), `hit` (0.03), `quake` (0.06 + roll), each with its own decay.
 - 🔲 A18 **Parallax foreground cards** in every wide: a blurred locker edge, plant or chair at 0.8 m from the camera.
 - ✅ A19 **Lens breathing**: fov ±0.4° slow sine, so the image is never frozen.
 - ✅ A20 **Shot-size rhythm audit**: no two neighbouring shots with the same size **and** move (warning in `audit_shots.mjs`).
@@ -45,10 +45,10 @@
 - ✅ B2 Speaking body bob plus a squash accent on stressed words.
 - ✅ B3 Listener life: slow arm sway, lean drift, and eye glances on a longer cycle.
 - ✅ B4 Speaker eye micro-darts (±2 px).
-- 🔲 B5 **Anticipation** on every reaction (§21): a 4–6 beat counter-move before the main move.
+- ✅ B5 **Anticipation** on every reaction (§21): a 4–6 beat counter-move before the main move.
 - ✅ B6 **Head-turn-to-speaker**: listeners turn toward whoever talks (the head leads, the body follows at 20%, 6 beats later).
-- 🔲 B7 **Real walk cycle** (§40): a 16-beat cycle, pelvis bob, opposite arm swing, no foot slide. Use it for entrances.
-- 🔲 B8 **Entrances and exits**: characters walk into frame on act openings instead of standing pre-placed.
+- ✅ B7 **Real walk cycle** (§40): a 16-beat cycle, pelvis bob, opposite arm swing, no foot slide. Use it for entrances.
+- ✅ B8 **Entrances and exits**: characters walk into frame on act openings instead of standing pre-placed.
 - ✅ B9 **Weight shifts** every 3–5 s: the hip moves 2 cm, the shoulders counter-tilt.
 - 🔲 B10 **Hand-to-face** gestures: chin scratch, rubbing the neck (nervous), facepalm (exists in reactions, so use it).
 - 🔲 B11 **Wrist look**: Kai glances down at the thread wrist whenever a thread is mentioned.
@@ -59,7 +59,7 @@
 - 🔲 B16 **Breathing that shows emotion**: a big sigh (shoulders up, then drop) on sad lines.
 - 🔲 B17 **Crowd variation**: 3 idle loops × random phase × speed 0.9–1.1, and one "hero extra" per crowd doing something unique.
 - 🔲 B18 **Hug, handshake and pinky-promise poses** for the promise moments (two-character contact pose, wrist-to-wrist).
-- 🔲 B19 **Jump celebrate** with squash on landing and a dust puff.
+- ✅ B19 **Jump celebrate** with squash on landing and a dust puff.
 - 🔲 B20 **Sit-down and stand-up** transitions, not teleporting between poses.
 - 🔲 B21 **Phone acting**: thumb taps, a screen glow on the face, and a pocket put-away.
 - 🔲 B22 **Sleep acting**: slow breathing, a twitch, and the blanket rising.
@@ -74,7 +74,7 @@
 - ✅ C4 **Snap**: a 3-frame white flash at the break point, the two halves whip back (spring), and ember sparks fall with gravity.
 - ✅ C5 **Fray**: the broken ends curl and drop fibres for 2 s.
 - ✅ C6 **Thread light** actually lights faces (a point light at the thread midpoint, intensity tied to the pulse), colour gold or grey.
-- 🔲 C7 **Ignite**: a fire wave travels along the thread, then bloom spikes, an impact stack, and a 0.5 s slow-motion peak (A6).
+- ✅ C7 **Ignite**: a fire wave travels along the thread, then bloom spikes, an impact stack, and a 0.5 s slow-motion peak (A6).
 - 🔲 C8 **Swarm choreography**: the threads in a swarm flow like a school of fish (curl noise), not static lines.
 - 🔲 C9 **Knot tying**: the thread loops into a visible knot (instanced torus segments).
 - 🔲 C10 **Ghost threads** for past promises: faint, thin and drifting.
@@ -136,15 +136,15 @@
 - 🔲 G4 **Cut on action**: cuts land mid-gesture (B1 gestures make this possible).
 - 🔲 G5 **Average shot length 2.5 s** in montages, and 4–5 s on emotional beats (check the cut list).
 - 🔲 G6 **Breath shots** after every big reveal (3 s of slow drift, music only).
-- 🔲 G7 **Flash frames** on the snap and the ignite (2 beats, 0.25 opacity, never more than 3 per second).
+- ✅ G7 **Flash frames** on the snap and the ignite (2 beats, 0.25 opacity, never more than 3 per second).
 - 🔲 G8 **Dip-to-black** only at the act breaks, with a whoosh_heavy.
 - 🔲 G9 **Montage split-screens** for "every promise" lists (2–3 panels sliding in).
 - 🔲 G10 **Loopable ending** that mirrors the first frame (vertical-cut ready).
 
 ## H. Sound to match the motion (10)
-- 🔲 H1 Cloth rustle on every gesture of B1 (vol 0.15, rate ±5%).
-- 🔲 H2 Footsteps under B7 walks.
-- 🔲 H3 A camera whoosh on every A3 cut-in with momentum > 0.5 (quiet, 0.2).
+- ✅ H1 Cloth rustle on every gesture of B1 (vol 0.15, rate ±5%).
+- ✅ H2 Footsteps under B7 walks.
+- ✅ H3 A camera whoosh on every A3 cut-in with momentum > 0.5 (quiet, 0.2).
 - 🔲 H4 A thread hum that follows the pulse (C1).
 - 🔲 H5 Snap: crack + sub + reverse tail, and silence 6 beats before it.
 - 🔲 H6 Ignite: riser → impact → sparkle → music swell.
@@ -166,4 +166,4 @@
 - 🔲 I10 The user approves the motion test before every full render.
 - 🔲 I11 Update CLAUDE.md §1 and §50 when items ship.
 
-**Total: 130 items (33 done).**
+**Total: 130 items (44 done).**

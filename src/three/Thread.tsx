@@ -131,7 +131,11 @@ export const Thread = ({from, to, state, t, thickness = 0.01, seed, light = true
   const c = makeCurve(from, to, Math.max(0, 0.04 - t * 0.2), t, seed);
   if (t < 0.27) {
     const flash = t > 0.2 ? 1 : 0;
+    // C7 ignite: a white-hot fire front runs wrist to wrist before the pop
+    const front = c.getPoint(Math.min(1, t / 0.2));
     return <group><Tube curve={c} r={r * (1 + t * 2)} color={flash ? '#fff6dc' : GOLD} i={2.2 + t * 4} t={t} seed={seed} pulse={1} />
+      {!flash && <><mesh position={front}><sphereGeometry args={[r * 4, 14, 14]} /><meshBasicMaterial color="#fff6dc" toneMapped={false} /></mesh>
+        <mesh position={front}><sphereGeometry args={[r * 11, 14, 14]} /><meshBasicMaterial color="#ffb35a" transparent opacity={0.35} blending={AdditiveBlending} depthWrite={false} toneMapped={false} /></mesh></>}
       {light && <pointLight position={c.getPoint(0.5)} color={GOLD} intensity={0.6 + t * 5} distance={3} decay={2} />}</group>;
   }
   const s = t - 0.27, sparks: number[] = [], n = 240;

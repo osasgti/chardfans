@@ -9,14 +9,14 @@ import {FAST} from './Stage';
 export type Hair = 'none' | 'beanie' | 'cap' | 'capBack' | 'bun' | 'ponytail' | 'bob' | 'visor';
 export type PillProps = {
   id: string; frame: number; position?: [number, number, number]; rotY?: number;
-  hoodie?: string; expr?: Expr; hat?: Hair; hatColor?: string; glasses?: boolean; scale?: number; mouth?: number; turnLag?: number; lean?: number; armLx?: number; armRx?: number; nod?: number; brow?: number; rightHand?: React.ReactNode;
+  hoodie?: string; expr?: Expr; hat?: Hair; hatColor?: string; glasses?: boolean; scale?: number; mouth?: number; turnLag?: number; lean?: number; armLx?: number; armRx?: number; nod?: number; brow?: number; rightHand?: React.ReactNode; legSwing?: number;
   armL?: number; armR?: number; headTilt?: number; headTurn?: number; squash?: number; look?: number; seg?: number;
 };
 
 const skinMat = <meshPhysicalMaterial color={C.skin} roughness={0.42} clearcoat={0.35} clearcoatRoughness={0.4} sheen={0.4} sheenColor="#ffffff" />;
 
 export const Pill = ({id, frame, position = [0, 0, 0], rotY = 0, hoodie = C.red, expr = 'neutral', hat = 'none', hatColor = '#1b1622',
-  armL = 0.15, armR = 0.15, headTilt = 0, headTurn = 0, squash = 0, look = 0, seg = 48, glasses = false, scale = 1, mouth = 0, turnLag = 0, lean = 0, armLx = 0, armRx = 0, nod = 0, brow = 0, rightHand}: PillProps) => {
+  armL = 0.15, armR = 0.15, headTilt = 0, headTurn = 0, squash = 0, look = 0, seg = 48, glasses = false, scale = 1, mouth = 0, turnLag = 0, lean = 0, armLx = 0, armRx = 0, nod = 0, brow = 0, rightHand, legSwing = 0}: PillProps) => {
   if (FAST) seg = Math.min(seg, 28);
   const t = frame / 30, ph = random(id) * 6.28;
   // breathing rate follows emotion (backlog #41): calm ≈ 0.33 Hz, anxious ≈ 0.6 Hz
@@ -45,7 +45,7 @@ export const Pill = ({id, frame, position = [0, 0, 0], rotY = 0, hoodie = C.red,
   return (
     <group position={position} rotation={[0, rotY, 0]} scale={scale}>
       {[-1, 1].map((s) => (
-        <group key={s} position={[s * 0.09, 0.42, 0]}>
+        <group key={s} position={[s * 0.09, 0.42, 0]} rotation={[s * legSwing, 0, 0]}>
           <mesh position={[0, -0.2, 0]} castShadow><capsuleGeometry args={[0.055, 0.3, 6, 12]} /><meshStandardMaterial color={C.lavender} roughness={0.6} /></mesh>
           <mesh position={[0, -0.39, 0.03]} scale={[1, 0.6, 1.5]} castShadow><sphereGeometry args={[0.07, 16, 16]} /><meshStandardMaterial color="#2a2433" roughness={0.7} /></mesh>
         </group>

@@ -25,7 +25,7 @@ export const SHOTS: ShotSpec[] = [
   {line: 'P002', w: 0.9, ...V, grade: 'wonder', cam: {on: [0, 1.2, 0], size: 'wide', yaw: 12, move: 'crane'},
     cast: [fig('giver', [-0.9, 0], {rot: 40, expr: 'happy'}), kai([0.9, 0], {rot: -40, expr: 'happy'})], threads: [th(0, 1, 'held', {thick: 0.012})],
     title: {words: ['PROMISE', 'THREADS'], emph: [1], y: 0.22, size: 80}},
-  {line: 'P003', ...V, grade: 'wonder', cam: {on: [0, 1.3, 0], size: 'med', yaw: 0, move: 'push'},
+  {slowmo: {at: 49, len: 20}, line: 'P003', ...V, grade: 'wonder', cam: {on: [0, 1.3, 0], size: 'med', yaw: 0, move: 'push'},
     cast: [fig('a', [-1.0, 0], {rot: 35, expr: 'happy'}), kai([0, 0.3], {expr: 'neutral'}), fig('b', [1.0, 0], {rot: -35, expr: 'neutral'})],
     threads: [th(0, 1, 'held', {then: {state: 'burst', at: 40}, thick: 0.012}), th(2, 1, 'held', {then: {state: 'slack', at: 95}})]},
   {line: 'P003b', ...V, grade: 'wonder', cam: {on: [0.8, 0.6, 0], size: 'med', yaw: -20, pitch: 10, move: 'drop'},
@@ -50,7 +50,7 @@ export const SHOTS: ShotSpec[] = [
   {line: 'P009', set: 'Street', light: 'street', grade: 'fun', cam: {on: [0, 1.3, 0], size: 'med', yaw: 10, move: 'truck'},
     cast: [fig('s1', [-1.2, 0], {rot: 40, expr: 'happy'}), fig('s2', [1.2, 0], {rot: -40})], threads: [th(0, 1, 'held', {thick: 0.004}), th(1, 0, 'held', {thick: 0.02})],
     title: {words: ['BIG', 'PROMISE', '=', 'THICK', 'THREAD'], emph: [3], y: 0.22, size: 56}},
-  {line: 'P009', ...V, grade: 'fun', cam: {on: [0, 1.3, 0], size: 'med', yaw: -10, move: 'push'},
+  {slowmo: {at: 54, len: 20}, line: 'P009', ...V, grade: 'fun', cam: {on: [0, 1.3, 0], size: 'med', yaw: -10, move: 'push'},
     cast: [fig('a', [-1.0, 0], {rot: 35, expr: 'happy'}), kai([0, 0.3]), fig('b', [1.0, 0], {rot: -35, expr: 'bored'})],
     threads: [th(0, 1, 'held', {then: {state: 'burst', at: 45}}), th(2, 1, 'slack', {then: {state: 'broken', at: 80}})]},
   {line: 'P010', w: 1.3, set: 'Street', light: 'street', grade: 'fun', cam: {on: [-0.5, 1.6, 0], size: 'wide', yaw: 25, move: 'orbitR'}, extra: 'bus',
@@ -92,7 +92,7 @@ export const SHOTS: ShotSpec[] = [
 
   /* ═════ ACT 3 — IT TURNS ═════ */
   {line: 'P021', set: 'Hallway', light: 'hallwayNight', grade: 'tension', cam: {on: 0, size: 'wide', yaw: -20, move: 'push'},
-    cast: [{who: 'maya', pos: [0.8, -2.2], rot: 0, expr: 'neutral'}, kai([-0.8, 0.4], {rot: 150, expr: 'neutral'})]},
+    cast: [{who: 'maya', pos: [0.8, -2.2], rot: 0, expr: 'neutral', enter: [0, -2.4], enterLen: 40}, kai([-0.8, 0.4], {rot: 150, expr: 'neutral'})]},
   {line: 'P022', set: 'Hallway', light: 'hallwayNight', grade: 'tension', cam: {on: [0, 1.2, -0.9], size: 'med', yaw: 70, move: 'orbitR'},
     cast: [{who: 'maya', pos: [0.8, -2.2], rot: -30, expr: 'neutral'}, kai([-0.8, 0.4], {rot: 150, expr: 'worried'})], threads: [th(0, 1, 'slack', {thick: 0.006})]},
   {line: 'P023', ...V, grade: 'wonder', exposure: 1.2, cam: {on: [0, 0.9, 0], size: 'med', yaw: 10, move: 'push'}, tag: 'SECOND GRADE',
@@ -148,7 +148,7 @@ export const SHOTS: ShotSpec[] = [
 
   /* ═════ ACT 5 — KEEPING ONE ═════ */
   {line: 'P040', set: 'Kitchen', setProps: {dawn: true}, light: 'dawn', grade: 'wonder', cam: {on: 0, size: 'wide', pitch: 20, move: 'crane'}, tag: 'THE NEXT MORNING',
-    cast: [kai([-1.4, 0.8], {rot: 30, expr: 'neutral'})]},
+    cast: [kai([-1.4, 0.8], {rot: 30, expr: 'neutral', enter: [-2.2, 0.4], enterLen: 36})]},
   {line: 'P041', set: 'Cafeteria', setProps: {saved: true}, light: 'gym', grade: 'wonder', cam: {on: 0, size: 'med', yaw: 30, move: 'push'},
     cast: [kai([-1.6, 0.4], {rot: 90, expr: 'neutral'}), {who: 'maya', pos: [0.9, 0.95], rot: 180, pose: 'sit'}]},
   {line: 'P042', set: 'Cafeteria', setProps: {saved: false}, light: 'gym', grade: 'wonder', cam: {on: 1, size: 'mcu', yaw: 200, move: 'orbitL'},
@@ -158,13 +158,13 @@ export const SHOTS: ShotSpec[] = [
     cast: [kai([-0.5, 0.95], {rot: 180, pose: 'sit', expr: 'happy'}), {who: 'maya', pos: [0.9, 0.95], rot: 180, pose: 'sit', expr: 'happy', turn: -40}],
     threads: [th(1, 0, 'held', {thick: 0.012})]},
   // WOW: the burst (signature shot of act 5)
-  {line: 'P044', set: 'Cafeteria', setProps: {saved: false}, light: 'gym', grade: 'triumph', flash: 0.35, shake: 2, cam: {on: [0.2, 1.1, 0.95], size: 'med', yaw: 200, pitch: 8, move: 'pull'},
+  {slowmo: {at: 9, len: 24, rate: 0.25}, shakeKind: 'quake', line: 'P044', set: 'Cafeteria', setProps: {saved: false}, light: 'gym', grade: 'triumph', flash: 0.35, shake: 2, cam: {on: [0.2, 1.3, 0.95], size: 'med', yaw: 200, pitch: 16, move: 'pull'},
     cast: [kai([-0.5, 0.95], {rot: 180, pose: 'sit', expr: 'happy'}), {who: 'maya', pos: [0.9, 0.95], rot: 180, pose: 'sit', expr: 'happy', turn: -40, react: 'celebrate', reactAt: 30}],
     threads: [th(1, 0, 'burst', {thick: 0.016})], title: {words: ['IT', 'IGNITES'], emph: [1], y: 0.22, size: 80}},
-  {line: 'P045', w: 1, ...V, grade: 'triumph', cam: {on: 1, size: 'mcu', yaw: -20, move: 'push'},
+  {slowmo: {at: 29, len: 18}, line: 'P045', w: 1, ...V, grade: 'triumph', cam: {on: 1, size: 'mcu', yaw: -20, move: 'push'},
     cast: [{who: 'grandma', pos: [-0.9, 0], rot: 40, pose: 'phone', hold: 'phone', expr: 'happy'}, kai([0.9, 0], {rot: -40, pose: 'phone', hold: 'phone', expr: 'happy'})],
     threads: [th(1, 0, 'burst', {at: 20})]},
-  {line: 'P045', w: 1.3, set: 'Bedroom', light: 'bedroom', grade: 'triumph', cam: {on: 1, size: 'med', yaw: 25, move: 'orbitR'},
+  {slowmo: {at: 44, len: 18}, line: 'P045', w: 1.3, set: 'Bedroom', light: 'bedroom', grade: 'triumph', cam: {on: 1, size: 'med', yaw: 25, move: 'orbitR'},
     cast: [kai([0.3, -0.4], {rot: -30, expr: 'happy'}), {who: 'brother', pos: [1.3, -1.0], rot: -60, expr: 'shock', react: 'doubleTake', reactAt: 15}],
     threads: [th(0, 1, 'held', {then: {state: 'burst', at: 35}}), th(1, 0, 'held', {then: {state: 'burst', at: 70}})]},
   {line: 'P046', ...V, grade: 'triumph', cam: {on: [0.3, 1.2, 0], size: 'cu', yaw: 55, move: 'push'},

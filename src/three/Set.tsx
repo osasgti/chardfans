@@ -38,8 +38,8 @@ export const Dust = ({frame, n = 90}: {frame: number; n?: number}) => (
       const t = frame / 30;
       const x = -2.5 + random('dx' + i) * 5 + Math.sin(t * 0.3 + i) * 0.25 + t * 0.04;
       const y = 0.4 + ((random('dy' + i) * 3 + t * (0.05 + random('dv' + i) * 0.08)) % 3);
-      const layer = i % 3, z = [-4.5, -1.5, 1.2][layer] + random('dz' + i) * 3;
-      const s = (0.006 + random('ds' + i) * 0.01) * [1.6, 1, 0.7][layer];
+      const layer = i % 3, z = [-4.5, -1.8, -0.6][layer] + random('dz' + i) * 3;
+      const s = (0.006 + random('ds' + i) * 0.01) * [1.5, 1, 0.8][layer];
       return (<mesh key={i} position={[x, y, z]}><sphereGeometry args={[s, 6, 6]} /><meshBasicMaterial color={C.keyWarm} toneMapped={false} transparent opacity={0.8} /></mesh>);
     })}
   </group>
