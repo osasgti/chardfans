@@ -148,8 +148,8 @@
 - ✅ H2 Footsteps under B7 walks.
 - ✅ H3 A camera whoosh on every A3 cut-in with momentum > 0.5 (quiet, 0.2).
 - ✅ H4 A thread hum that follows the pulse (C1).
-- 🔲 H5 Snap: crack + sub + reverse tail, and silence 6 beats before it.
-- 🔲 H6 Ignite: riser → impact → sparkle → music swell.
+- ✅ H5 Snap: crack + sub + reverse tail, and silence 6 beats before it.
+- ✅ H6 Ignite: riser → impact → sparkle → music swell.
 - 🔲 H7 Spatial panning from the screen x position (§36.6 rule 6).
 - ✅ H8 Stingers on the act cards.
 - 🔲 H9 Music hits on the cut downbeats (the tempo map, §36.7).
@@ -168,4 +168,4 @@
 - 🔲 I10 The user approves the motion test before every full render.
 - 🔲 I11 Update CLAUDE.md §1 and §50 when items ship.
 
-**Total: 132 items (96 done).**
+**Total: 132 items (98 done).**

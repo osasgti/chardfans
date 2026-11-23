@@ -81,6 +81,15 @@ const THREAD_CUES: [number, string, number, number][] = P_SHOT_TIMES.flatMap((t)
   });
   return out.slice(0, 3);
 });
+/** H5/H6: layered stingers. Ignite = riser into the pop, impact + sparkle on it. Snap = suck-back into a short silence, crack on the break. */
+const STING_CUES: [number, string, number][] = P_SHOT_TIMES.flatMap((t) => (SHOTS[t.i].threads ?? []).flatMap((th) => {
+  if (th.swarm) return [];
+  const st = th.then?.state ?? th.state, at = t.startSec + ((th.then ? th.then.at : th.at) ?? 0) / 30;
+  if (st === 'burst') return [[at - 1.0, 'riser_short', 0.28], [at + 0.27, 'impact', 0.42], [at + 0.3, 'sparkle', 0.36]] as [number, string, number][];
+  if (st === 'broken' && th.then) return [[at - 0.45, 'suck_back', 0.22], [at, 'impact_light', 0.38]] as [number, string, number][];
+  return [];
+})).filter(([at]) => at > 0);
+
 
 /** H3: a quiet whoosh peaking on every cut (varied rate) · H1: cloth rustle on stressed words of on-screen talkers (max 3 per line) */
 const CUT_CUES: [number, number][] = P_SHOT_TIMES.slice(1).map((t, i) => [t.startSec - 0.18, 0.92 + ((i * 5) % 11) * 0.016]);
@@ -157,6 +166,7 @@ export const PromiseVideo = () => {
       {ACTS.slice(1).map((a) => <Cue key={a} src="whoosh_heavy" at={ACT_START(a) - 1.5} vol={0.4} fps={fps} />)}
       {THREAD_CUES.map(([at, s, v, r], i) => <Cue key={'tc' + i} src={s} at={at} vol={v} rate={r} fps={fps} />)}
       {CUT_CUES.map(([at, r], i) => <Cue key={'cw' + i} src="whoosh_short" at={at} vol={0.1} rate={r} fps={fps} duck={0.5} />)}
+      {STING_CUES.map(([at, src, v], i) => <Cue key={'sg' + i} src={src} at={at} vol={v} rate={1 + (i % 5 - 2) * 0.02} fps={fps} duck={0.75} />)}
       {WHIP_CUES.map((at, i) => <Cue key={'wh' + i} src="whip" at={at} vol={0.45} rate={1 + i * 0.03} fps={fps} duck={0.7} />)}
       {STEP_CUES.map(([at, v], i) => <Cue key={'st' + i} src="step_wood" at={at} vol={v} rate={0.95 + (i % 5) * 0.025} fps={fps} duck={0.8} />)}
       {RUSTLE_CUES.map((at, i) => <Cue key={'cr' + i} src="cloth_rustle" at={at} vol={0.13} rate={0.94 + (i % 7) * 0.02} fps={fps} duck={0.8} />)}
