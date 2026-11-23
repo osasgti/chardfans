@@ -156,10 +156,10 @@
 - ✅ H10 Room tone per set crossfading across cuts.
 
 ## I. Process & QA (11)
-- 🔲 I1 `npm run motion` renders a 10 s, half-scale clip of any shot: `node scripts/motion_test.mjs P020`.
+- ✅ I1 `npm run motion` renders a 10 s, half-scale clip of any shot: `python scripts/motion_test.py P020` (clip + GIF + sheet + motion_qa).
 - ✅ I2 **Stillness detector**: `python scripts/motion_qa.py <video> <fps>`, so any second with summed frame difference < 14 fails. v04 failed 170 of 268 seconds; the motion-pass test clip fails 1 of 11.
 - ✅ I3 **Highlight detector**: % of pixels at luma ≥ 245 per shot. Faces must not clip (D10).
-- 🔲 I4 **Contact sheets as GIFs**: a 6-frame flip per shot, so motion can be reviewed fast.
+- ✅ I4 **Contact sheets as GIFs**: a 6-frame flip per shot, so motion can be reviewed fast.
 - ✅ I5 The audit adds a `STATIC` warning: a shot with `move: 'lock'`, no talker and no extra.
 - 🔲 I6 A per-shot render cache: re-render only changed shots (hash the spec) and splice them.
 - ✅ I7 Every batch is committed with the ticked IDs in the message.
@@ -168,4 +168,4 @@
 - 🔲 I10 The user approves the motion test before every full render.
 - 🔲 I11 Update CLAUDE.md §1 and §50 when items ship.
 
-**Total: 132 items (88 done).**
+**Total: 132 items (90 done).**
