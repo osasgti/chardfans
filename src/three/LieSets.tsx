@@ -14,8 +14,8 @@ import {C} from '../style/tokens';
  * staticFile() fonts in the render browser, so it never lays out — see CLAUDE.md §32.) Fonts here are the page's
  * already-loaded FontFaces (style/fonts.ts), so this is synchronous and deterministic.
  */
-export const Text = ({children, position, fontSize, color = '#fff', font = 'Cinzel'}: {
-  children: React.ReactNode; position?: [number, number, number]; fontSize: number; color?: string; font?: string; maxWidth?: number; textAlign?: string;
+export const Text = ({children, position, fontSize, color = '#fff', font = 'Cinzel', opacity = 1}: {
+  children: React.ReactNode; position?: [number, number, number]; fontSize: number; color?: string; font?: string; maxWidth?: number; textAlign?: string; opacity?: number;
 }) => {
   const tex = useMemo(() => {
     const str = String(children); const px = 128; const c = document.createElement('canvas'); const ctx = c.getContext('2d')!;
@@ -25,7 +25,7 @@ export const Text = ({children, position, fontSize, color = '#fff', font = 'Cinz
     const t = new CanvasTexture(c); t.anisotropy = 8; return {t, aspect: w / c.height};
   }, [children, color, font]);
   const h = fontSize * 1.3;
-  return <mesh position={position}><planeGeometry args={[h * tex.aspect, h]} /><meshBasicMaterial map={tex.t} transparent toneMapped={false} depthWrite={false} /></mesh>;
+  return <mesh position={position}><planeGeometry args={[h * tex.aspect, h]} /><meshBasicMaterial map={tex.t} transparent opacity={opacity} toneMapped={false} depthWrite={false} /></mesh>;
 };
 const std = (color: string, r = 0.8, m = 0) => <meshStandardMaterial color={color} roughness={r} metalness={m} />;
 const glow = (color: string, i = 2.5) => <meshStandardMaterial color={color} emissive={color} emissiveIntensity={i} toneMapped={false} />;

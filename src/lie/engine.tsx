@@ -4,6 +4,8 @@
  */
 import {RB} from '../three/RB';
 import React from 'react';
+import {LIGHTS} from '../style/presets';
+import {Text as Text3} from '../three/LieSets';
 import {WhipStreak} from '../overlay/Transitions';
 import {AbsoluteFill, interpolate, Easing, random, Audio, Sequence, staticFile} from 'remotion';
 import {PerspectiveCamera, Vector3} from 'three';
@@ -38,7 +40,7 @@ export type ShotSpec = {
   line: string; w?: number; set: string; setProps?: Record<string, unknown>; light: string; grade: string; keyPos?: [number, number, number]; keyI?: number;
   cam: {on: number | [number, number, number]; size: Size; yaw?: number; pitch?: number; move?: Move; amount?: number};
   cast: CastSpec[]; meters?: MeterSpec[]; tag?: string; title?: {words: string[]; emph?: number[]; y?: number; size?: number};
-  dust?: boolean; extra?: string; threads?: ThreadSpec[]; shake?: number; shakeKind?: 'light' | 'hit' | 'quake'; slowmo?: {at: number; len?: number; rate?: number}; rack?: {at: number; to: number}; whip?: 'in' | 'out' | 'both'; focusOn?: number | V3; intent?: string[]; flash?: number; exposure?: number; mirror?: boolean; flicker?: boolean;
+  dust?: boolean; extra?: string; threads?: ThreadSpec[]; shake?: number; shakeKind?: 'light' | 'hit' | 'quake'; slowmo?: {at: number; len?: number; rate?: number}; rack?: {at: number; to: number}; whip?: 'in' | 'out' | 'both'; title3d?: {words: string[]; pos: [number, number, number]; size?: number}; net?: boolean; focusOn?: number | V3; intent?: string[]; flash?: number; exposure?: number; mirror?: boolean; flicker?: boolean;
 };
 
 const E = Easing.bezier(0.45, 0, 0.2, 1);
@@ -217,7 +219,7 @@ export const LieShot = ({spec, beat: beatIn, dur, sec, seed, fpsRatio = 1, calSt
     <AbsoluteFill>
       <AbsoluteFill style={{transform: weave(sec)}}>
       <Stage cam={cam} focus={fp.focus} focusRange={fp.range} grade={spec.grade} flash={spec.flash ?? 0} exposure={(spec.exposure ?? 1.05) * Math.pow(2, calStops)}>
-        <Lights preset={spec.light} keyPos={spec.keyPos} keyI={spec.keyI} subjectDepth={fp.meters} />
+        <Lights preset={spec.light} keyPos={spec.keyPos} keyI={spec.keyI ?? ((LIGHTS[spec.light ?? 'hallway'] ?? LIGHTS.hallway).keyI * ({ecu: 0.5, cu: 0.6, mcu: 0.75} as Record<string, number>)[spec.cam.size] || undefined)} subjectDepth={fp.meters} />
         {/* void: every character stands in its own soft pool of light (a dark scene still has a lit subject, CLAUDE.md §57.2 rule 2) */}
         {spec.set === 'Void' && spec.cast.map((c, i) => { const h = headOf(c); return (<group key={'pool' + i}>
           <pointLight position={[h[0] - 0.9, h[1] + 0.3, h[2] + 1.4]} intensity={1.3} distance={3.2} decay={2} color="#ffd2a8" />
@@ -239,10 +241,30 @@ export const LieShot = ({spec, beat: beatIn, dur, sec, seed, fpsRatio = 1, calSt
           const p: [number, number, number] = [cam.pos[0] + fx * 0.95 + rx * 0.62, cam.pos[1] - 0.2, cam.pos[2] + fz * 0.95 + rz * 0.62];
           return <mesh position={p} rotation={[0, Math.atan2(fx, fz), 0]}><boxGeometry args={[0.16, 3.2, 0.16]} /><meshStandardMaterial color="#1c1626" roughness={0.7} /></mesh>;
         })()}
+        {/* F1 3D title: gold words standing IN the scene (parallax with the camera move), each rising out of the floor glow */}
+        {spec.title3d && spec.title3d.words.map((w, i) => {
+          const T = spec.title3d!, sz = T.size ?? 0.42, e = Math.min(1, Math.max(0, (beat - 8 - i * 7) / 14)), ee = 1 - Math.pow(1 - e, 3);
+          const wd = (ww: string) => sz * 1.3 * ww.length * 0.74, gap = sz * 0.7, tot = T.words.reduce((q, ww) => q + wd(ww), 0) + gap * (T.words.length - 1);
+          const x = T.pos[0] - tot / 2 + T.words.slice(0, i).reduce((q, ww) => q + wd(ww) + gap, 0) + wd(w) / 2;
+          return <group key={'t3' + i} position={[x, T.pos[1] - 0.25 * (1 - ee), T.pos[2]]} scale={[1, 0.6 + 0.4 * ee, 1]}>
+            <Text3 position={[0, 0, 0]} fontSize={sz} color={i === T.words.length - 1 ? '#f2c46b' : '#f5ead2'} opacity={ee * 0.92}>{w}</Text3>
+          </group>;
+        })}
+        {/* C15 ending tapestry: 26 gold threads spool across the sky one after another and weave a net over the city */}
+        {spec.net && Array.from({length: 26}).map((_, i) => {
+          // anchored to the camera so the net always spans the frame: D m ahead, left half → right half, above the eye line
+          const cn = camFor(spec, 0.5, 0, seed);   // fixed mid-shot camera: the net stays put in the world, so the orbit gives parallax
+          const f0 = [cn.target[0] - cn.pos[0], 0, cn.target[2] - cn.pos[2]], fn = Math.hypot(f0[0], f0[2]), fx = f0[0] / fn, fz = f0[2] / fn;
+          const P = (side: number, d: number, up: number): [number, number, number] => [cn.pos[0] + fx * d - fz * side, cn.pos[1] + up, cn.pos[2] + fz * d + fx * side];
+          const D = 9 + random('nc' + i) * 5;
+          const a = P(-(1.5 + random('na' + i) * 7), D, 0.1 + random('nb' + i) * 2.2), b = P(1.5 + random('nd' + i) * 7, D + (random('nf' + i) - 0.5) * 3, 0.1 + random('ne' + i) * 2.2);
+          const at = 6 + i * 3.2;
+          return beat >= at ? <Thread key={'net' + i} from={a} to={b} state="fresh" t={(beat - at) / 30} thickness={0.007} seed={'net' + i} light={false} /> : null;
+        })}
         {/* E2 background extras: two students walk along the lockers in hallway shots (16-beat step cycle) */}
         {spec.set === 'Hallway' && [0, 1].map((k) => {
           const tt = sec + k * 4.3, dir = k ? -1 : 1, ph = (tt * 0.11 + random(seed + 'ex' + k)) % 1, x = dir * (-6 + ph * 12), sw = Math.sin(tt * Math.PI * 2 * 1.8);
-          return <Pill key={'ex' + k} id={'extra' + k} frame={beat} position={[x, Math.abs(sw) * 0.03, -2.62 + k * 0.1]} rotY={dir * Math.PI / 2} hoodie={k ? '#2f8f8a' : '#d29a2d'}
+          return <Pill key={'ex' + k} id={'extra' + k} frame={beat} position={[x, Math.abs(sw) * 0.03, -2.62 + k * 0.1]} rotY={dir * Math.PI / 2} hoodie={k ? '#6a5a9a' : '#8a5a3c'}
             hat={k ? 'cap' : 'bob'} scale={0.94} legSwing={sw * 0.42} armLx={sw * 0.45} armRx={-sw * 0.45} />;
         })}
         {spec.mirror && <>

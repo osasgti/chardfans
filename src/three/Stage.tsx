@@ -22,7 +22,7 @@ import {Uniform} from 'three';
  *  linear HDR colour, AFTER DepthOfField and before Bloom: first in the chain it broke the DOF depth input and blurred every face (§58). */
 class ExposureEffect extends Effect {
   constructor(exposure = 1) {
-    super('ExposureEffect', 'uniform float exposure; void mainImage(const in vec4 inputColor, const in vec2 uv, out vec4 outputColor) { vec3 c = inputColor.rgb * exposure; vec3 k = 0.70 + 0.22 * (1.0 - exp(-(c - 0.70) / 0.22)); outputColor = vec4(mix(c, k, step(0.72, c)), inputColor.a); }',
+    super('ExposureEffect', 'uniform float exposure; void mainImage(const in vec4 inputColor, const in vec2 uv, out vec4 outputColor) { vec3 c = inputColor.rgb * exposure; vec3 k = 0.70 + 0.22 * (1.0 - exp(-(c - 0.70) / 0.22)); vec3 o = mix(c, k, step(0.72, c)); float hl = max(0.0, dot(o, vec3(0.299, 0.587, 0.114)) - 0.55); o += hl * vec3(0.10, 0.03, -0.03); outputColor = vec4(o, inputColor.a); }',
       {blendFunction: BlendFunction.NORMAL, uniforms: new Map([['exposure', new Uniform(exposure)]])});
   }
 }
@@ -133,7 +133,7 @@ export const Stage = ({cam, focus, focusRange, children, grade = 'wonder', flash
     gl={{antialias: false, preserveDrawingBuffer: true, toneMapping: ACESFilmicToneMapping}}>
     <CameraApply cam={cam} exposure={exposure ?? 1.05} />
     {/* eye light (backlog #66): tiny, shadowless light at the lens so every eye gets a catch-light */}
-    <pointLight position={cam.pos} intensity={0.9} decay={2} color="#fff4e8" />
+    <pointLight position={cam.pos} intensity={0.9 * Math.min(1, (Math.hypot(cam.pos[0] - cam.target[0], cam.pos[1] - cam.target[1], cam.pos[2] - cam.target[2]) / 3.4) ** 2)} decay={2} color="#fff4e8" />
     {children}
     <PostFX focus={focus} range={focusRange} exposure={exposure ?? 1.05} g={GRADES[grade] ?? GRADES.wonder} flash={flash} />
   </ThreeCanvas>

@@ -42,14 +42,14 @@ void main(){
   gl_FragColor = vec4(uColor * uI * (core + 0.6 * f + band), 1.0);
 }`;
 
-const Tube = ({curve, r, color, i, t, seed, pulse, halo = true}: {curve: CatmullRomCurve3; r: number; color: string; i: number; t: number; seed: string; pulse: number; halo?: boolean}) => {
+const Tube = ({curve, r, color, i, t, seed, pulse, halo = true, haloK = 1}: {curve: CatmullRomCurve3; r: number; color: string; i: number; t: number; seed: string; pulse: number; halo?: boolean; haloK?: number}) => {
   const geo = useMemo(() => new TubeGeometry(curve, 64, r, 8, false), [curve, r]);
   const halog = useMemo(() => (halo ? new TubeGeometry(curve, 48, r * 3.6, 8, false) : null), [curve, r, halo]);
   const u = {uColor: {value: new Color(color)}, uI: {value: i}, uT: {value: t}, uSeed: {value: random(seed)}, uPulse: {value: pulse}};
   return (
     <group>
       <mesh geometry={geo}><shaderMaterial vertexShader={vert} fragmentShader={frag} uniforms={u} toneMapped={false} /></mesh>
-      {halog && <mesh geometry={halog}><meshBasicMaterial color={color} transparent opacity={0.22 * Math.min(1, i)} blending={AdditiveBlending} depthWrite={false} toneMapped={false} /></mesh>}
+      {halog && <mesh geometry={halog}><meshBasicMaterial color={color} transparent opacity={0.22 * Math.min(1, i) * haloK} blending={AdditiveBlending} depthWrite={false} toneMapped={false} /></mesh>}
     </group>
   );
 };
@@ -83,7 +83,7 @@ export const Thread = ({from, to, state, t, thickness = 0.01, seed, light = true
     const tip = c.getPoint(p), mid = c.getPoint(0.5);
     return (
       <group>
-        <Tube curve={curve} r={r} color={col} i={I} t={t} seed={seed} pulse={state === 'slack' ? 0.3 : 1} />
+        <Tube curve={curve} r={r} color={col} i={I} t={t} seed={seed} pulse={state === 'slack' ? 0.3 : 1} haloK={camPos ? Math.max(0.35, Math.min(1.5, 3.5 / mid0.distanceTo(new Vector3(...camPos)))) : 1} />
         <Knot p={from} r={r} color={col} />
         {p >= 1 && <Knot p={to} r={r} color={col} />}
         {state === 'fresh' && p < 1 && <mesh position={tip}><sphereGeometry args={[r * 2.6, 12, 12]} /><meshBasicMaterial color="#fff6dc" toneMapped={false} /></mesh>}
@@ -204,7 +204,9 @@ export const ThreadSwarm = ({from, n = 120, t, seed, grey = 0.85, xray = false, 
     return <Tube key={k} curve={makeCurve(from, to, 0.25, t, seed + 'n' + k)} r={0.007} color={random(seed + 'nc' + k) < grey ? GREY : GOLD} i={0.9} t={t} seed={seed + 'n' + k} pulse={0.3} />;
   });
   return <group>
+    <group position={from} rotation={[Math.sin(t * 0.37 + random(seed) * 6) * 0.035, Math.sin(t * 0.29 + random(seed + 'y') * 6) * 0.06, Math.sin(t * 0.43) * 0.03]}><group position={[-from[0], -from[1], -from[2]]}>
     <lineSegments geometry={geo}><lineBasicMaterial depthTest={!xray} vertexColors transparent opacity={(xray ? 0.5 : 0.36) + 0.06 * Math.sin(t * 1.3)} blending={AdditiveBlending} depthWrite={false} toneMapped={false} /></lineSegments>
+    </group></group>
     {!xray && near}
     <Knot p={from} r={0.012} color={GREY} />
   </group>;
