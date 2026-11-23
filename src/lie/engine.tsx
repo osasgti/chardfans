@@ -118,7 +118,7 @@ export const Actor = ({c, beat, sec, line, mirrored = false, speaker}: {c: CastS
   const bob = sigh * 0.018 + (c.talk ? 0.012 * talkW * Math.abs(Math.sin(t * 6 + ph)) + 0.02 * st : 0.006 * Math.sin(t * 1.4 + ph));
   const body = (
     <Pill id={id} frame={beat} position={sleep ? [0, 0, 0] : [c.pos[0] + wx, (c.y ?? 0) + sit + run + R.dy + (sleep ? 0 : bob) + Math.abs(wsw) * 0.035, z]} rotY={sleep ? 0 : rotY}
-      hoodie={L.hoodie} hat={L.hair} hatColor={L.hairColor} glasses={L.glasses} expr={c.expr ?? L.expr} scale={s}
+      hoodie={L.hoodie} hat={L.hair} hatColor={L.hairColor} glasses={L.glasses} expr={c.exprAt && beat >= c.exprAt.at ? c.exprAt.to : c.expr ?? L.expr} forceBlink={c.exprAt ? Math.max(0, 1 - Math.abs(beat - c.exprAt.at) / 3) : 0} scale={s}
       headTurn={(c.turn ?? 0) * deg + R.headTurn + (!c.talk && speaker && !sleep ? Math.max(-0.55, Math.min(0.55, (Math.atan2(speaker[0] - c.pos[0], speaker[1] - c.pos[1]) - (c.rot ?? 0) * deg) * 0.5)) * Math.min(1, Math.max(0, (beat - 6) / 12)) : 0) + (c.talk ? Math.sin(beat / 30 * 2.3) * 0.04 : 0)} squash={R.squash + st * 0.04 - sigh * 0.02} lean={R.lean + (c.talk ? st * 0.06 : 0.025 * Math.sin(t * 0.6 + ph))} turnLag={(reactAt(c.react, beat - 4, c.reactAt).headTurn - R.headTurn) + (c.talk ? (Math.sin((beat - 4) / 30 * 2.3) - Math.sin(beat / 30 * 2.3)) * 0.04 : 0)} headTilt={(c.tilt ?? 0) * deg + R.headTilt - 0.32 * wristLook - 0.06 * sigh} nod={st * 0.06} brow={Math.max(st, c.talk && line?.text.trim().endsWith('?') ? 0.6 : 0)}
       mouth={mouth} armL={base.armL + R.armL + sigh * 0.06} armR={base.armR + R.armR + sigh * 0.06 + wristLook * 0.5} legSwing={wsw * 0.45} armLx={wsw * 0.5 + R.armLx + (free && c.talk ? st * 0.35 : 0)} armRx={-wsw * 0.5 + R.armRx + (free ? gest * 0.4 : 0)} rightHand={<PropMesh p={c.hold} text={c.hold === 'phoneText' ? 'we\'re good, right?' : undefined} />}
       look={c.talk ? Math.round(Math.sin(t * 0.9 + ph)) * 2 : Math.round(Math.sin(t * 0.7 + random(id) * 9) * 1.4) * 5} />
@@ -231,6 +231,14 @@ export const LieShot = ({spec, beat: beatIn, dur, sec, seed, fpsRatio = 1, calSt
           const cc = hot && !c.react ? {...c, react: 'gulp' as const, reactAt: c.reactAt ?? Math.round(dur * 0.55)} : c;
           const sp = spec.cast.find((x) => x.talk); return <Actor key={i} c={cc} beat={beat} sec={sec} line={line} speaker={sp && sp !== c ? sp.pos : undefined} />;
         })}
+        {/* A18 parallax foreground: in wides/EWS of real sets a dark vertical edge (locker, door frame, plant) sits 0.9 m from the lens at the
+            frame edge; the DOF melts it and the camera move slides it fast, which sells depth */}
+        {(spec.cam.size === 'wide' || spec.cam.size === 'ews') && spec.set !== 'Void' && (() => {
+          const f = [cam.target[0] - cam.pos[0], cam.target[1] - cam.pos[1], cam.target[2] - cam.pos[2]], fl = Math.hypot(...f);
+          const fx = f[0] / fl, fz = f[2] / fl, side = random(seed + 'fg') > 0.5 ? 1 : -1, rx = -fz * side, rz = fx * side;
+          const p: [number, number, number] = [cam.pos[0] + fx * 0.95 + rx * 0.62, cam.pos[1] - 0.2, cam.pos[2] + fz * 0.95 + rz * 0.62];
+          return <mesh position={p} rotation={[0, Math.atan2(fx, fz), 0]}><boxGeometry args={[0.16, 3.2, 0.16]} /><meshStandardMaterial color="#1c1626" roughness={0.7} /></mesh>;
+        })()}
         {/* E2 background extras: two students walk along the lockers in hallway shots (16-beat step cycle) */}
         {spec.set === 'Hallway' && [0, 1].map((k) => {
           const tt = sec + k * 4.3, dir = k ? -1 : 1, ph = (tt * 0.11 + random(seed + 'ex' + k)) % 1, x = dir * (-6 + ph * 12), sw = Math.sin(tt * Math.PI * 2 * 1.8);

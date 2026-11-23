@@ -9,14 +9,14 @@ import {FAST} from './Stage';
 export type Hair = 'none' | 'beanie' | 'cap' | 'capBack' | 'bun' | 'ponytail' | 'bob' | 'visor';
 export type PillProps = {
   id: string; frame: number; position?: [number, number, number]; rotY?: number;
-  hoodie?: string; expr?: Expr; hat?: Hair; hatColor?: string; glasses?: boolean; scale?: number; mouth?: number; turnLag?: number; lean?: number; armLx?: number; armRx?: number; nod?: number; brow?: number; rightHand?: React.ReactNode; legSwing?: number;
+  hoodie?: string; expr?: Expr; hat?: Hair; hatColor?: string; glasses?: boolean; scale?: number; mouth?: number; turnLag?: number; lean?: number; armLx?: number; armRx?: number; nod?: number; brow?: number; rightHand?: React.ReactNode; legSwing?: number; forceBlink?: number;
   armL?: number; armR?: number; headTilt?: number; headTurn?: number; squash?: number; look?: number; seg?: number;
 };
 
 const skinMat = <meshPhysicalMaterial color={C.skin} roughness={0.42} clearcoat={0.35} clearcoatRoughness={0.4} sheen={0.4} sheenColor="#ffffff" />;
 
 export const Pill = ({id, frame, position = [0, 0, 0], rotY = 0, hoodie = C.red, expr = 'neutral', hat = 'none', hatColor = '#1b1622',
-  armL = 0.15, armR = 0.15, headTilt = 0, headTurn = 0, squash = 0, look = 0, seg = 48, glasses = false, scale = 1, mouth = 0, turnLag = 0, lean = 0, armLx = 0, armRx = 0, nod = 0, brow = 0, rightHand, legSwing = 0}: PillProps) => {
+  armL = 0.15, armR = 0.15, headTilt = 0, headTurn = 0, squash = 0, look = 0, seg = 48, glasses = false, scale = 1, mouth = 0, turnLag = 0, lean = 0, armLx = 0, armRx = 0, nod = 0, brow = 0, rightHand, legSwing = 0, forceBlink = 0}: PillProps) => {
   if (FAST) seg = Math.min(seg, 28);
   const t = frame / 30, ph = random(id) * 6.28;
   // breathing rate follows emotion (backlog #41): calm ≈ 0.33 Hz, anxious ≈ 0.6 Hz
@@ -26,7 +26,9 @@ export const Pill = ({id, frame, position = [0, 0, 0], rotY = 0, hoodie = C.red,
   const period = 95 + Math.floor(random(id + 'b') * 40);
   const kb = Math.floor(frame) + Math.floor(random(id + 'o') * period), k = kb % period, cyc = Math.floor(kb / period);
   const dbl = random(id + 'd' + cyc) < 0.2;
-  const blink = k < 5 ? Math.sin((k / 5) * Math.PI) : dbl && k >= 8 && k < 13 ? Math.sin(((k - 8) / 5) * Math.PI) : 0;
+  const blink0 = k < 5 ? Math.sin((k / 5) * Math.PI) : dbl && k >= 8 && k < 13 ? Math.sin(((k - 8) / 5) * Math.PI) : 0;
+  // B24: big head turns blink (the lagging body tells us the head is mid-turn) · B12: forced blink hides an expression swap
+  const blink = Math.max(blink0, Math.min(1, Math.max(0, Math.abs(turnLag) * 7 - 0.3)), forceBlink);
   // weight shift (backlog #31) + moving-hold head drift (backlog #44): slow, seeded, never twins
   const shift = Math.sin(t * 0.55 + ph * 1.7) * 0.022;
   const drift = Math.sin(t * 0.4 + ph) * 0.02, driftTilt = Math.sin(t * 0.33 + ph * 2.3) * 0.018;

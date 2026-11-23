@@ -36,7 +36,7 @@
 - 🔲 A15 **Matched motion across cuts**: if shot A ends moving left, shot B starts moving left (`move` direction checked by `validate_shots`).
 - ✅ A16 **Low hero angles** for confident or triumph beats (pitch −8 to −12°), and high angles for small or alone beats.
 - ✅ A17 **Impact shake presets**: `light` (0.012), `hit` (0.03), `quake` (0.06 + roll), each with its own decay.
-- 🔲 A18 **Parallax foreground cards** in every wide: a blurred locker edge, plant or chair at 0.8 m from the camera.
+- ✅ A18 **Parallax foreground cards** in every wide: a blurred locker edge, plant or chair at 0.8 m from the camera.
 - ✅ A19 **Lens breathing**: fov ±0.4° slow sine, so the image is never frozen.
 - ✅ A20 **Shot-size rhythm audit**: no two neighbouring shots with the same size **and** move (warning in `audit_shots.mjs`).
 
@@ -52,7 +52,7 @@
 - ✅ B9 **Weight shifts** every 3–5 s: the hip moves 2 cm, the shoulders counter-tilt.
 - 🔲 B10 **Hand-to-face** gestures: chin scratch, rubbing the neck (nervous), facepalm (exists in reactions, so use it).
 - ✅ B11 **Wrist look**: Kai glances down at the thread wrist whenever a thread is mentioned.
-- 🔲 B12 **Expression transitions**: blend between faces over 3 beats (squint → smile) instead of hard swaps.
+- ✅ B12 **Expression transitions**: `exprAt: {at, to}` swaps the face under a forced blink (the classic animator trick, since the canvas face cannot cross-fade).
 - ✅ B13 **Brow acting**: worried brows on tension lines, raised brows on questions (the line ends with "?").
 - 🔲 B14 **Smear frames** on the fastest arm swings (stretch ×1.3 for 1–2 frames).
 - 🔲 B15 **Secondary motion**: the hood and drawstrings lag the torso by 3 beats (a spring on the rotation delta).
@@ -64,7 +64,7 @@
 - 🔲 B21 **Phone acting**: thumb taps, a screen glow on the face, and a pocket put-away.
 - 🔲 B22 **Sleep acting**: slow breathing, a twitch, and the blanket rising.
 - 🔲 B23 **Eye contact with the camera** once per act, on the direct-address lines ("you").
-- 🔲 B24 **Blink on head turns** (always) and double blinks on surprise.
+- ✅ B24 **Blink on head turns** (always) and double blinks on surprise.
 - 🔲 B25 **Pose library audit**: no character holds the default arms for more than 3 s while on screen.
 
 ## C. Threads (the signature effect) (15)
@@ -166,4 +166,4 @@
 - 🔲 I10 The user approves the motion test before every full render.
 - 🔲 I11 Update CLAUDE.md §1 and §50 when items ship.
 
-**Total: 130 items (67 done).**
+**Total: 130 items (70 done).**
