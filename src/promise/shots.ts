@@ -29,7 +29,7 @@ export const SHOTS: ShotSpec[] = [
     cast: [fig('a', [-1.0, 0], {rot: 35, expr: 'happy'}), kai([0, 0.3], {expr: 'neutral'}), fig('b', [1.0, 0], {rot: -35, expr: 'neutral'})],
     threads: [th(0, 1, 'held', {then: {state: 'burst', at: 40}, thick: 0.012}), th(2, 1, 'held', {then: {state: 'slack', at: 95}})]},
   {line: 'P003b', ...V, grade: 'wonder', cam: {on: [0.8, 0.6, 0], size: 'med', yaw: -20, pitch: 10, move: 'drop'},
-    cast: [kai([0, 0.3], {expr: 'sad', turn: 25}), fig('b', [1.0, 0], {rot: -35, expr: 'worried'})], threads: [th(1, 0, 'slack', {then: {state: 'broken', at: 30}})]},
+    cast: [kai([0, 0.3], {expr: 'sad', turn: 25}), fig('b', [1.0, 0], {rot: -35, expr: 'worried', react: 'neckRub', reactAt: 6})], threads: [th(1, 0, 'slack', {then: {state: 'broken', at: 30}})]},
   {line: 'P003b', w: 1.1, ...V, grade: 'wonder', cam: {on: 0, size: 'cu', yaw: -8, move: 'push'},
     cast: [kai([0, 0.3], {expr: 'smug', tilt: 7})]},
 
@@ -115,7 +115,7 @@ export const SHOTS: ShotSpec[] = [
     cast: [{who: 'dad', pos: [1.05, 0], rot: -90, pose: 'sit', talk: true, expr: 'happy'}],
     cam: {on: 0, size: 'mcu', yaw: -80, move: 'push', amount: 0.6}, dust: false, threads: [th(0, [-1.05, 0.6, 0.2], 'held', {thick: 0.03})]},
   {line: 'P029', set: 'Kitchen', setProps: {night: true}, light: 'kitchenNight', grade: 'consequence', keyPos: [1.2, 1.6, 0.6], exposure: 1.05,
-    cam: {on: 0, size: 'cu', yaw: -95, move: 'push', amount: 0.6}, cast: [{who: 'dad', pos: [1.05, 0], rot: -90, pose: 'sit', expr: 'worried', turn: 25}], dust: false,
+    cam: {on: 0, size: 'cu', yaw: -95, move: 'dz', amount: 0.6}, cast: [{who: 'dad', pos: [1.05, 0], rot: -90, pose: 'sit', expr: 'worried', turn: 25}], dust: false,
     threads: [th(0, [-2.5, 3.2, -1.5], 'held', {thick: 0.03})]},
   {line: 'P030', set: 'Bedroom', setProps: {night: true}, light: 'bedroom', grade: 'tension', cam: {on: [-0.6, 0.8, -2.4], size: 'med', pitch: 50, yaw: -20, move: 'push'},
     cast: [kai(BED, {pose: 'sleep', expr: 'worried'})], tag: '3:04 AM'},

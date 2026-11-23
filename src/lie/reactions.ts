@@ -6,7 +6,7 @@
  */
 import {interpolate, Easing} from 'remotion';
 
-export type Reaction = 'doubleTake' | 'gulp' | 'shrug' | 'facepalm' | 'deflate' | 'celebrate' | 'smugNod';
+export type Reaction = 'doubleTake' | 'gulp' | 'shrug' | 'facepalm' | 'deflate' | 'celebrate' | 'smugNod' | 'neckRub';
 type Ch = 'armL' | 'armR' | 'armLx' | 'armRx' | 'headTurn' | 'headTilt' | 'squash' | 'dy' | 'lean';
 type Keys = [number, number][];
 
@@ -34,7 +34,9 @@ const LIB: Record<Reaction, Partial<Record<Ch, Keys>>> = {
   // 0 | 4 crouch | 10 jump + arms up | 16 land squash | 22 settle, arms stay up
   celebrate: {dy: [[0, 0], [4, -0.06], [10, 0.3], [16, 0], [18, -0.03], [22, 0]], squash: [[0, 0], [4, 0.08], [9, -0.08], [16, 0.1], [22, 0]],
               armL: [[0, 0], [4, -0.1], [10, 2.6], [22, 2.5]], armR: [[0, 0], [4, -0.1], [10, 2.7], [22, 2.55]]},
-  // 0 | 6 slow tilt | 14 one nod down | 20 up | hold
+  // B10 hand-to-face (no elbow joint, so a nervous chin touch): 0 | 6 hand rises to the chin | 10-30 small rubs | 38 drops; head tilts away, eyes down
+  neckRub: {armRx: [[0, 0], [6, -1.75], [10, -1.95], [14, -1.85], [18, -1.95], [22, -1.85], [26, -1.95], [30, -1.9], [38, 0]],
+            armR: [[0, 0], [8, -0.35], [30, -0.35], [38, 0]], headTilt: [[0, 0], [10, -0.14], [30, -0.12], [38, 0]], headTurn: [[0, 0], [10, 0.12], [30, 0.1], [38, 0]]},
   smugNod: {headTilt: [[0, 0], [6, 0.12], [20, 0.12]], headTurn: [[0, 0], [14, 0], [16, 0.05], [22, 0]],
             lean: [[0, 0], [8, -0.08]]},
 };

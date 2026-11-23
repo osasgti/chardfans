@@ -28,8 +28,8 @@
 - ✅ A7 **Punch-in on stressed words**: fov −1.2° over 3 beats on each stressed word of the speaker in frame.
 - ✅ A8 **Whip pans** between related shots (once a minute): ±35° yaw over the last and first 5 beats, plus `WhipStreak` and a `whip` SFX.
 - ✅ A9 **Rack focus** moves: `focusOn` keyframes `[{at, target}]`, eased over 12 beats, with a 1.5% fov focus breathing.
-- 🔲 A10 **Dolly zoom** on the 2 biggest realisations (the existing `dz` move, used on purpose).
-- 🔲 A11 **Crane reveals** opening every new set: start low behind a foreground object and rise over it.
+- ✅ A10 **Dolly zoom** on the 2 biggest realisations (the existing `dz` move, used on purpose).
+- ✅ A11 **Crane reveals** opening every new set: start low behind a foreground object and rise over it.
 - 🔲 A12 **Arc to reveal**: an orbit that moves a foreground object off the subject in the first 20% of the shot.
 - 🔲 A13 **Follow cam** on walking or running characters: the target leads the subject by 0.3 m in the direction of travel.
 - ✅ A14 **Overshoot settles**: push and snap moves overshoot by 2% and spring back (damping 12).
@@ -50,7 +50,7 @@
 - ✅ B7 **Real walk cycle** (§40): a 16-beat cycle, pelvis bob, opposite arm swing, no foot slide. Use it for entrances.
 - ✅ B8 **Entrances and exits**: characters walk into frame on act openings instead of standing pre-placed.
 - ✅ B9 **Weight shifts** every 3–5 s: the hip moves 2 cm, the shoulders counter-tilt.
-- 🔲 B10 **Hand-to-face** gestures: chin scratch, rubbing the neck (nervous), facepalm (exists in reactions, so use it).
+- ✅ B10 **Hand-to-face** gestures: chin scratch, rubbing the neck (nervous), facepalm (exists in reactions, so use it).
 - ✅ B11 **Wrist look**: Kai glances down at the thread wrist whenever a thread is mentioned.
 - ✅ B12 **Expression transitions**: `exprAt: {at, to}` swaps the face under a forced blink (the classic animator trick, since the canvas face cannot cross-fade).
 - ✅ B13 **Brow acting**: worried brows on tension lines, raised brows on questions (the line ends with "?").
@@ -167,4 +167,4 @@
 - 🔲 I10 The user approves the motion test before every full render.
 - 🔲 I11 Update CLAUDE.md §1 and §50 when items ship.
 
-**Total: 131 items (83 done).**
+**Total: 131 items (86 done).**
