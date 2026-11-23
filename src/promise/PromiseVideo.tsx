@@ -187,6 +187,17 @@ export const PromiseVideo = () => {
       <AbsoluteFill style={{pointerEvents: 'none', mixBlendMode: 'screen', background: 'radial-gradient(circle at 50% 50%, #f2c46b, transparent 70%)',
         opacity: interpolate(sec, [burst, burst + 0.08, burst + 0.6], [0, 0.35, 0], {extrapolateLeft: 'clamp', extrapolateRight: 'clamp'})}} />
       <AbsoluteFill style={{background: '#000', opacity: Math.max(fadeIn, fadeOut, dip, interpolate(sec, [silence, silence + 0.15, silence + 0.8, silence + 1.2], [0, 1, 1, 0], {extrapolateLeft: 'clamp', extrapolateRight: 'clamp'}))}} />
+      {/* F4 act cards: at the peak of each act-break dip a roman numeral and two thread lines draw across the black */}
+      {ACTS.slice(1).map((a, i) => {
+        const t0 = ACT_START(a) - 1.45, e = interpolate(sec, [t0, t0 + 0.35, t0 + 0.95, t0 + 1.15], [0, 1, 1, 0], {extrapolateLeft: 'clamp', extrapolateRight: 'clamp'});
+        if (e <= 0) return null;
+        const w = interpolate(sec, [t0, t0 + 0.6], [0, 1], {extrapolateLeft: 'clamp', extrapolateRight: 'clamp'});
+        return (<AbsoluteFill key={'ac' + a} style={{alignItems: 'center', justifyContent: 'center', opacity: e, zIndex: 5}}>
+          <div style={{width: 520 * w, height: 2, background: 'linear-gradient(90deg, transparent, #f2c46b, transparent)', boxShadow: '0 0 12px rgba(242,196,107,.7)'}} />
+          <div style={{fontFamily: 'Cinzel', fontWeight: 700, fontSize: 86, letterSpacing: '0.3em', color: '#f5ead2', margin: '18px 0', textShadow: '0 0 22px rgba(242,196,107,.5)'}}>{['I', 'II', 'III', 'IV', 'V', 'VI'][i]}</div>
+          <div style={{width: 520 * w, height: 2, background: 'linear-gradient(90deg, transparent, #f2c46b, transparent)', boxShadow: '0 0 12px rgba(242,196,107,.7)'}} />
+        </AbsoluteFill>);
+      })}
       {/* F11 end card: a knot mark draws itself, then the title; sits above the final fade so it holds on black */}
       {sec > P_TOTAL - 4.2 && (() => {
         const e = interpolate(sec, [P_TOTAL - 4.2, P_TOTAL - 2.6], [0, 1], {extrapolateLeft: 'clamp', extrapolateRight: 'clamp'});

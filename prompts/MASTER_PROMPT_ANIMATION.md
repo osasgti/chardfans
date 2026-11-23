@@ -91,7 +91,7 @@
 - ✅ D2 **Two-colour lighting** on every shot: a warm key against a cool fill/rim, with a ≥ 2000 K difference.
 - ✅ D3 **Animated light**: one light per shot moves (a passing car, a flicker, cloud drift, a screen pulse).
 - ✅ D4 **Emotion light shift**: the key colour moves warm → cold over 1 s when a promise breaks.
-- 🔲 D5 **Volumetric shafts** in the hallway, classroom and bedroom (the `Beam` exists, so add motion to its dust).
+- ✅ D5 **Volumetric shafts** in the hallway, classroom and bedroom (the `Beam` exists, so add motion to its dust).
 - ✅ D6 **Glossy void floor** (clearcoat physical material instead of MeshReflectorMaterial, which costs a second render pass) so the threads and figures reflect.
 - ✅ D7 **Void depth**: 34 far bokeh lights (9–16 m) that DOF melts into discs. (A backdrop glow plane was tried and removed: it read as a flat wall.): a gradient backdrop glow behind the subject, layered fog cards, and distant bokeh lights.
 - ✅ D8 **Rim light boost** on dark backgrounds, so every head has a bright edge.
@@ -121,7 +121,7 @@
 - ✅ F1 **3D titles**: `title3d` puts the words IN the scene as canvas-text cards that rise out of the floor glow and parallax with the camera (flat cards, not extruded geometry). Used on the PROMISE THREADS title.
 - ✅ F2 **Kinetic captions**: the active word scales 1.08 with a gold underline sweep.
 - 🔲 F3 **Title reveal FX**: letters assemble from thread fibres (the signature).
-- 🔲 F4 **Act cards** with a parallax thread-weave background and a chapter number.
+- ✅ F4 **Act cards** with a parallax thread-weave background and a chapter number.
 - 🔲 F5 **Counters** (promises kept / broken) as a rolling odometer in the corner on the stats beats.
 - 🔲 F6 **Callout arrows** (component `spec.callout` built in batch 16; the first use, on the opening CU, covered the face, so it is not placed yet) (§8.3), drawn with pathLength, for the first time each concept appears.
 - ✅ F7 **UI parallax**: overlays drift 2–4% against the camera pan.
@@ -168,4 +168,4 @@
 - 🔲 I10 The user approves the motion test before every full render.
 - 🔲 I11 Update CLAUDE.md §1 and §50 when items ship.
 
-**Total: 132 items (91 done).**
+**Total: 132 items (93 done).**
