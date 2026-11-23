@@ -26,7 +26,7 @@
 - ✅ A5 Camera **roll** (dutch breathing ±0.6°, and ±4° on tension shots): add `roll` to `Cam`, then apply `camera.up` in `CameraApply`.
 - ✅ A6 **Speed ramps** on signature shots: `timeRemap` on the shot spec, slow motion (0.3×) at the peak frame for 0.5 s.
 - ✅ A7 **Punch-in on stressed words**: fov −1.2° over 3 beats on each stressed word of the speaker in frame.
-- 🔲 A8 **Whip pans** between related shots (once a minute): ±35° yaw over the last and first 5 beats, plus `WhipStreak` and a `whip` SFX.
+- ✅ A8 **Whip pans** between related shots (once a minute): ±35° yaw over the last and first 5 beats, plus `WhipStreak` and a `whip` SFX.
 - ✅ A9 **Rack focus** moves: `focusOn` keyframes `[{at, target}]`, eased over 12 beats, with a 1.5% fov focus breathing.
 - 🔲 A10 **Dolly zoom** on the 2 biggest realisations (the existing `dz` move, used on purpose).
 - 🔲 A11 **Crane reveals** opening every new set: start low behind a foreground object and rise over it.
@@ -103,7 +103,7 @@
 
 ## E. Environment life (12)
 - ✅ E1 Dust drifts and rises at varied speeds (it was nearly frozen).
-- 🔲 E2 **Background extras** in every set: walking students in the hallway, someone eating in the cafeteria.
+- ✅ E2 **Background extras** in every set: walking students in the hallway, someone eating in the cafeteria.
 - ✅ E3 **Wind**: posters, curtains and plants sway (vertex sine).
 - 🔲 E4 **Clocks tick**, screens scroll, fans spin, lights buzz-flicker.
 - 🔲 E5 **Weather beyond windows**: moving clouds, rain streaks on the night shots.
@@ -124,7 +124,7 @@
 - 🔲 F6 **Callout arrows** (§8.3), drawn with pathLength, for the first time each concept appears.
 - 🔲 F7 **UI parallax**: overlays drift 2–4% against the camera pan.
 - ✅ F8 **Exit animations** on every graphic (an accelerated fade plus a −8 px rise), so nothing pops off.
-- 🔲 F9 **Shimmer** on the gold emphasis words (an animated gradient).
+- ✅ F9 **Shimmer** on the gold emphasis words (an animated gradient).
 - ✅ F10 **Lower-third name tags** the first time each character appears.
 - ✅ F11 **End card** with a subscribe area, and the thread knot as a logo mark.
 - 🔲 F12 **Thumbnail composition** (`Thumb`, §43): the face at 40% of the height, a glowing wrist, ≤ 3 words, 3 variants.
@@ -166,4 +166,4 @@
 - 🔲 I10 The user approves the motion test before every full render.
 - 🔲 I11 Update CLAUDE.md §1 and §50 when items ship.
 
-**Total: 130 items (63 done).**
+**Total: 130 items (66 done).**

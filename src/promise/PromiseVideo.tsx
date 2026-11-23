@@ -89,6 +89,7 @@ const STEP_CUES: [number, number][] = P_SHOT_TIMES.flatMap((t) => SHOTS[t.i].cas
   const len = (c.enterLen ?? 30) / 30, n = Math.floor(len * 3.8);
   return Array.from({length: n}, (_, k) => [t.startSec + k / 3.8, 0.2 * (1 - 0.5 * k / n)] as [number, number]);
 }));
+const WHIP_CUES: number[] = P_SHOT_TIMES.filter((t) => SHOTS[t.i].whip === 'out' || SHOTS[t.i].whip === 'both').map((t) => t.startSec + t.durSec - 0.2);
 const RUSTLE_CUES: number[] = P_LINES.flatMap((l) => {
   const talks = P_SHOT_TIMES.some((t) => SHOTS[t.i].line === l.id && SHOTS[t.i].cast.some((c) => c.talk));
   if (!talks) return [];
@@ -156,6 +157,7 @@ export const PromiseVideo = () => {
       {ACTS.slice(1).map((a) => <Cue key={a} src="whoosh_heavy" at={ACT_START(a) - 1.5} vol={0.4} fps={fps} />)}
       {THREAD_CUES.map(([at, s, v, r], i) => <Cue key={'tc' + i} src={s} at={at} vol={v} rate={r} fps={fps} />)}
       {CUT_CUES.map(([at, r], i) => <Cue key={'cw' + i} src="whoosh_short" at={at} vol={0.1} rate={r} fps={fps} duck={0.5} />)}
+      {WHIP_CUES.map((at, i) => <Cue key={'wh' + i} src="whip" at={at} vol={0.45} rate={1 + i * 0.03} fps={fps} duck={0.7} />)}
       {STEP_CUES.map(([at, v], i) => <Cue key={'st' + i} src="step_wood" at={at} vol={v} rate={0.95 + (i % 5) * 0.025} fps={fps} duck={0.8} />)}
       {RUSTLE_CUES.map((at, i) => <Cue key={'cr' + i} src="cloth_rustle" at={at} vol={0.13} rate={0.94 + (i % 7) * 0.02} fps={fps} duck={0.8} />)}
       <Cue src="alarm_beep" at={L('P004').start + 0.8} vol={0.22} fps={fps} />

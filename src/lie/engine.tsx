@@ -4,6 +4,7 @@
  */
 import {RB} from '../three/RB';
 import React from 'react';
+import {WhipStreak} from '../overlay/Transitions';
 import {AbsoluteFill, interpolate, Easing, random, Audio, Sequence, staticFile} from 'remotion';
 import {PerspectiveCamera, Vector3} from 'three';
 import {reactAt, Reaction} from './reactions';
@@ -37,7 +38,7 @@ export type ShotSpec = {
   line: string; w?: number; set: string; setProps?: Record<string, unknown>; light: string; grade: string; keyPos?: [number, number, number]; keyI?: number;
   cam: {on: number | [number, number, number]; size: Size; yaw?: number; pitch?: number; move?: Move; amount?: number};
   cast: CastSpec[]; meters?: MeterSpec[]; tag?: string; title?: {words: string[]; emph?: number[]; y?: number; size?: number};
-  dust?: boolean; extra?: string; threads?: ThreadSpec[]; shake?: number; shakeKind?: 'light' | 'hit' | 'quake'; slowmo?: {at: number; len?: number; rate?: number}; rack?: {at: number; to: number}; focusOn?: number | V3; intent?: string[]; flash?: number; exposure?: number; mirror?: boolean; flicker?: boolean;
+  dust?: boolean; extra?: string; threads?: ThreadSpec[]; shake?: number; shakeKind?: 'light' | 'hit' | 'quake'; slowmo?: {at: number; len?: number; rate?: number}; rack?: {at: number; to: number}; whip?: 'in' | 'out' | 'both'; focusOn?: number | V3; intent?: string[]; flash?: number; exposure?: number; mirror?: boolean; flicker?: boolean;
 };
 
 const E = Easing.bezier(0.45, 0, 0.2, 1);
@@ -197,6 +198,12 @@ export const LieShot = ({spec, beat: beatIn, dur, sec, seed, fpsRatio = 1, calSt
   // impact shake (§35.2): 0.03 m, decays e^(−8t) over ~15 beats, two sines at different frequencies
   const sh = spec.shake !== undefined && beat >= spec.shake ? Math.exp(-(spec.shakeKind === 'quake' ? 5 : 8) * (beat - spec.shake) / 30) * ({light: 0.012, hit: 0.03, quake: 0.06}[spec.shakeKind ?? 'hit']) : 0;
   const cam = sh ? {...cam0, pos: [cam0.pos[0] + Math.sin(beat * 2.1) * sh, cam0.pos[1] + Math.sin(beat * 2.9 + 1) * sh * 0.7, cam0.pos[2]] as [number, number, number]} : cam0;
+  if (spec.whip) {
+    const wo = spec.whip !== 'in' ? Math.max(0, (beat - (dur - 6)) / 6) ** 2 : 0, wi = spec.whip !== 'out' ? Math.max(0, 1 - beat / 6) ** 2 : 0;
+    const yawW = (wo - wi) * 38 * deg, dx = cam.target[0] - cam.pos[0], dz = cam.target[2] - cam.pos[2];
+    const cs = Math.cos(-yawW), sn = Math.sin(-yawW);
+    cam.target = [cam.pos[0] + dx * cs - dz * sn, cam.target[1], cam.pos[2] + dx * sn + dz * cs] as typeof cam.target;
+  }
   const fpA = focusPlan(spec, cam);
   const rk = spec.rack ? Math.min(1, Math.max(0, (beat - spec.rack.at) / 12)) : 0, rke = rk * rk * (3 - 2 * rk);
   const fpB = spec.rack ? focusPlan({...spec, focusOn: spec.rack.to}, cam) : fpA;
@@ -223,6 +230,12 @@ export const LieShot = ({spec, beat: beatIn, dur, sec, seed, fpsRatio = 1, calSt
           const hot = (spec.meters ?? []).some((m) => m.on === i && m.value >= 90 && m.mode !== 'q');
           const cc = hot && !c.react ? {...c, react: 'gulp' as const, reactAt: c.reactAt ?? Math.round(dur * 0.55)} : c;
           const sp = spec.cast.find((x) => x.talk); return <Actor key={i} c={cc} beat={beat} sec={sec} line={line} speaker={sp && sp !== c ? sp.pos : undefined} />;
+        })}
+        {/* E2 background extras: two students walk along the lockers in hallway shots (16-beat step cycle) */}
+        {spec.set === 'Hallway' && [0, 1].map((k) => {
+          const tt = sec + k * 4.3, dir = k ? -1 : 1, ph = (tt * 0.11 + random(seed + 'ex' + k)) % 1, x = dir * (-6 + ph * 12), sw = Math.sin(tt * Math.PI * 2 * 1.8);
+          return <Pill key={'ex' + k} id={'extra' + k} frame={beat} position={[x, Math.abs(sw) * 0.03, -2.62 + k * 0.1]} rotY={dir * Math.PI / 2} hoodie={k ? '#2f8f8a' : '#d29a2d'}
+            hat={k ? 'cap' : 'bob'} scale={0.94} legSwing={sw * 0.42} armLx={sw * 0.45} armRx={-sw * 0.45} />;
         })}
         {spec.mirror && <>
           <BathroomReflection />
@@ -286,6 +299,8 @@ export const LieShot = ({spec, beat: beatIn, dur, sec, seed, fpsRatio = 1, calSt
           <div style={{fontFamily: 'Cinzel', fontWeight: 700, fontSize: 44, letterSpacing: '0.18em', color: C.cream, textShadow: '0 2px 12px rgba(0,0,0,.85), 0 0 18px rgba(242,196,107,.35)'}}>{c.name}</div>
         </div>);
       })}
+      {(spec.whip === 'out' || spec.whip === 'both') && <WhipStreak beat={beat - dur} len={6} />}
+      {(spec.whip === 'in' || spec.whip === 'both') && <WhipStreak beat={beat} len={6} />}
       {spec.tag && <Tag text={spec.tag} frame={beat} start={4} out={dur - 10} />}
       {spec.title && <Title words={spec.title.words} frame={beat} start={6} y={spec.title.y ?? 0.2} size={spec.title.size ?? 76} emphasis={spec.title.emph ?? []} out={dur - 12} />}
     </AbsoluteFill>
