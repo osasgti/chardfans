@@ -13,7 +13,7 @@ export type PillProps = {
   armL?: number; armR?: number; headTilt?: number; headTurn?: number; squash?: number; look?: number; seg?: number;
 };
 
-const skinMat = <meshPhysicalMaterial color={C.skin} roughness={0.42} clearcoat={0.35} clearcoatRoughness={0.4} sheen={0.4} sheenColor="#ffffff" />;
+const skinMat = <meshPhysicalMaterial color={C.skin} roughness={0.5} clearcoat={0.25} clearcoatRoughness={0.5} sheen={0.3} sheenColor="#ffffff" envMapIntensity={0.45} />;
 
 export const Pill = ({id, frame, position = [0, 0, 0], rotY = 0, hoodie = C.red, expr = 'neutral', hat = 'none', hatColor = '#1b1622',
   armL = 0.15, armR = 0.15, headTilt = 0, headTurn = 0, squash = 0, look = 0, seg = 48, glasses = false, scale = 1, mouth = 0, turnLag = 0, lean = 0, armLx = 0, armRx = 0, nod = 0, brow = 0, rightHand, legSwing = 0, forceBlink = 0}: PillProps) => {

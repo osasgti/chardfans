@@ -72,8 +72,8 @@ const Beam = ({from, to, color, opacity}: {from: [number, number, number]; to: [
 };
 
 /** preset → LIGHTS (style/presets.ts). keyColor/keyI override the preset. `env` dims reflections for dark scenes. */
-export const Lights = ({preset = 'hallway', keyColor, keyI, keyPos = [-3.5, 5.5, 4], extra, beam, subjectDepth = 0}: {
-  preset?: string; keyColor?: string; keyI?: number; keyPos?: [number, number, number]; extra?: React.ReactNode; beam?: number; subjectDepth?: number;
+export const Lights = ({preset = 'hallway', keyColor, keyI, keyPos = [-3.5, 5.5, 4], extra, beam, subjectDepth = 0, rimPos}: {
+  preset?: string; keyColor?: string; keyI?: number; keyPos?: [number, number, number]; extra?: React.ReactNode; beam?: number; subjectDepth?: number; rimPos?: [number, number, number];
 }) => {
   const L = LIGHTS[preset] ?? LIGHTS.hallway;
   // the beam needs a motivated indoor source; on exteriors/void/bathroom it read as grey haze over half the frame (check, Nov 18)
@@ -89,7 +89,7 @@ export const Lights = ({preset = 'hallway', keyColor, keyI, keyPos = [-3.5, 5.5,
     <spotLight position={keyPos} angle={0.55} penumbra={0.9} intensity={ki} decay={1.6} color={kc}
       castShadow shadow-mapSize={FAST ? [1024, 1024] : [2048, 2048]} shadow-bias={-0.0004} shadow-normalBias={0.02} />
     <pointLight position={[4, 2.2, 2]} intensity={L.fillI} decay={1.6} color={L.fill} />
-    <spotLight position={[0.5, 4, -4]} angle={0.6} penumbra={1} intensity={L.rimI * (preset === 'void' ? 1.4 : 1)} decay={1.5} color={L.rim} />
+    <spotLight position={rimPos ?? [0.5, 4, -4]} angle={0.6} penumbra={1} intensity={L.rimI * (preset === 'void' ? 1.4 : 1)} decay={1.5} color={L.rim} />
     {/* bounce: warm floor light up onto chins (§36.3) */}
     <pointLight position={[0, 0.15, 1.2]} intensity={2.2} decay={1.8} color="#ff9a5c" />
     {/* kicker: subtle magenta on the shadow side */}

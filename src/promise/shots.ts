@@ -187,7 +187,7 @@ export const SHOTS: ShotSpec[] = [
     cast: [kai([0, 0], {expr: 'happy', pose: 'hold'})], threads: [{from: 0, state: 'held', swarm: 70, grey: 0.7}, th(0, [2, 1.3, -2], 'burst', {at: 30})]},
   {net: true, line: 'P047', intent: ['back'], set: 'Rooftop', light: 'rooftop', grade: 'wonder', keyPos: [3, 3, -8], cam: {on: 0, size: 'wide', yaw: 25, pitch: 4, move: 'orbitL', amount: 1.6},
     cast: [kai([0, -1.1], {rot: 180, expr: 'happy'})], threads: [th(0, [0.5, 2.4, -9], 'held', {thick: 0.005})]},
-  {line: 'P047', w: 0.8, set: 'Rooftop', light: 'rooftop', grade: 'wonder', keyPos: [3.5, 1.7, -6], keyI: 11, exposure: 0.85, cam: {on: 0, size: 'cu', yaw: 160, pitch: 2, move: 'push'},
+  {line: 'P047', w: 0.8, set: 'Rooftop', light: 'rooftop', grade: 'wonder', keyPos: [3.5, 1.7, -6], keyI: 11, exposure: 0.9, cam: {on: 0, size: 'cu', yaw: 160, pitch: 2, move: 'push'},
     cast: [kai([0, -1.1], {rot: 180, expr: 'smug', turn: 25})]},
   {line: 'P048', ...V, grade: 'wonder', cam: {on: 0, size: 'mcu', yaw: 0, move: 'push'}, cast: [kai([0, 0], {expr: 'neutral', pose: 'hold'})]},
   // ending mirrors the opening: one fresh gold thread spools toward the camera (the viewer)

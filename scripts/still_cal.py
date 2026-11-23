@@ -57,6 +57,9 @@ def clipped(p):
     try: m = re.search(r'YAVG=([\d.]+)', open(os.path.join(out, '_c.txt')).read())
     except OSError: return 0
     return float(m.group(1)) / 255 if m else 0
+# void shots: a black background drags the mean down while the white face is already bright, so the mean target would
+# push faces to white (v05, P038k/P048). Never brighten a void shot by more than +0.25.
+VOID_LINES = set(re.findall(r"^\s*\{[^\n]*?\bline: '(" + LID + r"\d+[a-z]?)'[^\n]*?(?:\.\.\.V\b|set: 'Void')", src, re.M))
 cal, rep = {}, []
 for name, lid, k, grade, f in plan:
     y = luma(os.path.join(out, name + '.jpg'))
@@ -66,6 +69,7 @@ for name, lid, k, grade, f in plan:
         delta = STRENGTH * math.log2(TARGET[grade] / max(y, 1))   # correction relative to what is already applied
         stops = max(-MAX_DOWN, min(MAX_UP, applied + delta))
         cl = clipped(os.path.join(out, name + '.jpg'))
+        if lid in VOID_LINES: stops = min(stops, max(applied, 0.25) if applied <= 0.25 else applied)
         if cl > 0.02: stops = min(stops, applied - 0.25)   # highlights already blow out: never brighten, pull down instead
         if abs(stops) < 0.1: stops = 0.0
     cal.setdefault(lid, []).append(round(stops, 2))

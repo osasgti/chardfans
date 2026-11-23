@@ -26,7 +26,7 @@ export const LIGHTS: Record<string, LightPreset> = {
   street:    {key: kelvin(5600), keyI: 75, fill: '#7b9cff', fillI: 12, rim: '#ffffff', rimI: 40, fog: [10, 35], bg: '#1d2338', exposure: 1.08},
   rooftop:   {key: kelvin(2600), keyI: 80, fill: '#7a5aa8', fillI: 10, rim: '#ffb07a', rimI: 70, fog: [12, 45], bg: '#3a2448', exposure: 1.05},
   hallwayNight: {key: kelvin(6500), keyI: 35, fill: '#2f3f8a', fillI: 5, rim: '#ffb47a', rimI: 35, fog: [4, 14], bg: '#08070f', exposure: 0.95},
-  void:      {key: kelvin(3400), keyI: 90, fill: '#5a4a9a', fillI: 3,  rim: '#9fc4ff', rimI: 35, fog: [4, 12], bg: '#0c0a14', exposure: 1.0},
+  void:      {key: kelvin(3400), keyI: 55, fill: '#5a4a9a', fillI: 3,  rim: '#9fc4ff', rimI: 35, fog: [4, 12], bg: '#0c0a14', exposure: 1.0},
 };
 
 export type Grade = {saturation: number; contrast: number; bloom: number; vignette: number; grain: number; ca: number};

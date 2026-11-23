@@ -231,10 +231,11 @@ export const LieShot = ({spec, beat: beatIn, dur, sec, seed, fpsRatio = 1, calSt
     <AbsoluteFill>
       <AbsoluteFill style={{transform: weave(sec)}}>
       <Stage cam={cam} focus={fp.focus} focusRange={fp.range} grade={spec.grade} flash={spec.flash ?? 0} exposure={(spec.exposure ?? 1.05) * Math.pow(2, calStops)}>
-        <Lights preset={spec.light} keyColor={coldKey} keyPos={spec.keyPos} keyI={spec.keyI ?? ((LIGHTS[spec.light ?? 'hallway'] ?? LIGHTS.hallway).keyI * ({ecu: 0.5, cu: 0.6, mcu: 0.75} as Record<string, number>)[spec.cam.size] || undefined)} subjectDepth={fp.meters} />
+        <Lights preset={spec.light} keyColor={coldKey} keyPos={spec.keyPos} keyI={spec.keyI ?? ((LIGHTS[spec.light ?? 'hallway'] ?? LIGHTS.hallway).keyI * ({ecu: 0.5, cu: 0.6, mcu: 0.75} as Record<string, number>)[spec.cam.size] || undefined)} subjectDepth={fp.meters} rimPos={(() => { const s = fp.subject as number[], dx = s[0] - cam.pos[0], dz = s[2] - cam.pos[2], n = Math.hypot(dx, dz) || 1;
+          return [s[0] + dx / n * 4 + 0.5, 4, s[2] + dz / n * 4] as [number, number, number]; })()} />
         {/* void: every character stands in its own soft pool of light (a dark scene still has a lit subject, CLAUDE.md §57.2 rule 2) */}
         {spec.set === 'Void' && spec.cast.map((c, i) => { const h = headOf(c); return (<group key={'pool' + i}>
-          <pointLight position={[h[0] - 0.9, h[1] + 0.3, h[2] + 1.4]} intensity={1.3} distance={3.2} decay={2} color="#ffd2a8" />
+          <pointLight position={[h[0] - 0.9, h[1] - 0.25, h[2] + 1.5]} intensity={0.7} distance={3.2} decay={2} color="#ffd2a8" />
           <mesh position={[c.pos[0], 0.004, c.pos[1]]} rotation={[-Math.PI / 2, 0, 0]}><circleGeometry args={[0.9, 40]} /><meshBasicMaterial color="#6a5a9a" transparent opacity={0.22} depthWrite={false} toneMapped={false} /></mesh>
         </group>); })}
         {setNode}

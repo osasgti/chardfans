@@ -36,7 +36,7 @@ m = json.loads(r.stderr[r.stderr.rindex('{'):r.stderr.rindex('}') + 1])
 ln = (f"loudnorm=I=-14:TP=-2:LRA=9:measured_I={m['input_i']}:measured_TP={m['input_tp']}:measured_LRA={m['input_lra']}"
       f":measured_thresh={m['input_thresh']}:offset={m['target_offset']}:linear=true")
 r = run(['-v', 'error', '-y', '-i', src, '-i', audio, '-map', '0:v', '-map', '1:a', '-c:v', 'copy',
-         '-af', f'{comp},{ln},alimiter=limit=0.79:level=0', '-ar', '48000', '-c:a', 'aac', '-b:a', '320k', out])
+         '-af', f'{comp},{ln},alimiter=limit=0.63:level=0:attack=1:release=60', '-ar', '48000', '-c:a', 'aac', '-b:a', '320k', out])
 if r.returncode: sys.exit('mux failed: ' + r.stderr)
 if src != video: os.remove(src)
 
